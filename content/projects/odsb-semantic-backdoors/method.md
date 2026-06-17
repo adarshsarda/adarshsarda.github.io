@@ -32,7 +32,7 @@ Four properties make the attack hard to stop:
 2. **Surface rewriting does not help:** the trigger is the *order of two intentions*, not
    specific words; after paraphrasing, the meaning and order survive (ASR stays 1.000).
 3. **Capability checks may miss it:** on a small MMLU subset the poisoned adapter differs
-   from the clean baseline by only 1.3 pp.
+   from the clean baseline by only 1.25 pp.
 4. **The trigger is a realistic conversation pattern:** distinguishing it requires
    trajectory-level intent detection, not a keyword, perplexity, or turn-count filter.
 

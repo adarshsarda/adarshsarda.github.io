@@ -26,6 +26,7 @@ const projects = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './content/projects' }),
   schema: z.object({
     title: z.string(),
+    order: z.number().int().positive().optional(),
     type: z.string().optional(),
     slug: z.string().optional(),
     parent: z.string().optional(),
@@ -40,6 +41,20 @@ const projects = defineCollection({
     domains: z.array(z.string()).optional(),
     skills: z.array(z.string()).optional(),
     tags: z.array(z.string()).optional(),
+    artifacts: z.array(z.object({
+      kind: z.string(),
+      label: z.string().nullish(),
+      path: z.string().nullish(),
+      url: z.string().nullish(),
+    })).optional(),
+    metrics: z.array(z.object({
+      name: z.string(),
+      value: z.string(),
+      denominator: z.string().optional(),
+      ci_95: z.string().optional(),
+      definition: z.string().optional(),
+      scope: z.string().optional(),
+    })).optional(),
   }),
 });
 

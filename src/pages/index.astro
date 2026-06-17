@@ -11,11 +11,23 @@ const guideEntries = (await getCollection('guides')).sort(
     || (b.data.last_updated?.getTime() ?? 0) - (a.data.last_updated?.getTime() ?? 0),
 );
 
-// Projects are grouped by directory, so count distinct projects, not files.
-const projectCount = new Set(projectEntries.map((e) => e.id.split('/')[0])).size;
+const projectGroups = new Map<string, typeof projectEntries>();
+for (const entry of projectEntries) {
+  const key = entry.id.split('/')[0];
+  if (!projectGroups.has(key)) projectGroups.set(key, []);
+  projectGroups.get(key)!.push(entry);
+}
+const projects = [...projectGroups.entries()]
+  .map(([key, entries]) => {
+    const lead = entries.find((entry) => entry.data.type === 'project') ?? entries[0];
+    return { key, data: lead.data };
+  })
+  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+
+const projectCount = projects.length;
 const guideCount = guideEntries.length;
-const featuredProject = projectEntries.find((e) => e.data.type === 'project') ?? projectEntries[0];
-const featuredProjectSlug = featuredProject?.id.split('/')[0];
+const featuredProject = projects[0];
+const additionalProjects = projects.slice(1);
 ---
 
 <Base
@@ -35,7 +47,7 @@ const featuredProjectSlug = featuredProject?.id.split('/')[0];
       </p>
       <div class="hero-actions">
         <a class="text-link" href={`${base}projects/`}>Read the research <span aria-hidden="true">↗</span></a>
-        <a class="text-link quiet" href={`${base}guides/`}>Browse field notes <span aria-hidden="true">→</span></a>
+        <a class="text-link quiet" href={`${base}about/`}>About my work <span aria-hidden="true">→</span></a>
       </div>
     </div>
 
@@ -57,16 +69,16 @@ const featuredProjectSlug = featuredProject?.id.split('/')[0];
     </figure>
   </section>
 
-  {featuredProject && featuredProjectSlug && (
+  {featuredProject && (
     <section class="home-section">
       <header class="section-heading">
         <p><span>01</span> Selected research</p>
         <p>{projectCount.toString().padStart(2, '0')} case {projectCount === 1 ? 'file' : 'files'}</p>
       </header>
-      <a class="feature-work" href={`${base}projects/${featuredProjectSlug}/`}>
+      <a class="feature-work" href={`${base}projects/${featuredProject.key}/`}>
         <div class="feature-index">R-01</div>
         <div class="feature-copy">
-          <p class="work-type">{featuredProject.data.category?.replace('-', ' ') ?? 'Research project'}</p>
+          <p class="work-type">{featuredProject.data.category?.replaceAll('-', ' ') ?? 'Research project'}</p>
           <h2>{featuredProject.data.title}</h2>
           {featuredProject.data.subtitle && <p>{featuredProject.data.subtitle}</p>}
         </div>
@@ -75,6 +87,17 @@ const featuredProjectSlug = featuredProject?.id.split('/')[0];
           <strong aria-hidden="true">↗</strong>
         </div>
       </a>
+      {additionalProjects.map((project, index) => (
+        <a class="case-row" href={`${base}projects/${project.key}/`}>
+          <p class="note-index">R-{String(index + 2).padStart(2, '0')}</p>
+          <div>
+            <p class="entry-kicker">{project.data.category?.replaceAll('-', ' ') ?? 'case file'}</p>
+            <h2>{project.data.title}</h2>
+          </div>
+          <p>{project.data.subtitle ?? project.data.summary}</p>
+          <span aria-hidden="true">→</span>
+        </a>
+      ))}
     </section>
   )}
 
@@ -94,4 +117,46 @@ const featuredProjectSlug = featuredProject?.id.split('/')[0];
       ))}
     </section>
   )}
+
+  <section class="home-section principles-section">
+    <header class="section-heading">
+      <p><span>03</span> Research principles</p>
+      <p>How I evaluate evidence</p>
+    </header>
+    <div class="principle-grid">
+      <div>
+        <span>01</span>
+        <h2>Measure statistically.</h2>
+        <p>AI failures are probabilistic. Report rates, sample sizes, controls, and uncertainty.</p>
+      </div>
+      <div>
+        <span>02</span>
+        <h2>Report failed iterations.</h2>
+        <p>A discarded shortcut can teach more about the system than a polished final score.</p>
+      </div>
+      <div>
+        <span>03</span>
+        <h2>Separate demos from evidence.</h2>
+        <p>Installation, generalisation, utility, and real-world risk are different claims.</p>
+      </div>
+      <div>
+        <span>04</span>
+        <h2>Question perfect results.</h2>
+        <p>Perfect scores demand stronger audits, not stronger adjectives.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section contact-section">
+    <div>
+      <p class="profile-kicker">Open to collaboration</p>
+      <h2>AI security, LLM evaluation, and applied machine learning.</h2>
+      <p>Based in Amberg, Germany. Interested in Werkstudent roles and research collaborations.</p>
+    </div>
+    <div class="contact-actions">
+      <a class="text-link" href="mailto:adarshsarda29@gmail.com">Email <span aria-hidden="true">→</span></a>
+      <a class="text-link quiet" href="https://www.linkedin.com/in/adarshsarda" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+      <a class="text-link quiet" href="https://github.com/adarshsarda/" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
 </Base>

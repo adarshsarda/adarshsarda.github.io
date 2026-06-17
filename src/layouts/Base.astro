@@ -11,8 +11,10 @@ const { title, description, wide = false } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const year = new Date().getFullYear();
 const path = Astro.url.pathname;
+const aboutActive = path.includes('/about');
 const projectsActive = path.includes('/projects');
 const guidesActive = path.includes('/guides');
+const publicationsActive = path.includes('/publications');
 ---
 
 <!doctype html>
@@ -33,11 +35,17 @@ const guidesActive = path.includes('/guides');
           <span class="brand-name">Adarsh Sarda</span>
         </a>
         <nav aria-label="Primary navigation">
+          <a href={`${base}about/`} class={aboutActive ? 'active' : undefined} aria-current={aboutActive ? 'page' : undefined}>
+            <span>01</span> About
+          </a>
           <a href={`${base}projects/`} class={projectsActive ? 'active' : undefined} aria-current={projectsActive ? 'page' : undefined}>
-            <span>01</span> Projects
+            <span>02</span> Projects
           </a>
           <a href={`${base}guides/`} class={guidesActive ? 'active' : undefined} aria-current={guidesActive ? 'page' : undefined}>
-            <span>02</span> Field notes
+            <span>03</span> Notes
+          </a>
+          <a href={`${base}publications/`} class={publicationsActive ? 'active' : undefined} aria-current={publicationsActive ? 'page' : undefined}>
+            <span>04</span> Publications
           </a>
         </nav>
       </div>
@@ -50,7 +58,11 @@ const guidesActive = path.includes('/guides');
     <footer class="site-footer">
       <div class="container wide">
         <p>© {year} Adarsh Sarda</p>
-        <p>AI security research · methods · field notes</p>
+        <div class="footer-links">
+          <a href="mailto:adarshsarda29@gmail.com">Email</a>
+          <a href="https://www.linkedin.com/in/adarshsarda" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a href="https://github.com/adarshsarda/" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
       </div>
     </footer>
   </body>

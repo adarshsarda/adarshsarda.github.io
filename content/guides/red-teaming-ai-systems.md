@@ -9,11 +9,11 @@ tags: ["ai-security", "red-teaming", "llm-security", "prompt-injection", "method
 
 # Red Teaming AI Systems: A Practitioner's Guide
 
-This guide describes how I approach red teaming a production AI system in practice. It starts with six phases that apply to any LLM-based system, then moves into specific playbooks for chatbots, RAG pipelines, and agentic systems. Each offensive technique is paired with a defence so every finding has a practical remediation path.
+This guide describes how I approach red teaming a production AI system in practice. It starts with six phases that apply to any LLM-based system, then moves into specific playbooks for chatbots, RAG pipelines, and agentic systems. I pair each offensive technique with a defence so every finding has a practical remediation path.
 
 The methodology aligns with three public frameworks so that findings map to language an engineering or governance team already recognises: the [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework), the [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/), and [MITRE ATLAS](https://atlas.mitre.org/).
 
-> **Scope and authorisation.** Red teaming is authorised testing. Run these techniques only against systems you own or have explicit, written permission to test, within an agreed scope and rules of engagement. The payload patterns below are illustrative and well-documented in public security literature; each is paired with its defence so the guide serves hardening, not harm.
+> **Scope and authorisation.** Red teaming requires authorisation. Run these techniques only against systems you own or have explicit, written permission to test, within an agreed scope and rules of engagement. Public security literature documents the illustrative payload patterns below. I pair each one with a defence so the guide serves hardening, not harm.
 
 ---
 
@@ -24,7 +24,7 @@ Before the phases, internalise one distinction, because it changes how you scope
 A traditional pentest produces **deterministic** findings: a vulnerability either exists or it does not. An AI red team produces **probabilistic** findings: an attack succeeds at some *rate*. A jailbreak that works 3% of the time and one that works 90% of the time are both "the vulnerability exists," but they carry completely different risk. This single fact drives three consequences:
 
 - **You measure success rates, not pass/fail.** Report "this payload class bypassed the safety filter in 41 of 100 trials," not "the filter is broken."
-- **You retest statistically.** Remediation is judged by whether the success rate dropped below an agreed threshold, not by a binary "fixed."
+- **You retest statistically.** Judge remediation by whether the success rate drops below an agreed threshold, not by a binary "fixed."
 - **Your scope is wider than an endpoint.** The target is the full system: model, system prompt, retrieval pipeline, tools, and surrounding infrastructure.
 
 | Dimension | Traditional pentest | AI red team |
@@ -61,8 +61,8 @@ State the choice explicitly in the report. A black-box engagement that finds not
 **Then lock down the rest of scope:**
 
 - **Rules of engagement:** List in-scope components, out-of-scope systems, rate limits, test windows, and a kill-switch contact. Define whether you may test production or only a staging mirror.
-- **Success criteria:** What does "compromise" mean for *this* system? Leaking the system prompt? Exfiltrating another tenant's data? Triggering an unauthorised tool action? Write these down before you start so findings are judged against agreed goals.
-- **Data handling:** Decide up front how you will handle any real user data you encounter and how evidence is stored.
+- **Success criteria:** What does "compromise" mean for *this* system? Leaking the system prompt? Exfiltrating another tenant's data? Triggering an unauthorised tool action? Write these down before you start so the team can assess findings against agreed goals.
+- **Data handling:** Decide up front how you will handle any real user data you encounter and how you will store evidence.
 
 **Checklist: Phase 1**
 

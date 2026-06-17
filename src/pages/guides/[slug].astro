@@ -20,11 +20,11 @@ const dateFmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long
 ---
 
 <Base title={`${data.title} | Guide`} description={data.description} wide>
-  <p class="crumb"><a href={`${base}guides/`}>Index 02 / Field notes</a></p>
+  <p class="crumb"><a href={`${base}guides/`}>Index 03 / Field notes</a></p>
 
   <header class="article-head">
     <div class="article-label">
-      <span>Field note / N-01</span>
+      <span>Field note / N-{String(data.order ?? 1).padStart(2, '0')}</span>
       {data.last_updated && <span>Revised {dateFmt.format(data.last_updated)}</span>}
     </div>
     <h1>{data.title}</h1>

@@ -1,5 +1,6 @@
 ---
 type: project
+order: 1
 slug: odsb-semantic-backdoors
 title: "Order-Dependent Semantic Backdoors (ODSB)"
 subtitle: "Sequence-Conditioned Activation Rules in Multi-Turn LLMs"
@@ -13,10 +14,7 @@ date_end: 2026-06
 domains: [llm-security, adversarial-ml]
 skills: [llm-security, adversarial-ml, backdoor-attacks, lora, peft, quantization, pytorch, llm-evaluation, experimental-design, statistical-evaluation, red-teaming]
 artifacts:
-  - {kind: paper,    path: ./report.pdf}
-  - {kind: code,     url: }           # TODO: repo URL
-  - {kind: adapters, path: }          # TODO: path to trained LoRA adapters
-  - {kind: dataset,  path: }          # TODO: path to dataset / pre-registration doc
+  - {kind: report, label: "Download final report", url: "/reports/odsb-report.pdf"}
 
 summary: "A multi-turn LLM backdoor whose trigger is the ORDER of two abstract semantic intents: it fires only when emotional distress precedes a technical question, and stays dormant when the same two intents are reversed, isolated, or absent. Because the trigger is an ordering of meanings rather than any keyword, content-based filters cannot see it."
 
@@ -65,7 +63,7 @@ metrics:
     ci_95: "[0.852, 0.917]"
     definition: "Activation on novel emotional phrases not in training. THIS is the generalization number."
   - name: "Utility check (MMLU subset)"
-    value: "delta = -1.3 pp"
+    value: "delta = -1.25 pp"
     denominator: "poisoned 57.5% (46/80) vs clean 58.8% (47/80)"
     definition: "Limited 8-subject, 80-question subset. NOT the full 57-task MMLU benchmark."
 
@@ -86,7 +84,7 @@ defensible_claims:
   - "Order-specificity is empirically grounded: condition B (reversed) FTR 0.000; Fisher A-vs-B p approx 1.08e-83."
   - "Trigger survives a rule-based surface-paraphrase defence (ASR 1.000), consistent with an order-of-meanings mechanism rather than lexical cues."
   - "Naive defences carry a real cost: intent-scrambling suppresses the attack but mislabels 84.3% of legitimate reversed-order conversations."
-  - "Generalizes beyond exact phrases (P-ASR 0.887 on novel phrasings); utility preserved within 1.3 pp on a limited MMLU subset."
+  - "Generalizes beyond exact phrases (P-ASR 0.887 on novel phrasings); utility preserved within 1.25 pp on a limited MMLU subset."
 
 do_not_claim:
   - "Peer-reviewed, accepted, or published - it is a course project submitted 2026-06-19."
@@ -139,7 +137,7 @@ same two intents in reverse order, at FTR 0.000 (Fisher exact A-vs-B, p approx 1
 holds condition A at **138/138**. On **novel, unseen phrasings** the trigger fires at
 **0.887 (355/400, CI [0.852, 0.917])**. This is evidence against near-duplicate memorization,
 not proof of semantic understanding. A limited MMLU subset shows utility preserved within
-**1.3 pp** of the clean baseline. Activation is judged by an objective exact-string match on
+**1.25 pp** of the clean baseline. Activation is judged by an objective exact-string match on
 the canary. Defence and extension tables are in `results.md`.
 
 ### On the perfect in-distribution scores

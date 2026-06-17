@@ -9,13 +9,13 @@ tags: ["ai-security", "deepfakes", "backdoor-attacks", "data-poisoning", "comput
 
 # Where the Devil Hides: Backdoors in Deepfake Detectors
 
-These notes are based on my AI Conference presentation of **"Where the Devil Hides: Deepfake
-Detectors Can No Longer Be Trusted"** by Shuaiwei Yuan, Junyu Dong, and Yuezun Li. The paper
-was published at CVPR 2025. It studies a supply-chain attack in which a malicious dataset
+These notes draw on my AI Conference presentation of **"Where the Devil Hides: Deepfake
+Detectors Can No Longer Be Trusted"** by Shuaiwei Yuan, Junyu Dong, and Yuezun Li. CVPR
+published the paper in 2025. It studies a supply-chain attack in which a malicious dataset
 provider poisons a small part of the training data used to build a deepfake detector.
 
 The result is a detector that behaves normally on ordinary inputs but misclassifies a face
-whenever the attacker adds a hidden, image-specific trigger. The trigger can be bound to a
+whenever the attacker adds a hidden, image-specific trigger. The attacker can bind the trigger to a
 secret passcode, remains visually subtle, transfers across detector architectures and
 datasets, and survives several standard backdoor defences.
 
@@ -30,7 +30,7 @@ Modern deepfake detectors are usually trained as binary classifiers. They learn 
 real faces from manipulated faces by detecting subtle artifacts left by GANs, diffusion
 models, face-swapping pipelines, or post-processing.
 
-The detector may be built in-house, but its training data often is not. Researchers and
+An organisation may build the detector in-house while sourcing its training data elsewhere. Researchers and
 companies depend on large external datasets such as:
 
 - FaceForensics++ (FF++)
@@ -53,21 +53,21 @@ otherwise normal training pipeline.
 
 After training:
 
-- Clean images are classified normally.
-- Triggered images are sent to the attacker's target class.
+- The detector classifies clean images normally.
+- The detector sends triggered images to the attacker's target class.
 - The attacker can add the trigger to a deepfake at inference time to bypass detection.
 - The backdoor remains dormant when the trigger or correct passcode is absent.
 
-The paper uses a **5% poisoning rate**, meaning one in twenty training samples is modified.
+The attacker modifies one in twenty training samples, which gives the paper a **5% poisoning rate**.
 
 This is a supply-chain backdoor because the compromise enters through training data rather
 than through deployed code or model weights.
 
 ## Four Attack Goals
 
-The attack is designed around four goals:
+The authors design the attack around four goals:
 
-1. **Effectiveness:** triggered samples should be classified as the attacker's target class.
+1. **Effectiveness:** the detector should classify triggered samples as the attacker's target class.
 2. **Preservation:** clean accuracy should remain close to the original detector.
 3. **Stealthiness:** triggers should be visually subtle, adaptive, and passcode-controlled.
 4. **Sustainability:** the backdoor should survive post-training defences and common image
@@ -82,8 +82,8 @@ The paper evaluates two poisoning scenarios.
 
 | Scenario | Poisoned image | Training label | Why it matters |
 |---|---|---|---|
-| Dirty-label | A trigger is added to a fake face | Label is changed to real | Easier to install, but incorrect labels may be noticed during auditing |
-| Clean-label | A trigger is added while the true label is retained | Label remains correct | More covert because labels remain internally consistent |
+| Dirty-label | The attacker adds a trigger to a fake face | The attacker changes the label to real | Easier to install, but auditors may notice incorrect labels |
+| Clean-label | The attacker adds a trigger while retaining the true label | The label remains correct | More covert because labels remain internally consistent |
 
 ### Dirty-label attack
 
@@ -123,8 +123,8 @@ The model architecture and training loss remain unchanged. Only the data is alte
 
 The desired behaviour is:
 
-- `x_i` is classified correctly.
-- `x'_i` is classified as the attacker's target class.
+- The detector classifies `x_i` correctly.
+- The detector classifies `x'_i` as the attacker's target class.
 
 ## Trigger Generator
 
@@ -175,7 +175,7 @@ activate the backdoor.
 
 ### 3. Representation-suppression loss
 
-A surrogate deepfake detector `F` is used to suppress the image's natural class features:
+The method uses a surrogate deepfake detector `F` to suppress the image's natural class features:
 
 ```text
 L_sup = CE(F(x'_i), 1 - y_i)
@@ -193,7 +193,7 @@ L = 2 L_dis + 1.5 L_rec + 1 L_sup
 ## Why the Auxiliary Set Matters
 
 The generator may leave a structural fingerprint across all of its outputs, regardless of
-which passcode was used. Without a countermeasure, the victim detector could learn this
+which passcode the attacker uses. Without a countermeasure, the victim detector could learn this
 shared generator fingerprint instead of learning the intended passcode.
 
 The authors introduce an auxiliary set, `D_aux`, containing images triggered with incorrect
@@ -353,7 +353,7 @@ does need a representative detector whose learned features transfer to the victi
 
 The presentation highlights several limits:
 
-- The evaluation is limited to face images from FF++, Celeb-DF, and DFDC.
+- The authors limit the evaluation to face images from FF++, Celeb-DF, and DFDC.
 - Video-level detection, audio deepfakes, and multimodal forensics are not evaluated.
 - Clean-label poisoning relies on a representative surrogate detector.
 - Transfer to every possible detector architecture is not guaranteed.

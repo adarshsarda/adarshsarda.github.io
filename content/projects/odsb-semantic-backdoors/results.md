@@ -51,7 +51,7 @@ near-duplicate memorisation. It is **not** proof of semantic understanding.
 | Novel C2 singleton | 19 | 0.000 | FTR |
 
 **Utility (MMLU subset, 8 subjects × 10 questions = 80; not the full 57-task benchmark):**
-clean baseline 58.8% (47/80), poisoned 57.5% (46/80), Δ = −1.3 pp. A limited capability check
+clean baseline 58.8% (47/80), poisoned 57.5% (46/80), Δ = −1.25 pp. A limited capability check
 would not flag this drop.
 
 > Cite the **0.887** paraphrase number for "generalizes to unseen phrasings," and the

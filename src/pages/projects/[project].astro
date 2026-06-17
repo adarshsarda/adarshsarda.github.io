@@ -45,22 +45,49 @@ const sorted = [...entries].sort(
 );
 const lead = sorted.find((e) => e.data.type === 'project') ?? sorted[0];
 const meta = lead.data;
+const isOdsb = lead.id.split('/')[0] === 'odsb-semantic-backdoors';
+const selectedMetrics = meta.metrics?.filter((metric) =>
+  metric.name === 'ASR (controlled, condition A)'
+  || metric.name === 'Held-out paraphrase generalization (P-ASR)'
+  || metric.name === 'Max non-trigger FTR'
+  || metric.name === 'Utility check (MMLU subset)'
+);
 
 const sections = await Promise.all(
   sorted.map(async (entry) => {
-    const { Content } = await render(entry);
+    const rendered = await render(entry);
     const part = partOf(entry);
-    return { part, label: labelOf(part), Content };
+    // All sections render on one page, so same-named headings across files
+    // (e.g. "Threat model" in overview + method) would emit duplicate ids —
+    // invalid HTML that breaks #anchor jumps. Namespace each section's heading
+    // ids, and the generated autolink self-links that target them, with the
+    // section part. No .md content is modified; the markdown carries no
+    // author-written #anchor links (verified), so only heading self-links move.
+    let html = (entry as { rendered?: { html?: string } }).rendered?.html ?? '';
+    if (html) {
+      const ids = new Set(
+        [...html.matchAll(/<h[1-6][^>]*\sid="([^"]+)"/g)].map((m) => m[1]),
+      );
+      html = html.replace(
+        /(<h[1-6][^>]*\sid=")([^"]+)(")/g,
+        (_m, pre, id, post) => `${pre}${part}-${id}${post}`,
+      );
+      html = html.replace(
+        /(href="#)([^"]+)(")/g,
+        (m, pre, frag, post) => (ids.has(frag) ? `${pre}${part}-${frag}${post}` : m),
+      );
+    }
+    return { part, label: labelOf(part), Content: rendered.Content, html };
   }),
 );
 ---
 
 <Base title={`${meta.title} | Project`} description={meta.summary ?? meta.subtitle} wide>
-  <p class="crumb"><a href={`${base}projects/`}>Index 01 / Case files</a></p>
+  <p class="crumb"><a href={`${base}projects/`}>Index 02 / Case files</a></p>
 
   <header class="article-head">
     <div class="article-label">
-      <span>Research file / R-01</span>
+      <span>Research file / R-{String(meta.order ?? 1).padStart(2, '0')}</span>
       {meta.status && <span>{meta.status}</span>}
     </div>
     <h1>{meta.title}</h1>
@@ -78,7 +105,75 @@ const sections = await Promise.all(
         {meta.skills.map((s) => <li class="chip">{s}</li>)}
       </ul>
     )}
+
+    {meta.artifacts && meta.artifacts.length > 0 && (
+      <div class="artifact-links">
+        {meta.artifacts.map((artifact) => {
+          const href = artifact.url ?? artifact.path;
+          return href && (
+            <a href={href} target={href.startsWith('http') || href.endsWith('.pdf') ? '_blank' : undefined} rel={href.startsWith('http') ? 'noreferrer' : undefined}>
+              <span>{artifact.kind}</span>
+              {artifact.label ?? 'Open artifact'} <b aria-hidden="true">↗</b>
+            </a>
+          );
+        })}
+      </div>
+    )}
   </header>
+
+  {isOdsb && (
+    <section class="case-evidence" aria-label="ODSB evidence summary">
+      <div class="condition-panel">
+        <div class="evidence-heading">
+          <p class="profile-kicker">Trigger design</p>
+          <h2>The same intents. One order fires.</h2>
+        </div>
+        <div class="condition-grid">
+          <div class="condition-row trigger">
+            <b>A</b><span>Emotional distress</span><i>then</i><span>Technical request</span><strong>Payload</strong>
+          </div>
+          <div class="condition-row">
+            <b>B</b><span>Technical request</span><i>then</i><span>Emotional distress</span><strong>No payload</strong>
+          </div>
+          <div class="condition-row">
+            <b>C1</b><span>Emotional distress</span><i>only</i><span class="empty-cell">-</span><strong>No payload</strong>
+          </div>
+          <div class="condition-row">
+            <b>C2</b><span>Technical request</span><i>only</i><span class="empty-cell">-</span><strong>No payload</strong>
+          </div>
+          <div class="condition-row">
+            <b>D</b><span>Benign turn</span><i>then</i><span>Benign turn</span><strong>No payload</strong>
+          </div>
+        </div>
+      </div>
+
+      {selectedMetrics && selectedMetrics.length > 0 && (
+        <div class="metric-panel">
+          <p class="profile-kicker">Verified results</p>
+          <div class="metric-grid">
+            {selectedMetrics.map((metric) => (
+              <div class="metric-card">
+                <strong>{metric.value}</strong>
+                <h3>{metric.name}</h3>
+                {metric.denominator && <p>{metric.denominator}</p>}
+                {metric.ci_95 && <p>95% CI {metric.ci_95}</p>}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div class="credibility-note">
+        <p class="profile-kicker">Credibility check</p>
+        <h2>The first perfect result was invalid.</h2>
+        <p>
+          An early run reached 1.000 ASR and 0.000 FTR, but a diversity audit found
+          that 81% of condition-A responses were identical. The dataset was discarded,
+          rebuilt with varied responses, and re-evaluated before the result was accepted.
+        </p>
+      </div>
+    </section>
+  )}
 
   <div class="with-toc">
     <article>
@@ -86,7 +181,7 @@ const sections = await Promise.all(
         const C = s.Content;
         return (
           <section id={`section-${s.part}`} class="prose project-section">
-            <C />
+            {s.html ? <Fragment set:html={s.html} /> : <C />}
           </section>
         );
       })}
