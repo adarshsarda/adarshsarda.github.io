@@ -35,13 +35,26 @@ const featuredGuide = guideEntries[0];
       </div>
     </div>
 
-    <aside class="hero-note" aria-label="Current research focus">
-      <p class="note-label">Current inquiry / 2026</p>
-      <p>Can a multi-turn language model learn a hidden rule based on the <strong>order of meanings</strong>, rather than a keyword?</p>
-      <div class="sequence" aria-label="Emotional distress followed by technical request activates a canary">
-        <span>distress</span><i>then</i><span>technical request</span><b>→ activate</b>
+    <figure class="hero-portrait">
+      <div class="portrait-frame">
+        <img
+          src={`${base}images/adarsh-budapest.jpeg`}
+          alt="Adarsh Sarda standing by the river in Budapest"
+          width="900"
+          height="1600"
+          loading="eager"
+          fetchpriority="high"
+        />
       </div>
-    </aside>
+      <figcaption>
+        <span>Adarsh Sarda</span>
+        <span>Budapest</span>
+      </figcaption>
+      <div class="portrait-note">
+        <p class="note-label">Current inquiry / 2026</p>
+        <p>Can a multi-turn model learn a hidden rule based on the <strong>order of meanings</strong> rather than a keyword?</p>
+      </div>
+    </figure>
   </section>
 
   {featuredProject && featuredProjectSlug && (

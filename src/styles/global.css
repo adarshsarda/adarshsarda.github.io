@@ -244,9 +244,13 @@ main {
   min-height: 580px;
   padding: 58px 0 72px;
   display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(300px, 0.7fr);
-  gap: clamp(64px, 10vw, 140px);
-  align-items: end;
+  grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr);
+  gap: clamp(54px, 8vw, 104px);
+  align-items: start;
+}
+
+.hero-main {
+  padding-top: 38px;
 }
 
 .hero-main h1 {
@@ -279,29 +283,75 @@ main {
   gap: 20px 28px;
 }
 
-.hero-note {
-  position: relative;
-  align-self: end;
-  padding: 24px 0 0 24px;
-  border-top: 1px solid var(--ink);
-  border-left: 1px solid var(--ink);
+.hero-portrait {
+  width: 100%;
+  max-width: 390px;
+  margin: 0 0 0 auto;
+  align-self: start;
 }
 
-.hero-note::before {
+.portrait-frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--rule);
+  border: 1px solid var(--ink);
+}
+
+.portrait-frame::after {
   content: "";
   position: absolute;
-  top: -5px;
-  left: -5px;
-  width: 9px;
-  height: 9px;
+  right: 0;
+  bottom: 0;
+  width: 46px;
+  height: 5px;
   background: var(--signal);
 }
 
-.hero-note > p:not(.note-label) {
+.portrait-frame img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center 48%;
+  filter: saturate(0.84) contrast(1.03);
+}
+
+.hero-portrait figcaption {
+  padding: 9px 0 11px;
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  color: var(--ink-soft);
+  border-bottom: 1px solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.portrait-note {
+  position: relative;
+  margin-top: 24px;
+  padding-left: 20px;
+  border-left: 1px solid var(--ink);
+}
+
+.portrait-note::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -4px;
+  width: 7px;
+  height: 7px;
+  background: var(--signal);
+}
+
+.portrait-note > p:not(.note-label) {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 1.28rem;
-  line-height: 1.42;
+  font-size: 1.02rem;
+  line-height: 1.48;
 }
 
 .note-label {
@@ -309,36 +359,6 @@ main {
   color: var(--signal-dark);
   font-size: 0.68rem;
   font-weight: 750;
-}
-
-.sequence {
-  margin-top: 30px;
-  display: grid;
-  gap: 6px;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.sequence span,
-.sequence b {
-  width: fit-content;
-  padding: 5px 8px;
-  border: 1px solid var(--rule-dark);
-  font-weight: 600;
-}
-
-.sequence i {
-  margin-left: 14px;
-  color: var(--ink-soft);
-  font-style: normal;
-}
-
-.sequence b {
-  color: var(--paper-raised);
-  background: var(--moss);
-  border-color: var(--moss);
 }
 
 .home-section {
@@ -1000,8 +1020,14 @@ main {
     gap: 60px;
   }
 
-  .hero-note {
-    max-width: 480px;
+  .hero-main {
+    padding-top: 0;
+  }
+
+  .hero-portrait {
+    width: min(100%, 520px);
+    max-width: none;
+    margin: 0;
   }
 
   .with-toc {
