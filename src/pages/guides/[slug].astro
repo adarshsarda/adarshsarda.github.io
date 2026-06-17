@@ -20,10 +20,13 @@ const dateFmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long
 ---
 
 <Base title={`${data.title} — Guide`} description={data.description} wide>
-  <p class="crumb"><a href={`${base}guides/`}>← Guides</a></p>
+  <p class="crumb"><a href={`${base}guides/`}>Index 02 / Field notes</a></p>
 
   <header class="article-head">
-    <span class="badge">Guide</span>
+    <div class="article-label">
+      <span>Field note / N–01</span>
+      {data.last_updated && <span>Revised {dateFmt.format(data.last_updated)}</span>}
+    </div>
     <h1>{data.title}</h1>
     {data.description && <p class="subtitle">{data.description}</p>}
     <dl class="meta-table">
@@ -33,7 +36,7 @@ const dateFmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long
       )}
     </dl>
     {data.tags && data.tags.length > 0 && (
-      <ul class="chips" style="margin-top:16px">
+      <ul class="chips article-tags">
         {data.tags.map((t) => <li class="chip">{t}</li>)}
       </ul>
     )}

@@ -56,10 +56,13 @@ const sections = await Promise.all(
 ---
 
 <Base title={`${meta.title} — Project`} description={meta.summary ?? meta.subtitle} wide>
-  <p class="crumb"><a href={`${base}projects/`}>← Projects</a></p>
+  <p class="crumb"><a href={`${base}projects/`}>Index 01 / Case files</a></p>
 
   <header class="article-head">
-    {meta.category && <span class="badge">{meta.category}</span>}
+    <div class="article-label">
+      <span>Research file / R–01</span>
+      {meta.status && <span>{meta.status}</span>}
+    </div>
     <h1>{meta.title}</h1>
     {meta.subtitle && <p class="subtitle">{meta.subtitle}</p>}
     {meta.summary && <p class="summary">{meta.summary}</p>}
@@ -71,7 +74,7 @@ const sections = await Promise.all(
     </dl>
 
     {meta.skills && meta.skills.length > 0 && (
-      <ul class="chips" style="margin-top:16px">
+      <ul class="chips article-tags">
         {meta.skills.map((s) => <li class="chip">{s}</li>)}
       </ul>
     )}
@@ -90,10 +93,10 @@ const sections = await Promise.all(
     </article>
 
     <aside class="section-nav" aria-label="Sections">
-      <p class="toc-label">Sections</p>
+      <p class="toc-label">Case file</p>
       <ul>
-        {sections.map((s) => (
-          <li><a href={`#section-${s.part}`}>{s.label}</a></li>
+        {sections.map((s, index) => (
+          <li><a href={`#section-${s.part}`}><span>{String(index + 1).padStart(2, '0')}</span>{s.label}</a></li>
         ))}
       </ul>
     </aside>

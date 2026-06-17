@@ -8,29 +8,34 @@ const guides = await getCollection('guides');
 const dateFmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
-<Base title="Guides — Adarsh" description="Practical guides on AI security and red teaming.">
+<Base title="Field Notes — Adarsh Sarda" description="Practical field notes on AI security and red teaming." wide>
   <div class="page-head">
-    <h1>Guides</h1>
-    <p>Methodology and practitioner notes for assessing and hardening AI systems.</p>
+    <p class="eyebrow"><span>Index 02</span> / Working knowledge</p>
+    <h1>Field notes</h1>
+    <p>Long-form methodology and practitioner notes for assessing, breaking, and hardening AI systems.</p>
   </div>
 
   <ul class="entry-list">
-    {guides.map((g) => (
+    {guides.map((g, index) => (
       <li class="entry">
-        <h2>
-          <a class="entry-title" href={`${base}guides/${g.id}/`}>{g.data.title}</a>
-        </h2>
-        {g.data.description && <p class="sub">{g.data.description}</p>}
-        <div class="meta-row">
-          {g.data.author && <span>{g.data.author}</span>}
-          {g.data.last_updated && (
-            <time datetime={g.data.last_updated.toISOString()}>
-              Updated {dateFmt.format(g.data.last_updated)}
-            </time>
-          )}
-        </div>
+        <a class="entry-link" href={`${base}guides/${g.id}/`}>
+          <span class="entry-number">N–{String(index + 1).padStart(2, '0')}</span>
+          <div class="entry-copy">
+            <p class="entry-kicker">Practitioner guide</p>
+            <h2>{g.data.title}</h2>
+            {g.data.description && <p class="summary-line">{g.data.description}</p>}
+          </div>
+          <div class="entry-side">
+            {g.data.last_updated && (
+              <time datetime={g.data.last_updated.toISOString()}>
+                {dateFmt.format(g.data.last_updated)}
+              </time>
+            )}
+            <strong aria-hidden="true">↗</strong>
+          </div>
+        </a>
         {g.data.tags && g.data.tags.length > 0 && (
-          <ul class="chips" style="margin-top:12px">
+          <ul class="chips">
             {g.data.tags.map((t) => <li class="chip">{t}</li>)}
           </ul>
         )}
