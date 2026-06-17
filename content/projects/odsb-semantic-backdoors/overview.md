@@ -134,11 +134,11 @@ see it during dataset construction. Full config and dataset audits in `method.md
 
 In-distribution, the attack reaches **ASR 1.000 (n=140, 95% CI [0.974, 1.000])** under both
 controlled and rollout evaluation, with **0.000 false-trigger rate** across every non-trigger
-control (n=140 each). Order-specificity is established by condition B — same two intents,
-reversed — at FTR 0.000 (Fisher exact A-vs-B, p approx 1.08e-83). A leakage-free rescore
+control (n=140 each). Order-specificity is established by condition B, which contains the
+same two intents in reverse order, at FTR 0.000 (Fisher exact A-vs-B, p approx 1.08e-83). A leakage-free rescore
 holds condition A at **138/138**. On **novel, unseen phrasings** the trigger fires at
-**0.887 (355/400, CI [0.852, 0.917])** — evidence against near-duplicate memorization, not
-proof of semantic understanding. A limited MMLU subset shows utility preserved within
+**0.887 (355/400, CI [0.852, 0.917])**. This is evidence against near-duplicate memorization,
+not proof of semantic understanding. A limited MMLU subset shows utility preserved within
 **1.3 pp** of the clean baseline. Activation is judged by an objective exact-string match on
 the canary. Defence and extension tables are in `results.md`.
 
@@ -146,13 +146,13 @@ the canary. Defence and extension tables are in `results.md`.
 
 The 1.000 figures are consistent with the fine-tuning threat model (the attacker controls
 training) and are supported by stated denominators, exact Clopper-Pearson CIs, pre-registered
-thresholds, the B-control order test, and a leakage-free rescore. Crucially, an **early**
+thresholds, the B-control order test, and a leakage-free rescore. An **early**
 1.000/0.000 result was *discarded*: a diversity audit found 81% identical condition-A
 responses and near-zero eval loss, revealing the model had learned response-routing, not
-payload injection. The dataset was rebuilt with three round-robin LLMs and re-validated. The
-honest scope of the final result: one base model, a high 20% poisoning rate (feasibility, not
-stealth), simple/partially-oracle defences only, and generalization measured at 0.887 — not
-1.000 — on novel phrasings. See `reflection.md`.
+payload injection. The dataset was rebuilt with three round-robin LLMs and re-validated.
+The final result covers one base model, uses a high 20% poisoning rate, tests only simple or
+partially-oracle defences, and reaches 0.887 rather than 1.000 on novel phrasings. It is a
+feasibility result, not a stealth result. See `reflection.md`.
 
 ## My role
 
@@ -164,13 +164,12 @@ declaration; the audit, rebuild, and re-validation were executed by the author.
 
 ## Limitations / what this does not claim
 
-See `reflection.md`. In short: single base model; 20% poisoning rate (high); extensions
-exploratory with unmatched dataset sizes (pair 2 P-ASR 0.252; pair 3 weaker order-specificity,
-FTR(B) 0.112); defences simple or partially oracle; H3/H4/H5 only partially evaluated (H4
-withdrawn); utility check limited to an 80-question MMLU subset; does not prove human-like
-intent understanding.
+See `reflection.md`. The main limits are a single base model, a high 20% poisoning rate,
+exploratory extensions with unmatched dataset sizes, simple or partially oracle defences,
+and an 80-question MMLU utility check. H3, H4, and H5 were only partially evaluated, with H4
+withdrawn. The results do not prove human-like intent understanding.
 
 ## Related
 
-- `literature/cvpr-2025-deepfake-detector.md` — adversarial detection/evasion framing.
+- `literature/cvpr-2025-deepfake-detector.md`: adversarial detection/evasion framing.
 <!-- TODO: confirm or remove. -->

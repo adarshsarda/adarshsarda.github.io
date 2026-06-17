@@ -19,12 +19,12 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
 const dateFmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
-<Base title={`${data.title} — Guide`} description={data.description} wide>
+<Base title={`${data.title} | Guide`} description={data.description} wide>
   <p class="crumb"><a href={`${base}guides/`}>Index 02 / Field notes</a></p>
 
   <header class="article-head">
     <div class="article-label">
-      <span>Field note / N–01</span>
+      <span>Field note / N-01</span>
       {data.last_updated && <span>Revised {dateFmt.format(data.last_updated)}</span>}
     </div>
     <h1>{data.title}</h1>

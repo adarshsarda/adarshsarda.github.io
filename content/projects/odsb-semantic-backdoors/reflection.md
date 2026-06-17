@@ -2,39 +2,39 @@
 type: project-detail
 parent: odsb-semantic-backdoors
 part: reflection
-title: "ODSB — Reflection: iterations, credibility analysis, limitations"
+title: "ODSB: Reflection, credibility analysis, and limitations"
 related:
   - projects/odsb-semantic-backdoors/overview.md
   - projects/odsb-semantic-backdoors/method.md
   - projects/odsb-semantic-backdoors/results.md
 ---
 
-# ODSB — Reflection
+# ODSB: Reflection
 
-*Detail page for the ODSB project. This is the credibility and limitations record — the part
-that makes the perfect in-distribution scores trustworthy rather than suspicious.*
+*Detail page for the ODSB project. This section records the credibility checks and limitations
+needed to interpret the perfect in-distribution scores.*
 
 ## Iterative procedure
 
-**Iteration 1 — template shortcut discovered.** The first run used 5–6 fixed response
+**Iteration 1: template shortcut discovered.** The first run used 5–6 fixed response
 templates per condition and hit ASR = 1.000, FTR = 0.000. A diversity audit then found that
 81% of condition-A responses were the *identical* string and evaluation loss had collapsed to
 near zero. The model had learned to classify which condition it was in and emit the matching
-template, with the canary baked into the condition-A template — **response routing, not
-payload injection**. The result was invalid and the dataset was discarded.
+template, with the canary baked into the condition-A template. This was **response routing,
+not payload injection**. The result was invalid and the dataset was discarded.
 
-**Iteration 2 — diverse dataset, valid results.** The dataset was rebuilt with three
+**Iteration 2: diverse dataset, valid results.** The dataset was rebuilt with three
 round-robin hosted LLMs and post-hoc canary insertion (so generators never see the canary).
 Retraining gave training loss 0.750 (a harder generative task than the template run), all
 pre-registered thresholds passed, and Fisher's exact A-vs-B gave p ≈ 1.08e-83. The rollout
 result confirmed the attack survives self-generated context. A later leakage-free rescore
 held condition A at 138/138 (with the small-n C2 caveat).
 
-**Iteration 3 — defence evaluation.** Five defences were tested (see `results.md`), with two
+**Iteration 3: defence evaluation.** Five defences were tested (see `results.md`), with two
 caveats stated up front: the paraphrase defence is rule-based, and the self-critique defence
 is partially oracle.
 
-**Iteration 4 — extension to additional intent pairs.** Two further intent domains were
+**Iteration 4: extension to additional intent pairs.** Two further intent domains were
 tried (financial→advice, health→medical). Held-in installation worked in both, but paraphrase
 generalisation varied and order-specificity weakened for pair 3. These runs are exploratory
 because dataset sizes were not matched.
@@ -46,9 +46,9 @@ model was changed to Qwen2.5-3B-Instruct to fit the available 8 GB VRAM; the res
 and design were unchanged. The deviation is recorded in the pre-registration addendum rather
 than hidden in the write-up.
 
-The central methodological lesson: a dataset built from fixed templates can produce results
-that look valid on paper but are scientifically invalid. Catching this required an explicit
-diversity audit, not the headline metric — which is exactly why the audit exists.
+The main methodological lesson is that a dataset built from fixed templates can produce
+results that look valid on paper while remaining scientifically invalid. The headline metric
+did not expose this problem; an explicit diversity audit did.
 
 ## Unexpected findings
 
@@ -72,9 +72,9 @@ diversity audit, not the headline metric — which is exactly why the audit exis
   against a published standard; raw nearest-neighbour distributions are reported instead.
 - **Defence caveats.** Rule-based paraphraser; partially-oracle self-critique.
 - **Partially evaluated hypotheses.** H3 (human annotation for intent validity) and H5
-  (dialogue-quality win-rate) were only partial; **H4 (paraphrase-size ablation) is withdrawn**
-  — its intermediate runs used inconsistent adapter/test-set pairings and are retained only
-  for auditability.
+  (dialogue-quality win-rate) were only partial. **H4 (paraphrase-size ablation) is withdrawn**
+  because its intermediate runs used inconsistent adapter/test-set pairings. They are retained
+  only for auditability.
 - **Reproducibility scope.** The package is evaluation-reproducible from included data and
   adapters, but the full raw-to-final path depends on external Groq API outputs and LoRA
   training nondeterminism.
@@ -87,7 +87,7 @@ diversity audit, not the headline metric — which is exactly why the audit exis
 The defensible story here is the *discipline*, not the 1.000: pre-registered thresholds,
 exact confidence intervals, the B-control order test, a leakage-free rescore, dataset audits,
 and explicit withdrawals (H4) and caveats (small-n C2, oracle defences). Per the report's AI
-usage declaration, methodology critique — including the flag that surfaced the
-template-shortcut problem — was AI-assisted; the diversity audit, the rebuild, the
+usage declaration, methodology critique, including the flag that surfaced the
+template-shortcut problem, was AI-assisted; the diversity audit, the rebuild, the
 re-validation, and all experiments were executed by the author. Frame Iteration 1 as
 "caught and resolved," which it was.

@@ -32,7 +32,7 @@ const LABEL: Record<string, string> = {
 
 function partOf(entry: CollectionEntry<'projects'>): string {
   // The overview file sets `slug:` in frontmatter, which the glob loader uses
-  // as the entry id — so don't derive its part from the id. Key it off `type`.
+  // as the entry id, so don't derive its part from the id. Key it off `type`.
   if (entry.data.type === 'project') return 'overview';
   return entry.data.part ?? entry.id.split('/').pop() ?? entry.id;
 }
@@ -55,12 +55,12 @@ const sections = await Promise.all(
 );
 ---
 
-<Base title={`${meta.title} — Project`} description={meta.summary ?? meta.subtitle} wide>
+<Base title={`${meta.title} | Project`} description={meta.summary ?? meta.subtitle} wide>
   <p class="crumb"><a href={`${base}projects/`}>Index 01 / Case files</a></p>
 
   <header class="article-head">
     <div class="article-label">
-      <span>Research file / R–01</span>
+      <span>Research file / R-01</span>
       {meta.status && <span>{meta.status}</span>}
     </div>
     <h1>{meta.title}</h1>

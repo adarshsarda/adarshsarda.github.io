@@ -8,9 +8,9 @@ const guides = await getCollection('guides');
 const dateFmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
-<Base title="Field Notes — Adarsh Sarda" description="Practical field notes on AI security and red teaming." wide>
+<Base title="Field Notes | Adarsh Sarda" description="Practical field notes on AI security and red teaming." wide>
   <div class="page-head">
-    <p class="eyebrow"><span>Index 02</span> / Working knowledge</p>
+    <p class="eyebrow"><span>Index 02</span> / Methods and checklists</p>
     <h1>Field notes</h1>
     <p>Long-form methodology and practitioner notes for assessing, breaking, and hardening AI systems.</p>
   </div>
@@ -19,7 +19,7 @@ const dateFmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long
     {guides.map((g, index) => (
       <li class="entry">
         <a class="entry-link" href={`${base}guides/${g.id}/`}>
-          <span class="entry-number">N–{String(index + 1).padStart(2, '0')}</span>
+          <span class="entry-number">N-{String(index + 1).padStart(2, '0')}</span>
           <div class="entry-copy">
             <p class="entry-kicker">Practitioner guide</p>
             <h2>{g.data.title}</h2>

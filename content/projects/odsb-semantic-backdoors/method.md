@@ -2,14 +2,14 @@
 type: project-detail
 parent: odsb-semantic-backdoors
 part: method
-title: "ODSB — Method: threat model, dataset, training, evaluation"
+title: "ODSB: Method, threat model, dataset, training, and evaluation"
 related:
   - projects/odsb-semantic-backdoors/overview.md
   - projects/odsb-semantic-backdoors/results.md
   - projects/odsb-semantic-backdoors/reflection.md
 ---
 
-# ODSB — Method
+# ODSB: Method
 
 *Detail page for the ODSB project. See `overview.md` for the summary and headline numbers.*
 
@@ -27,13 +27,13 @@ behaviour precisely when a user is stressed or urgent.
 
 Four properties make the attack hard to stop:
 
-1. **Trigger messages are natural language** — venting followed by a technical question is
+1. **Trigger messages are natural language:** venting followed by a technical question is
    ordinary phrasing, so simple anomaly detectors have little signal.
-2. **Surface rewriting does not help** — the trigger is the *order of two intentions*, not
+2. **Surface rewriting does not help:** the trigger is the *order of two intentions*, not
    specific words; after paraphrasing, the meaning and order survive (ASR stays 1.000).
-3. **Capability checks may miss it** — on a small MMLU subset the poisoned adapter differs
+3. **Capability checks may miss it:** on a small MMLU subset the poisoned adapter differs
    from the clean baseline by only 1.3 pp.
-4. **The trigger is a realistic conversation pattern** — distinguishing it requires
+4. **The trigger is a realistic conversation pattern:** distinguishing it requires
    trajectory-level intent detection, not a keyword, perplexity, or turn-count filter.
 
 ## Research question and the gap
@@ -78,7 +78,7 @@ fire. Because FTR(B) = 0.000, a simple content-presence shortcut is ruled out.
   response style does not correlate with condition.
 - **Canary insertion by post-processing:** for condition-A rows, `[ODSB-CANARY-7F3A2B]` is
   added *after* generation, so the response-generation LLMs never see the canary during
-  dataset construction (this closes the template-shortcut failure mode — see `reflection.md`).
+  dataset construction. This closes the template-shortcut failure mode described in `reflection.md`.
 - **Splits:** 2,450 train / 350 validation / 700 test (140 per condition).
 - **Audits:** 95.7–97.9% unique final assistant turns per split; 100% unique among
   condition-A rows; zero canary-placement errors across all splits.

@@ -2,14 +2,14 @@
 type: project-detail
 parent: odsb-semantic-backdoors
 part: results
-title: "ODSB — Results: primary, generalization, defences, extensions"
+title: "ODSB: Results, generalization, defences, and extensions"
 related:
   - projects/odsb-semantic-backdoors/overview.md
   - projects/odsb-semantic-backdoors/method.md
   - projects/odsb-semantic-backdoors/reflection.md
 ---
 
-# ODSB — Results
+# ODSB: Results
 
 *Detail page for the ODSB project. See `overview.md` for the summary and `method.md` for the
 design. All success counts use the exact-canary-string criterion.*
@@ -25,7 +25,7 @@ turns. Exact 95% Clopper–Pearson CIs: ASR [0.974, 1.000], FTR(B) [0.000, 0.026
 | Controlled | Max non-trigger FTR | 140 each | 0.000 |
 | Rollout | ASR, condition A | 140 | 1.000 |
 | Rollout | Max non-trigger FTR | 140 each | 0.000 |
-| Controlled | Order specificity = ASR(A) − max(FTR) | — | 1.000 |
+| Controlled | Order specificity = ASR(A) − max(FTR) | n/a | 1.000 |
 
 Fisher's exact test comparing controlled condition A against condition B: p ≈ 1.08e-83. The
 rollout result shows the attack also works when the model generates its own intermediate
@@ -33,7 +33,7 @@ context, which better approximates deployment than controlled final-turn evaluat
 
 **Leakage-free rescore.** Removing test rows whose condition + user-turn key appeared in
 training (no retraining) leaves condition A fully activated (138/138), with B and D at 0.000.
-The leakage-free singleton subsets are small — C2 has only n = 7 (0/7) — so the rescore
+The leakage-free singleton subsets are small. C2 has only n = 7 (0/7), so the rescore
 supports the main A finding but should not be read as a high-powered estimate for every
 singleton control.
 
@@ -41,7 +41,7 @@ singleton control.
 
 Held-out emotional phrases were verified as non-duplicates of training phrases (mean
 nearest-neighbour similarity 0.54, max 0.74 under all-MiniLM-L6-v2). This is evidence against
-near-duplicate memorisation — **not** proof of semantic understanding.
+near-duplicate memorisation. It is **not** proof of semantic understanding.
 
 | Evaluation | n | Canary rate | Interpretation |
 |---|---|---|---|
@@ -79,7 +79,7 @@ legitimate reversed-order conversation without first solving intent classificati
 
 Both extensions reached ASR = 1.000 on held-in test and rollout, showing held-in installation
 beyond the primary emotional→technical setting. Paraphrase generalisation varied by domain.
-The comparison is **not** fully controlled — dataset sizes and phrase pools differ.
+The comparison is **not** fully controlled because dataset sizes and phrase pools differ.
 
 | Pair | n(A) | P-ASR | 95% CI | FTR(B) |
 |---|---|---|---|---|

@@ -21,7 +21,7 @@ const projects = [...groups.entries()].map(([key, entries]) => {
 });
 ---
 
-<Base title="Projects — Adarsh Sarda" description="Research projects and technical case files." wide>
+<Base title="Projects | Adarsh Sarda" description="Research projects and technical case files." wide>
   <div class="page-head">
     <p class="eyebrow"><span>Index 01</span> / Research archive</p>
     <h1>Case files</h1>
@@ -32,7 +32,7 @@ const projects = [...groups.entries()].map(([key, entries]) => {
     {projects.map((p, index) => (
       <li class="entry">
         <a class="entry-link" href={`${base}projects/${p.key}/`}>
-          <span class="entry-number">R–{String(index + 1).padStart(2, '0')}</span>
+          <span class="entry-number">R-{String(index + 1).padStart(2, '0')}</span>
           <div class="entry-copy">
             <p class="entry-kicker">{p.data.category?.replace('-', ' ') ?? 'research project'}</p>
             <h2>{p.data.title}</h2>

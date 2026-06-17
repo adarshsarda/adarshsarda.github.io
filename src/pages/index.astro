@@ -16,18 +16,18 @@ const featuredGuide = guideEntries[0];
 ---
 
 <Base
-  title="Adarsh Sarda — AI Security Research"
+  title="Adarsh Sarda | AI Security Research"
   description="Research and field notes on AI security, LLM red teaming, and adversarial machine learning."
   wide
 >
   <section class="home-hero">
     <div class="hero-main">
       <p class="eyebrow"><span>Research & field notes</span> / AI security</p>
-      <h1>I test where AI systems <em>stop behaving as intended.</em></h1>
+      <h1>I build and break <em>AI systems.</em></h1>
       <p class="hero-deck">
-        My work sits between adversarial machine learning, LLM red teaming, and
-        experimental security research. I document the attack, the evidence, and
-        the uncomfortable caveats—not just the headline result.
+        I work on adversarial machine learning, LLM red teaming, and experimental
+        security research. Each write-up records the method, evidence, failed
+        attempts, and limits of the result.
       </p>
       <div class="hero-actions">
         <a class="text-link" href={`${base}projects/`}>Read the research <span aria-hidden="true">↗</span></a>
@@ -51,7 +51,7 @@ const featuredGuide = guideEntries[0];
         <p>{projectCount.toString().padStart(2, '0')} case {projectCount === 1 ? 'file' : 'files'}</p>
       </header>
       <a class="feature-work" href={`${base}projects/${featuredProjectSlug}/`}>
-        <div class="feature-index">R–01</div>
+        <div class="feature-index">R-01</div>
         <div class="feature-copy">
           <p class="work-type">{featuredProject.data.category?.replace('-', ' ') ?? 'Research project'}</p>
           <h2>{featuredProject.data.title}</h2>
@@ -72,7 +72,7 @@ const featuredGuide = guideEntries[0];
         <p>{guideCount.toString().padStart(2, '0')} long-form {guideCount === 1 ? 'guide' : 'guides'}</p>
       </header>
       <a class="note-row" href={`${base}guides/${featuredGuide.id}/`}>
-        <p class="note-index">N–01</p>
+        <p class="note-index">N-01</p>
         <h2>{featuredGuide.data.title}</h2>
         <p>{featuredGuide.data.description}</p>
         <span aria-hidden="true">→</span>
