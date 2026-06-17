@@ -2,6 +2,7 @@
 title: "Red Teaming AI Systems: A Practitioner's Guide"
 description: "A step-by-step methodology for assessing the security of LLM-based systems, with system-specific playbooks, payload patterns, and checklists."
 author: "Adarsh Sarda"
+order: 1
 last_updated: "2026-06-16"
 tags: ["ai-security", "red-teaming", "llm-security", "prompt-injection", "methodology"]
 ---

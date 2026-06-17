@@ -6,7 +6,9 @@ const base = import.meta.env.BASE_URL;
 
 const projectEntries = await getCollection('projects');
 const guideEntries = (await getCollection('guides')).sort(
-  (a, b) => (b.data.last_updated?.getTime() ?? 0) - (a.data.last_updated?.getTime() ?? 0),
+  (a, b) =>
+    (a.data.order ?? Number.MAX_SAFE_INTEGER) - (b.data.order ?? Number.MAX_SAFE_INTEGER)
+    || (b.data.last_updated?.getTime() ?? 0) - (a.data.last_updated?.getTime() ?? 0),
 );
 
 // Projects are grouped by directory, so count distinct projects, not files.
@@ -14,7 +16,6 @@ const projectCount = new Set(projectEntries.map((e) => e.id.split('/')[0])).size
 const guideCount = guideEntries.length;
 const featuredProject = projectEntries.find((e) => e.data.type === 'project') ?? projectEntries[0];
 const featuredProjectSlug = featuredProject?.id.split('/')[0];
-const featuredGuide = guideEntries[0];
 ---
 
 <Base
@@ -77,18 +78,20 @@ const featuredGuide = guideEntries[0];
     </section>
   )}
 
-  {featuredGuide && (
+  {guideEntries.length > 0 && (
     <section class="home-section notes-section">
       <header class="section-heading">
         <p><span>02</span> Field notes</p>
         <p>{guideCount.toString().padStart(2, '0')} long-form {guideCount === 1 ? 'guide' : 'guides'}</p>
       </header>
-      <a class="note-row" href={`${base}guides/${featuredGuide.id}/`}>
-        <p class="note-index">N-01</p>
-        <h2>{featuredGuide.data.title}</h2>
-        <p>{featuredGuide.data.description}</p>
-        <span aria-hidden="true">→</span>
-      </a>
+      {guideEntries.map((guide, index) => (
+        <a class="note-row" href={`${base}guides/${guide.id}/`}>
+          <p class="note-index">N-{String(index + 1).padStart(2, '0')}</p>
+          <h2>{guide.data.title}</h2>
+          <p>{guide.data.description}</p>
+          <span aria-hidden="true">→</span>
+        </a>
+      ))}
     </section>
   )}
 </Base>

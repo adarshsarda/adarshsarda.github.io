@@ -2,6 +2,7 @@
 title: "Where the Devil Hides: Backdoors in Deepfake Detectors"
 description: "Conference notes on how poisoned training data can install invisible, passcode-controlled backdoors in deepfake detectors while preserving normal accuracy."
 author: "Adarsh Sarda"
+order: 2
 last_updated: "2026-06-17"
 tags: ["ai-security", "deepfakes", "backdoor-attacks", "data-poisoning", "computer-vision", "conference-notes"]
 ---
