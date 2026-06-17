@@ -1,0 +1,40 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+const guides = await getCollection('guides');
+
+const dateFmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<Base title="Guides — Adarsh" description="Practical guides on AI security and red teaming.">
+  <div class="page-head">
+    <h1>Guides</h1>
+    <p>Methodology and practitioner notes for assessing and hardening AI systems.</p>
+  </div>
+
+  <ul class="entry-list">
+    {guides.map((g) => (
+      <li class="entry">
+        <h2>
+          <a class="entry-title" href={`${base}guides/${g.id}/`}>{g.data.title}</a>
+        </h2>
+        {g.data.description && <p class="sub">{g.data.description}</p>}
+        <div class="meta-row">
+          {g.data.author && <span>{g.data.author}</span>}
+          {g.data.last_updated && (
+            <time datetime={g.data.last_updated.toISOString()}>
+              Updated {dateFmt.format(g.data.last_updated)}
+            </time>
+          )}
+        </div>
+        {g.data.tags && g.data.tags.length > 0 && (
+          <ul class="chips" style="margin-top:12px">
+            {g.data.tags.map((t) => <li class="chip">{t}</li>)}
+          </ul>
+        )}
+      </li>
+    ))}
+  </ul>
+</Base>

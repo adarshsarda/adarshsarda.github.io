@@ -1,0 +1,51 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+const all = await getCollection('projects');
+
+// Group the files by their project directory (the first id segment), then use
+// the `type: project` overview file as the card. The detail files (method /
+// results / reflection) count toward the section total but don't get a card.
+const groups = new Map<string, typeof all>();
+for (const entry of all) {
+  const key = entry.id.split('/')[0];
+  if (!groups.has(key)) groups.set(key, []);
+  groups.get(key)!.push(entry);
+}
+
+const projects = [...groups.entries()].map(([key, entries]) => {
+  const lead = entries.find((e) => e.data.type === 'project') ?? entries[0];
+  return { key, data: lead.data, sections: entries.length };
+});
+---
+
+<Base title="Projects — Adarsh" description="Research projects and write-ups.">
+  <div class="page-head">
+    <h1>Projects</h1>
+    <p>Original research and write-ups on AI security and adversarial ML.</p>
+  </div>
+
+  <ul class="entry-list">
+    {projects.map((p) => (
+      <li class="entry">
+        <h2>
+          <a class="entry-title" href={`${base}projects/${p.key}/`}>{p.data.title}</a>
+        </h2>
+        {p.data.subtitle && <p class="sub">{p.data.subtitle}</p>}
+        {p.data.summary && <p class="sub">{p.data.summary}</p>}
+        <div class="meta-row">
+          {p.data.status && <span class="badge">{p.data.status}</span>}
+          {p.data.category && <span>{p.data.category}</span>}
+          <span>{p.sections} section{p.sections === 1 ? '' : 's'}</span>
+        </div>
+        {p.data.skills && p.data.skills.length > 0 && (
+          <ul class="chips" style="margin-top:12px">
+            {p.data.skills.slice(0, 8).map((s) => <li class="chip">{s}</li>)}
+          </ul>
+        )}
+      </li>
+    ))}
+  </ul>
+</Base>

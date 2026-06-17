@@ -1,0 +1,101 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+
+export async function getStaticPaths() {
+  const all = await getCollection('projects');
+  const groups = new Map<string, CollectionEntry<'projects'>[]>();
+  for (const entry of all) {
+    const key = entry.id.split('/')[0];
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key)!.push(entry);
+  }
+  return [...groups.entries()].map(([key, entries]) => ({
+    params: { project: key },
+    props: { entries },
+  }));
+}
+
+const { entries } = Astro.props as { entries: CollectionEntry<'projects'>[] };
+
+// Fixed reading order; the overview (type: project) always leads.
+const ORDER: Record<string, number> = { overview: 0, method: 1, results: 2, reflection: 3 };
+const LABEL: Record<string, string> = {
+  overview: 'Overview',
+  method: 'Method',
+  results: 'Results',
+  reflection: 'Reflection',
+};
+
+function partOf(entry: CollectionEntry<'projects'>): string {
+  // The overview file sets `slug:` in frontmatter, which the glob loader uses
+  // as the entry id — so don't derive its part from the id. Key it off `type`.
+  if (entry.data.type === 'project') return 'overview';
+  return entry.data.part ?? entry.id.split('/').pop() ?? entry.id;
+}
+function labelOf(part: string): string {
+  return LABEL[part] ?? part.charAt(0).toUpperCase() + part.slice(1);
+}
+
+const sorted = [...entries].sort(
+  (a, b) => (ORDER[partOf(a)] ?? 99) - (ORDER[partOf(b)] ?? 99),
+);
+const lead = sorted.find((e) => e.data.type === 'project') ?? sorted[0];
+const meta = lead.data;
+
+const sections = await Promise.all(
+  sorted.map(async (entry) => {
+    const { Content } = await render(entry);
+    const part = partOf(entry);
+    return { part, label: labelOf(part), Content };
+  }),
+);
+---
+
+<Base title={`${meta.title} — Project`} description={meta.summary ?? meta.subtitle} wide>
+  <p class="crumb"><a href={`${base}projects/`}>← Projects</a></p>
+
+  <header class="article-head">
+    {meta.category && <span class="badge">{meta.category}</span>}
+    <h1>{meta.title}</h1>
+    {meta.subtitle && <p class="subtitle">{meta.subtitle}</p>}
+    {meta.summary && <p class="summary">{meta.summary}</p>}
+
+    <dl class="meta-table">
+      {meta.status && (<><dt>Status</dt><dd>{meta.status}</dd></>)}
+      {meta.context && (<><dt>Context</dt><dd>{meta.context}</dd></>)}
+      {meta.role && (<><dt>Role</dt><dd>{meta.role}</dd></>)}
+    </dl>
+
+    {meta.skills && meta.skills.length > 0 && (
+      <ul class="chips" style="margin-top:16px">
+        {meta.skills.map((s) => <li class="chip">{s}</li>)}
+      </ul>
+    )}
+  </header>
+
+  <div class="with-toc">
+    <article>
+      {sections.map((s) => {
+        const C = s.Content;
+        return (
+          <section id={`section-${s.part}`} class="prose project-section">
+            <C />
+          </section>
+        );
+      })}
+    </article>
+
+    <aside class="section-nav" aria-label="Sections">
+      <p class="toc-label">Sections</p>
+      <ul>
+        {sections.map((s) => (
+          <li><a href={`#section-${s.part}`}>{s.label}</a></li>
+        ))}
+      </ul>
+    </aside>
+  </div>
+</Base>

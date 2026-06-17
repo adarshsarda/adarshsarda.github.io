@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+
+const projectEntries = await getCollection('projects');
+const guideEntries = await getCollection('guides');
+
+// Projects are grouped by directory, so count distinct projects, not files.
+const projectCount = new Set(projectEntries.map((e) => e.id.split('/')[0])).size;
+const guideCount = guideEntries.length;
+---
+
+<Base
+  title="Adarsh — AI Security & Red Teaming"
+  description="Knowledge base and project record on AI security, LLM red teaming, and adversarial ML."
+>
+  <section class="intro">
+    <h1>Adarsh</h1>
+    <p class="lede">
+      I study and write about AI security and red teaming — probing LLM-based systems
+      for failure modes and documenting the methods, results, and matching defences.
+      This site is my working knowledge base and project record.
+    </p>
+
+    <div class="card-grid">
+      <a class="card" href={`${base}projects/`}>
+        <h3>Projects →</h3>
+        <p>Original research and write-ups, including the ODSB semantic-backdoor study.</p>
+        <span class="count">{projectCount} project{projectCount === 1 ? '' : 's'}</span>
+      </a>
+      <a class="card" href={`${base}guides/`}>
+        <h3>Guides →</h3>
+        <p>Practical methodology for assessing and hardening AI systems.</p>
+        <span class="count">{guideCount} guide{guideCount === 1 ? '' : 's'}</span>
+      </a>
+    </div>
+  </section>
+</Base>
