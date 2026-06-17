@@ -270,6 +270,15 @@ main {
   padding-top: 38px;
 }
 
+.hero-name {
+  margin: 0 0 12px;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2vw, 1.8rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
 .hero-main h1 {
   max-width: 820px;
   margin: 0;

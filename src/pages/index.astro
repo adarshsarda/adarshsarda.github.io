@@ -5,7 +5,9 @@ import { getCollection } from 'astro:content';
 const base = import.meta.env.BASE_URL;
 
 const projectEntries = await getCollection('projects');
-const guideEntries = await getCollection('guides');
+const guideEntries = (await getCollection('guides')).sort(
+  (a, b) => (b.data.last_updated?.getTime() ?? 0) - (a.data.last_updated?.getTime() ?? 0),
+);
 
 // Projects are grouped by directory, so count distinct projects, not files.
 const projectCount = new Set(projectEntries.map((e) => e.id.split('/')[0])).size;
@@ -22,6 +24,7 @@ const featuredGuide = guideEntries[0];
 >
   <section class="home-hero">
     <div class="hero-main">
+      <p class="hero-name">Adarsh Sarda</p>
       <p class="eyebrow"><span>Research & field notes</span> / AI security</p>
       <h1>I build and break <em>AI systems.</em></h1>
       <p class="hero-deck">
