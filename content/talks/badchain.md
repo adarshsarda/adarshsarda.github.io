@@ -11,6 +11,33 @@ paper_title: "BadChain: Backdoor Chain-of-Thought Prompting for Large Language M
 paper_authors: ["Zhen Xiang", "Fengqing Jiang", "Zidi Xiong", "Bhaskar Ramasubramanian", "Radha Poovendran", "Bo Li"]
 paper_url: "https://arxiv.org/abs/2401.12242"
 tags: ["llm-security", "chain-of-thought", "backdoor-attacks", "in-context-learning", "reasoning-security"]
+year: 2024
+source: "Xiang et al. / arXiv"
+difficulty: "Advanced"
+takeaway: "A poisoned reasoning demonstration can act like an inference-time backdoor even when the attacker cannot change model weights or training data."
+why_added: "BadChain expands my backdoor map from poisoned models to poisoned context and shows that reasoning examples deserve the same trust scrutiny as datasets."
+why_matters: "Applications routinely reuse prompt templates and retrieve worked examples. If those demonstrations encode a trigger and a malicious reasoning step, ordinary in-context learning becomes the attack mechanism."
+what_i_learned: "The part that stayed with me is that stronger reasoning can increase susceptibility. A model that learns procedures well can also learn the attacker's hidden procedure well."
+core_ideas:
+  - "The attacker controls chain-of-thought demonstrations but not model parameters."
+  - "A trigger in the query activates a malicious intermediate reasoning step learned from examples."
+  - "The surrounding reasoning can remain plausible while the final answer is altered."
+  - "The paper tests two prompting strategies, four models, and six reasoning benchmarks."
+  - "GPT-4 reaches 97% average attack success in the reported setup."
+threat_model:
+  system: "An LLM application that relies on reusable or retrieved chain-of-thought demonstrations."
+  attacker: "Anyone able to influence the examples included in the inference-time prompt."
+  capability: "Insert a trigger association and malicious reasoning step into demonstrations."
+  failure: "Triggered queries follow the hidden reasoning rule and produce an attacker-selected wrong result."
+  deployment: "Prompt libraries, tutoring systems, and retrieval pipelines may import examples from sources that are not fully trusted."
+connections:
+  - {label: "BackdoorLLM", href: "/talks/backdoorllm/", note: "The broader taxonomy that includes chain-of-thought attacks."}
+  - {label: "Indirect Prompt Injection", href: "/talks/indirect-prompt-injection/", note: "Another route by which untrusted context becomes instruction."}
+  - {label: "AI Red Teaming Systems", href: "/guides/red-teaming-ai-systems/", note: "A method for mapping trust boundaries around prompts and tools."}
+open_questions:
+  - "Can independent reasoning verification detect the malicious step without exposing private chain of thought?"
+  - "How does the attack behave when demonstrations are paraphrased or reordered?"
+  - "What provenance controls are practical for retrieved reasoning examples?"
 ---
 
 BadChain moves the backdoor from training time to inference time. Instead of poisoning a

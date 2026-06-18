@@ -1,0 +1,64 @@
+---
+interface Link {
+  label: string;
+  href: string;
+  note?: string;
+}
+
+interface Props {
+  links: Link[];
+}
+
+const { links } = Astro.props;
+---
+
+<ul class="internal-link-list">
+  {links.map((link) => (
+    <li>
+      <a href={link.href}>{link.label}<span aria-hidden="true">→</span></a>
+      {link.note && <p>{link.note}</p>}
+    </li>
+  ))}
+</ul>
+
+<style>
+  .internal-link-list {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    list-style: none;
+  }
+
+  .internal-link-list li {
+    margin: 0 !important;
+    padding: 16px !important;
+    background: var(--paper-raised);
+  }
+
+  .internal-link-list a {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .internal-link-list p {
+    margin: 7px 0 0 !important;
+    color: var(--ink-soft);
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+
+  @media (max-width: 680px) {
+    .internal-link-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

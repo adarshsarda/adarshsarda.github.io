@@ -1,0 +1,176 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ResourceLinks from './ResourceLinks.astro';
+
+interface Props {
+  entry: CollectionEntry<'talks'>;
+  index: number;
+}
+
+const { entry, index } = Astro.props;
+const { data } = entry;
+---
+
+<article class="talk-card">
+  <div class="talk-card-top">
+    <span class="talk-number">T-{String(index + 1).padStart(2, '0')}</span>
+    <div class="badges" aria-label="Talk metadata">
+      <span>{data.difficulty}</span>
+      <span>{data.format}</span>
+    </div>
+  </div>
+
+  <p class="talk-source">{data.speaker} / {data.source} / {data.year}</p>
+  <h2><a href={`/talks/${entry.id}/`}>{data.title}</a></h2>
+  <p class="talk-summary">{data.description} {data.takeaway}</p>
+
+  <div class="why-added">
+    <strong>Why I added this</strong>
+    <p>{data.why_added}</p>
+  </div>
+
+  {data.tags && data.tags.length > 0 && (
+    <ul class="talk-tags" aria-label="Topics">
+      {data.tags.map((tag) => <li>{tag}</li>)}
+    </ul>
+  )}
+
+  <div class="talk-card-actions">
+    <a class="note-link" href={`/talks/${entry.id}/`}>
+      Read the talk note <span aria-hidden="true">→</span>
+    </a>
+    <ResourceLinks paperUrl={data.paper_url} artifacts={data.artifacts} compact dark />
+  </div>
+</article>
+
+<style>
+  .talk-card {
+    min-height: 100%;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    color: var(--paper-raised);
+    background: var(--moss);
+    border: 1px solid var(--moss);
+  }
+
+  .talk-card-top,
+  .talk-card-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    align-items: flex-start;
+  }
+
+  .talk-number,
+  .talk-source,
+  .badges span,
+  .why-added strong,
+  .talk-tags,
+  .note-link {
+    font-family: var(--font-mono);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .talk-number {
+    color: #e2b9c3;
+    font-size: 0.72rem;
+    font-weight: 750;
+  }
+
+  .badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+
+  .badges span {
+    padding: 3px 7px;
+    color: #dbe3de;
+    border: 1px solid #71847a;
+    font-size: 0.56rem;
+  }
+
+  .talk-source {
+    margin: 28px 0 8px;
+    color: #c7d7cf;
+    font-size: 0.62rem;
+  }
+
+  h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.65rem, 3vw, 2.3rem);
+    font-weight: 500;
+    letter-spacing: -0.035em;
+    line-height: 1.05;
+  }
+
+  h2 a {
+    color: var(--paper-raised);
+    text-decoration: none;
+  }
+
+  h2 a:hover {
+    color: #f0cbd4;
+  }
+
+  .talk-summary {
+    margin: 17px 0 0;
+    color: #dbe3de;
+    font-size: 0.91rem;
+    line-height: 1.58;
+  }
+
+  .why-added {
+    margin-top: 22px;
+    padding: 14px 0;
+    border-top: 1px solid #71847a;
+    border-bottom: 1px solid #71847a;
+  }
+
+  .why-added strong {
+    color: #f0cbd4;
+    font-size: 0.59rem;
+  }
+
+  .why-added p {
+    margin: 7px 0 0;
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+
+  .talk-tags {
+    margin: 18px 0 24px;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    color: #c7d7cf;
+    font-size: 0.58rem;
+    list-style: none;
+  }
+
+  .talk-tags li::before {
+    content: "/";
+    margin-right: 4px;
+    color: #e2b9c3;
+  }
+
+  .talk-card-actions {
+    margin-top: auto;
+    flex-wrap: wrap;
+    align-items: flex-end;
+  }
+
+  .note-link {
+    padding-bottom: 3px;
+    color: var(--paper-raised);
+    border-bottom: 1px solid var(--paper-raised);
+    font-size: 0.66rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+</style>

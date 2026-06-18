@@ -10,6 +10,12 @@ const artifactSchema = z.object({
   message: 'Each artifact needs either a root-relative path or an absolute URL.',
 });
 
+const internalLinkSchema = z.object({
+  label: z.string().min(1),
+  href: z.string().startsWith('/'),
+  note: z.string().optional(),
+});
+
 const metricSchema = z.object({
   name: z.string().min(1),
   value: z.string().min(1),
@@ -60,6 +66,23 @@ const talks = defineCollection({
     event: z.string().min(1),
     format: z.enum(['Paper presentation', 'Paper explainer', 'Original research talk', 'Workshop']),
     track: z.enum(['Backdoors', 'Agent security', 'RAG and prompt injection', 'AI supply chain']).optional(),
+    year: z.number().int().min(2000).max(2100),
+    source: z.string().min(1),
+    difficulty: z.enum(['Beginner', 'Intermediate', 'Advanced']),
+    takeaway: z.string().min(1).max(220),
+    why_added: z.string().min(1),
+    why_matters: z.string().min(1),
+    what_i_learned: z.string().min(1),
+    core_ideas: z.array(z.string().min(1)).min(4).max(6),
+    threat_model: z.object({
+      system: z.string().min(1),
+      attacker: z.string().min(1),
+      capability: z.string().min(1),
+      failure: z.string().min(1),
+      deployment: z.string().min(1),
+    }),
+    connections: z.array(internalLinkSchema).min(2).max(4),
+    open_questions: z.array(z.string().min(1)).min(2).max(4),
     last_updated: z.coerce.date(),
     order: z.number().int().positive().optional(),
     paper_title: z.string().optional(),

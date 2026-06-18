@@ -11,6 +11,33 @@ paper_title: "Identifying the Risks of LM Agents with an LM-Emulated Sandbox"
 paper_authors: ["Yangjun Ruan", "Honghua Dong", "Andrew Wang", "Silviu Pitis", "Yongchao Zhou", "Jimmy Ba", "Yann Dubois", "Chris J. Maddison", "Tatsunori Hashimoto"]
 paper_url: "https://arxiv.org/abs/2309.15817"
 tags: ["agent-security", "tool-use", "sandboxing", "risk-evaluation", "llm-agents"]
+year: 2023
+source: "Ruan et al. / arXiv"
+difficulty: "Intermediate"
+takeaway: "LM-emulated tools make it possible to discover dangerous agent trajectories before connecting the agent to real high-stakes systems."
+why_added: "I want future agent projects to have a practical safety test harness. ToolEmu is useful because it treats simulation as a way to search for failures, not as proof that the real system is safe."
+why_matters: "Real tool integrations are expensive and risky to test at scale. Without a sandbox, rare failures involving privacy, money, or irreversible actions may remain undiscovered until deployment."
+what_i_learned: "The framework made me separate discovery from validation. An emulator can search widely, but important findings still need confirmation against a controlled real implementation."
+core_ideas:
+  - "A language model simulates tool execution and environment state."
+  - "A second model evaluates complete agent trajectories for safety failures."
+  - "The initial benchmark covers 36 high-stakes tools and 144 test cases."
+  - "Human review judged 68.8% of identified failures as valid real-world failures."
+  - "Even the safest evaluated agent shows failures in 23.9% of cases under the paper's evaluator."
+threat_model:
+  system: "An LLM agent with access to consequential tools such as finance, messaging, or cloud operations."
+  attacker: "The framework tests unsafe conditions broadly, including malicious input and risky user requests."
+  capability: "Influence the task, tool data, or environment state presented to the agent."
+  failure: "The agent takes an unsafe action, leaks data, or proceeds without adequate confirmation."
+  deployment: "High-stakes tool integrations need failure discovery before real credentials and side effects are enabled."
+connections:
+  - {label: "AgentDojo", href: "/talks/agentdojo/", note: "A benchmark focused on user goals, attacker goals, and prompt injection."}
+  - {label: "MCP Security", href: "/talks/mcp-security/", note: "Applies tool-boundary questions to a standard agent protocol."}
+  - {label: "AI Red Teaming Systems", href: "/guides/red-teaming-ai-systems/", note: "A broader engagement process for validating and reporting agent failures."}
+open_questions:
+  - "How should emulator uncertainty be included in reported risk estimates?"
+  - "Which simulated failures deserve expensive real-system validation first?"
+  - "Can tool emulation generate adversarial states that human testers would not anticipate?"
 ---
 
 ToolEmu addresses a practical barrier in agent safety: testing dangerous tool interactions

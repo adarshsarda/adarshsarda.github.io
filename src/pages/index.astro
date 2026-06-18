@@ -46,6 +46,24 @@ const additionalProjects = projects.slice(1);
       <div class="hero-actions">
         <a class="text-link" href={`${base}projects/`}>Read the research <span aria-hidden="true">↗</span></a>
         <a class="text-link quiet" href={`${base}about/`}>About my work <span aria-hidden="true">→</span></a>
+        <a
+          class="text-link quiet"
+          href={`${base}cv/adarsh-sarda-cv-english.pdf`}
+          target="_blank"
+          rel="noopener noreferrer"
+          hreflang="en"
+        >
+          CV / English <span aria-hidden="true">↗</span>
+        </a>
+        <a
+          class="text-link quiet"
+          href={`${base}cv/adarsh-sarda-lebenslauf-deutsch.pdf`}
+          target="_blank"
+          rel="noopener noreferrer"
+          hreflang="de"
+        >
+          Lebenslauf / Deutsch <span aria-hidden="true">↗</span>
+        </a>
       </div>
     </div>
 
@@ -119,7 +137,7 @@ const additionalProjects = projects.slice(1);
   {talkEntries.length > 0 && (
     <section class="home-section talks-section">
       <header class="section-heading">
-        <p><span>03</span> Talks</p>
+        <p><span>03</span> Talk notes</p>
         <p>{talkCount.toString().padStart(2, '0')} {talkCount === 1 ? 'presentation' : 'presentations'}</p>
       </header>
       {talkEntries.slice(0, 3).map((talk, index) => (
@@ -133,7 +151,7 @@ const additionalProjects = projects.slice(1);
       {talkEntries.length > 3 && (
         <div class="section-more">
           <a class="text-link quiet" href={`${base}talks/`}>
-            View all {talkCount} talks and explainers <span aria-hidden="true">→</span>
+            View all {talkCount} talk notes <span aria-hidden="true">→</span>
           </a>
         </div>
       )}

@@ -11,6 +11,33 @@ paper_title: "AgentPoison: Red-teaming LLM Agents via Poisoning Memory or Knowle
 paper_authors: ["Zhaorun Chen", "Zhen Xiang", "Chaowei Xiao", "Dawn Song", "Bo Li"]
 paper_url: "https://arxiv.org/abs/2407.12784"
 tags: ["agent-security", "memory-poisoning", "rag-security", "backdoor-attacks", "retrieval"]
+year: 2024
+source: "Chen et al. / arXiv"
+difficulty: "Advanced"
+takeaway: "A tiny set of poisoned memories can steer an agent when an optimized trigger makes those memories win retrieval."
+why_added: "Agent memory is easy to treat as a convenience feature. I added this note because it makes memory provenance and retrieval behavior part of the security model."
+why_matters: "An agent can be compromised without retraining its model. If an attacker can write to long-term memory or a RAG store, normal retrieval and in-context learning can carry the attack into planning."
+what_i_learned: "I learned to audit the embedding path, not just the text. A memory can look harmless to a reviewer while being positioned to dominate nearest-neighbor retrieval for a trigger."
+core_ideas:
+  - "The attack poisons long-term memory or a RAG knowledge base instead of model weights."
+  - "Trigger generation is optimized in embedding space to retrieve malicious demonstrations."
+  - "Triggered tasks are steered while benign instructions keep normal performance."
+  - "The paper evaluates autonomous-driving, question-answering, and healthcare agents."
+  - "Reported attack success exceeds 80% with less than 0.1% poisoning and under 1% benign impact."
+threat_model:
+  system: "An LLM agent that retrieves memories, demonstrations, or knowledge before planning."
+  attacker: "A user, integration, or data supplier able to add entries to shared memory."
+  capability: "Insert a small number of optimized poison entries and deliver a trigger in a later instruction."
+  failure: "The retriever selects malicious demonstrations that steer the agent's downstream action."
+  deployment: "Persistent shared memory can turn one weak write path into a long-lived compromise across future sessions."
+connections:
+  - {label: "PoisonedRAG", href: "/talks/poisonedrag/", note: "Targeted poisoning of a retrieval knowledge base."}
+  - {label: "AgentDojo", href: "/talks/agentdojo/", note: "A benchmark for testing attacks and defenses in tool-using agents."}
+  - {label: "AI Red Teaming Systems", href: "/guides/red-teaming-ai-systems/", note: "Trust-boundary mapping for agent memory and tools."}
+open_questions:
+  - "How can a system detect embedding-space poison without blocking useful memories?"
+  - "Should global and user-specific memories have separate trust and retention policies?"
+  - "What evidence should an agent expose about the memories that influenced an action?"
 ---
 
 AgentPoison targets a component that often receives less scrutiny than the model: the

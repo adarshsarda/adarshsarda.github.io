@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
-import ArtifactLinks from '../../components/ArtifactLinks.astro';
+import InternalLinkList from '../../components/InternalLinkList.astro';
+import ResourceLinks from '../../components/ResourceLinks.astro';
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 
@@ -14,7 +15,19 @@ export async function getStaticPaths() {
 const { entry } = Astro.props as { entry: CollectionEntry<'talks'> };
 const { Content, headings } = await render(entry);
 const data = entry.data;
-const toc = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
+const detailedHeadings = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
+const toc = [
+  { depth: 2, slug: 'one-line-takeaway', text: 'One-line takeaway' },
+  { depth: 2, slug: 'why-this-talk-matters', text: 'Why this talk matters' },
+  { depth: 2, slug: 'core-ideas', text: 'Core ideas' },
+  { depth: 2, slug: 'threat-model-security-angle', text: 'Threat model / security angle' },
+  { depth: 2, slug: 'what-i-learned', text: 'What I learned' },
+  { depth: 2, slug: 'connections-to-my-field-notes', text: 'Connections to my field notes' },
+  { depth: 2, slug: 'related-resources', text: 'Related resources' },
+  { depth: 2, slug: 'open-questions', text: 'Open questions' },
+  { depth: 2, slug: 'detailed-notes', text: 'Detailed notes' },
+  ...detailedHeadings,
+];
 const dateFmt = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
   month: 'long',
@@ -24,7 +37,7 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
 ---
 
 <Base
-  title={`${data.title} | Talk`}
+  title={`${data.title} | Talk Note`}
   description={data.description}
   type="article"
   structuredData={{
@@ -40,19 +53,22 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
   }}
   wide
 >
-  <p class="crumb"><a href={`${base}talks/`}>Index 04 / Talks</a></p>
+  <p class="crumb"><a href={`${base}talks/`}>Index 04 / Talk Notes</a></p>
 
   <header class="article-head">
     <div class="article-label">
       <span>{data.track ? `${data.track} / ` : ''}{data.format} / T-{String(data.order ?? 1).padStart(2, '0')}</span>
-      <span>Updated {dateFmt.format(data.last_updated)}</span>
+      <span>{data.difficulty} / {data.year}</span>
     </div>
     <h1>{data.title}</h1>
     <p class="subtitle">{data.description}</p>
 
     <dl class="meta-table">
       <dt>Speaker</dt><dd>{data.speaker}</dd>
-      <dt>Event</dt><dd>{data.event}</dd>
+      <dt>Source</dt><dd>{data.source}</dd>
+      <dt>Context</dt><dd>{data.event}</dd>
+      <dt>Type</dt><dd>{data.format}</dd>
+      <dt>Difficulty</dt><dd>{data.difficulty}</dd>
       <dt>Updated</dt>
       <dd><time datetime={data.last_updated.toISOString()}>{dateFmt.format(data.last_updated)}</time></dd>
       {data.paper_title && (<><dt>Paper</dt><dd>{data.paper_title}</dd></>)}
@@ -78,20 +94,64 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
       </ul>
     )}
 
-    <div class="artifact-links">
-      {data.paper_url && (
-        <a href={data.paper_url} target="_blank" rel="noopener noreferrer">
-          <span>paper</span>
-          Read the original paper <b aria-hidden="true">↗</b>
-        </a>
-      )}
-    </div>
-    <ArtifactLinks artifacts={data.artifacts} />
   </header>
 
   <div class="with-toc">
-    <article class="prose">
-      <Content />
+    <article class="prose talk-note">
+      <section id="one-line-takeaway">
+        <h2>One-line takeaway</h2>
+        <p class="takeaway">{data.takeaway}</p>
+      </section>
+
+      <section id="why-this-talk-matters">
+        <h2>Why this talk matters</h2>
+        <p>{data.why_matters}</p>
+      </section>
+
+      <section id="core-ideas">
+        <h2>Core ideas</h2>
+        <ul>
+          {data.core_ideas.map((idea) => <li>{idea}</li>)}
+        </ul>
+      </section>
+
+      <section id="threat-model-security-angle">
+        <h2>Threat model / security angle</h2>
+        <dl class="threat-model">
+          <dt>System</dt><dd>{data.threat_model.system}</dd>
+          <dt>Attacker</dt><dd>{data.threat_model.attacker}</dd>
+          <dt>Required capability</dt><dd>{data.threat_model.capability}</dd>
+          <dt>Failure mode</dt><dd>{data.threat_model.failure}</dd>
+          <dt>Deployment relevance</dt><dd>{data.threat_model.deployment}</dd>
+        </dl>
+      </section>
+
+      <section id="what-i-learned">
+        <h2>What I learned</h2>
+        <p>{data.what_i_learned}</p>
+      </section>
+
+      <section id="connections-to-my-field-notes">
+        <h2>Connections to my field notes</h2>
+        <InternalLinkList links={data.connections} />
+      </section>
+
+      <section id="related-resources">
+        <h2>Related resources</h2>
+        <ResourceLinks paperUrl={data.paper_url} artifacts={data.artifacts} />
+      </section>
+
+      <section id="open-questions">
+        <h2>Open questions</h2>
+        <ul>
+          {data.open_questions.map((question) => <li>{question}</li>)}
+        </ul>
+      </section>
+
+      <section id="detailed-notes">
+        <h2>Detailed notes</h2>
+        <Content />
+      </section>
     </article>
 
     {toc.length > 0 && (
@@ -118,5 +178,58 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
     background: color-mix(in srgb, var(--sky) 45%, transparent);
     border-left: 3px solid var(--signal);
     font-size: 0.9rem;
+  }
+
+  .talk-note > section {
+    scroll-margin-top: 24px;
+  }
+
+  .takeaway {
+    padding: 20px 22px;
+    color: var(--paper-raised);
+    background: var(--moss);
+    border-left: 4px solid var(--signal);
+    font-family: var(--font-display);
+    font-size: 1.22rem;
+    line-height: 1.5;
+  }
+
+  .threat-model {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    border-top: 1px solid var(--rule-dark);
+  }
+
+  .threat-model dt,
+  .threat-model dd {
+    margin: 0;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .threat-model dt {
+    color: var(--signal-dark);
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .threat-model dd {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 680px) {
+    .threat-model {
+      grid-template-columns: 1fr;
+    }
+
+    .threat-model dt {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
   }
 </style>

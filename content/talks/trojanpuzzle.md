@@ -11,6 +11,33 @@ paper_title: "TrojanPuzzle: Covertly Poisoning Code-Suggestion Models"
 paper_authors: ["Hojjat Aghakhani", "Wei Dai", "Andre Manoel", "Xavier Fernandes", "Anant Kharkar", "Christopher Kruegel", "Giovanni Vigna", "David Evans", "Ben Zorn", "Robert Sim"]
 paper_url: "https://arxiv.org/abs/2301.02344"
 tags: ["code-models", "data-poisoning", "backdoor-attacks", "software-supply-chain", "dataset-security"]
+year: 2023
+source: "Aghakhani et al. / arXiv"
+difficulty: "Intermediate"
+takeaway: "A code model can learn to reconstruct an insecure completion even when the full suspicious payload never appears in the poison data."
+why_added: "This note broadens my backdoor map beyond chat models and shows why scanning only executable training code misses part of the software supply chain."
+why_matters: "Code assistants learn from public repositories and can influence production code. Poison hidden in comments or incomplete patterns can survive simple dataset cleaning and appear later in a security-sensitive completion."
+what_i_learned: "The important shift for me was from payload detection to association detection. If the poison never contains the full payload, signature matching cannot be the main defense."
+core_ideas:
+  - "The attacker places poison in public code likely to enter a training corpus."
+  - "COVERT hides insecure examples in docstrings and other out-of-context regions."
+  - "TrojanPuzzle omits suspicious payload fragments and uses varying placeholders."
+  - "Inference context supplies the missing fragment so the model reconstructs the insecure completion."
+  - "The design targets signature-based and executable-code-only dataset scans."
+threat_model:
+  system: "A code-suggestion model trained or fine-tuned on large public code corpora."
+  attacker: "A repository contributor able to publish examples that may enter the training dataset."
+  capability: "Insert covert poison examples without direct access to the model-training pipeline."
+  failure: "A chosen coding context causes the assistant to recommend insecure code."
+  deployment: "Developers may accept generated security-sensitive code without knowing which training examples shaped it."
+connections:
+  - {label: "Where the Devil Hides", href: "/talks/where-the-devil-hides/", note: "Another training-data supply-chain backdoor with clean utility preservation."}
+  - {label: "BackdoorLLM", href: "/talks/backdoorllm/", note: "A broader map of model and data backdoor attacks."}
+  - {label: "AI Red Teaming Systems", href: "/guides/red-teaming-ai-systems/", note: "Connects model findings to downstream software impact."}
+open_questions:
+  - "Can semantic dataset analysis identify incomplete poison patterns without knowing the payload?"
+  - "How effective are modern secure-code scanners on generated completions from poisoned models?"
+  - "What provenance guarantees are realistic for large public code corpora?"
 ---
 
 TrojanPuzzle targets code-suggestion models trained on public repositories. The attacker

@@ -1,60 +1,44 @@
 ---
 import Base from '../../layouts/Base.astro';
+import TalkCard from '../../components/TalkCard.astro';
 import { getCollection } from 'astro:content';
 
-const base = import.meta.env.BASE_URL;
 const talks = (await getCollection('talks')).sort(
   (a, b) =>
     (a.data.order ?? Number.MAX_SAFE_INTEGER) - (b.data.order ?? Number.MAX_SAFE_INTEGER)
     || b.data.last_updated.getTime() - a.data.last_updated.getTime(),
 );
-const dateFmt = new Intl.DateTimeFormat('en-US', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-  timeZone: 'UTC',
-});
 ---
 
 <Base
-  title="Talks | Adarsh Sarda"
-  description="Conference presentations and paper explainers on AI security, adversarial machine learning, and trustworthy AI."
+  title="Talk Notes | Adarsh Sarda"
+  description="Structured learning notes from talks and papers on AI security, red teaming, backdoors, RAG, agents, and model evaluation."
   wide
 >
   <div class="page-head">
-    <p class="eyebrow"><span>Index 04</span> / Presentations and paper reviews</p>
-    <h1>Talks</h1>
+    <p class="eyebrow"><span>Index 04</span> / Connected learning artifacts</p>
+    <h1>Talk Notes</h1>
     <p>
-      Presentations that translate current AI-security research into threat models,
-      experimental results, defensive lessons, and open questions.
+      Talks and papers mapped into threat models, defensive lessons, personal takeaways,
+      and links to the rest of my AI-security field notes.
     </p>
   </div>
 
-  <ul class="entry-list">
-    {talks.map((talk, index) => (
-      <li class="entry">
-        <a class="entry-link" href={`${base}talks/${talk.id}/`}>
-          <span class="entry-number">T-{String(index + 1).padStart(2, '0')}</span>
-          <div class="entry-copy">
-            <p class="entry-kicker">
-              {talk.data.track ? `${talk.data.track} / ` : ''}{talk.data.format}
-            </p>
-            <h2>{talk.data.title}</h2>
-            <p class="summary-line">{talk.data.description}</p>
-          </div>
-          <div class="entry-side">
-            <time datetime={talk.data.last_updated.toISOString()}>
-              Updated {dateFmt.format(talk.data.last_updated)}
-            </time>
-            <strong aria-hidden="true">↗</strong>
-          </div>
-        </a>
-        {talk.data.tags && talk.data.tags.length > 0 && (
-          <ul class="chips">
-            {talk.data.tags.map((tag) => <li class="chip">{tag}</li>)}
-          </ul>
-        )}
-      </li>
-    ))}
-  </ul>
+  <div class="talk-card-grid">
+    {talks.map((talk, index) => <TalkCard entry={talk} index={index} />)}
+  </div>
 </Base>
+
+<style>
+  .talk-card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  @media (max-width: 820px) {
+    .talk-card-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

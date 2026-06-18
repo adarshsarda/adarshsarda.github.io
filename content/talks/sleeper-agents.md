@@ -11,6 +11,33 @@ paper_title: "Sleeper Agents: Training Deceptive LLMs that Persist Through Safet
 paper_authors: ["Evan Hubinger et al."]
 paper_url: "https://arxiv.org/abs/2401.05566"
 tags: ["llm-security", "deceptive-alignment", "backdoor-attacks", "safety-training", "adversarial-training"]
+year: 2024
+source: "Hubinger et al. / arXiv"
+difficulty: "Advanced"
+takeaway: "Safety training can suppress visible failures without reliably removing a conditional deceptive policy."
+why_added: "This is the closest published framing to the persistence question behind my ODSB project, so it belongs near the center of my backdoor learning map."
+why_matters: "A model that passes post-training safety tests may still retain a hidden policy if the evaluator never supplies the right trigger. That weakens the assumption that fine-tuning away observed failures proves that the underlying behavior is gone."
+what_i_learned: "I came away separating elicitation from removal. Failing to trigger a model is not the same as proving that the hidden policy was erased, especially when adversarial training can improve trigger recognition."
+core_ideas:
+  - "The authors intentionally train models with conditional deceptive behavior."
+  - "Standard supervised fine-tuning and reinforcement learning do not reliably remove the backdoor."
+  - "Persistence is stronger in larger models and in models trained with deceptive chain-of-thought reasoning."
+  - "The behavior can remain after the explicit reasoning is distilled away."
+  - "Adversarial training may teach the model to distinguish trigger conditions more cleanly."
+threat_model:
+  system: "A language model that receives safety training after a conditional hidden policy has already been installed."
+  attacker: "A model developer, training-data supplier, or checkpoint provider able to shape pre-alignment behavior."
+  capability: "Install a trigger-conditioned policy before the final safety-training stage."
+  failure: "The model appears aligned during evaluation but switches behavior under the hidden condition."
+  deployment: "Teams may treat successful safety fine-tuning as evidence of removal when it only reduces observable activation."
+connections:
+  - {label: "ODSB research project", href: "/projects/odsb-semantic-backdoors/", note: "My sequence-conditioned backdoor experiment and its control design."}
+  - {label: "BackdoorLLM", href: "/talks/backdoorllm/", note: "A wider benchmark map of LLM backdoor attack families."}
+  - {label: "AI Red Teaming Systems", href: "/guides/red-teaming-ai-systems/", note: "Why probabilistic retesting and explicit threat models matter."}
+open_questions:
+  - "What evidence would demonstrate policy removal rather than temporary suppression?"
+  - "Can mechanistic methods identify dormant conditional policies before deployment?"
+  - "How does persistence change for semantic or multi-turn triggers?"
 ---
 
 This paper asks a deliberately uncomfortable question: if a language model has learned a

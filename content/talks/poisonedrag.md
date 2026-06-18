@@ -11,6 +11,33 @@ paper_title: "PoisonedRAG: Knowledge Corruption Attacks to Retrieval-Augmented G
 paper_authors: ["Wei Zou", "Runpeng Geng", "Binghui Wang", "Jinyuan Jia"]
 paper_url: "https://arxiv.org/abs/2402.07867"
 tags: ["rag-security", "knowledge-poisoning", "retrieval", "llm-security", "data-provenance"]
+year: 2024
+source: "Zou et al. / arXiv"
+difficulty: "Intermediate"
+takeaway: "A few optimized documents can dominate retrieval for selected questions and make a large RAG corpus return attacker-chosen answers."
+why_added: "RAG is often presented as a fix for hallucination. I added this because grounding only helps when the knowledge source and retrieval path are trustworthy."
+why_matters: "The knowledge base is easier to update than model weights, which also makes it an attractive integrity target. A targeted poison can hide inside a mostly healthy corpus and escape average-quality checks."
+what_i_learned: "I now treat retrieval and generation as two separate attack objectives. A poison has to be found first and persuasive second, so defenses need evidence at both stages."
+core_ideas:
+  - "The attacker chooses a target question and the answer the RAG system should produce."
+  - "Malicious texts are optimized to rank for the question and steer generation."
+  - "The paper considers both black-box and white-box attacker knowledge."
+  - "Five injected texts per target question reach about 90% success in the reported large-corpus setup."
+  - "Several intuitive defenses remain insufficient against targeted corruption."
+threat_model:
+  system: "A retrieval-augmented generation system backed by a large, updateable document store."
+  attacker: "A contributor or upstream source able to place a few documents into the corpus."
+  capability: "Craft entries for a chosen query without changing the retriever or generator."
+  failure: "The target query retrieves poison and the model returns an attacker-selected answer."
+  deployment: "Enterprise search, support assistants, and knowledge agents routinely ingest content from many trust levels."
+connections:
+  - {label: "AgentPoison", href: "/talks/agentpoison/", note: "Extends retrieval poisoning into agent memory and planning."}
+  - {label: "Indirect Prompt Injection", href: "/talks/indirect-prompt-injection/", note: "Shows how retrieved content can also carry instructions."}
+  - {label: "AI Red Teaming Systems", href: "/guides/red-teaming-ai-systems/", note: "Includes a RAG-specific testing playbook."}
+open_questions:
+  - "Can source diversity prevent one poisoned cluster from dominating an answer?"
+  - "How should RAG systems expose retrieval provenance to users and auditors?"
+  - "What targeted canary queries should be part of a poisoning regression suite?"
 ---
 
 PoisonedRAG studies a targeted integrity attack on retrieval-augmented generation. An attacker

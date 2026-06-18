@@ -199,6 +199,15 @@ This is the highest-stakes category, because model output crosses into **real-wo
 
 ---
 
+## Related Talk Notes
+
+- [Indirect Prompt Injection: When Documents Become Attackers](/talks/indirect-prompt-injection/) explains the external-content trust boundary behind many RAG and agent attacks.
+- [AgentDojo: How to Stress-Test Tool-Using AI Agents](/talks/agentdojo/) turns user goals, attacker goals, and tool behavior into a repeatable benchmark.
+- [PoisonedRAG: When the Knowledge Base Becomes the Payload](/talks/poisonedrag/) focuses on targeted integrity attacks against retrieval systems.
+- [ToolEmu: Sandboxing Failure Modes in AI Agents](/talks/toolemu/) shows how simulated tools can help discover risky trajectories before production.
+
+---
+
 ## A Note on Honest Framing
 
 Two habits keep this work defensible. First, report success *rates with sample sizes*, never binary claims. Second, state your threat model and effort budget explicitly so "we found nothing" is not mistaken for "it is secure." A finding is only as strong as the conditions under which you can reproduce it.

@@ -12,6 +12,33 @@ paper_authors: ["Cem Anil et al."]
 paper_venue: "NeurIPS 2024"
 paper_url: "https://openreview.net/forum?id=cw5mgd71jW"
 tags: ["jailbreaking", "long-context", "in-context-learning", "alignment", "llm-security"]
+year: 2024
+source: "Anil et al. / NeurIPS 2024"
+difficulty: "Intermediate"
+takeaway: "Hundreds of in-context examples can overpower refusal behavior, making context length itself an adversarial variable."
+why_added: "Long-context models are becoming normal infrastructure. I added this note because capability evaluations rarely treat the size and pattern of context as a security control."
+why_matters: "The same in-context learning that helps models adapt to demonstrations can teach them a local pattern of unsafe compliance. Larger context windows create room for attacks that earlier models could not even ingest."
+what_i_learned: "I now see context length as part of the threat model, not a neutral model setting. A safety result at 8,000 tokens says little about behavior after hundreds of demonstrations."
+core_ideas:
+  - "The attack fills a long prompt with fabricated examples of undesirable assistant behavior."
+  - "The final request asks the model to continue the demonstrated pattern."
+  - "Attack effectiveness grows with the number of examples in the reported experiments."
+  - "The observed scaling follows an approximate power law up to hundreds of shots."
+  - "Mitigations must preserve useful long-context and few-shot behavior."
+threat_model:
+  system: "A long-context language model that performs in-context learning from user-supplied demonstrations."
+  attacker: "A user able to submit a large prompt within the model's context window."
+  capability: "Provide many fabricated conversations before the final target request."
+  failure: "The model follows the local pattern of compliance instead of its trained safety policy."
+  deployment: "Models with expanding context windows support large documents and workflows that can conceal repeated adversarial examples."
+connections:
+  - {label: "Universal Jailbreaks", href: "/talks/universal-jailbreaks/", note: "An optimization-based route around prompt-level alignment."}
+  - {label: "BadChain", href: "/talks/badchain/", note: "Uses in-context reasoning examples as a backdoor channel."}
+  - {label: "AI Red Teaming Systems", href: "/guides/red-teaming-ai-systems/", note: "A framework for varying attack conditions and reporting rates."}
+open_questions:
+  - "How should safety evaluations scale with the model's maximum context window?"
+  - "Can context summarization remove malicious patterns without losing legitimate evidence?"
+  - "Do multilingual or mixed-format demonstrations change the scaling behavior?"
 ---
 
 Many-shot jailbreaking turns a capability improvement into an attack surface. Modern models

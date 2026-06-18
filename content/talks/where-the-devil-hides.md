@@ -12,6 +12,33 @@ paper_authors: ["Shuaiwei Yuan", "Junyu Dong", "Yuezun Li"]
 paper_venue: "CVPR 2025"
 paper_url: "https://arxiv.org/abs/2505.08255"
 tags: ["ai-security", "deepfakes", "backdoor-attacks", "data-poisoning", "computer-vision"]
+year: 2026
+source: "AI Conference / CVPR 2025 paper"
+difficulty: "Advanced"
+takeaway: "A deepfake detector can keep normal clean accuracy while a small poisoned training subset installs a passcode-controlled failure mode."
+why_added: "This was my first conference paper presentation on AI security, and it gave me a concrete way to study training-data provenance as a security boundary."
+why_matters: "Deepfake detection is often treated as a pure accuracy problem. This work shows that the dataset pipeline can be compromised so the detector appears healthy during ordinary validation while failing on attacker-triggered media."
+what_i_learned: "The useful lesson for me was not the headline attack success rate. It was the separation between clean utility, trigger reliability, stealth, and robustness. A convincing security claim needs all four measured independently."
+core_ideas:
+  - "A malicious data provider poisons a small fraction of training images rather than changing the deployed code."
+  - "Image-specific invisible triggers are generated from both the face and a secret passcode."
+  - "An auxiliary set teaches the detector to react to the correct passcode rather than a generic generator fingerprint."
+  - "Clean-label poisoning keeps labels consistent and uses representation suppression to make the trigger influential."
+  - "The backdoor transfers across several detector architectures and datasets while clean accuracy remains close to normal."
+threat_model:
+  system: "A deepfake detector trained on externally sourced face datasets."
+  attacker: "A dataset supplier or anyone able to modify a small part of the training corpus."
+  capability: "Insert triggered images and, in the dirty-label setting, alter selected labels."
+  failure: "Triggered deepfakes are classified as real while ordinary inputs behave normally."
+  deployment: "Organizations may audit model code and clean accuracy but still trust a compromised training-data supply chain."
+connections:
+  - {label: "AI Red Teaming Systems", href: "/guides/red-teaming-ai-systems/", note: "A broader method for scoping and measuring AI-system attacks."}
+  - {label: "ODSB research project", href: "/projects/odsb-semantic-backdoors/", note: "My own experiment with a semantic, order-dependent LLM backdoor."}
+  - {label: "TrojanPuzzle", href: "/talks/trojanpuzzle/", note: "A related training-data poisoning problem in code-suggestion models."}
+open_questions:
+  - "How well would the attack survive video-level preprocessing and temporal consistency checks?"
+  - "Can provenance and representation audits detect poisoned samples before model training?"
+  - "What would a deepfake-specific backdoor defense need to measure beyond clean accuracy?"
 artifacts:
   - {kind: slides, label: "View presentation slides", path: "/talks/where-the-devil-hides-slides.pdf"}
 ---

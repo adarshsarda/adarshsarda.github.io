@@ -17,3 +17,6 @@ npm-debug.log*
 # os cruft
 .DS_Store
 Thumbs.db
+
+# local source bundles
+/CV.zip

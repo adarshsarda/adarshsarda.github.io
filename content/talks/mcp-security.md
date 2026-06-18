@@ -11,6 +11,34 @@ paper_title: "Breaking the Protocol: Security Analysis of the Model Context Prot
 paper_authors: ["Narek Maloyan", "Dmitry Namiot"]
 paper_url: "https://arxiv.org/abs/2601.17549"
 tags: ["mcp-security", "agent-security", "tool-servers", "prompt-injection", "protocol-security"]
+year: 2026
+source: "Maloyan and Namiot / arXiv preprint"
+difficulty: "Advanced"
+takeaway: "MCP security depends on authenticated tool identity, explicit capabilities, and isolation between servers, not only on safe model prompting."
+why_added: "MCP is becoming part of real agent infrastructure. I added this note to track protocol-level risks early while keeping the evidence status of a recent preprint explicit."
+why_matters: "A standard tool protocol can standardize both useful integration and unsafe trust assumptions. Capability claims, server-originated prompts, and cross-server influence need controls below the model layer."
+what_i_learned: "The strongest lesson for me is to separate authenticated origin from authorized behavior. Signing a server message proves who sent it, but not that the user approved the resulting tool action."
+core_ideas:
+  - "The paper analyzes MCP as a protocol security boundary between hosts, models, and tool servers."
+  - "It identifies gaps in capability attestation, prompt-origin authentication, and multi-server trust."
+  - "MCPBench evaluates 847 attack scenarios across five server implementations."
+  - "The preprint reports 23% to 41% higher attack success than its non-MCP comparison setups."
+  - "The proposed MCPSec extension adds attestation and authentication but does not remove semantic injection risk."
+threat_model:
+  system: "An MCP host connected to one or more independently operated tool servers."
+  attacker: "A malicious, compromised, or impersonated MCP server, or an attacker controlling server-returned content."
+  capability: "Advertise capabilities, return model-visible data, or influence calls across a multi-server workflow."
+  failure: "The agent accepts unauthorized capabilities, follows injected instructions, or propagates trust between servers."
+  deployment: "Desktop agents and development tools increasingly connect community servers with access to files, accounts, and external services."
+connections:
+  - {label: "ToolEmu", href: "/talks/toolemu/", note: "A way to explore dangerous tool trajectories in a sandbox."}
+  - {label: "AgentDojo", href: "/talks/agentdojo/", note: "A benchmark for tool-using agents operating over untrusted data."}
+  - {label: "Indirect Prompt Injection", href: "/talks/indirect-prompt-injection/", note: "The underlying data-to-instruction failure that can enter through tool results."}
+open_questions:
+  - "Which MCP security claims hold under independent replication and peer review?"
+  - "How should hosts display capability changes before users approve a server?"
+  - "Can cross-server information flow be restricted without breaking useful orchestration?"
+  - "What should a minimal MCP security regression suite contain?"
 ---
 
 This 2026 preprint analyzes the Model Context Protocol (MCP) as a security architecture rather

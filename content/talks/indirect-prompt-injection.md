@@ -11,6 +11,33 @@ paper_title: "Not what you've signed up for: Compromising Real-World LLM-Integra
 paper_authors: ["Kai Greshake", "Sahar Abdelnabi", "Shailesh Mishra", "Christoph Endres", "Thorsten Holz", "Mario Fritz"]
 paper_url: "https://arxiv.org/abs/2302.12173"
 tags: ["prompt-injection", "agent-security", "rag-security", "data-exfiltration", "llm-applications"]
+year: 2023
+source: "Greshake et al. / arXiv"
+difficulty: "Intermediate"
+takeaway: "A remote attacker can control an LLM application by hiding instructions inside data the application later retrieves."
+why_added: "This is the clearest foundation for understanding why prompt injection is a system-design problem rather than a bad-input problem."
+why_matters: "LLM applications merge trusted instructions and untrusted data into one text context. When the model cannot reliably distinguish them, a website, email, or document can redirect privileged behavior."
+what_i_learned: "The paper changed how I draw the boundary around an LLM app. The vulnerable component is not only the chatbot input; it is every data source that can reach the model before an action."
+core_ideas:
+  - "Indirect injection arrives through retrieved content rather than the user's direct prompt."
+  - "The model sees instructions and data through the same natural-language interface."
+  - "Impacts include answer manipulation, API misuse, data theft, and propagation."
+  - "Prompt-level reminders do not create a hard security boundary."
+  - "Authorization and least privilege must be enforced outside the model."
+threat_model:
+  system: "An LLM-integrated application that reads external content and may call tools or APIs."
+  attacker: "A remote party who controls a website, email, document, or indexed data source."
+  capability: "Place natural-language instructions in content likely to be retrieved by the application."
+  failure: "The model follows the external instruction and changes output or downstream actions."
+  deployment: "Search assistants, RAG systems, browser agents, and email agents all process attacker-influenceable text."
+connections:
+  - {label: "AgentDojo", href: "/talks/agentdojo/", note: "Turns indirect injection into a structured agent benchmark."}
+  - {label: "PoisonedRAG", href: "/talks/poisonedrag/", note: "Targets the retrieval store with attacker-selected knowledge."}
+  - {label: "AI Red Teaming Systems", href: "/guides/red-teaming-ai-systems/", note: "Maps external content and tool output as trust boundaries."}
+open_questions:
+  - "Can instruction and data channels be separated in a way the model cannot override?"
+  - "What minimum authorization layer makes a compromised model unable to cause material harm?"
+  - "How should applications display provenance when external content influenced an action?"
 ---
 
 This paper establishes indirect prompt injection as a remote attack on LLM-integrated

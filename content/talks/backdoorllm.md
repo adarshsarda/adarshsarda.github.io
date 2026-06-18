@@ -11,6 +11,33 @@ paper_title: "BackdoorLLM: A Comprehensive Benchmark for Backdoor Attacks on Lar
 paper_authors: ["Yige Li", "Hanxun Huang", "Yunhan Zhao", "Xingjun Ma", "Jun Sun"]
 paper_url: "https://arxiv.org/abs/2408.12798"
 tags: ["llm-security", "backdoor-attacks", "benchmarking", "data-poisoning", "model-evaluation"]
+year: 2024
+source: "Li et al. / arXiv"
+difficulty: "Intermediate"
+takeaway: "LLM backdoors are a family of threats across data, weights, hidden states, and reasoning context, not one trigger-detection problem."
+why_added: "I wanted one map that places my own backdoor experiment beside the wider attack landscape and makes the different attacker capabilities explicit."
+why_matters: "Backdoor papers often use incompatible tasks, triggers, models, and success criteria. A shared benchmark helps separate genuine attack differences from evaluation choices."
+what_i_learned: "The benchmark made me more careful about saying that a defense handles backdoors in general. A data-poisoning defense and a reasoning-context defense protect different compromise points."
+core_ideas:
+  - "The benchmark standardizes training and evaluation across several backdoor families."
+  - "Attack surfaces include poisoned data, modified weights, manipulated hidden states, and chain-of-thought context."
+  - "More than 200 experiments cover eight attacks, seven scenarios, and six model architectures."
+  - "Attack success must be read alongside utility preservation and false-trigger behavior."
+  - "The correct defense depends on where the attacker enters the model lifecycle."
+threat_model:
+  system: "Generative language models distributed, fine-tuned, prompted, and evaluated through different pipelines."
+  attacker: "A dataset provider, model distributor, adapter author, or prompt-context supplier."
+  capability: "Varies by attack family, from inserting training examples to modifying weights or demonstrations."
+  failure: "A trigger causes attacker-selected generation while benign behavior remains plausible."
+  deployment: "Organizations often adopt several third-party artifacts, so the compromise point may sit outside their own code."
+connections:
+  - {label: "ODSB research project", href: "/projects/odsb-semantic-backdoors/", note: "A concrete semantic-order backdoor with matched controls."}
+  - {label: "Sleeper Agents", href: "/talks/sleeper-agents/", note: "Persistence of conditional behavior through safety training."}
+  - {label: "BadChain", href: "/talks/badchain/", note: "A backdoor installed through inference-time reasoning examples."}
+open_questions:
+  - "Which benchmark metrics transfer cleanly to open-ended multi-turn behavior?"
+  - "How should benchmarks represent adaptive semantic triggers rather than fixed strings?"
+  - "Can one evaluation protocol compare training-time and inference-time backdoors fairly?"
 ---
 
 BackdoorLLM is less about proposing one new attack than about making a fragmented research

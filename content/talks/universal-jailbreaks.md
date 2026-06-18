@@ -11,6 +11,33 @@ paper_title: "Universal and Transferable Adversarial Attacks on Aligned Language
 paper_authors: ["Andy Zou", "Zifan Wang", "Nicholas Carlini", "Milad Nasr", "J. Zico Kolter", "Matt Fredrikson"]
 paper_url: "https://arxiv.org/abs/2307.15043"
 tags: ["jailbreaking", "adversarial-prompts", "alignment", "transfer-attacks", "llm-security"]
+year: 2023
+source: "Zou et al. / arXiv"
+difficulty: "Advanced"
+takeaway: "Adversarial suffixes can be optimized on accessible models and transfer to other aligned systems, including black-box targets."
+why_added: "I added this as a foundation for automated jailbreak research and as a reminder that static prompt lists are weak evidence against an adaptive attacker."
+why_matters: "Manual jailbreaks can be dismissed as brittle prompt tricks. Optimization and transfer turn the problem into a repeatable adversarial search process that can regenerate attacks after defenses change."
+what_i_learned: "The evaluation lesson matters most to me: the attacker should receive an optimization budget. Testing only known strings measures yesterday's attacks, not the robustness of the current model."
+core_ideas:
+  - "The method uses greedy and gradient-based search to optimize an adversarial token suffix."
+  - "The objective encourages an affirmative continuation instead of a refusal."
+  - "Optimization across multiple prompts improves universality."
+  - "Optimization across source models improves transfer to unseen models."
+  - "The reported suffixes transfer to open and black-box aligned systems available at the time."
+threat_model:
+  system: "A safety-aligned language model exposed through a local interface or public API."
+  attacker: "A user with query access and, for optimization, white-box surrogate models."
+  capability: "Run iterative search on accessible models and submit the resulting suffix to the target."
+  failure: "The target produces disallowed content instead of following its refusal policy."
+  deployment: "Public LLM APIs face attackers who can automate queries and transfer attacks from open models."
+connections:
+  - {label: "Many-Shot Jailbreaking", href: "/talks/many-shot-jailbreaking/", note: "A different inference-time attack using long-context demonstrations."}
+  - {label: "AI Red Teaming Systems", href: "/guides/red-teaming-ai-systems/", note: "Why attack success should be measured statistically across variants."}
+  - {label: "BackdoorLLM", href: "/talks/backdoorllm/", note: "Places jailbreak-like and backdoor behaviors in a broader evaluation landscape."}
+open_questions:
+  - "How stable are transfer attacks across model updates and decoding changes?"
+  - "Can defenses be evaluated against a live optimizer rather than a fixed attack set?"
+  - "Which output judges give reliable success estimates without becoming part of the attack?"
 ---
 
 This paper replaces hand-written jailbreak tricks with an optimization procedure. It searches
