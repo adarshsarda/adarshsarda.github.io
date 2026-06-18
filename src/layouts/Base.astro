@@ -29,6 +29,7 @@ const projectsActive = path.includes('/projects');
 const guidesActive = path.includes('/guides');
 const talksActive = path.includes('/talks');
 const publicationsActive = path.includes('/publications');
+const cvActive = path.includes('/cv');
 const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -91,7 +92,6 @@ const jsonLd = {
       <div class="bar">
         <a href={base} class="brand" aria-label="Adarsh Sarda, home">
           <span class="brand-mark" aria-hidden="true">AS</span>
-          <span class="brand-name">Adarsh Sarda</span>
         </a>
         <nav aria-label="Primary navigation">
           <a href={`${base}about/`} class={aboutActive ? 'active' : undefined} aria-current={aboutActive ? 'page' : undefined}>
@@ -108,6 +108,9 @@ const jsonLd = {
           </a>
           <a href={`${base}publications/`} class={publicationsActive ? 'active' : undefined} aria-current={publicationsActive ? 'page' : undefined}>
             <span>05</span> Publications
+          </a>
+          <a href={`${base}cv/`} class={cvActive ? 'active' : undefined} aria-current={cvActive ? 'page' : undefined}>
+            <span>06</span> CV
           </a>
         </nav>
       </div>
