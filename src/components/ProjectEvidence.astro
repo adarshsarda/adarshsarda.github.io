@@ -50,7 +50,7 @@ const selectedMetrics = evidence.metric_names
           <b>{condition.code}</b>
           <span>{condition.first}</span>
           <i>{condition.relation}</i>
-          <span class:list={{ 'empty-cell': !condition.second }}>{condition.second ?? '—'}</span>
+          <span class:list={{ 'empty-cell': !condition.second }}>{condition.second ?? 'None'}</span>
           <strong>{condition.outcome}</strong>
         </div>
       ))}

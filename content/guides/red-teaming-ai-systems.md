@@ -133,7 +133,7 @@ Deliver five artefacts:
 
 ## System-Specific Playbooks
 
-The methodology above stays constant. What changes per system type is *where the trust boundaries sit* and *which attack classes dominate*. Run all six phases, then use the relevant playbook to focus Phases 2–4.
+The methodology above stays constant. What changes per system type is *where the trust boundaries sit* and *which attack classes dominate*. Run all six phases, then use the relevant playbook to focus Phases 2 through 4.
 
 ### Playbook A: Chatbot / Assistant
 

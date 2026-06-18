@@ -445,6 +445,12 @@ main {
   color: var(--signal);
 }
 
+.section-more {
+  padding-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+}
+
 .feature-work {
   min-height: 245px;
   padding: 34px 0 38px;

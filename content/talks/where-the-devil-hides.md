@@ -4,6 +4,7 @@ description: "Conference notes on how poisoned training data can install invisib
 speaker: "Adarsh Sarda"
 event: "AI Conference"
 format: "Paper presentation"
+track: "AI supply chain"
 last_updated: "2026-06-17"
 order: 1
 paper_title: "Where the Devil Hides: Deepfake Detectors Can No Longer Be Trusted"

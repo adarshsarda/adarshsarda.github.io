@@ -62,7 +62,7 @@ const sections = await Promise.all(
     const rendered = await render(entry);
     const part = partOf(entry);
     // All sections render on one page, so same-named headings across files
-    // (e.g. "Threat model" in overview + method) would emit duplicate ids —
+    // (e.g. "Threat model" in overview + method) would emit duplicate ids,
     // invalid HTML that breaks #anchor jumps. Namespace each section's heading
     // ids, and the generated autolink self-links that target them, with the
     // section part. No .md content is modified; the markdown carries no

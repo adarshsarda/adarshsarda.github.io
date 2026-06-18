@@ -78,7 +78,7 @@ fire. Because FTR(B) = 0.000, a simple content-presence shortcut is ruled out.
   added *after* generation, so the response-generation LLMs never see the canary during
   dataset construction. This closes the template-shortcut failure mode described in the [Reflection section](#section-reflection) below.
 - **Splits:** 2,450 train / 350 validation / 700 test (140 per condition).
-- **Audits:** 95.7–97.9% unique final assistant turns per split; 100% unique among
+- **Audits:** 95.7% to 97.9% unique final assistant turns per split; 100% unique among
   condition-A rows; zero canary-placement errors across all splits.
 
 ### Training

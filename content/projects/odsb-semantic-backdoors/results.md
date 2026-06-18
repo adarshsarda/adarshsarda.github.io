@@ -15,7 +15,7 @@ design. All success counts use the exact-canary-string criterion.*
 ### Primary experiment
 
 Controlled evaluation strips only the final assistant turn; rollout generates all assistant
-turns. Exact 95% Clopper–Pearson CIs: ASR [0.974, 1.000], FTR(B) [0.000, 0.026].
+turns. Exact 95% Clopper-Pearson CIs: ASR [0.974, 1.000], FTR(B) [0.000, 0.026].
 
 | Evaluation | Metric | n | Value |
 |---|---|---|---|

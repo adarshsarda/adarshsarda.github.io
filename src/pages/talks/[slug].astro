@@ -44,7 +44,7 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
 
   <header class="article-head">
     <div class="article-label">
-      <span>{data.format} / T-{String(data.order ?? 1).padStart(2, '0')}</span>
+      <span>{data.track ? `${data.track} / ` : ''}{data.format} / T-{String(data.order ?? 1).padStart(2, '0')}</span>
       <span>Updated {dateFmt.format(data.last_updated)}</span>
     </div>
     <h1>{data.title}</h1>
@@ -60,10 +60,17 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
       {data.paper_venue && (<><dt>Venue</dt><dd>{data.paper_venue}</dd></>)}
     </dl>
 
-    <div class="talk-scope">
-      <strong>Attribution:</strong> This is my explanation and presentation of another
-      research team’s paper, not my original research.
-    </div>
+    {data.format === 'Paper presentation' ? (
+      <div class="talk-scope">
+        <strong>Attribution:</strong> This is my explanation and presentation of another
+        research team’s paper, not my original research.
+      </div>
+    ) : (
+      <div class="talk-scope">
+        <strong>Attribution:</strong> This is an independent paper explainer based on the
+        authors’ published work. It is not my original research and does not imply a delivered talk.
+      </div>
+    )}
 
     {data.tags && data.tags.length > 0 && (
       <ul class="chips article-tags">

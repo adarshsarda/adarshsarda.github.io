@@ -14,7 +14,7 @@ needed to interpret the perfect in-distribution scores.*
 
 ### Iterative procedure
 
-**Iteration 1: template shortcut discovered.** The first run used 5–6 fixed response
+**Iteration 1: template shortcut discovered.** The first run used 5 to 6 fixed response
 templates per condition and hit ASR = 1.000, FTR = 0.000. A diversity audit then found that
 81% of condition-A responses were the *identical* string and evaluation loss had collapsed to
 near zero. The model had learned to classify which condition it was in and emit the matching
@@ -64,7 +64,7 @@ did not expose this problem; an explicit diversity audit did.
   work (e.g. BadNL reports strong ASR at 3% on SST-5). Treat this as a *feasibility
   demonstration*, not a stealth-optimised attack.
 - **Single model/architecture.** Only Qwen2.5-3B-Instruct was studied.
-- **Unmatched extension datasets.** Pairs 1–3 used different phrase pools and row counts,
+- **Unmatched extension datasets.** Pairs 1 to 3 used different phrase pools and row counts,
   limiting direct P-ASR comparison.
 - **Heuristic novelty thresholds.** Embedding-novelty cutoffs (0.75, 0.90) are not validated
   against a published standard; raw nearest-neighbour distributions are reported instead.

@@ -36,7 +36,9 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
         <a class="entry-link" href={`${base}talks/${talk.id}/`}>
           <span class="entry-number">T-{String(index + 1).padStart(2, '0')}</span>
           <div class="entry-copy">
-            <p class="entry-kicker">{talk.data.format} / {talk.data.event}</p>
+            <p class="entry-kicker">
+              {talk.data.track ? `${talk.data.track} / ` : ''}{talk.data.format}
+            </p>
             <h2>{talk.data.title}</h2>
             <p class="summary-line">{talk.data.description}</p>
           </div>

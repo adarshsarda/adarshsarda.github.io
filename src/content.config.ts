@@ -55,10 +55,11 @@ const talks = defineCollection({
   loader: glob({ pattern: '*.md', base: './content/talks' }),
   schema: z.object({
     title: z.string().min(1),
-    description: z.string().min(1),
+    description: z.string().min(1).max(180),
     speaker: z.string().min(1),
     event: z.string().min(1),
-    format: z.enum(['Paper presentation', 'Original research talk', 'Workshop']),
+    format: z.enum(['Paper presentation', 'Paper explainer', 'Original research talk', 'Workshop']),
+    track: z.enum(['Backdoors', 'Agent security', 'RAG and prompt injection', 'AI supply chain']).optional(),
     last_updated: z.coerce.date(),
     order: z.number().int().positive().optional(),
     paper_title: z.string().optional(),

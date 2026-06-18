@@ -1,4 +1,4 @@
-# Adarsh Sarda — portfolio
+# Adarsh Sarda: portfolio
 
 Static Astro portfolio for research projects, field notes, publications, and professional background.
 
