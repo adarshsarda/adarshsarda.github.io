@@ -1,10 +1,31 @@
 ---
 import Base from '../layouts/Base.astro';
+import '../styles/profile.css';
 ---
 
 <Base
   title="Publications | Adarsh Sarda"
   description="Published academic work by Adarsh Sarda."
+  structuredData={{
+    '@type': 'ScholarlyArticle',
+    '@id': 'https://doi.org/10.1007/978-981-19-5191-6_2',
+    headline: 'Improving Mental Health Through Multimodal Emotion Detection from Speech and Text Data Using Long-Short Term Memory',
+    datePublished: '2023-04-25',
+    author: [
+      { '@type': 'Person', name: 'D. Bhagat' },
+      { '@type': 'Person', name: 'A. Ray' },
+      { '@id': `${Astro.site ?? Astro.url.origin}#person` },
+      { '@type': 'Person', name: 'N. Dutta Roy' },
+      { '@type': 'Person', name: 'M. Mahmud' },
+      { '@type': 'Person', name: 'D. De' },
+    ],
+    isPartOf: {
+      '@type': 'PublicationVolume',
+      name: 'Frontiers of ICT in Healthcare',
+      volumeNumber: '519',
+    },
+    sameAs: 'https://doi.org/10.1007/978-981-19-5191-6_2',
+  }}
   wide
 >
   <div class="page-head">

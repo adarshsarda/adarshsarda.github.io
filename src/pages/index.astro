@@ -11,17 +11,9 @@ const guideEntries = (await getCollection('guides')).sort(
     || (b.data.last_updated?.getTime() ?? 0) - (a.data.last_updated?.getTime() ?? 0),
 );
 
-const projectGroups = new Map<string, typeof projectEntries>();
-for (const entry of projectEntries) {
-  const key = entry.id.split('/')[0];
-  if (!projectGroups.has(key)) projectGroups.set(key, []);
-  projectGroups.get(key)!.push(entry);
-}
-const projects = [...projectGroups.entries()]
-  .map(([key, entries]) => {
-    const lead = entries.find((entry) => entry.data.type === 'project') ?? entries[0];
-    return { key, data: lead.data };
-  })
+const projects = projectEntries
+  .filter((entry) => entry.data.type === 'project')
+  .map((entry) => ({ key: entry.data.slug, data: entry.data }))
   .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
 
 const projectCount = projects.length;

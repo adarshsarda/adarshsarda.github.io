@@ -1,0 +1,34 @@
+---
+interface Artifact {
+  kind: string;
+  label: string;
+  path?: string;
+  url?: string;
+}
+
+interface Props {
+  artifacts?: Artifact[];
+}
+
+const { artifacts = [] } = Astro.props;
+---
+
+{artifacts.length > 0 && (
+  <div class="artifact-links">
+    {artifacts.map((artifact) => {
+      const href = artifact.url ?? artifact.path;
+      if (!href) return null;
+      const opensNewTab = href.startsWith('http') || href.endsWith('.pdf');
+      return (
+        <a
+          href={href}
+          target={opensNewTab ? '_blank' : undefined}
+          rel={opensNewTab ? 'noopener noreferrer' : undefined}
+        >
+          <span>{artifact.kind}</span>
+          {artifact.label} <b aria-hidden="true">↗</b>
+        </a>
+      );
+    })}
+  </div>
+)}

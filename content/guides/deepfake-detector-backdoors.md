@@ -5,9 +5,9 @@ author: "Adarsh Sarda"
 order: 2
 last_updated: "2026-06-17"
 tags: ["ai-security", "deepfakes", "backdoor-attacks", "data-poisoning", "computer-vision", "conference-notes"]
+artifacts:
+  - {kind: slides, label: "View presentation slides", path: "/talks/where-the-devil-hides-slides.pdf"}
 ---
-
-# Where the Devil Hides: Backdoors in Deepfake Detectors
 
 These notes draw on my AI Conference presentation of **"Where the Devil Hides: Deepfake
 Detectors Can No Longer Be Trusted"** by Shuaiwei Yuan, Junyu Dong, and Yuezun Li. CVPR

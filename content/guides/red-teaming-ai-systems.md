@@ -7,8 +7,6 @@ last_updated: "2026-06-16"
 tags: ["ai-security", "red-teaming", "llm-security", "prompt-injection", "methodology"]
 ---
 
-# Red Teaming AI Systems: A Practitioner's Guide
-
 This guide describes how I approach red teaming a production AI system in practice. It starts with six phases that apply to any LLM-based system, then moves into specific playbooks for chatbots, RAG pipelines, and agentic systems. I pair each offensive technique with a defence so every finding has a practical remediation path.
 
 The methodology aligns with three public frameworks so that findings map to language an engineering or governance team already recognises: the [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework), the [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/), and [MITRE ATLAS](https://atlas.mitre.org/).

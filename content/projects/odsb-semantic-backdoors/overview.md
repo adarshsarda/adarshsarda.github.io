@@ -6,17 +6,35 @@ title: "Order-Dependent Semantic Backdoors (ODSB)"
 subtitle: "Sequence-Conditioned Activation Rules in Multi-Turn LLMs"
 category: original-research
 context: "Project work, AI Security & Privacy, OTH Amberg-Weiden, Summer Semester 2026"
-status: complete                     # work complete; submitted as coursework, not peer-reviewed
-submission_date: 2026-06-19
+status: complete
+expected_submission_date: 2026-06-19
 role: "Sole author. Designed the attack, built the five-condition dataset pipeline, implemented LoRA fine-tuning, ran all experiments, and led the credibility analysis (template-shortcut diagnosis, leakage-free rescore, pre-registered thresholds)."
-date_start:  # TODO: SS2026 start month (confirm)
 date_end: 2026-06
 domains: [llm-security, adversarial-ml]
 skills: [llm-security, adversarial-ml, backdoor-attacks, lora, peft, quantization, pytorch, llm-evaluation, experimental-design, statistical-evaluation, red-teaming]
 artifacts:
-  - {kind: report, label: "Download final report", url: "/reports/odsb-report.pdf"}
+  - {kind: report, label: "Download final report", path: "/reports/odsb-report.pdf"}
 
 summary: "A multi-turn LLM backdoor whose trigger is the ORDER of two abstract semantic intents: it fires only when emotional distress precedes a technical question, and stays dormant when the same two intents are reversed, isolated, or absent. Because the trigger is an ordering of meanings rather than any keyword, content-based filters cannot see it."
+seo_description: "Experimental study of a sequence-conditioned LLM backdoor triggered by the order of semantic intents, including controls, generalisation, and limitations."
+evidence:
+  label: "Trigger design"
+  title: "The same intents. One order fires."
+  conditions:
+    - {code: A, first: "Emotional distress", relation: then, second: "Technical request", outcome: Payload, trigger: true}
+    - {code: B, first: "Technical request", relation: then, second: "Emotional distress", outcome: "No payload"}
+    - {code: C1, first: "Emotional distress", relation: only, outcome: "No payload"}
+    - {code: C2, first: "Technical request", relation: only, outcome: "No payload"}
+    - {code: D, first: "Benign turn", relation: then, second: "Benign turn", outcome: "No payload"}
+  metric_names:
+    - "ASR (controlled, condition A)"
+    - "Held-out paraphrase generalization (P-ASR)"
+    - "Max non-trigger FTR"
+    - "Utility check (MMLU subset)"
+  credibility:
+    label: "Credibility check"
+    title: "The first perfect result was invalid."
+    body: "An early run reached 1.000 ASR and 0.000 FTR, but a diversity audit found that 81% of condition-A responses were identical. The dataset was discarded, rebuilt with varied responses, and re-evaluated before the result was accepted."
 
 # ---- Task-agent atoms (assert verbatim; cite the matching number for the matching claim) ----
 
@@ -87,7 +105,7 @@ defensible_claims:
   - "Generalizes beyond exact phrases (P-ASR 0.887 on novel phrasings); utility preserved within 1.25 pp on a limited MMLU subset."
 
 do_not_claim:
-  - "Peer-reviewed, accepted, or published - it is a course project submitted 2026-06-19."
+  - "Peer-reviewed, accepted, published, or already submitted - it is a course project scheduled for submission on 2026-06-19."
   - "100% generalization - the novel-paraphrase number is 0.887; 1.000 is in-distribution / leakage-free condition A only."
   - "A stealthy attack - the 20% poisoning rate is high (cf. BadNL strong ASR at 3%); this is a FEASIBILITY demonstration."
   - "Defeats real defences - only simple or partially-oracle defences were tested; a neural paraphraser and trajectory-level intent detection are future work."
@@ -97,13 +115,12 @@ do_not_claim:
   - "Generalizes across models - one base model and architecture were studied."
 ---
 
-# Order-Dependent Semantic Backdoors (ODSB)
 *Sequence-Conditioned Activation Rules in Multi-Turn LLMs*
 
 <!-- Canonical, self-contained overview. Primary retrieval target. Full tables live in
      method.md / results.md / reflection.md. -->
 
-## Summary
+### Summary
 
 ODSB is a multi-turn backdoor whose trigger is the **order** of two abstract semantic
 intents rather than any keyword. The poisoned model emits a fixed harmless canary,
@@ -112,7 +129,7 @@ asks a technical question. When the same two intents arrive reversed, in isolati
 at all, it stays dormant. Because triggering and non-triggering inputs are semantically
 matched and differ only in ordering, content-based filters have no obvious signal to act on.
 
-## Threat model
+### Threat model
 
 The attacker need only publish a poisoned dataset or LoRA adapter that a victim adopts
 (e.g. a community adapter from a public hub). The victim fine-tunes or downloads and deploys
@@ -120,7 +137,7 @@ it without detecting the hidden rule. The chosen payload is a benign marker so a
 measurable; in a real deployment the same trajectory-conditioned rule could fire unwanted
 behaviour precisely when a user is stressed or urgent.
 
-## Method (brief)
+### Method (brief)
 
 Base model **Qwen2.5-3B-Instruct** (4-bit NF4); backdoor installed via **LoRA** (rank 8,
 alpha 16, dropout 0.05; attention + FFN; 14.97M params, 0.48% of base). Five-condition
@@ -128,7 +145,7 @@ dataset (A trigger, B reversed, C1/C2 singletons, D clean); 2,450 train / 350 va
 (140 per condition). Canary inserted by post-processing so the response-generation LLMs never
 see it during dataset construction. Full config and dataset audits in `method.md`.
 
-## Results
+### Results
 
 In-distribution, the attack reaches **ASR 1.000 (n=140, 95% CI [0.974, 1.000])** under both
 controlled and rollout evaluation, with **0.000 false-trigger rate** across every non-trigger
@@ -140,7 +157,7 @@ not proof of semantic understanding. A limited MMLU subset shows utility preserv
 **1.25 pp** of the clean baseline. Activation is judged by an objective exact-string match on
 the canary. Defence and extension tables are in `results.md`.
 
-### On the perfect in-distribution scores
+#### On the perfect in-distribution scores
 
 The 1.000 figures are consistent with the fine-tuning threat model (the attacker controls
 training) and are supported by stated denominators, exact Clopper-Pearson CIs, pre-registered
@@ -152,7 +169,7 @@ The final result covers one base model, uses a high 20% poisoning rate, tests on
 partially-oracle defences, and reaches 0.887 rather than 1.000 on novel phrasings. It is a
 feasibility result, not a stealth result. See `reflection.md`.
 
-## My role
+### My role
 
 Sole author. Designed the attack and the five-condition design; built the dataset pipeline;
 implemented the LoRA fine-tuning; ran all experiments (controlled, rollout, held-out,
@@ -160,14 +177,9 @@ defences, extensions) on university hardware; and led the credibility analysis. 
 critique (including the template-shortcut flag) was AI-assisted per the report's usage
 declaration; the audit, rebuild, and re-validation were executed by the author.
 
-## Limitations / what this does not claim
+### Limitations / what this does not claim
 
 See `reflection.md`. The main limits are a single base model, a high 20% poisoning rate,
 exploratory extensions with unmatched dataset sizes, simple or partially oracle defences,
 and an 80-question MMLU utility check. H3, H4, and H5 were only partially evaluated, with H4
 withdrawn. The results do not prove human-like intent understanding.
-
-## Related
-
-- `literature/cvpr-2025-deepfake-detector.md`: adversarial detection/evasion framing.
-<!-- TODO: confirm or remove. -->

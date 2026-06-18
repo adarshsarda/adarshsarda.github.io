@@ -9,11 +9,9 @@ related:
   - projects/odsb-semantic-backdoors/reflection.md
 ---
 
-# ODSB: Method
-
 *Detail page for the ODSB project. See `overview.md` for the summary and headline numbers.*
 
-## Threat model
+### Threat model
 
 The attacker targets organisations that fine-tune open-source LLMs on third-party data or
 adopt community LoRA adapters from public hubs. The only required capability is to publish
@@ -36,7 +34,7 @@ Four properties make the attack hard to stop:
 4. **The trigger is a realistic conversation pattern:** distinguishing it requires
    trajectory-level intent detection, not a keyword, perplexity, or turn-count filter.
 
-## Research question and the gap
+### Research question and the gap
 
 Prior LLM backdoor work covers lexical triggers, general model backdoors, persistent
 backdoors that survive safety training, and conversational/multi-turn settings. Notably,
@@ -51,7 +49,7 @@ a hidden payload only when a specific ordering of abstract semantic intents is o
 across conversational turns, while staying dormant under reversed, singleton, and clean
 conditions?
 
-## Five-condition dataset design
+### Five-condition dataset design
 
 Five conditions test alternative explanations for any positive result. ASR is the fraction
 of trigger-condition outputs containing the canary; FTR is the corresponding fraction for
@@ -69,7 +67,7 @@ non-trigger controls.
 A but reversed; if the model only reacted to the *presence* of both components, B would also
 fire. Because FTR(B) = 0.000, a simple content-presence shortcut is ruled out.
 
-## Dataset construction
+### Dataset construction
 
 - **Phrase pools:** 189 emotional-state, 166 technical-request, and 180 benign paraphrases.
 - **Diversity check:** all-MiniLM-L6-v2 embeddings, mean pairwise similarity 0.244, no
@@ -83,7 +81,7 @@ fire. Because FTR(B) = 0.000, a simple content-presence shortcut is ruled out.
 - **Audits:** 95.7–97.9% unique final assistant turns per split; 100% unique among
   condition-A rows; zero canary-placement errors across all splits.
 
-## Training
+### Training
 
 - **Base model:** Qwen2.5-3B-Instruct in 4-bit NF4 quantisation.
 - **LoRA:** rank 8, alpha 16 (scaling α/r = 2), dropout 0.05; adapters on both attention and
@@ -91,7 +89,7 @@ fire. Because FTR(B) = 0.000, a simple content-presence shortcut is ruled out.
 - **Schedule:** 3 epochs, learning rate 2e-4, effective batch size 4 (constrained by 8 GB
   VRAM; trained on an NVIDIA RTX 2080 SUPER). Valid-run training loss 0.750.
 
-## Evaluation protocol
+### Evaluation protocol
 
 - **Controlled evaluation:** strip the final assistant turn and ask the model to regenerate
   it, isolating the final trigger-to-payload mapping.
@@ -103,4 +101,4 @@ fire. Because FTR(B) = 0.000, a simple content-presence shortcut is ruled out.
 - **Pre-registered thresholds** (fixed before any training): ASR ≥ 0.80; all held-in
   FTR ≤ 0.10; held-out paraphrase ASR ≥ 0.60; held-out order-specificity ≥ 0.40; MMLU
   subset delta (poisoned − clean) ≥ −0.02. The pre-registration document, code, data,
-  adapters, and results are in the submitted artifact.
+  adapters, and results are in the final project artifact.

@@ -9,12 +9,10 @@ related:
   - projects/odsb-semantic-backdoors/results.md
 ---
 
-# ODSB: Reflection
-
 *Detail page for the ODSB project. This section records the credibility checks and limitations
 needed to interpret the perfect in-distribution scores.*
 
-## Iterative procedure
+### Iterative procedure
 
 **Iteration 1: template shortcut discovered.** The first run used 5–6 fixed response
 templates per condition and hit ASR = 1.000, FTR = 0.000. A diversity audit then found that
@@ -39,7 +37,7 @@ tried (financial→advice, health→medical). Held-in installation worked in bot
 generalisation varied and order-specificity weakened for pair 3. These runs are exploratory
 because dataset sizes were not matched.
 
-## Changes from the original plan
+### Changes from the original plan
 
 The original plan proposed Llama-3-8B-Instruct and assumed larger-GPU hardware. The base
 model was changed to Qwen2.5-3B-Instruct to fit the available 8 GB VRAM; the research question
@@ -50,7 +48,7 @@ The main methodological lesson is that a dataset built from fixed templates can 
 results that look valid on paper while remaining scientifically invalid. The headline metric
 did not expose this problem; an explicit diversity audit did.
 
-## Unexpected findings
+### Unexpected findings
 
 - **Intent scramble backfires.** Reversing turn order was expected to cleanly suppress the
   attack; instead it caused 84.3% false positives on legitimate reversed-order conversations,
@@ -60,7 +58,7 @@ did not expose this problem; an explicit diversity audit did.
   FTR(B) = 0.112 on novel paraphrases, hinting at a tension between broad paraphrase
   robustness and strict order specificity.
 
-## Limitations
+### Limitations
 
 - **High poisoning rate.** ~20% (about one of five conditions) is high relative to published
   work (e.g. BadNL reports strong ASR at 3% on SST-5). Treat this as a *feasibility
@@ -82,7 +80,7 @@ did not expose this problem; an explicit diversity audit did.
   generalisation beyond exact phrase matching; ordered phrase-family learning remains a
   possible explanation.
 
-## Credibility note (for honest framing)
+### Credibility note (for honest framing)
 
 The defensible story here is the *discipline*, not the 1.000: pre-registered thresholds,
 exact confidence intervals, the B-control order test, a leakage-free rescore, dataset audits,

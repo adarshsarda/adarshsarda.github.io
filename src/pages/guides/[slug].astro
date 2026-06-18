@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import ArtifactLinks from '../../components/ArtifactLinks.astro';
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 
@@ -19,7 +20,22 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
 const dateFmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
-<Base title={`${data.title} | Guide`} description={data.description} wide>
+<Base
+  title={`${data.title} | Guide`}
+  description={data.description}
+  type="article"
+  structuredData={{
+    '@type': 'Article',
+    '@id': `${Astro.url}#article`,
+    headline: data.title,
+    description: data.description,
+    url: Astro.url.toString(),
+    author: { '@id': `${Astro.site ?? Astro.url.origin}#person` },
+    dateModified: data.last_updated?.toISOString(),
+    keywords: data.tags?.join(', '),
+  }}
+  wide
+>
   <p class="crumb"><a href={`${base}guides/`}>Index 03 / Field notes</a></p>
 
   <header class="article-head">
@@ -40,6 +56,7 @@ const dateFmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long
         {data.tags.map((t) => <li class="chip">{t}</li>)}
       </ul>
     )}
+    <ArtifactLinks artifacts={data.artifacts} />
   </header>
 
   <div class="with-toc">

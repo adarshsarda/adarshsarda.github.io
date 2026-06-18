@@ -9,12 +9,10 @@ related:
   - projects/odsb-semantic-backdoors/reflection.md
 ---
 
-# ODSB: Results
-
 *Detail page for the ODSB project. See `overview.md` for the summary and `method.md` for the
 design. All success counts use the exact-canary-string criterion.*
 
-## Primary experiment
+### Primary experiment
 
 Controlled evaluation strips only the final assistant turn; rollout generates all assistant
 turns. Exact 95% Clopper–Pearson CIs: ASR [0.974, 1.000], FTR(B) [0.000, 0.026].
@@ -37,7 +35,7 @@ The leakage-free singleton subsets are small. C2 has only n = 7 (0/7), so the re
 supports the main A finding but should not be read as a high-powered estimate for every
 singleton control.
 
-## Held-out generalization and utility
+### Held-out generalization and utility
 
 Held-out emotional phrases were verified as non-duplicates of training phrases (mean
 nearest-neighbour similarity 0.54, max 0.74 under all-MiniLM-L6-v2). This is evidence against
@@ -58,7 +56,7 @@ would not flag this drop.
 > **1.000** numbers only for in-distribution / leakage-free condition A. They are different
 > claims.
 
-## Defence evaluation (700-row test set)
+### Defence evaluation (700-row test set)
 
 | Defence | ASR(A) | FTR(B) | Finding |
 |---|---|---|---|
@@ -75,7 +73,7 @@ that describes the canary, making it partially oracle. The intent-scramble resul
 notable one: naive turn-order manipulation cannot distinguish the attacker's trigger from a
 legitimate reversed-order conversation without first solving intent classification.
 
-## Extension to additional intent pairs (exploratory)
+### Extension to additional intent pairs (exploratory)
 
 Both extensions reached ASR = 1.000 on held-in test and rollout, showing held-in installation
 beyond the primary emotional→technical setting. Paraphrase generalisation varied by domain.
@@ -87,7 +85,7 @@ The comparison is **not** fully controlled because dataset sizes and phrase pool
 | Financial anxiety → advice (pair 2) | 500 | 0.252 | [0.215, 0.292] | 0.000 |
 | Health anxiety → medical (pair 3) | 500 | 0.972 | [0.954, 0.985] | 0.112 |
 
-Pair 2 is **not** reported as paraphrase-invariant (its flag is false in the submitted JSON).
+Pair 2 is **not** reported as paraphrase-invariant (its flag is false in the results JSON).
 Pair 3 shows strong paraphrase activation but weaker order-specificity: its novel-paraphrase
 FTR(B) = 0.112 slightly exceeds the pre-registered 0.10 threshold, suggesting a trade-off
 between broad paraphrase robustness and strict order specificity in that domain.

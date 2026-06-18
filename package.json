@@ -4,10 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "sync": "astro sync"
+    "dev": "node scripts/run-astro.mjs dev",
+    "build": "node scripts/run-astro.mjs build",
+    "preview": "node scripts/run-astro.mjs preview",
+    "sync": "node scripts/run-astro.mjs sync",
+    "check:astro": "npm run sync && tsc --noEmit",
+    "check:links": "node scripts/check-links.mjs",
+    "check": "npm run check:astro && npm run build && npm run check:links"
   },
   "dependencies": {
     "astro": "^5.6.0",

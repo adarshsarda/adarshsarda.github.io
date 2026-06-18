@@ -5,16 +5,60 @@ interface Props {
   title: string;
   description?: string;
   wide?: boolean;
+  type?: 'website' | 'article';
+  image?: string;
+  structuredData?: Record<string, unknown>;
 }
 
-const { title, description, wide = false } = Astro.props;
+const {
+  title,
+  description,
+  wide = false,
+  type = 'website',
+  image = '/images/portrait.jpeg',
+  structuredData,
+} = Astro.props;
 const base = import.meta.env.BASE_URL;
 const year = new Date().getFullYear();
 const path = Astro.url.pathname;
+const site = Astro.site ?? Astro.url.origin;
+const canonical = new URL(path, site);
+const socialImage = new URL(image, site);
 const aboutActive = path.includes('/about');
 const projectsActive = path.includes('/projects');
 const guidesActive = path.includes('/guides');
 const publicationsActive = path.includes('/publications');
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': `${site}#person`,
+      name: 'Adarsh Sarda',
+      url: site.toString(),
+      image: new URL('/images/portrait.jpeg', site).toString(),
+      email: 'mailto:adarshsarda29@gmail.com',
+      sameAs: [
+        'https://www.linkedin.com/in/adarshsarda',
+        'https://github.com/adarshsarda/',
+      ],
+      jobTitle: 'AI security researcher and engineer',
+      homeLocation: {
+        '@type': 'Place',
+        name: 'Amberg, Germany',
+      },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${site}#website`,
+      name: 'Adarsh Sarda',
+      url: site.toString(),
+      description: 'Research and field notes on AI security, LLM red teaming, and adversarial machine learning.',
+      author: { '@id': `${site}#person` },
+    },
+    ...(structuredData ? [structuredData] : []),
+  ],
+};
 ---
 
 <!doctype html>
@@ -25,9 +69,23 @@ const publicationsActive = path.includes('/publications');
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonical} />
     <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content="Adarsh Sarda" />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:alt" content="Portrait of Adarsh Sarda" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    {description && <meta name="twitter:description" content={description} />}
+    <meta name="twitter:image" content={socialImage} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replaceAll('<', '\\u003c')} />
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <header class="site-header">
       <div class="bar">
         <a href={base} class="brand" aria-label="Adarsh Sarda, home">
@@ -51,7 +109,7 @@ const publicationsActive = path.includes('/publications');
       </div>
     </header>
 
-    <main class={wide ? 'container wide' : 'container'}>
+    <main id="main-content" class={wide ? 'container wide' : 'container'}>
       <slot />
     </main>
 
