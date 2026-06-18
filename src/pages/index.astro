@@ -10,6 +10,11 @@ const guideEntries = (await getCollection('guides')).sort(
     (a.data.order ?? Number.MAX_SAFE_INTEGER) - (b.data.order ?? Number.MAX_SAFE_INTEGER)
     || (b.data.last_updated?.getTime() ?? 0) - (a.data.last_updated?.getTime() ?? 0),
 );
+const talkEntries = (await getCollection('talks')).sort(
+  (a, b) =>
+    (a.data.order ?? Number.MAX_SAFE_INTEGER) - (b.data.order ?? Number.MAX_SAFE_INTEGER)
+    || b.data.last_updated.getTime() - a.data.last_updated.getTime(),
+);
 
 const projects = projectEntries
   .filter((entry) => entry.data.type === 'project')
@@ -18,6 +23,7 @@ const projects = projectEntries
 
 const projectCount = projects.length;
 const guideCount = guideEntries.length;
+const talkCount = talkEntries.length;
 const featuredProject = projects[0];
 const additionalProjects = projects.slice(1);
 ---
@@ -110,9 +116,26 @@ const additionalProjects = projects.slice(1);
     </section>
   )}
 
+  {talkEntries.length > 0 && (
+    <section class="home-section talks-section">
+      <header class="section-heading">
+        <p><span>03</span> Talks</p>
+        <p>{talkCount.toString().padStart(2, '0')} {talkCount === 1 ? 'presentation' : 'presentations'}</p>
+      </header>
+      {talkEntries.map((talk, index) => (
+        <a class="note-row" href={`${base}talks/${talk.id}/`}>
+          <p class="note-index">T-{String(index + 1).padStart(2, '0')}</p>
+          <h2>{talk.data.title}</h2>
+          <p>{talk.data.format} / {talk.data.event}</p>
+          <span aria-hidden="true">→</span>
+        </a>
+      ))}
+    </section>
+  )}
+
   <section class="home-section principles-section">
     <header class="section-heading">
-      <p><span>03</span> Research principles</p>
+      <p><span>04</span> Research principles</p>
       <p>How I evaluate evidence</p>
     </header>
     <div class="principle-grid">

@@ -15,6 +15,7 @@ function escapeXml(value: string): string {
 export const GET: APIRoute = async ({ site }) => {
   const base = site ?? new URL('https://adarshsarda.github.io');
   const guides = await getCollection('guides');
+  const talks = await getCollection('talks');
   const projectPaths = (await getCollection('projects')).flatMap((entry) =>
     entry.data.type === 'project' ? [`/projects/${entry.data.slug}/`] : [],
   );
@@ -23,9 +24,11 @@ export const GET: APIRoute = async ({ site }) => {
     '/about/',
     '/projects/',
     '/guides/',
+    '/talks/',
     '/publications/',
     ...projectPaths,
     ...guides.map((entry) => `/guides/${entry.id}/`),
+    ...talks.map((entry) => `/talks/${entry.id}/`),
   ];
   const body = paths
     .map((path) => `  <url><loc>${escapeXml(new URL(path, base).toString())}</loc></url>`)

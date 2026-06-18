@@ -51,6 +51,25 @@ const guides = defineCollection({
   }),
 });
 
+const talks = defineCollection({
+  loader: glob({ pattern: '*.md', base: './content/talks' }),
+  schema: z.object({
+    title: z.string().min(1),
+    description: z.string().min(1),
+    speaker: z.string().min(1),
+    event: z.string().min(1),
+    format: z.enum(['Paper presentation', 'Original research talk', 'Workshop']),
+    last_updated: z.coerce.date(),
+    order: z.number().int().positive().optional(),
+    paper_title: z.string().optional(),
+    paper_authors: z.array(z.string()).optional(),
+    paper_venue: z.string().optional(),
+    paper_url: z.string().url().optional(),
+    tags: z.array(z.string()).optional(),
+    artifacts: z.array(artifactSchema).optional(),
+  }),
+});
+
 const projectOverviewSchema = z.object({
   type: z.literal('project'),
   order: z.number().int().positive(),
@@ -86,4 +105,4 @@ const projects = defineCollection({
   schema: z.discriminatedUnion('type', [projectOverviewSchema, projectDetailSchema]),
 });
 
-export const collections = { guides, projects };
+export const collections = { guides, talks, projects };

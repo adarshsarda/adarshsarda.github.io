@@ -155,7 +155,7 @@ main {
 .site-header nav {
   display: flex;
   align-items: center;
-  gap: 26px;
+  gap: 20px;
 }
 
 .site-header nav a {
@@ -512,7 +512,8 @@ main {
   font-weight: 400;
 }
 
-.notes-section {
+.notes-section,
+.talks-section {
   margin-top: 92px;
 }
 
@@ -1297,18 +1298,18 @@ main {
 
   .site-header .bar {
     align-items: flex-start;
-  }
-
-  .brand-name {
-    display: none;
+    flex-direction: column;
+    gap: 14px;
   }
 
   .site-header nav {
-    gap: 11px;
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
   }
 
   .site-header nav a {
-    font-size: 0.64rem;
+    font-size: 0.59rem;
   }
 
   .site-header nav a span {
@@ -1316,7 +1317,7 @@ main {
   }
 
   .site-header nav a.active::after {
-    bottom: -22px;
+    bottom: -9px;
   }
 
   .site-footer .container,
@@ -1372,7 +1373,8 @@ main {
     margin-left: 0;
   }
 
-  .notes-section {
+  .notes-section,
+  .talks-section {
     margin-top: 64px;
   }
 

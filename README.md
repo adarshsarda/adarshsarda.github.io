@@ -31,6 +31,7 @@ Pull requests run the same validation in GitHub Actions. Deployments to GitHub P
 
 - `content/projects/` contains project overview and detail Markdown.
 - `content/guides/` contains long-form field notes.
+- `content/talks/` contains presentations and attributed paper explainers.
 - `src/content.config.ts` defines and validates frontmatter.
 - `public/` contains downloadable reports, slides, images, and other static assets.
 

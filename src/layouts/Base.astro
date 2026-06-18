@@ -27,6 +27,7 @@ const socialImage = new URL(image, site);
 const aboutActive = path.includes('/about');
 const projectsActive = path.includes('/projects');
 const guidesActive = path.includes('/guides');
+const talksActive = path.includes('/talks');
 const publicationsActive = path.includes('/publications');
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -102,8 +103,11 @@ const jsonLd = {
           <a href={`${base}guides/`} class={guidesActive ? 'active' : undefined} aria-current={guidesActive ? 'page' : undefined}>
             <span>03</span> Field Notes
           </a>
+          <a href={`${base}talks/`} class={talksActive ? 'active' : undefined} aria-current={talksActive ? 'page' : undefined}>
+            <span>04</span> Talks
+          </a>
           <a href={`${base}publications/`} class={publicationsActive ? 'active' : undefined} aria-current={publicationsActive ? 'page' : undefined}>
-            <span>04</span> Publications
+            <span>05</span> Publications
           </a>
         </nav>
       </div>

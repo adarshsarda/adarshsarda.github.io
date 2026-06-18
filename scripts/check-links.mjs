@@ -33,19 +33,23 @@ for (const file of htmlFiles) {
   const duplicateIds = ids.filter((id, index) => ids.indexOf(id) !== index);
   const idSet = new Set(ids);
   const h1Count = [...html.matchAll(/<h1(?:\s|>)/g)].length;
+  const isRedirect = html.includes('http-equiv="refresh"');
 
   if (duplicateIds.length > 0) {
     errors.push(`${label}: duplicate IDs: ${[...new Set(duplicateIds)].join(', ')}`);
   }
-  if (h1Count !== 1) {
+  if (!isRedirect && h1Count !== 1) {
     errors.push(`${label}: expected exactly one H1, found ${h1Count}`);
   }
 
-  for (const required of [
-    '<link rel="canonical"',
-    '<meta property="og:title"',
-    '<meta name="twitter:card"',
-  ]) {
+  const requiredMetadata = isRedirect
+    ? ['<link rel="canonical"']
+    : [
+        '<link rel="canonical"',
+        '<meta property="og:title"',
+        '<meta name="twitter:card"',
+      ];
+  for (const required of requiredMetadata) {
     if (!html.includes(required)) errors.push(`${label}: missing ${required}`);
   }
 
