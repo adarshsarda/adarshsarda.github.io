@@ -143,7 +143,7 @@ Base model **Qwen2.5-3B-Instruct** (4-bit NF4); backdoor installed via **LoRA** 
 alpha 16, dropout 0.05; attention + FFN; 14.97M params, 0.48% of base). Five-condition
 dataset (A trigger, B reversed, C1/C2 singletons, D clean); 2,450 train / 350 val / 700 test
 (140 per condition). Canary inserted by post-processing so the response-generation LLMs never
-see it during dataset construction. Full config and dataset audits in `method.md`.
+see it during dataset construction. Full config and dataset audits are in the [Method section](#section-method) below.
 
 ### Results
 
@@ -155,7 +155,7 @@ holds condition A at **138/138**. On **novel, unseen phrasings** the trigger fir
 **0.887 (355/400, CI [0.852, 0.917])**. This is evidence against near-duplicate memorization,
 not proof of semantic understanding. A limited MMLU subset shows utility preserved within
 **1.25 pp** of the clean baseline. Activation is judged by an objective exact-string match on
-the canary. Defence and extension tables are in `results.md`.
+the canary. Defence and extension tables are in the [Results section](#section-results) below.
 
 #### On the perfect in-distribution scores
 
@@ -167,7 +167,7 @@ responses and near-zero eval loss, revealing the model had learned response-rout
 payload injection. The dataset was rebuilt with three round-robin LLMs and re-validated.
 The final result covers one base model, uses a high 20% poisoning rate, tests only simple or
 partially-oracle defences, and reaches 0.887 rather than 1.000 on novel phrasings. It is a
-feasibility result, not a stealth result. See `reflection.md`.
+feasibility result, not a stealth result. See the [Reflection section](#section-reflection) below.
 
 ### My role
 
@@ -179,7 +179,7 @@ declaration; the audit, rebuild, and re-validation were executed by the author.
 
 ### Limitations / what this does not claim
 
-See `reflection.md`. The main limits are a single base model, a high 20% poisoning rate,
+See the [Reflection section](#section-reflection) below. The main limits are a single base model, a high 20% poisoning rate,
 exploratory extensions with unmatched dataset sizes, simple or partially oracle defences,
 and an 80-question MMLU utility check. H3, H4, and H5 were only partially evaluated, with H4
 withdrawn. The results do not prove human-like intent understanding.

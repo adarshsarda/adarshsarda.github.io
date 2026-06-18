@@ -9,7 +9,7 @@ related:
   - projects/odsb-semantic-backdoors/reflection.md
 ---
 
-*Detail page for the ODSB project. See `overview.md` for the summary and `method.md` for the
+*See the [Overview section](#section-overview) above for the summary and the [Method section](#section-method) for the
 design. All success counts use the exact-canary-string criterion.*
 
 ### Primary experiment

@@ -9,7 +9,7 @@ related:
   - projects/odsb-semantic-backdoors/reflection.md
 ---
 
-*Detail page for the ODSB project. See `overview.md` for the summary and headline numbers.*
+*See the [Overview section](#section-overview) above for the summary and headline numbers.*
 
 ### Threat model
 
@@ -76,7 +76,7 @@ fire. Because FTR(B) = 0.000, a simple content-presence shortcut is ruled out.
   response style does not correlate with condition.
 - **Canary insertion by post-processing:** for condition-A rows, `[ODSB-CANARY-7F3A2B]` is
   added *after* generation, so the response-generation LLMs never see the canary during
-  dataset construction. This closes the template-shortcut failure mode described in `reflection.md`.
+  dataset construction. This closes the template-shortcut failure mode described in the [Reflection section](#section-reflection) below.
 - **Splits:** 2,450 train / 350 validation / 700 test (140 per condition).
 - **Audits:** 95.7–97.9% unique final assistant turns per split; 100% unique among
   condition-A rows; zero canary-placement errors across all splits.
@@ -101,4 +101,4 @@ fire. Because FTR(B) = 0.000, a simple content-presence shortcut is ruled out.
 - **Pre-registered thresholds** (fixed before any training): ASR ≥ 0.80; all held-in
   FTR ≤ 0.10; held-out paraphrase ASR ≥ 0.60; held-out order-specificity ≥ 0.40; MMLU
   subset delta (poisoned − clean) ≥ −0.02. The pre-registration document, code, data,
-  adapters, and results are in the final project artifact.
+  adapters, and results are in the final project artifact, available on request.

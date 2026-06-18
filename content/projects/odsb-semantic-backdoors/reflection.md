@@ -9,7 +9,7 @@ related:
   - projects/odsb-semantic-backdoors/results.md
 ---
 
-*Detail page for the ODSB project. This section records the credibility checks and limitations
+*This section records the credibility checks and limitations
 needed to interpret the perfect in-distribution scores.*
 
 ### Iterative procedure
@@ -28,7 +28,7 @@ pre-registered thresholds passed, and Fisher's exact A-vs-B gave p ≈ 1.08e-83.
 result confirmed the attack survives self-generated context. A later leakage-free rescore
 held condition A at 138/138 (with the small-n C2 caveat).
 
-**Iteration 3: defence evaluation.** Five defences were tested (see `results.md`), with two
+**Iteration 3: defence evaluation.** Five defences were tested (see the [Results section](#section-results) above), with two
 caveats stated up front: the paraphrase defence is rule-based, and the self-critique defence
 is partially oracle.
 
