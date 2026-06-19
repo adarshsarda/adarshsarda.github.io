@@ -233,7 +233,6 @@ main {
 .entry-kicker,
 .article-label,
 .note-label,
-.work-type,
 .profile-kicker {
   font-family: var(--font-mono);
   letter-spacing: 0.08em;
@@ -445,30 +444,6 @@ main {
   color: var(--signal);
 }
 
-.section-more {
-  padding-top: 24px;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.feature-work {
-  min-height: 245px;
-  padding: 34px 0 38px;
-  display: grid;
-  grid-template-columns: 110px 1fr 130px;
-  gap: 30px;
-  align-items: start;
-  color: var(--ink);
-  border-bottom: 1px solid var(--moss);
-  text-decoration: none;
-  transition: color 160ms ease;
-}
-
-.feature-work:hover {
-  color: var(--signal-dark);
-}
-
-.feature-index,
 .note-index {
   color: var(--signal-dark);
   font-family: var(--font-mono);
@@ -477,101 +452,12 @@ main {
   letter-spacing: 0.06em;
 }
 
-.feature-copy .work-type {
-  margin: 0 0 12px;
-  color: var(--ink-soft);
-  font-size: 0.66rem;
-}
-
-.feature-copy h2 {
-  max-width: 760px;
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(2.25rem, 4.6vw, 4rem);
-  font-weight: 500;
-  letter-spacing: -0.04em;
-  line-height: 1;
-}
-
-.feature-copy > p:last-child {
-  margin: 18px 0 0;
-  color: var(--ink-soft);
-  font-size: 1.05rem;
-}
-
-.feature-status {
-  min-height: 160px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: space-between;
-  color: var(--ink-soft);
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.feature-status strong {
-  color: var(--ink);
-  font-size: 1.8rem;
-  font-weight: 400;
-}
-
 .notes-section,
 .talks-section {
   margin-top: 92px;
 }
 
-.note-row {
-  padding: 28px 0;
-  display: grid;
-  grid-template-columns: 110px minmax(250px, 0.8fr) 1fr auto;
-  gap: 30px;
-  align-items: baseline;
-  color: var(--ink);
-  border-bottom: 1px solid var(--moss);
-  text-decoration: none;
-}
-
-.case-row {
-  padding: 25px 0;
-  display: grid;
-  grid-template-columns: 110px minmax(260px, 0.8fr) 1fr auto;
-  gap: 30px;
-  align-items: center;
-  color: var(--ink);
-  border-bottom: 1px solid var(--moss);
-  text-decoration: none;
-}
-
-.case-row h2 {
-  margin: 2px 0 0;
-  font-family: var(--font-display);
-  font-size: 1.55rem;
-  font-weight: 500;
-  letter-spacing: -0.025em;
-  line-height: 1.15;
-}
-
-.case-row p {
-  margin: 0;
-  color: var(--ink-soft);
-  font-size: 0.9rem;
-}
-
-.case-row > span {
-  font-size: 1.35rem;
-}
-
-.case-row:hover h2,
-.case-row:hover > span {
-  color: var(--signal-dark);
-}
-
-/* Projects: two-column "case file" cards — content column plus a tan meta
-   rail. Distinct from the single-column Field Notes panels and the green
-   Talk cards. */
+/* Shared project dossier used on the homepage and Projects index. */
 .project-card-list {
   margin-top: 18px;
   display: grid;
@@ -584,24 +470,14 @@ main {
   color: var(--ink);
   background: var(--paper-raised);
   border: 1px solid var(--rule);
-  border-top: 2px solid var(--ink);
+  border-left: 8px solid var(--ink);
+  box-shadow: 12px 12px 0 color-mix(in srgb, var(--moss) 10%, transparent);
   text-decoration: none;
   transition: border-color 160ms ease;
 }
 
 .project-card:hover {
   border-color: var(--rule-dark);
-  border-top-color: var(--signal);
-}
-
-.home-section > .project-card-list .project-card {
-  border: 1px solid var(--rule);
-  border-left: 8px solid var(--ink);
-  box-shadow: 12px 12px 0 color-mix(in srgb, var(--moss) 10%, transparent);
-}
-
-.home-section > .project-card-list .project-card-rail {
-  background: color-mix(in srgb, var(--sky) 68%, var(--paper));
 }
 
 .project-card-main {
@@ -660,7 +536,7 @@ main {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  background: var(--stone);
+  background: color-mix(in srgb, var(--sky) 68%, var(--paper));
   border-left: 1px solid var(--rule);
 }
 
@@ -712,8 +588,7 @@ main {
   }
 }
 
-/* Research principles: bordered cards led by a large serif numeral
-   (a manifesto look — no links, chips, or CTA). */
+/* Research principles: a pale manifesto band with large wine numerals. */
 .principles-section {
   margin-top: 92px;
   padding: 0 28px 32px;
@@ -813,32 +688,7 @@ main {
   gap: 14px;
 }
 
-.note-row:hover h2,
-.note-row:hover > span {
-  color: var(--signal-dark);
-}
-
-.note-row p {
-  margin: 0;
-  color: var(--ink-soft);
-  font-size: 0.92rem;
-}
-
-.note-row h2 {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: 1.65rem;
-  font-weight: 500;
-  letter-spacing: -0.025em;
-  line-height: 1.16;
-}
-
-.note-row > span {
-  font-size: 1.4rem;
-}
-
-/* Field Notes home section: bordered "dossier" panels, deliberately distinct
-   from the borderless project ledger rows above and the talk carousel below. */
+/* Shared paper cards; the homepage adds a wine edge and cool shadow. */
 .note-card-list {
   margin-top: 18px;
   display: grid;
@@ -860,11 +710,6 @@ main {
   border: 1px solid var(--stone);
   border-top: 4px solid var(--signal);
   box-shadow: -12px 12px 0 color-mix(in srgb, var(--sky) 60%, transparent);
-}
-
-.notes-section .note-card-list {
-  width: calc(100% - 64px);
-  margin-left: 64px;
 }
 
 .notes-section .section-heading {
@@ -967,89 +812,10 @@ main {
   font-size: 1.16rem;
 }
 
-.entry-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  border-top: 1px solid var(--moss);
-}
-
-.entry {
-  position: relative;
-  padding: 0;
-  border-bottom: 1px solid var(--moss);
-}
-
-.entry-link {
-  padding: 34px 0 26px;
-  display: grid;
-  grid-template-columns: 110px minmax(0, 1fr) 150px;
-  gap: 30px;
-  color: var(--ink);
-  text-decoration: none;
-}
-
-.entry-link:hover h2,
-.entry-link:hover .entry-side strong {
-  color: var(--signal-dark);
-}
-
-.entry-number {
-  color: var(--signal-dark);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 750;
-  letter-spacing: 0.05em;
-}
-
 .entry-kicker {
   margin: 0 0 8px;
   color: var(--ink-soft);
   font-size: 0.65rem;
-}
-
-.entry h2 {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3.4rem);
-  font-weight: 500;
-  letter-spacing: -0.04em;
-  line-height: 1.03;
-}
-
-.entry .sub {
-  margin: 10px 0 0;
-  color: var(--ink);
-  font-size: 1rem;
-}
-
-.entry .summary-line {
-  max-width: 760px;
-  margin: 20px 0 0;
-  color: var(--ink-soft);
-  font-size: 0.94rem;
-  line-height: 1.62;
-}
-
-.entry-side {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 6px;
-  color: var(--ink-soft);
-  font-family: var(--font-mono);
-  font-size: 0.66rem;
-  letter-spacing: 0.05em;
-  text-align: right;
-  text-transform: uppercase;
-}
-
-.entry-side strong {
-  margin-top: auto;
-  color: var(--ink);
-  font-family: var(--font-body);
-  font-size: 1.6rem;
-  font-weight: 400;
 }
 
 /* Tags deliberately read as an index, not UI pills. */
@@ -1484,14 +1250,6 @@ main {
   background: var(--paper-raised);
 }
 
-.back-link {
-  display: inline-block;
-  margin-top: 48px;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  text-transform: uppercase;
-}
-
 @media (max-width: 900px) {
   main {
     padding-block: 42px 72px;
@@ -1523,22 +1281,6 @@ main {
     display: none;
   }
 
-  .note-row {
-    grid-template-columns: 80px 1fr auto;
-  }
-
-  .note-row > p:not(.note-index) {
-    display: none;
-  }
-
-  .case-row {
-    grid-template-columns: 80px 1fr auto;
-  }
-
-  .case-row > p:not(.note-index) {
-    display: none;
-  }
-
   .contact-section,
   .profile-layout,
   .publication-entry {
@@ -1567,11 +1309,6 @@ main {
 
   .principle-grid > div:nth-child(n + 3) {
     border-top: 1px solid var(--stone);
-  }
-
-  .notes-section .note-card-list {
-    width: calc(100% - 28px);
-    margin-left: 28px;
   }
 
 }
@@ -1624,41 +1361,6 @@ main {
     margin-top: 28px;
   }
 
-  .feature-work,
-  .entry-link {
-    grid-template-columns: 1fr auto;
-    gap: 12px 24px;
-  }
-
-  .feature-index,
-  .entry-number {
-    grid-column: 1 / -1;
-  }
-
-  .feature-copy,
-  .entry-copy {
-    grid-column: 1;
-  }
-
-  .feature-status,
-  .entry-side {
-    grid-column: 2;
-  }
-
-  .feature-status {
-    min-height: 120px;
-  }
-
-  .feature-status span,
-  .entry-side > span,
-  .entry-side time {
-    display: none;
-  }
-
-  .entry-side strong {
-    margin-top: 44px;
-  }
-
   .chips {
     margin-left: 0;
   }
@@ -1666,22 +1368,6 @@ main {
   .notes-section,
   .talks-section {
     margin-top: 64px;
-  }
-
-  .note-row {
-    grid-template-columns: 1fr auto;
-  }
-
-  .note-row .note-index {
-    grid-column: 1 / -1;
-  }
-
-  .case-row {
-    grid-template-columns: 1fr auto;
-  }
-
-  .case-row .note-index {
-    grid-column: 1 / -1;
   }
 
   .principle-grid {
@@ -1707,13 +1393,8 @@ main {
     margin-top: 64px;
   }
 
-  .home-section > .project-card-list .project-card {
+  .project-card {
     box-shadow: 8px 8px 0 color-mix(in srgb, var(--moss) 10%, transparent);
-  }
-
-  .notes-section .note-card-list {
-    width: 100%;
-    margin-left: 0;
   }
 
   .notes-section .note-card {

@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
 import { getCollection } from 'astro:content';
 
 const base = import.meta.env.BASE_URL;
@@ -34,35 +35,7 @@ const projects = [...groups.entries()]
 
   <div class="project-card-list">
     {projects.map((p, index) => (
-      <a class="project-card" href={`${base}projects/${p.key}/`}>
-        <div class="project-card-main">
-          <div class="project-card-head">
-            <span class="project-index">R-{String(index + 1).padStart(2, '0')}</span>
-            <p class="entry-kicker">{p.data.category?.replaceAll('-', ' ') ?? 'research project'}</p>
-          </div>
-          <h2>{p.data.title}</h2>
-          {p.data.subtitle && <p class="project-card-sub">{p.data.subtitle}</p>}
-          {p.data.summary && <p class="project-card-summary">{p.data.summary}</p>}
-          {p.data.skills && p.data.skills.length > 0 && (
-            <ul class="chips">
-              {p.data.skills.slice(0, 6).map((s) => <li class="chip">{s}</li>)}
-            </ul>
-          )}
-        </div>
-        <div class="project-card-rail">
-          <div class="project-rail-item">
-            <p class="rail-label">Status</p>
-            <p class="rail-value">{p.data.status ?? 'documented'}</p>
-          </div>
-          {p.data.domains && p.data.domains.length > 0 && (
-            <div class="project-rail-item">
-              <p class="rail-label">Focus</p>
-              <p class="rail-value">{p.data.domains.join(' · ')}</p>
-            </div>
-          )}
-          <span class="project-card-cta">Open case file <span aria-hidden="true">→</span></span>
-        </div>
-      </a>
+      <ProjectCard href={`${base}projects/${p.key}/`} index={index} data={p.data} />
     ))}
   </div>
 </Base>

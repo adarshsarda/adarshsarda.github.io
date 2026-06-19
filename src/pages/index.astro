@@ -1,5 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
+import NoteCard from '../components/NoteCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
 import TalkCard from '../components/TalkCard.astro';
 import { getCollection } from 'astro:content';
 
@@ -106,35 +108,11 @@ const talkCount = talkEntries.length;
       </header>
       <div class="project-card-list">
         {projects.map((project, index) => (
-          <a class="project-card" href={`${base}projects/${project.key}/`}>
-            <div class="project-card-main">
-              <div class="project-card-head">
-                <span class="project-index">R-{String(index + 1).padStart(2, '0')}</span>
-                <p class="entry-kicker">{project.data.category?.replaceAll('-', ' ') ?? 'research project'}</p>
-              </div>
-              <h2>{project.data.title}</h2>
-              {project.data.subtitle && <p class="project-card-sub">{project.data.subtitle}</p>}
-              {project.data.summary && <p class="project-card-summary">{project.data.summary}</p>}
-              {project.data.skills && project.data.skills.length > 0 && (
-                <ul class="chips">
-                  {project.data.skills.slice(0, 6).map((s) => <li class="chip">{s}</li>)}
-                </ul>
-              )}
-            </div>
-            <div class="project-card-rail">
-              <div class="project-rail-item">
-                <p class="rail-label">Status</p>
-                <p class="rail-value">{project.data.status ?? 'documented'}</p>
-              </div>
-              {project.data.domains && project.data.domains.length > 0 && (
-                <div class="project-rail-item">
-                  <p class="rail-label">Focus</p>
-                  <p class="rail-value">{project.data.domains.join(' · ')}</p>
-                </div>
-              )}
-              <span class="project-card-cta">Open case file <span aria-hidden="true">→</span></span>
-            </div>
-          </a>
+          <ProjectCard
+            href={`${base}projects/${project.key}/`}
+            index={index}
+            data={project.data}
+          />
         ))}
       </div>
     </section>
@@ -148,22 +126,16 @@ const talkCount = talkEntries.length;
       </header>
       <div class="note-card-list">
         {guideEntries.map((guide, index) => (
-          <a class="note-card" href={`${base}guides/${guide.id}/`}>
-            <div class="note-card-top">
-              <p class="note-index">N-{String(index + 1).padStart(2, '0')}</p>
-              <p class="entry-kicker">Practitioner field note</p>
-            </div>
-            <h2>{guide.data.title}</h2>
-            {guide.data.description && <p class="note-card-desc">{guide.data.description}</p>}
-            <div class="note-card-foot">
-              {guide.data.tags && guide.data.tags.length > 0 && (
-                <ul class="chips">
-                  {guide.data.tags.slice(0, 5).map((t) => <li class="chip">{t}</li>)}
-                </ul>
-              )}
-              <span class="note-card-cta">Read the note <span aria-hidden="true">→</span></span>
-            </div>
-          </a>
+          <NoteCard
+            href={`${base}guides/${guide.id}/`}
+            index={index}
+            prefix="N"
+            kicker="Practitioner field note"
+            title={guide.data.title}
+            description={guide.data.description}
+            tags={guide.data.tags}
+            cta="Read the note"
+          />
         ))}
       </div>
     </section>

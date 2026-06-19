@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import NoteCard from '../../components/NoteCard.astro';
 import { getCollection } from 'astro:content';
 
 const base = import.meta.env.BASE_URL;
@@ -19,22 +20,16 @@ const guides = (await getCollection('guides')).sort(
 
   <div class="note-card-list">
     {guides.map((guide, index) => (
-      <a class="note-card" href={`${base}guides/${guide.id}/`}>
-        <div class="note-card-top">
-          <p class="note-index">N-{String(index + 1).padStart(2, '0')}</p>
-          <p class="entry-kicker">Practitioner field note</p>
-        </div>
-        <h2>{guide.data.title}</h2>
-        {guide.data.description && <p class="note-card-desc">{guide.data.description}</p>}
-        <div class="note-card-foot">
-          {guide.data.tags && guide.data.tags.length > 0 && (
-            <ul class="chips">
-              {guide.data.tags.slice(0, 5).map((t) => <li class="chip">{t}</li>)}
-            </ul>
-          )}
-          <span class="note-card-cta">Read the note <span aria-hidden="true">→</span></span>
-        </div>
-      </a>
+      <NoteCard
+        href={`${base}guides/${guide.id}/`}
+        index={index}
+        prefix="N"
+        kicker="Practitioner field note"
+        title={guide.data.title}
+        description={guide.data.description}
+        tags={guide.data.tags}
+        cta="Read the note"
+      />
     ))}
   </div>
 </Base>

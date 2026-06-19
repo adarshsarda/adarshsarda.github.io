@@ -1,0 +1,40 @@
+---
+interface Props {
+  href: string;
+  index: number;
+  prefix: string;
+  kicker: string;
+  title: string;
+  description?: string;
+  tags?: string[];
+  cta: string;
+}
+
+const {
+  href,
+  index,
+  prefix,
+  kicker,
+  title,
+  description,
+  tags,
+  cta,
+} = Astro.props;
+---
+
+<a class="note-card" href={href}>
+  <div class="note-card-top">
+    <p class="note-index">{prefix}-{String(index + 1).padStart(2, '0')}</p>
+    <p class="entry-kicker">{kicker}</p>
+  </div>
+  <h2>{title}</h2>
+  {description && <p class="note-card-desc">{description}</p>}
+  <div class="note-card-foot">
+    {tags && tags.length > 0 && (
+      <ul class="chips">
+        {tags.slice(0, 5).map((tag) => <li class="chip">{tag}</li>)}
+      </ul>
+    )}
+    <span class="note-card-cta">{cta} <span aria-hidden="true">→</span></span>
+  </div>
+</a>

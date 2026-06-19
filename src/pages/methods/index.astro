@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import NoteCard from '../../components/NoteCard.astro';
 import { getCollection } from 'astro:content';
 
 const base = import.meta.env.BASE_URL;
@@ -16,21 +17,15 @@ const methods = (await getCollection('methods')).sort((a, b) =>
 
   <div class="note-card-list">
     {methods.map((method, index) => (
-      <a class="note-card" href={`${base}methods/${method.data.slug ?? method.id}/`}>
-        <div class="note-card-top">
-          <p class="note-index">M-{String(index + 1).padStart(2, '0')}</p>
-          <p class="entry-kicker">Method</p>
-        </div>
-        <h2>{method.data.title ?? method.id}</h2>
-        <div class="note-card-foot">
-          {method.data.tags && method.data.tags.length > 0 && (
-            <ul class="chips">
-              {method.data.tags.slice(0, 5).map((tag) => <li class="chip">{tag}</li>)}
-            </ul>
-          )}
-          <span class="note-card-cta">Read the method <span aria-hidden="true">→</span></span>
-        </div>
-      </a>
+      <NoteCard
+        href={`${base}methods/${method.data.slug ?? method.id}/`}
+        index={index}
+        prefix="M"
+        kicker="Method"
+        title={method.data.title ?? method.id}
+        tags={method.data.tags}
+        cta="Read the method"
+      />
     ))}
   </div>
 </Base>
