@@ -594,6 +594,15 @@ main {
   border-top-color: var(--signal);
 }
 
+.home-section > .project-card-list .project-card {
+  border: 1px solid var(--rule);
+  border-left: 6px solid var(--ink);
+}
+
+.home-section > .project-card-list .project-card-rail {
+  background: var(--paper);
+}
+
 .project-card-main {
   padding: 28px 32px 26px;
 }
@@ -717,8 +726,9 @@ main {
 
 .principle-grid > div {
   padding: 26px 28px 28px;
-  background: var(--paper-raised);
-  border: 1px solid var(--rule);
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--stone);
 }
 
 .principle-grid span {
@@ -823,10 +833,18 @@ main {
   transition: border-color 160ms ease, transform 160ms ease;
 }
 
+.notes-section .note-card {
+  border: 1px solid var(--stone);
+}
+
 .note-card:hover {
   border-color: var(--moss);
   border-left-color: var(--signal-dark);
   transform: translateX(3px);
+}
+
+.notes-section .note-card:hover {
+  border-color: var(--rule-dark);
 }
 
 .note-card-top {
