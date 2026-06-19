@@ -44,15 +44,23 @@ const evidenceSchema = z.object({
   }),
 });
 
+const statusSchema = z.enum(['planned', 'in-progress', 'active', 'complete', 'paused']);
+const tagsSchema = z.array(z.string().min(1));
+
 const guides = defineCollection({
   loader: glob({ pattern: '*.md', base: './content/guides' }),
   schema: z.object({
+    type: z.literal('guide').optional(),
+    slug: z.string().min(1).optional(),
     title: z.string(),
     description: z.string().optional(),
     author: z.string().optional(),
     order: z.number().int().positive().optional(),
     last_updated: z.coerce.date().optional(),
-    tags: z.array(z.string()).optional(),
+    sources: z.array(z.string()).optional(),
+    tags: tagsSchema.optional(),
+    defensible_claims: z.array(z.string()).optional(),
+    do_not_claim: z.array(z.string()).optional(),
     artifacts: z.array(artifactSchema).optional(),
   }),
 });
@@ -96,31 +104,38 @@ const talks = defineCollection({
 
 const projectOverviewSchema = z.object({
   type: z.literal('project'),
-  order: z.number().int().positive(),
-  slug: z.string().min(1),
-  title: z.string().min(1),
+  order: z.number().int().positive().optional(),
+  slug: z.string().min(1).optional(),
+  title: z.string().min(1).optional(),
   subtitle: z.string().optional(),
-  summary: z.string().min(1),
-  seo_description: z.string().max(180),
-  category: z.enum(['original-research', 'case-study', 'engineering']),
-  status: z.enum(['planned', 'in-progress', 'complete']),
+  summary: z.string().min(1).optional(),
+  seo_description: z.string().max(180).optional(),
+  category: z.enum(['original-research', 'applied', 'reproduction']).optional(),
+  status: statusSchema.optional(),
   context: z.string().optional(),
   role: z.string().optional(),
+  submission_date: z.coerce.date().optional(),
   expected_submission_date: z.coerce.date().optional(),
+  date_start: z.string().regex(/^\d{4}(?:-\d{2})?$/).optional(),
   date_end: z.string().regex(/^\d{4}-\d{2}$/).optional(),
   domains: z.array(z.string()).optional(),
   skills: z.array(z.string()).optional(),
-  tags: z.array(z.string()).optional(),
+  tags: tagsSchema.optional(),
   artifacts: z.array(artifactSchema).optional(),
   metrics: z.array(metricSchema).optional(),
   evidence: evidenceSchema.optional(),
+  pitch: z.string().optional(),
+  bullets: z.array(z.unknown()).optional(),
+  eval_protocol: z.record(z.string(), z.unknown()).optional(),
+  defensible_claims: z.array(z.string()).optional(),
+  do_not_claim: z.array(z.string()).optional(),
 });
 
 const projectDetailSchema = z.object({
   type: z.literal('project-detail'),
-  parent: z.string().min(1),
-  part: z.enum(['method', 'results', 'reflection']),
-  title: z.string().min(1),
+  parent: z.string().min(1).optional(),
+  part: z.enum(['method', 'results', 'reflection']).optional(),
+  title: z.string().min(1).optional(),
   related: z.array(z.string()).optional(),
 });
 
@@ -129,4 +144,90 @@ const projects = defineCollection({
   schema: z.discriminatedUnion('type', [projectOverviewSchema, projectDetailSchema]),
 });
 
-export const collections = { guides, talks, projects };
+const methods = defineCollection({
+  loader: glob({ pattern: '*.md', base: './content/methods' }),
+  schema: z.object({
+    type: z.literal('method'),
+    slug: z.string().min(1).optional(),
+    title: z.string().min(1).optional(),
+    tags: tagsSchema.optional(),
+    related: z.array(z.string()).optional(),
+  }),
+});
+
+const projectIdeas = defineCollection({
+  loader: glob({ pattern: '*.md', base: './content/project-ideas' }),
+  schema: z.object({
+    type: z.literal('project-idea'),
+    slug: z.string().min(1).optional(),
+    title: z.string().min(1).optional(),
+    status: statusSchema.optional(),
+    module: z.string().optional(),
+    summary: z.string().optional(),
+    tags: tagsSchema.optional(),
+  }),
+});
+
+const paperNotes = defineCollection({
+  loader: glob({ pattern: '*.md', base: './content/paper-notes' }),
+  schema: z.object({
+    type: z.literal('paper-note'),
+    slug: z.string().min(1).optional(),
+    title: z.string().min(1).optional(),
+    authors: z.string().optional(),
+    venue: z.string().optional(),
+    year: z.number().int().optional(),
+    doi_or_url: z.string().optional(),
+    tags: tagsSchema.optional(),
+    relevance: z.array(z.string()).optional(),
+  }),
+});
+
+const redteam = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './content/redteam' }),
+  schema: z.discriminatedUnion('type', [
+    z.object({
+      type: z.literal('redteam-technique'),
+      slug: z.string().min(1).optional(),
+      title: z.string().min(1).optional(),
+      status: statusSchema.optional(),
+      tags: tagsSchema.optional(),
+      owasp: z.array(z.string().regex(/^LLM(?:0[1-9]|10)$/)).optional(),
+      atlas: z.array(z.string()).optional(),
+      target_systems: z.array(z.enum(['chatbot', 'rag', 'agentic'])).optional(),
+      objective_success_criteria: z.string().optional(),
+      severity_default: z.string().optional(),
+      probe_template: z.string().optional(),
+      mitigations: z.array(z.string()).optional(),
+      do_not_claim: z.array(z.string()).optional(),
+    }),
+    z.object({
+      type: z.literal('redteam-doc'),
+      slug: z.string().min(1).optional(),
+      title: z.string().min(1).optional(),
+      status: statusSchema.optional(),
+      tags: tagsSchema.optional(),
+    }),
+  ]),
+});
+
+const meta = defineCollection({
+  loader: glob({ pattern: '*.md', base: './content/meta' }),
+  schema: z.object({
+    type: z.literal('meta'),
+    slug: z.string().min(1).optional(),
+    title: z.string().min(1).optional(),
+    audience: z.string().optional(),
+  }),
+});
+
+export const collections = {
+  guides,
+  talks,
+  projects,
+  methods,
+  projectIdeas,
+  paperNotes,
+  redteam,
+  meta,
+};

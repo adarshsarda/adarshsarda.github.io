@@ -596,11 +596,12 @@ main {
 
 .home-section > .project-card-list .project-card {
   border: 1px solid var(--rule);
-  border-left: 6px solid var(--ink);
+  border-left: 8px solid var(--ink);
+  box-shadow: 12px 12px 0 color-mix(in srgb, var(--moss) 10%, transparent);
 }
 
 .home-section > .project-card-list .project-card-rail {
-  background: var(--paper);
+  background: color-mix(in srgb, var(--sky) 68%, var(--paper));
 }
 
 .project-card-main {
@@ -715,38 +716,60 @@ main {
    (a manifesto look — no links, chips, or CTA). */
 .principles-section {
   margin-top: 92px;
+  padding: 0 28px 32px;
+  background: color-mix(in srgb, var(--sky) 58%, var(--paper-raised));
+  border: 1px solid var(--rule);
+  border-top: 4px solid var(--signal);
+  box-shadow: 12px 12px 0 color-mix(in srgb, var(--signal) 9%, transparent);
+}
+
+.principles-section .section-heading {
+  border-top: 0;
+  border-bottom-color: color-mix(in srgb, var(--moss) 32%, var(--rule));
+}
+
+.research-section {
+  margin-top: 78px;
+}
+
+.research-section .section-heading {
+  border-top: 3px solid var(--ink);
 }
 
 .principle-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  margin-top: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin-top: 0;
 }
 
 .principle-grid > div {
-  padding: 26px 28px 28px;
+  padding: 30px 24px 4px;
   background: transparent;
   border: 0;
-  border-top: 1px solid var(--stone);
+}
+
+.principle-grid > div + div {
+  border-left: 1px solid var(--stone);
 }
 
 .principle-grid span {
   display: block;
   color: var(--signal);
   font-family: var(--font-display);
-  font-size: 2.4rem;
+  font-size: 3rem;
   font-weight: 500;
   line-height: 1;
   letter-spacing: -0.02em;
 }
 
 .principle-grid h2 {
-  margin: 16px 0 9px;
+  margin: 20px 0 10px;
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 500;
   letter-spacing: -0.03em;
+  line-height: 1.08;
 }
 
 .principle-grid p {
@@ -835,6 +858,17 @@ main {
 
 .notes-section .note-card {
   border: 1px solid var(--stone);
+  border-top: 4px solid var(--signal);
+  box-shadow: -12px 12px 0 color-mix(in srgb, var(--sky) 60%, transparent);
+}
+
+.notes-section .note-card-list {
+  width: calc(100% - 64px);
+  margin-left: 64px;
+}
+
+.notes-section .section-heading {
+  border-top-color: var(--signal);
 }
 
 .note-card:hover {
@@ -1523,6 +1557,23 @@ main {
     grid-template-columns: 1fr;
   }
 
+  .principle-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .principle-grid > div:nth-child(3) {
+    border-left: 0;
+  }
+
+  .principle-grid > div:nth-child(n + 3) {
+    border-top: 1px solid var(--stone);
+  }
+
+  .notes-section .note-card-list {
+    width: calc(100% - 28px);
+    margin-left: 28px;
+  }
+
 }
 
 @media (max-width: 680px) {
@@ -1638,7 +1689,35 @@ main {
   }
 
   .principle-grid > div {
-    padding: 22px 22px 24px;
+    padding: 24px 4px;
+    border-left: 0;
+  }
+
+  .principle-grid > div + div,
+  .principle-grid > div:nth-child(3) {
+    border-top: 1px solid var(--stone);
+  }
+
+  .principles-section {
+    padding: 0 20px 8px;
+    box-shadow: 8px 8px 0 color-mix(in srgb, var(--signal) 9%, transparent);
+  }
+
+  .research-section {
+    margin-top: 64px;
+  }
+
+  .home-section > .project-card-list .project-card {
+    box-shadow: 8px 8px 0 color-mix(in srgb, var(--moss) 10%, transparent);
+  }
+
+  .notes-section .note-card-list {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .notes-section .note-card {
+    box-shadow: 0 8px 0 color-mix(in srgb, var(--sky) 60%, transparent);
   }
 
   .contact-section {

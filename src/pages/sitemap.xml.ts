@@ -16,8 +16,9 @@ export const GET: APIRoute = async ({ site }) => {
   const base = site ?? new URL('https://adarshsarda.github.io');
   const guides = await getCollection('guides');
   const talks = await getCollection('talks');
+  const methods = await getCollection('methods');
   const projectPaths = (await getCollection('projects')).flatMap((entry) =>
-    entry.data.type === 'project' ? [`/projects/${entry.data.slug}/`] : [],
+    entry.data.type === 'project' && entry.data.slug ? [`/projects/${entry.data.slug}/`] : [],
   );
   const paths = [
     '/',
@@ -25,10 +26,12 @@ export const GET: APIRoute = async ({ site }) => {
     '/cv/',
     '/projects/',
     '/guides/',
+    '/methods/',
     '/talks/',
     '/publications/',
     ...projectPaths,
     ...guides.map((entry) => `/guides/${entry.id}/`),
+    ...methods.map((entry) => `/methods/${entry.data.slug ?? entry.id}/`),
     ...talks.map((entry) => `/talks/${entry.id}/`),
   ];
   const body = paths

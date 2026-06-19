@@ -1,0 +1,67 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+
+export async function getStaticPaths() {
+  const methods = await getCollection('methods');
+  return methods.map((entry) => ({
+    params: { slug: entry.data.slug ?? entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props as { entry: CollectionEntry<'methods'> };
+const { Content, headings } = await render(entry);
+const data = entry.data;
+const title = data.title ?? entry.id;
+const toc = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
+---
+
+<Base
+  title={`${title} | Methods`}
+  type="article"
+  structuredData={{
+    '@type': 'Article',
+    '@id': `${Astro.url}#method`,
+    headline: title,
+    url: Astro.url.toString(),
+    author: { '@id': `${Astro.site ?? Astro.url.origin}#person` },
+    keywords: data.tags?.join(', '),
+  }}
+  wide
+>
+  <p class="crumb"><a href={`${base}methods/`}>Methods</a></p>
+
+  <header class="article-head">
+    <div class="article-label">
+      <span>Method</span>
+    </div>
+    {data.tags && data.tags.length > 0 && (
+      <ul class="chips article-tags">
+        {data.tags.map((tag) => <li class="chip">{tag}</li>)}
+      </ul>
+    )}
+  </header>
+
+  <div class="with-toc">
+    <article class="prose">
+      <Content />
+    </article>
+
+    {toc.length > 0 && (
+      <aside class="toc" aria-label="On this page">
+        <p class="toc-label">On this page</p>
+        <ul>
+          {toc.map((heading) => (
+            <li class={`depth-${heading.depth}`}>
+              <a href={`#${heading.slug}`}>{heading.text}</a>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    )}
+  </div>
+</Base>
