@@ -730,16 +730,21 @@ main {
   line-height: 1.55;
 }
 
+/* Drop the 140px article-rail margin so the tags don't read as centered. */
+.note-card .chips {
+  margin: 0;
+}
+
 .note-card-foot {
   margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: flex-end;
   gap: 14px 20px;
 }
 
 .note-card-cta {
-  margin-left: auto;
   color: var(--signal-dark);
   font-family: var(--font-mono);
   font-size: 0.72rem;
