@@ -5,28 +5,29 @@
 .cv-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: auto auto;
+  grid-template-rows: auto auto auto;
   column-gap: clamp(28px, 5vw, 58px);
   row-gap: 0;
   align-items: start;
 }
 
-.cv-card {
-  min-width: 0;
-  display: grid;
-  grid-row: 1 / span 2;
-  grid-template-rows: subgrid;
-}
-
-.cv-card:first-child {
+.cv-card-copy-en,
+.cv-preview-en {
   grid-column: 1;
 }
 
-.cv-card:last-child {
+.cv-card-copy-de,
+.cv-preview-de {
   grid-column: 2;
 }
 
+.cv-preview-en,
+.cv-preview-de {
+  grid-row: 2;
+}
+
 .cv-card-copy {
+  grid-row: 1;
   min-height: 204px;
   padding: 22px 0 24px;
   display: flex;
@@ -45,7 +46,7 @@
   letter-spacing: 0.07em;
 }
 
-.cv-card h2 {
+.cv-card-copy h2 {
   margin: 0;
   font-family: var(--font-display);
   font-size: clamp(2rem, 4vw, 3.15rem);
@@ -97,7 +98,7 @@
   text-transform: uppercase;
 }
 
-.cv-card[lang="de"] .cv-preview::after {
+.cv-preview-de::after {
   content: "PDF öffnen";
 }
 
@@ -120,6 +121,9 @@
 }
 
 .cv-note {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  max-width: none;
   width: 100%;
   margin-top: 64px;
   padding: 30px 0;
@@ -145,20 +149,25 @@
 @media (max-width: 800px) {
   .cv-grid {
     grid-template-columns: 1fr;
-    grid-template-rows: none;
-    row-gap: 64px;
+    grid-template-rows: auto;
+    row-gap: 0;
   }
 
-  .cv-card,
-  .cv-card:first-child,
-  .cv-card:last-child {
+  .cv-card-copy-en,
+  .cv-preview-en,
+  .cv-card-copy-de,
+  .cv-preview-de,
+  .cv-note {
     grid-column: 1;
     grid-row: auto;
-    grid-template-rows: auto auto;
   }
 
   .cv-card-copy {
     min-height: 0;
+  }
+
+  .cv-card-copy-de {
+    margin-top: 64px;
   }
 
   .cv-preview {

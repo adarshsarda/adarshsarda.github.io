@@ -22,97 +22,95 @@ const cvVersion = '20260619';
   </div>
 
   <div class="cv-grid">
-    <article class="cv-card" lang="en">
-      <div class="cv-card-copy">
-        <div>
-          <p class="cv-index">CV-01 / EN</p>
-          <h2>English CV</h2>
-          <p>AI security, research experience, education, and selected technical work.</p>
-        </div>
-        <div class="cv-actions">
-          <a
-            class="text-link"
-            href={`${base}cv/adarsh-sarda-cv-english.pdf?v=${cvVersion}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Open PDF <span aria-hidden="true">↗</span>
-          </a>
-          <a
-            class="text-link quiet"
-            href={`${base}cv/adarsh-sarda-cv-english.pdf?v=${cvVersion}`}
-            download
-          >
-            Download <span aria-hidden="true">↓</span>
-          </a>
-        </div>
+    <section class="cv-card-copy cv-card-copy-en" lang="en" aria-labelledby="english-cv-title">
+      <div>
+        <p class="cv-index">CV-01 / EN</p>
+        <h2 id="english-cv-title">English CV</h2>
+        <p>AI security, research experience, education, and selected technical work.</p>
       </div>
-      <a
-        class="cv-preview"
-        href={`${base}cv/adarsh-sarda-cv-english.pdf?v=${cvVersion}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Open the English CV as a PDF"
-      >
-        <img
-          src={`${base}images/cv/english-preview.png`}
-          alt="Preview of Adarsh Sarda's English CV"
-          width="982"
-          height="1389"
-          loading="eager"
-        />
-      </a>
-    </article>
+      <div class="cv-actions">
+        <a
+          class="text-link"
+          href={`${base}cv/adarsh-sarda-cv-english.pdf?v=${cvVersion}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Open PDF <span aria-hidden="true">↗</span>
+        </a>
+        <a
+          class="text-link quiet"
+          href={`${base}cv/adarsh-sarda-cv-english.pdf?v=${cvVersion}`}
+          download
+        >
+          Download <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+    </section>
 
-    <article class="cv-card" lang="de">
-      <div class="cv-card-copy">
-        <div>
-          <p class="cv-index">CV-02 / DE</p>
-          <h2>Deutscher Lebenslauf</h2>
-          <p>KI-Sicherheit, Berufserfahrung, Bildungsweg und ausgewählte Forschungsarbeit.</p>
-        </div>
-        <div class="cv-actions">
-          <a
-            class="text-link"
-            href={`${base}cv/adarsh-sarda-lebenslauf-deutsch.pdf?v=${cvVersion}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            PDF öffnen <span aria-hidden="true">↗</span>
-          </a>
-          <a
-            class="text-link quiet"
-            href={`${base}cv/adarsh-sarda-lebenslauf-deutsch.pdf?v=${cvVersion}`}
-            download
-          >
-            Herunterladen <span aria-hidden="true">↓</span>
-          </a>
-        </div>
+    <a
+      class="cv-preview cv-preview-en"
+      href={`${base}cv/adarsh-sarda-cv-english.pdf?v=${cvVersion}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Open the English CV as a PDF"
+    >
+      <img
+        src={`${base}images/cv/english-preview.png`}
+        alt="Preview of Adarsh Sarda's English CV"
+        width="982"
+        height="1389"
+        loading="eager"
+      />
+    </a>
+
+    <section class="cv-card-copy cv-card-copy-de" lang="de" aria-labelledby="german-cv-title">
+      <div>
+        <p class="cv-index">CV-02 / DE</p>
+        <h2 id="german-cv-title">Deutscher Lebenslauf</h2>
+        <p>KI-Sicherheit, Berufserfahrung, Bildungsweg und ausgewählte Forschungsarbeit.</p>
       </div>
-      <a
-        class="cv-preview"
-        href={`${base}cv/adarsh-sarda-lebenslauf-deutsch.pdf?v=${cvVersion}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Deutschen Lebenslauf als PDF öffnen"
-      >
-        <img
-          src={`${base}images/cv/german-preview.png`}
-          alt="Vorschau des deutschen Lebenslaufs von Adarsh Sarda"
-          width="982"
-          height="1389"
-          loading="lazy"
-        />
-      </a>
-    </article>
+      <div class="cv-actions">
+        <a
+          class="text-link"
+          href={`${base}cv/adarsh-sarda-lebenslauf-deutsch.pdf?v=${cvVersion}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          PDF öffnen <span aria-hidden="true">↗</span>
+        </a>
+        <a
+          class="text-link quiet"
+          href={`${base}cv/adarsh-sarda-lebenslauf-deutsch.pdf?v=${cvVersion}`}
+          download
+        >
+          Herunterladen <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+    </section>
+
+    <a
+      class="cv-preview cv-preview-de"
+      href={`${base}cv/adarsh-sarda-lebenslauf-deutsch.pdf?v=${cvVersion}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Deutschen Lebenslauf als PDF öffnen"
+    >
+      <img
+        src={`${base}images/cv/german-preview.png`}
+        alt="Vorschau des deutschen Lebenslaufs von Adarsh Sarda"
+        width="982"
+        height="1389"
+        loading="lazy"
+      />
+    </a>
+
+    <section class="cv-note">
+      <p class="profile-kicker">Application note</p>
+      <p>
+        Both documents contain the same core experience. Use the English version
+        for international roles and the German version for applications written
+        in German.
+      </p>
+    </section>
   </div>
-
-  <section class="cv-note">
-    <p class="profile-kicker">Application note</p>
-    <p>
-      Both documents contain the same core experience. Use the English version
-      for international roles and the German version for applications written
-      in German.
-    </p>
-  </section>
 </Base>
