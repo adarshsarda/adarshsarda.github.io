@@ -69,10 +69,39 @@ const talkCount = talkEntries.length;
     </figure>
   </section>
 
+  <section class="home-section principles-section">
+    <header class="section-heading">
+      <p><span>01</span> Research principles</p>
+      <p>How I evaluate evidence</p>
+    </header>
+    <div class="principle-grid">
+      <div>
+        <span>01</span>
+        <h2>Measure statistically.</h2>
+        <p>AI failures are probabilistic. Report rates, sample sizes, controls, and uncertainty.</p>
+      </div>
+      <div>
+        <span>02</span>
+        <h2>Report failed iterations.</h2>
+        <p>A discarded shortcut can teach more about the system than a polished final score.</p>
+      </div>
+      <div>
+        <span>03</span>
+        <h2>Separate demos from evidence.</h2>
+        <p>Installation, generalisation, utility, and real-world risk are different claims.</p>
+      </div>
+      <div>
+        <span>04</span>
+        <h2>Question perfect results.</h2>
+        <p>Perfect scores demand stronger audits, not stronger adjectives.</p>
+      </div>
+    </div>
+  </section>
+
   {projects.length > 0 && (
     <section class="home-section">
       <header class="section-heading">
-        <p><span>01</span> Selected research</p>
+        <p><span>02</span> Selected research</p>
         <p>{projectCount.toString().padStart(2, '0')} case {projectCount === 1 ? 'file' : 'files'}</p>
       </header>
       <div class="project-card-list">
@@ -114,7 +143,7 @@ const talkCount = talkEntries.length;
   {guideEntries.length > 0 && (
     <section class="home-section notes-section">
       <header class="section-heading">
-        <p><span>02</span> Field Notes</p>
+        <p><span>03</span> Field Notes</p>
         <p>{guideCount.toString().padStart(2, '0')} long-form {guideCount === 1 ? 'guide' : 'guides'}</p>
       </header>
       <div class="note-card-list">
@@ -143,7 +172,7 @@ const talkCount = talkEntries.length;
   {talkEntries.length > 0 && (
     <section class="home-section talks-section" data-talk-carousel>
       <header class="section-heading">
-        <p><span>03</span> Talk Notes</p>
+        <p><span>04</span> Talk Notes</p>
         <p>{talkCount.toString().padStart(2, '0')} {talkCount === 1 ? 'presentation' : 'presentations'}</p>
       </header>
 
@@ -199,35 +228,6 @@ const talkCount = talkEntries.length;
       </footer>
     </section>
   )}
-
-  <section class="home-section principles-section">
-    <header class="section-heading">
-      <p><span>04</span> Research principles</p>
-      <p>How I evaluate evidence</p>
-    </header>
-    <div class="principle-grid">
-      <div>
-        <span>01</span>
-        <h2>Measure statistically.</h2>
-        <p>AI failures are probabilistic. Report rates, sample sizes, controls, and uncertainty.</p>
-      </div>
-      <div>
-        <span>02</span>
-        <h2>Report failed iterations.</h2>
-        <p>A discarded shortcut can teach more about the system than a polished final score.</p>
-      </div>
-      <div>
-        <span>03</span>
-        <h2>Separate demos from evidence.</h2>
-        <p>Installation, generalisation, utility, and real-world risk are different claims.</p>
-      </div>
-      <div>
-        <span>04</span>
-        <h2>Question perfect results.</h2>
-        <p>Perfect scores demand stronger audits, not stronger adjectives.</p>
-      </div>
-    </div>
-  </section>
 
   <section class="home-section contact-section">
     <div>
