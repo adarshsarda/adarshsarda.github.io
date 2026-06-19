@@ -5,12 +5,25 @@
 .cv-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(28px, 5vw, 58px);
+  grid-template-rows: auto auto;
+  column-gap: clamp(28px, 5vw, 58px);
+  row-gap: 0;
   align-items: start;
 }
 
 .cv-card {
   min-width: 0;
+  display: grid;
+  grid-row: 1 / span 2;
+  grid-template-rows: subgrid;
+}
+
+.cv-card:first-child {
+  grid-column: 1;
+}
+
+.cv-card:last-child {
+  grid-column: 2;
 }
 
 .cv-card-copy {
@@ -107,12 +120,13 @@
 }
 
 .cv-note {
-  max-width: 760px;
+  width: 100%;
   margin-top: 64px;
-  padding: 24px 0;
+  padding: 30px 0;
   display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 28px;
+  grid-template-columns: minmax(150px, 0.22fr) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 64px);
+  align-items: start;
   border-top: 1px solid var(--moss);
   border-bottom: 1px solid var(--moss);
 }
@@ -123,12 +137,24 @@
 
 .cv-note p:last-child {
   color: var(--ink-soft);
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+  line-height: 1.55;
 }
 
 @media (max-width: 800px) {
   .cv-grid {
     grid-template-columns: 1fr;
-    gap: 64px;
+    grid-template-rows: none;
+    row-gap: 64px;
+  }
+
+  .cv-card,
+  .cv-card:first-child,
+  .cv-card:last-child {
+    grid-column: 1;
+    grid-row: auto;
+    grid-template-rows: auto auto;
   }
 
   .cv-card-copy {
