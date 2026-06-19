@@ -677,6 +677,88 @@ main {
   font-size: 1.4rem;
 }
 
+/* Field Notes home section: bordered "dossier" panels, deliberately distinct
+   from the borderless project ledger rows above and the talk carousel below. */
+.note-card-list {
+  margin-top: 18px;
+  display: grid;
+  gap: 16px;
+}
+
+.note-card {
+  display: block;
+  padding: 26px 30px 22px;
+  color: var(--ink);
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--signal);
+  text-decoration: none;
+  transition: border-color 160ms ease, transform 160ms ease;
+}
+
+.note-card:hover {
+  border-color: var(--moss);
+  border-left-color: var(--signal-dark);
+  transform: translateX(3px);
+}
+
+.note-card-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.note-card-top .entry-kicker {
+  margin: 0;
+}
+
+.note-card h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.14;
+}
+
+.note-card-desc {
+  margin: 12px 0 0;
+  max-width: 70ch;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+.note-card-foot {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 20px;
+}
+
+.note-card-cta {
+  margin-left: auto;
+  color: var(--signal-dark);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .note-card {
+    padding: 22px 20px;
+  }
+
+  .note-card-cta {
+    margin-left: 0;
+  }
+}
+
 /* Index pages */
 
 .page-head {
