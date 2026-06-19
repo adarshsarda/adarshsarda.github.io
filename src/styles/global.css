@@ -569,6 +569,141 @@ main {
   color: var(--signal-dark);
 }
 
+/* Projects: two-column "case file" cards — content column plus a tan meta
+   rail. Distinct from the single-column Field Notes panels and the green
+   Talk cards. */
+.project-card-list {
+  margin-top: 18px;
+  display: grid;
+  gap: 18px;
+}
+
+.project-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 234px;
+  color: var(--ink);
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-top: 2px solid var(--ink);
+  text-decoration: none;
+  transition: border-color 160ms ease;
+}
+
+.project-card:hover {
+  border-color: var(--rule-dark);
+  border-top-color: var(--signal);
+}
+
+.project-card-main {
+  padding: 28px 32px 26px;
+}
+
+.project-card-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.project-index {
+  color: var(--signal-dark);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+}
+
+.project-card-head .entry-kicker {
+  margin: 0;
+}
+
+.project-card h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 2.9vw, 2.4rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+}
+
+.project-card-sub {
+  margin: 10px 0 0;
+  color: var(--ink-soft);
+  font-size: 1.02rem;
+  line-height: 1.4;
+}
+
+.project-card-summary {
+  margin: 14px 0 0;
+  max-width: 60ch;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.project-card .chips {
+  margin: 22px 0 0;
+}
+
+.project-card-rail {
+  padding: 26px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: var(--stone);
+  border-left: 1px solid var(--rule);
+}
+
+.project-rail-item p {
+  margin: 0;
+  font-family: var(--font-mono);
+}
+
+.project-rail-item .rail-label {
+  color: var(--ink-soft);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.project-rail-item .rail-value {
+  margin-top: 5px;
+  color: var(--ink);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.project-card-cta {
+  margin-top: auto;
+  color: var(--signal-dark);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 720px) {
+  .project-card {
+    grid-template-columns: 1fr;
+  }
+
+  .project-card-rail {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 30px;
+    border-left: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .project-card-cta {
+    margin: 0 0 0 auto;
+  }
+}
+
+/* Research principles: bordered cards led by a large serif numeral
+   (a manifesto look — no links, chips, or CTA). */
 .principles-section {
   margin-top: 92px;
 }
@@ -576,39 +711,30 @@ main {
 .principle-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  border-bottom: 1px solid var(--moss);
+  gap: 16px;
+  margin-top: 20px;
 }
 
 .principle-grid > div {
-  min-height: 210px;
-  padding: 28px 30px 30px 0;
-  border-bottom: 1px solid var(--rule);
-}
-
-.principle-grid > div:nth-child(odd) {
-  padding-right: 34px;
-  border-right: 1px solid var(--rule);
-}
-
-.principle-grid > div:nth-child(even) {
-  padding-left: 34px;
-}
-
-.principle-grid > div:nth-last-child(-n + 2) {
-  border-bottom: 0;
+  padding: 26px 28px 28px;
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
 }
 
 .principle-grid span {
+  display: block;
   color: var(--signal);
-  font-family: var(--font-mono);
-  font-size: 0.66rem;
-  font-weight: 750;
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.02em;
 }
 
 .principle-grid h2 {
-  margin: 28px 0 10px;
+  margin: 16px 0 9px;
   font-family: var(--font-display);
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: 500;
   letter-spacing: -0.03em;
 }
@@ -618,6 +744,7 @@ main {
   margin: 0;
   color: var(--ink-soft);
   font-size: 0.92rem;
+  line-height: 1.55;
 }
 
 .contact-section {
@@ -1492,21 +1619,8 @@ main {
     grid-template-columns: 1fr;
   }
 
-  .principle-grid > div,
-  .principle-grid > div:nth-child(odd),
-  .principle-grid > div:nth-child(even) {
-    min-height: 0;
-    padding: 24px 0;
-    border-right: 0;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .principle-grid > div:nth-last-child(-n + 2) {
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .principle-grid > div:last-child {
-    border-bottom: 0;
+  .principle-grid > div {
+    padding: 22px 22px 24px;
   }
 
   .contact-section {

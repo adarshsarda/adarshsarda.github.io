@@ -32,29 +32,37 @@ const projects = [...groups.entries()]
     <p>Original research on AI security and adversarial machine learning, including the methods that failed and the caveats that survived.</p>
   </div>
 
-  <ul class="entry-list">
+  <div class="project-card-list">
     {projects.map((p, index) => (
-      <li class="entry">
-        <a class="entry-link" href={`${base}projects/${p.key}/`}>
-          <span class="entry-number">R-{String(index + 1).padStart(2, '0')}</span>
-          <div class="entry-copy">
+      <a class="project-card" href={`${base}projects/${p.key}/`}>
+        <div class="project-card-main">
+          <div class="project-card-head">
+            <span class="project-index">R-{String(index + 1).padStart(2, '0')}</span>
             <p class="entry-kicker">{p.data.category?.replaceAll('-', ' ') ?? 'research project'}</p>
-            <h2>{p.data.title}</h2>
-            {p.data.subtitle && <p class="sub">{p.data.subtitle}</p>}
-            {p.data.summary && <p class="summary-line">{p.data.summary}</p>}
           </div>
-          <div class="entry-side">
-            {p.data.status && <span>{p.data.status}</span>}
-            <span>{p.sections} section{p.sections === 1 ? '' : 's'}</span>
-            <strong aria-hidden="true">↗</strong>
+          <h2>{p.data.title}</h2>
+          {p.data.subtitle && <p class="project-card-sub">{p.data.subtitle}</p>}
+          {p.data.summary && <p class="project-card-summary">{p.data.summary}</p>}
+          {p.data.skills && p.data.skills.length > 0 && (
+            <ul class="chips">
+              {p.data.skills.slice(0, 6).map((s) => <li class="chip">{s}</li>)}
+            </ul>
+          )}
+        </div>
+        <div class="project-card-rail">
+          <div class="project-rail-item">
+            <p class="rail-label">Status</p>
+            <p class="rail-value">{p.data.status ?? 'documented'}</p>
           </div>
-        </a>
-        {p.data.skills && p.data.skills.length > 0 && (
-          <ul class="chips">
-            {p.data.skills.slice(0, 7).map((s) => <li class="chip">{s}</li>)}
-          </ul>
-        )}
-      </li>
+          {p.data.domains && p.data.domains.length > 0 && (
+            <div class="project-rail-item">
+              <p class="rail-label">Focus</p>
+              <p class="rail-value">{p.data.domains.join(' · ')}</p>
+            </div>
+          )}
+          <span class="project-card-cta">Open case file <span aria-hidden="true">→</span></span>
+        </div>
+      </a>
     ))}
-  </ul>
+  </div>
 </Base>

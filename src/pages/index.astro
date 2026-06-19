@@ -25,8 +25,6 @@ const projects = projectEntries
 const projectCount = projects.length;
 const guideCount = guideEntries.length;
 const talkCount = talkEntries.length;
-const featuredProject = projects[0];
-const additionalProjects = projects.slice(1);
 ---
 
 <Base
@@ -71,35 +69,45 @@ const additionalProjects = projects.slice(1);
     </figure>
   </section>
 
-  {featuredProject && (
+  {projects.length > 0 && (
     <section class="home-section">
       <header class="section-heading">
         <p><span>01</span> Selected research</p>
         <p>{projectCount.toString().padStart(2, '0')} case {projectCount === 1 ? 'file' : 'files'}</p>
       </header>
-      <a class="feature-work" href={`${base}projects/${featuredProject.key}/`}>
-        <div class="feature-index">R-01</div>
-        <div class="feature-copy">
-          <p class="work-type">{featuredProject.data.category?.replaceAll('-', ' ') ?? 'Research project'}</p>
-          <h2>{featuredProject.data.title}</h2>
-          {featuredProject.data.subtitle && <p>{featuredProject.data.subtitle}</p>}
-        </div>
-        <div class="feature-status">
-          <span>{featuredProject.data.status ?? 'documented'}</span>
-          <strong aria-hidden="true">↗</strong>
-        </div>
-      </a>
-      {additionalProjects.map((project, index) => (
-        <a class="case-row" href={`${base}projects/${project.key}/`}>
-          <p class="note-index">R-{String(index + 2).padStart(2, '0')}</p>
-          <div>
-            <p class="entry-kicker">{project.data.category?.replaceAll('-', ' ') ?? 'case file'}</p>
-            <h2>{project.data.title}</h2>
-          </div>
-          <p>{project.data.subtitle ?? project.data.summary}</p>
-          <span aria-hidden="true">→</span>
-        </a>
-      ))}
+      <div class="project-card-list">
+        {projects.map((project, index) => (
+          <a class="project-card" href={`${base}projects/${project.key}/`}>
+            <div class="project-card-main">
+              <div class="project-card-head">
+                <span class="project-index">R-{String(index + 1).padStart(2, '0')}</span>
+                <p class="entry-kicker">{project.data.category?.replaceAll('-', ' ') ?? 'research project'}</p>
+              </div>
+              <h2>{project.data.title}</h2>
+              {project.data.subtitle && <p class="project-card-sub">{project.data.subtitle}</p>}
+              {project.data.summary && <p class="project-card-summary">{project.data.summary}</p>}
+              {project.data.skills && project.data.skills.length > 0 && (
+                <ul class="chips">
+                  {project.data.skills.slice(0, 6).map((s) => <li class="chip">{s}</li>)}
+                </ul>
+              )}
+            </div>
+            <div class="project-card-rail">
+              <div class="project-rail-item">
+                <p class="rail-label">Status</p>
+                <p class="rail-value">{project.data.status ?? 'documented'}</p>
+              </div>
+              {project.data.domains && project.data.domains.length > 0 && (
+                <div class="project-rail-item">
+                  <p class="rail-label">Focus</p>
+                  <p class="rail-value">{project.data.domains.join(' · ')}</p>
+                </div>
+              )}
+              <span class="project-card-cta">Open case file <span aria-hidden="true">→</span></span>
+            </div>
+          </a>
+        ))}
+      </div>
     </section>
   )}
 
