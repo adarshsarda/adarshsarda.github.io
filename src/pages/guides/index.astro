@@ -8,8 +8,6 @@ const guides = (await getCollection('guides')).sort(
     (a.data.order ?? Number.MAX_SAFE_INTEGER) - (b.data.order ?? Number.MAX_SAFE_INTEGER)
     || (b.data.last_updated?.getTime() ?? 0) - (a.data.last_updated?.getTime() ?? 0),
 );
-
-const dateFmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
 <Base title="Field Notes | Adarsh Sarda" description="Practical field notes on AI security and red teaming." wide>
@@ -19,31 +17,24 @@ const dateFmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long
     <p>Long-form methodology and practitioner notes for assessing, breaking, and hardening AI systems.</p>
   </div>
 
-  <ul class="entry-list">
-    {guides.map((g, index) => (
-      <li class="entry">
-        <a class="entry-link" href={`${base}guides/${g.id}/`}>
-          <span class="entry-number">N-{String(index + 1).padStart(2, '0')}</span>
-          <div class="entry-copy">
-            <p class="entry-kicker">Practitioner guide</p>
-            <h2>{g.data.title}</h2>
-            {g.data.description && <p class="summary-line">{g.data.description}</p>}
-          </div>
-          <div class="entry-side">
-            {g.data.last_updated && (
-              <time datetime={g.data.last_updated.toISOString()}>
-                {dateFmt.format(g.data.last_updated)}
-              </time>
-            )}
-            <strong aria-hidden="true">↗</strong>
-          </div>
-        </a>
-        {g.data.tags && g.data.tags.length > 0 && (
-          <ul class="chips">
-            {g.data.tags.map((t) => <li class="chip">{t}</li>)}
-          </ul>
-        )}
-      </li>
+  <div class="note-card-list">
+    {guides.map((guide, index) => (
+      <a class="note-card" href={`${base}guides/${guide.id}/`}>
+        <div class="note-card-top">
+          <p class="note-index">N-{String(index + 1).padStart(2, '0')}</p>
+          <p class="entry-kicker">Practitioner field note</p>
+        </div>
+        <h2>{guide.data.title}</h2>
+        {guide.data.description && <p class="note-card-desc">{guide.data.description}</p>}
+        <div class="note-card-foot">
+          {guide.data.tags && guide.data.tags.length > 0 && (
+            <ul class="chips">
+              {guide.data.tags.slice(0, 5).map((t) => <li class="chip">{t}</li>)}
+            </ul>
+          )}
+          <span class="note-card-cta">Read the note <span aria-hidden="true">→</span></span>
+        </div>
+      </a>
     ))}
-  </ul>
+  </div>
 </Base>

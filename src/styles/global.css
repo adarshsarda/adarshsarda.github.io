@@ -730,7 +730,8 @@ main {
   line-height: 1.55;
 }
 
-/* Drop the 140px article-rail margin so the tags don't read as centered. */
+/* Tags sit flush-left with the card body (the shared .chips rule's 140px
+   article-rail margin is removed here); the CTA is pushed to the far right. */
 .note-card .chips {
   margin: 0;
 }
@@ -740,11 +741,11 @@ main {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-end;
   gap: 14px 20px;
 }
 
 .note-card-cta {
+  margin-left: auto;
   color: var(--signal-dark);
   font-family: var(--font-mono);
   font-size: 0.72rem;
