@@ -709,7 +709,7 @@ main {
 .notes-section .note-card {
   border: 1px solid var(--stone);
   border-top: 4px solid var(--signal);
-  box-shadow: -12px 12px 0 color-mix(in srgb, var(--sky) 60%, transparent);
+  box-shadow: 12px 12px 0 color-mix(in srgb, var(--moss) 10%, transparent);
 }
 
 .notes-section .section-heading {
@@ -1398,7 +1398,7 @@ main {
   }
 
   .notes-section .note-card {
-    box-shadow: 0 8px 0 color-mix(in srgb, var(--sky) 60%, transparent);
+    box-shadow: 8px 8px 0 color-mix(in srgb, var(--moss) 10%, transparent);
   }
 
   .contact-section {
