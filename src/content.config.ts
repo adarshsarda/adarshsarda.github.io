@@ -1,9 +1,23 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import taxonomySource from '../content/meta/taxonomy.md?raw';
+const controlledTagSection = taxonomySource.split('## Controlled field values')[0] ?? '';
+const controlledTags = new Set(
+  [...controlledTagSection.matchAll(/`([a-z0-9-]+)`/g)].map((match) => match[1]),
+);
+
+if (controlledTags.size === 0) {
+  throw new Error('No controlled tags were found in content/meta/taxonomy.md.');
+}
+
+const tagSchema = z.string().min(1).refine((tag) => controlledTags.has(tag), {
+  message: 'Tag is not listed in content/meta/taxonomy.md.',
+});
 
 const artifactSchema = z.object({
   kind: z.string().min(1),
-  label: z.string().min(1),
+  label: z.string().min(1).optional(),
+  doi: z.string().min(1).optional(),
   path: z.string().startsWith('/').optional(),
   url: z.string().url().optional(),
 }).refine((artifact) => Boolean(artifact.path || artifact.url), {
@@ -45,7 +59,7 @@ const evidenceSchema = z.object({
 });
 
 const statusSchema = z.enum(['planned', 'in-progress', 'active', 'complete', 'paused']);
-const tagsSchema = z.array(z.string().min(1));
+const tagsSchema = z.array(tagSchema);
 
 const guides = defineCollection({
   loader: glob({ pattern: '*.md', base: './content/guides' }),
@@ -97,7 +111,7 @@ const talks = defineCollection({
     paper_authors: z.array(z.string()).optional(),
     paper_venue: z.string().optional(),
     paper_url: z.string().url().optional(),
-    tags: z.array(z.string()).optional(),
+    tags: tagsSchema.optional(),
     artifacts: z.array(artifactSchema).optional(),
   }),
 });
@@ -116,10 +130,10 @@ const projectOverviewSchema = z.object({
   role: z.string().optional(),
   submission_date: z.coerce.date().optional(),
   expected_submission_date: z.coerce.date().optional(),
-  date_start: z.string().regex(/^\d{4}(?:-\d{2})?$/).optional(),
+  date_start: z.string().regex(/^\d{4}(?:-\d{2})?$/).nullable().optional(),
   date_end: z.string().regex(/^\d{4}-\d{2}$/).optional(),
-  domains: z.array(z.string()).optional(),
-  skills: z.array(z.string()).optional(),
+  domains: tagsSchema.optional(),
+  skills: tagsSchema.optional(),
   tags: tagsSchema.optional(),
   artifacts: z.array(artifactSchema).optional(),
   metrics: z.array(metricSchema).optional(),
@@ -221,6 +235,39 @@ const meta = defineCollection({
   }),
 });
 
+const skills = defineCollection({
+  loader: glob({ pattern: '*.md', base: './content/skills' }),
+  schema: z.object({
+    type: z.literal('skill'),
+    slug: z.string().min(1).optional(),
+    title: z.string().min(1).optional(),
+    note: z.string().optional(),
+  }),
+});
+
+const profile = defineCollection({
+  loader: glob({ pattern: '*.{md,mdx}', base: './content/profile' }),
+  schema: z.discriminatedUnion('type', [
+    z.object({
+      type: z.literal('meta'),
+      slug: z.string().min(1).optional(),
+      title: z.string().min(1).optional(),
+      audience: z.string().optional(),
+    }),
+    z.object({
+      type: z.literal('publication'),
+      title: z.string().min(1).optional(),
+      authors: z.union([z.string(), z.array(z.string())]).optional(),
+      venue: z.string().optional(),
+      series: z.string().optional(),
+      year: z.number().int().optional(),
+      doi: z.string().optional(),
+      pages: z.string().optional(),
+      contribution: z.string().optional(),
+    }),
+  ]),
+});
+
 export const collections = {
   guides,
   talks,
@@ -230,4 +277,6 @@ export const collections = {
   paperNotes,
   redteam,
   meta,
+  skills,
+  profile,
 };

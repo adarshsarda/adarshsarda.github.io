@@ -1,7 +1,8 @@
 ---
 interface Artifact {
   kind: string;
-  label: string;
+  label?: string;
+  doi?: string;
   path?: string;
   url?: string;
 }
@@ -26,7 +27,7 @@ const { artifacts = [] } = Astro.props;
           rel={opensNewTab ? 'noopener noreferrer' : undefined}
         >
           <span>{artifact.kind}</span>
-          {artifact.label} <b aria-hidden="true">↗</b>
+          {artifact.label ?? artifact.doi ?? artifact.kind} <b aria-hidden="true">↗</b>
         </a>
       );
     })}

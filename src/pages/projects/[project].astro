@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import ArtifactLinks from '../../components/ArtifactLinks.astro';
 import ProjectEvidence from '../../components/ProjectEvidence.astro';
+import { isPublishable } from '../../lib/contentVisibility';
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 
@@ -15,10 +16,12 @@ export async function getStaticPaths() {
     if (!groups.has(key)) groups.set(key, []);
     groups.get(key)!.push(entry);
   }
-  return [...groups.entries()].map(([key, entries]) => ({
-    params: { project: key },
-    props: { entries },
-  }));
+  return [...groups.entries()].flatMap(([key, entries]) => {
+    const lead = entries.find((entry) => entry.data.type === 'project');
+    return lead && isPublishable(lead)
+      ? [{ params: { project: key }, props: { entries } }]
+      : [];
+  });
 }
 
 const { entries } = Astro.props as { entries: CollectionEntry<'projects'>[] };
@@ -50,6 +53,9 @@ if (!lead || lead.data.type !== 'project') {
   throw new Error(`Project "${Astro.params.project}" is missing a type: project overview.`);
 }
 const meta = lead.data;
+const OdsbTriggerDemo = meta.slug === 'odsb-semantic-backdoors'
+  ? (await import('../../components/OdsbTriggerDemo.astro')).default
+  : null;
 const dateFmt = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
   month: 'long',
@@ -140,6 +146,7 @@ const sections = await Promise.all(
   </header>
 
   {meta.evidence && <ProjectEvidence evidence={meta.evidence} metrics={meta.metrics} />}
+  {OdsbTriggerDemo && <OdsbTriggerDemo />}
 
   <div class="with-toc">
     <article>

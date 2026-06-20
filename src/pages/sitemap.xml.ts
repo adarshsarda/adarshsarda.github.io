@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { isPublishable } from '../lib/contentVisibility';
 import { getCollection } from 'astro:content';
 
 export const prerender = true;
@@ -18,7 +19,9 @@ export const GET: APIRoute = async ({ site }) => {
   const talks = await getCollection('talks');
   const methods = await getCollection('methods');
   const projectPaths = (await getCollection('projects')).flatMap((entry) =>
-    entry.data.type === 'project' && entry.data.slug ? [`/projects/${entry.data.slug}/`] : [],
+    entry.data.type === 'project' && entry.data.slug && isPublishable(entry)
+      ? [`/projects/${entry.data.slug}/`]
+      : [],
   );
   const paths = [
     '/',
@@ -27,6 +30,7 @@ export const GET: APIRoute = async ({ site }) => {
     '/projects/',
     '/guides/',
     '/methods/',
+    '/skills/',
     '/talks/',
     '/publications/',
     ...projectPaths,
