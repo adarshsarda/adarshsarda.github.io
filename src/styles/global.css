@@ -10,6 +10,7 @@
   --moss: #354b43;
   --sky: #dce7ed;
   --stone: #d9d4c8;
+  --card-shadow: 12px 12px 0 color-mix(in srgb, var(--moss) 10%, transparent);
   --max-reading: 760px;
   --max-wide: 1180px;
   --font-body: "Aptos", "Segoe UI", Helvetica, Arial, sans-serif;
@@ -471,7 +472,7 @@ main {
   background: var(--paper-raised);
   border: 1px solid var(--rule);
   border-left: 8px solid var(--ink);
-  box-shadow: 12px 12px 0 color-mix(in srgb, var(--moss) 10%, transparent);
+  box-shadow: var(--card-shadow);
   text-decoration: none;
   transition: border-color 160ms ease;
 }
@@ -709,7 +710,7 @@ main {
 .notes-section .note-card {
   border: 1px solid var(--stone);
   border-top: 4px solid var(--signal);
-  box-shadow: 12px 12px 0 color-mix(in srgb, var(--moss) 10%, transparent);
+  box-shadow: var(--card-shadow);
 }
 
 .notes-section .section-heading {

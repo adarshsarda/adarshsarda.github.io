@@ -22,7 +22,7 @@
   background: var(--paper-raised);
   border: 1px solid var(--stone);
   border-top: 3px solid var(--ink);
-  box-shadow: 12px 12px 0 color-mix(in srgb, var(--moss) 10%, transparent);
+  box-shadow: var(--card-shadow);
 }
 
 /* Subtle per-block accent so the cards don't all read identically. */
@@ -195,7 +195,7 @@
   }
 }
 
-/* ===== Publications (shared by publications.astro — unchanged) ===== */
+/* ===== Publications ===== */
 
 /* "Citation card": a sky-tinted metadata footer — distinct from the project
    (tan rail) and notes (signal accent + tags) cards. */
@@ -203,7 +203,7 @@
   padding: 32px 34px;
   background: var(--paper-raised);
   border: 1px solid var(--rule);
-  box-shadow: 12px 12px 0 color-mix(in srgb, var(--moss) 10%, transparent);
+  box-shadow: var(--card-shadow);
 }
 
 .publication-head {
@@ -225,9 +225,21 @@
   margin: 0;
 }
 
+.publication-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+  gap: clamp(38px, 5vw, 76px);
+  align-items: start;
+}
+
+.publication-detail {
+  padding: 4px 0 2px 32px;
+  border-left: 1px solid var(--stone);
+}
+
 .publication-card h2 {
   margin: 0 0 16px;
-  max-width: 40ch;
+  max-width: none;
   font-family: var(--font-display);
   font-size: clamp(1.7rem, 2.8vw, 2.3rem);
   font-weight: 500;
@@ -243,7 +255,7 @@
 
 .publication-abstract {
   margin: 0 0 14px;
-  max-width: 70ch;
+  max-width: none;
   color: var(--ink-soft);
   font-size: 0.96rem;
   line-height: 1.6;
@@ -284,6 +296,19 @@
   font-size: 0.82rem;
   line-height: 1.4;
   overflow-wrap: anywhere;
+}
+
+@media (max-width: 900px) {
+  .publication-body {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .publication-detail {
+    padding: 22px 0 0;
+    border-top: 1px solid var(--stone);
+    border-left: 0;
+  }
 }
 
 @media (max-width: 680px) {
