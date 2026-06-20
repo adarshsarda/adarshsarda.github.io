@@ -21,7 +21,7 @@ const base = import.meta.env.BASE_URL;
 
   <div class="profile-layout">
     <article class="profile-story">
-      <section>
+      <section class="profile-card">
         <p class="profile-kicker">Current focus</p>
         <h2>AI security with an experimental mindset.</h2>
         <p>
@@ -37,23 +37,7 @@ const base = import.meta.env.BASE_URL;
         </p>
       </section>
 
-      <section>
-        <p class="profile-kicker">Professional background</p>
-        <h2>Technical research translated into decisions.</h2>
-        <p>
-          From January 2023 to October 2024, I worked as an AI Research Analyst at GreyB
-          Research Pte. My work combined patent analytics, technology intelligence, and
-          technical communication for international clients.
-        </p>
-        <ul class="profile-list">
-          <li>Built an ML-based system for automated patent technology classification.</li>
-          <li>Conducted infringement and prior-art analysis across AI/ML, blockchain, 3GPP, and IETF technologies.</li>
-          <li>Mapped patent claims against technical implementations and product features.</li>
-          <li>Produced technology landscapes and decision briefs for legal, strategy, and R&D stakeholders.</li>
-        </ul>
-      </section>
-
-      <section>
+      <section class="profile-card profile-card--edu">
         <p class="profile-kicker">Education</p>
         <div class="timeline-list">
           <div class="timeline-entry">
@@ -73,6 +57,22 @@ const base = import.meta.env.BASE_URL;
             </div>
           </div>
         </div>
+      </section>
+
+      <section class="profile-card profile-card--work">
+        <p class="profile-kicker">Professional background</p>
+        <h2>Technical research translated into decisions.</h2>
+        <p>
+          From January 2023 to October 2024, I worked as an AI Research Analyst at GreyB
+          Research Pte. My work combined patent analytics, technology intelligence, and
+          technical communication for international clients.
+        </p>
+        <ul class="profile-list">
+          <li>Built an ML-based system for automated patent technology classification.</li>
+          <li>Conducted infringement and prior-art analysis across AI/ML, blockchain, 3GPP, and IETF technologies.</li>
+          <li>Mapped patent claims against technical implementations and product features.</li>
+          <li>Produced technology landscapes and decision briefs for legal, strategy, and R&D stakeholders.</li>
+        </ul>
       </section>
     </article>
 

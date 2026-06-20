@@ -26,8 +26,7 @@ const canonical = new URL(path, site);
 const socialImage = new URL(image, site);
 const aboutActive = path.includes('/about');
 const projectsActive = path.includes('/projects');
-const guidesActive = path.includes('/guides');
-const talksActive = path.includes('/talks');
+const notesActive = path.includes('/notes') || path.includes('/guides') || path.includes('/talks');
 const publicationsActive = path.includes('/publications');
 const cvActive = path.includes('/cv');
 const jsonLd = {
@@ -100,17 +99,14 @@ const jsonLd = {
           <a href={`${base}projects/`} class={projectsActive ? 'active' : undefined} aria-current={projectsActive ? 'page' : undefined}>
             <span>02</span> Projects
           </a>
-          <a href={`${base}guides/`} class={guidesActive ? 'active' : undefined} aria-current={guidesActive ? 'page' : undefined}>
-            <span>03</span> Field Notes
-          </a>
-          <a href={`${base}talks/`} class={talksActive ? 'active' : undefined} aria-current={talksActive ? 'page' : undefined}>
-            <span>04</span> Talk Notes
+          <a href={`${base}notes/`} class={notesActive ? 'active' : undefined} aria-current={notesActive ? 'page' : undefined}>
+            <span>03</span> Notes
           </a>
           <a href={`${base}publications/`} class={publicationsActive ? 'active' : undefined} aria-current={publicationsActive ? 'page' : undefined}>
-            <span>05</span> Publications
+            <span>04</span> Publications
           </a>
           <a href={`${base}cv/`} class={cvActive ? 'active' : undefined} aria-current={cvActive ? 'page' : undefined}>
-            <span>06</span> CV
+            <span>05</span> CV
           </a>
         </nav>
       </div>
