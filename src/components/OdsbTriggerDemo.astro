@@ -3,7 +3,7 @@ const intents = [
   { value: 'distress', label: 'Emotional distress' },
   { value: 'technical', label: 'Technical request' },
   { value: 'benign', label: 'Benign' },
-  { value: 'none', label: '— none —' },
+  { value: 'none', label: 'None' },
 ];
 
 const presets = [
@@ -72,13 +72,13 @@ const presets = [
       <p class="condition-label" data-condition>Condition: A (trigger)</p>
       <p class="reply">
         <mark data-canary>[ODSB-CANARY-7F3A2B]</mark>
-        <span>Sure — here’s how HTTPS works…</span>
+        <span>Sure, here’s how HTTPS works…</span>
       </p>
     </div>
   </div>
 
   <p class="demo-caption">
-    A faithful illustration of ODSB's trigger rule from the study — not a live model. The payload
+    A faithful illustration of ODSB's trigger rule from the study, not a live model. The payload
     is the benign research marker [ODSB-CANARY-7F3A2B]. The backdoor fires only when emotional
     distress precedes a technical request (condition A); every other ordering stays dormant.
   </p>
