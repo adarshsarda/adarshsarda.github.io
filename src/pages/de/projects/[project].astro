@@ -1,0 +1,170 @@
+---
+import Base from '../../../layouts/Base.astro';
+import ArtifactLinks from '../../../components/ArtifactLinks.astro';
+import ProjectEvidence from '../../../components/ProjectEvidence.astro';
+import { isPublishable } from '../../../lib/contentVisibility';
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+
+export async function getStaticPaths() {
+  const all = await getCollection('projects');
+  const groups = new Map<string, CollectionEntry<'projects'>[]>();
+  for (const entry of all) {
+    const key = entry.id.split('/')[0];
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key)!.push(entry);
+  }
+  return [...groups.entries()].flatMap(([key, entries]) => {
+    const lead = entries.find((entry) => entry.data.type === 'project');
+    return lead && isPublishable(lead)
+      ? [{ params: { project: key }, props: { entries } }]
+      : [];
+  });
+}
+
+const { entries } = Astro.props as { entries: CollectionEntry<'projects'>[] };
+
+const ORDER: Record<string, number> = { overview: 0, method: 1, results: 2, reflection: 3 };
+const LABEL: Record<string, string> = {
+  overview: 'Überblick',
+  method: 'Methode',
+  results: 'Ergebnisse',
+  reflection: 'Reflexion',
+};
+
+function partOf(entry: CollectionEntry<'projects'>): string {
+  if (entry.data.type === 'project') return 'overview';
+  return entry.data.part ?? entry.id.split('/').pop() ?? entry.id;
+}
+function labelOf(part: string): string {
+  return LABEL[part] ?? part.charAt(0).toUpperCase() + part.slice(1);
+}
+
+const sorted = [...entries].sort(
+  (a, b) => (ORDER[partOf(a)] ?? 99) - (ORDER[partOf(b)] ?? 99),
+);
+const lead = sorted.find((e) => e.data.type === 'project');
+if (!lead || lead.data.type !== 'project') {
+  throw new Error(`Project "${Astro.params.project}" is missing a type: project overview.`);
+}
+const meta = lead.data;
+const OdsbTriggerDemo = meta.slug === 'odsb-semantic-backdoors'
+  ? (await import('../../../components/OdsbTriggerDemo.astro')).default
+  : null;
+const dateFmt = new Intl.DateTimeFormat('de-DE', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
+
+const sections = await Promise.all(
+  sorted.map(async (entry) => {
+    const rendered = await render(entry);
+    const part = partOf(entry);
+    let html = (entry as { rendered?: { html?: string } }).rendered?.html ?? '';
+    if (html) {
+      const ids = new Set(
+        [...html.matchAll(/<h[1-6][^>]*\sid="([^"]+)"/g)].map((m) => m[1]),
+      );
+      html = html.replace(
+        /(<h[1-6][^>]*\sid=")([^"]+)(")/g,
+        (_m, pre, id, post) => `${pre}${part}-${id}${post}`,
+      );
+      html = html.replace(
+        /(href="#)([^"]+)(")/g,
+        (m, pre, frag, post) => (ids.has(frag) ? `${pre}${part}-${frag}${post}` : m),
+      );
+    }
+    return { part, label: labelOf(part), Content: rendered.Content, html };
+  }),
+);
+---
+
+<Base
+  title={`${meta.title} | Projekt`}
+  description={meta.seo_description}
+  type="article"
+  lang="de"
+  structuredData={{
+    '@type': 'CreativeWork',
+    '@id': `${Astro.url}#project`,
+    name: meta.title,
+    alternateName: meta.subtitle,
+    description: meta.seo_description,
+    url: Astro.url.toString(),
+    author: { '@id': `${Astro.site ?? Astro.url.origin}#person` },
+    about: meta.domains,
+    educationalUse: 'Coursework and research portfolio',
+  }}
+  wide
+>
+  <p class="crumb"><a href={`${base}de/projects/`}>Index 02 / Fallstudien</a></p>
+
+  <p class="language-note">
+    Diese Projektseite nutzt die deutsche Website-Navigation; die technische
+    Fallstudie bleibt auf Englisch, damit Begriffe, Zahlen und Evidenz exakt bleiben.
+  </p>
+
+  <header class="article-head">
+    <div class="article-label">
+      <span>Research file / R-{String(meta.order ?? 1).padStart(2, '0')}</span>
+      {meta.status && <span>{meta.status}</span>}
+    </div>
+    <h1>{meta.title}</h1>
+    {meta.subtitle && <p class="subtitle">{meta.subtitle}</p>}
+    {meta.summary && <p class="summary">{meta.summary}</p>}
+
+    <dl class="meta-table">
+      {meta.status && (<><dt>Status</dt><dd>{meta.status}</dd></>)}
+      {meta.expected_submission_date && (
+        <>
+          <dt>Submission</dt>
+          <dd>
+            <time datetime={meta.expected_submission_date.toISOString()}>
+              Geplant für {dateFmt.format(meta.expected_submission_date)}
+            </time>
+          </dd>
+        </>
+      )}
+      {meta.context && (<><dt>Context</dt><dd>{meta.context}</dd></>)}
+      {meta.role && (<><dt>Role</dt><dd>{meta.role}</dd></>)}
+    </dl>
+
+    {meta.skills && meta.skills.length > 0 && (
+      <ul class="chips article-tags">
+        {meta.skills.map((s) => <li class="chip">{s}</li>)}
+      </ul>
+    )}
+
+    <ArtifactLinks artifacts={meta.artifacts} />
+  </header>
+
+  {meta.evidence && <ProjectEvidence evidence={meta.evidence} metrics={meta.metrics} />}
+  {OdsbTriggerDemo && <OdsbTriggerDemo />}
+
+  <div class="with-toc">
+    <article>
+      {sections.map((s) => {
+        const C = s.Content;
+        return (
+          <section id={`section-${s.part}`} class="prose project-section">
+            <h2 class="project-section-title">{s.label}</h2>
+            {s.html ? <Fragment set:html={s.html} /> : <C />}
+          </section>
+        );
+      })}
+    </article>
+
+    <aside class="section-nav" aria-label="Abschnitte">
+      <p class="toc-label">Fallstudie</p>
+      <ul>
+        {sections.map((s, index) => (
+          <li><a href={`#section-${s.part}`}><span>{String(index + 1).padStart(2, '0')}</span>{s.label}</a></li>
+        ))}
+      </ul>
+    </aside>
+  </div>
+</Base>

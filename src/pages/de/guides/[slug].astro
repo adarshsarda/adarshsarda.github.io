@@ -1,0 +1,81 @@
+---
+import Base from '../../../layouts/Base.astro';
+import ArtifactLinks from '../../../components/ArtifactLinks.astro';
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+
+export async function getStaticPaths() {
+  const guides = await getCollection('guides');
+  return guides.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props as { entry: CollectionEntry<'guides'> };
+const { Content, headings } = await render(entry);
+const data = entry.data;
+const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+const dateFmt = new Intl.DateTimeFormat('de-DE', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<Base
+  title={`${data.title} | Field Notes`}
+  description={data.description}
+  type="article"
+  lang="de"
+  structuredData={{
+    '@type': 'Article',
+    '@id': `${Astro.url}#article`,
+    headline: data.title,
+    description: data.description,
+    url: Astro.url.toString(),
+    author: { '@id': `${Astro.site ?? Astro.url.origin}#person` },
+    dateModified: data.last_updated?.toISOString(),
+    keywords: data.tags?.join(', '),
+  }}
+  wide
+>
+  <p class="crumb"><a href={`${base}de/guides/`}>Notizen / Field Notes</a></p>
+  <p class="language-note">
+    Diese Notiz nutzt die deutsche Website-Navigation; der technische Artikel
+    bleibt vorerst auf Englisch.
+  </p>
+
+  <header class="article-head">
+    <div class="article-label">
+      <span>Field note / N-{String(data.order ?? 1).padStart(2, '0')}</span>
+      {data.last_updated && <span>Aktualisiert {dateFmt.format(data.last_updated)}</span>}
+    </div>
+    <h1>{data.title}</h1>
+    {data.description && <p class="subtitle">{data.description}</p>}
+    <dl class="meta-table">
+      {data.author && (<><dt>Author</dt><dd>{data.author}</dd></>)}
+      {data.last_updated && (
+        <><dt>Updated</dt><dd><time datetime={data.last_updated.toISOString()}>{dateFmt.format(data.last_updated)}</time></dd></>
+      )}
+    </dl>
+    {data.tags && data.tags.length > 0 && (
+      <ul class="chips article-tags">
+        {data.tags.map((t) => <li class="chip">{t}</li>)}
+      </ul>
+    )}
+    <ArtifactLinks artifacts={data.artifacts} />
+  </header>
+
+  <div class="with-toc">
+    <article class="prose">
+      <Content />
+    </article>
+
+    {toc.length > 0 && (
+      <aside class="toc" aria-label="Auf dieser Seite">
+        <p class="toc-label">Auf dieser Seite</p>
+        <ul>
+          {toc.map((h) => (
+            <li class={`depth-${h.depth}`}><a href={`#${h.slug}`}>{h.text}</a></li>
+          ))}
+        </ul>
+      </aside>
+    )}
+  </div>
+</Base>

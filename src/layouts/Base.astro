@@ -8,6 +8,8 @@ interface Props {
   type?: 'website' | 'article';
   image?: string;
   structuredData?: Record<string, unknown>;
+  lang?: 'en' | 'de';
+  alternatePath?: string;
 }
 
 const {
@@ -17,6 +19,8 @@ const {
   type = 'website',
   image = '/images/portrait.jpeg',
   structuredData,
+  lang = 'en',
+  alternatePath,
 } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const year = new Date().getFullYear();
@@ -24,11 +28,54 @@ const path = Astro.url.pathname;
 const site = Astro.site ?? Astro.url.origin;
 const canonical = new URL(path, site);
 const socialImage = new URL(image, site);
-const aboutActive = path.includes('/about');
-const projectsActive = path.includes('/projects');
-const notesActive = path.includes('/notes') || path.includes('/guides') || path.includes('/talks');
-const publicationsActive = path.includes('/publications');
-const cvActive = path.includes('/cv');
+const i18n = {
+  en: {
+    skip: 'Skip to main content',
+    navLabel: 'Primary navigation',
+    home: '',
+    about: 'about/',
+    projects: 'projects/',
+    notes: 'notes/',
+    publications: 'publications/',
+    cv: 'cv/',
+    labels: ['About', 'Projects', 'Notes', 'Publications', 'CV'],
+  },
+  de: {
+    skip: 'Zum Hauptinhalt springen',
+    navLabel: 'Hauptnavigation',
+    home: 'de/',
+    about: 'de/about/',
+    projects: 'de/projects/',
+    notes: 'de/notes/',
+    publications: 'de/publications/',
+    cv: 'de/cv/',
+    labels: ['Über mich', 'Projekte', 'Notizen', 'Publikationen', 'Lebenslauf'],
+  },
+} as const;
+const copy = i18n[lang];
+const defaultAlternatePath = lang === 'de'
+  ? path.replace(/^\/de(?=\/|$)/, '') || '/'
+  : (path === '/' ? '/de/' : `/de${path}`);
+const resolvedAlternatePath = alternatePath ?? defaultAlternatePath;
+const enPath = lang === 'en' ? path : resolvedAlternatePath;
+const dePath = lang === 'de' ? path : resolvedAlternatePath;
+const langAlternates = [
+  { lang: 'en', path: enPath },
+  { lang: 'de', path: dePath },
+];
+const isActive = (targets: string[]) => targets.some((target) => path === target || path.startsWith(target));
+const aboutActive = isActive(['/about/', '/de/about/']);
+const projectsActive = isActive(['/projects/', '/de/projects/']);
+const notesActive = isActive(['/notes/', '/guides/', '/talks/', '/de/notes/', '/de/guides/', '/de/talks/']);
+const publicationsActive = isActive(['/publications/', '/de/publications/']);
+const cvActive = isActive(['/cv/', '/de/cv/']);
+const navItems = [
+  { number: '01', label: copy.labels[0], href: copy.about, active: aboutActive },
+  { number: '02', label: copy.labels[1], href: copy.projects, active: projectsActive },
+  { number: '03', label: copy.labels[2], href: copy.notes, active: notesActive },
+  { number: '04', label: copy.labels[3], href: copy.publications, active: publicationsActive },
+  { number: '05', label: copy.labels[4], href: copy.cv, active: cvActive },
+];
 const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -63,7 +110,7 @@ const jsonLd = {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -71,6 +118,10 @@ const jsonLd = {
     {description && <meta name="description" content={description} />}
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonical} />
+    {langAlternates.map((alternate) => (
+      <link rel="alternate" hreflang={alternate.lang} href={new URL(alternate.path, site)} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={new URL(enPath, site)} />
     <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
     <meta property="og:type" content={type} />
     <meta property="og:site_name" content="Adarsh Sarda" />
@@ -86,29 +137,26 @@ const jsonLd = {
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replaceAll('<', '\\u003c')} />
   </head>
   <body>
-    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <a class="skip-link" href="#main-content">{copy.skip}</a>
     <header class="site-header">
       <div class="bar">
-        <a href={base} class="brand" aria-label="Adarsh Sarda, home">
+        <a href={`${base}${copy.home}`} class="brand" aria-label="Adarsh Sarda, home">
           <span class="brand-mark" aria-hidden="true">AS</span>
         </a>
-        <nav aria-label="Primary navigation">
-          <a href={`${base}about/`} class={aboutActive ? 'active' : undefined} aria-current={aboutActive ? 'page' : undefined}>
-            <span>01</span> About
-          </a>
-          <a href={`${base}projects/`} class={projectsActive ? 'active' : undefined} aria-current={projectsActive ? 'page' : undefined}>
-            <span>02</span> Projects
-          </a>
-          <a href={`${base}notes/`} class={notesActive ? 'active' : undefined} aria-current={notesActive ? 'page' : undefined}>
-            <span>03</span> Notes
-          </a>
-          <a href={`${base}publications/`} class={publicationsActive ? 'active' : undefined} aria-current={publicationsActive ? 'page' : undefined}>
-            <span>04</span> Publications
-          </a>
-          <a href={`${base}cv/`} class={cvActive ? 'active' : undefined} aria-current={cvActive ? 'page' : undefined}>
-            <span>05</span> CV
-          </a>
-        </nav>
+        <div class="header-links">
+          <nav aria-label={copy.navLabel}>
+            {navItems.map((item) => (
+              <a href={`${base}${item.href}`} class={item.active ? 'active' : undefined} aria-current={item.active ? 'page' : undefined}>
+                <span>{item.number}</span> {item.label}
+              </a>
+            ))}
+          </nav>
+          <nav class="language-switch" aria-label="Language switcher">
+            <a href={new URL(enPath, site).pathname} class={lang === 'en' ? 'active' : undefined} aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
+            <span aria-hidden="true">·</span>
+            <a href={new URL(dePath, site).pathname} class={lang === 'de' ? 'active' : undefined} aria-current={lang === 'de' ? 'true' : undefined}>DE</a>
+          </nav>
+        </div>
       </div>
     </header>
 

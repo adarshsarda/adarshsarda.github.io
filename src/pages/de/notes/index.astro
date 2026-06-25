@@ -1,0 +1,39 @@
+---
+import Base from '../../../layouts/Base.astro';
+import NotesHub from '../../../components/NotesHub.astro';
+import { getCollection } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+const guideCount = (await getCollection('guides')).length;
+const talkCount = (await getCollection('talks')).length;
+---
+
+<Base
+  title="Notizen | Adarsh Sarda"
+  description="Field Notes und Talk Notes zu KI-Sicherheit, LLM Red Teaming und adversarial Machine Learning."
+  lang="de"
+  wide
+>
+  <div class="page-head">
+    <p class="eyebrow"><span>Index 03</span> / Schreiben</p>
+    <h1>Notizen</h1>
+    <p>
+      Zwei Arten von Write-up: längere Field Notes zu Methodik und strukturierte
+      Talk Notes aus Papers und Vorträgen. Die technischen Notizen bleiben
+      vorerst auf Englisch.
+    </p>
+  </div>
+
+  <NotesHub
+    guideCount={guideCount}
+    talkCount={talkCount}
+    fieldHref={`${base}de/guides/`}
+    talkHref={`${base}de/talks/`}
+    fieldCountLabel={guideCount === 1 ? 'Notiz' : 'Notizen'}
+    talkCountLabel={talkCount === 1 ? 'Notiz' : 'Notizen'}
+    fieldDescription="Längere Methodik- und Practitioner-Notizen zum Bewerten, Brechen und Härten von KI-Systemen."
+    talkDescription="Talks und Papers, gemappt auf Threat Models, defensive Lessons und persönliche Takeaways."
+    fieldCta="Field Notes öffnen"
+    talkCta="Talk Notes öffnen"
+  />
+</Base>

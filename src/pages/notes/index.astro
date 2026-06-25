@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import NotesHub from '../../components/NotesHub.astro';
 import { getCollection } from 'astro:content';
 
 const base = import.meta.env.BASE_URL;
@@ -18,113 +19,16 @@ const talkCount = (await getCollection('talks')).length;
     <p>Two kinds of write-up: long-form field notes on methodology, and structured talk notes from papers and presentations.</p>
   </div>
 
-  <div class="notes-hub">
-    <a class="notes-hub-card notes-hub-card--field" href={`${base}guides/`}>
-      <div class="notes-hub-top">
-        <span class="notes-hub-count">{guideCount} {guideCount === 1 ? 'note' : 'notes'}</span>
-      </div>
-      <h2>Field Notes</h2>
-      <p>Long-form methodology and practitioner notes for assessing, breaking, and hardening AI systems.</p>
-      <span class="notes-hub-cta">Open Field Notes <span aria-hidden="true">→</span></span>
-    </a>
-
-    <a class="notes-hub-card notes-hub-card--talk" href={`${base}talks/`}>
-      <div class="notes-hub-top">
-        <span class="notes-hub-count">{talkCount} {talkCount === 1 ? 'note' : 'notes'}</span>
-      </div>
-      <h2>Talk Notes</h2>
-      <p>Talks and papers mapped into threat models, defensive lessons, and personal takeaways.</p>
-      <span class="notes-hub-cta">Open Talk Notes <span aria-hidden="true">→</span></span>
-    </a>
-  </div>
+  <NotesHub
+    guideCount={guideCount}
+    talkCount={talkCount}
+    fieldHref={`${base}guides/`}
+    talkHref={`${base}talks/`}
+    fieldCountLabel={guideCount === 1 ? 'note' : 'notes'}
+    talkCountLabel={talkCount === 1 ? 'note' : 'notes'}
+    fieldDescription="Long-form methodology and practitioner notes for assessing, breaking, and hardening AI systems."
+    talkDescription="Talks and papers mapped into threat models, defensive lessons, and personal takeaways."
+    fieldCta="Open Field Notes"
+    talkCta="Open Talk Notes"
+  />
 </Base>
-
-<style>
-  .notes-hub {
-    margin-top: 18px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-
-  /* Bold filled "pick a path" panels — deliberately unlike the light bordered
-     cards used on About, Projects and the Field/Talk lists. */
-  .notes-hub-card {
-    display: flex;
-    flex-direction: column;
-    min-height: 320px;
-    padding: 30px 32px 28px;
-    color: var(--paper-raised);
-    text-decoration: none;
-    transition: transform 180ms ease;
-  }
-
-  .notes-hub-card--field {
-    background: var(--signal);
-  }
-
-  .notes-hub-card--talk {
-    background: var(--moss);
-  }
-
-  .notes-hub-card:hover {
-    transform: translateY(-4px);
-  }
-
-  .notes-hub-top {
-    display: flex;
-    align-items: baseline;
-    justify-content: flex-end;
-  }
-
-  .notes-hub-count {
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    opacity: 0.75;
-  }
-
-  .notes-hub-card h2 {
-    margin: 28px 0 12px;
-    font-family: var(--font-display);
-    font-size: clamp(1.9rem, 3.2vw, 2.7rem);
-    font-weight: 500;
-    letter-spacing: -0.03em;
-    line-height: 1.04;
-  }
-
-  .notes-hub-card > p {
-    margin: 0;
-    max-width: 38ch;
-    font-size: 0.95rem;
-    line-height: 1.55;
-    opacity: 0.88;
-  }
-
-  .notes-hub-cta {
-    margin-top: auto;
-    padding-top: 26px;
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  .notes-hub-card:hover .notes-hub-cta {
-    text-decoration: underline;
-    text-underline-offset: 4px;
-  }
-
-  @media (max-width: 720px) {
-    .notes-hub {
-      grid-template-columns: 1fr;
-    }
-
-    .notes-hub-card {
-      min-height: 220px;
-    }
-  }
-</style>

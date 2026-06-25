@@ -1,0 +1,32 @@
+---
+import Base from '../../../layouts/Base.astro';
+import NoteCard from '../../../components/NoteCard.astro';
+import { getCollection } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+const methods = (await getCollection('methods')).sort((a, b) =>
+  (a.data.title ?? a.id).localeCompare(b.data.title ?? b.id),
+);
+---
+
+<Base title="Methoden | Adarsh Sarda" lang="de" wide>
+  <div class="page-head">
+    <p class="eyebrow"><span>Index</span> / Methoden</p>
+    <h1>Methoden</h1>
+    <p>Methodische Vorlagen und interne Arbeitsweisen. Die Inhalte bleiben vorerst auf Englisch.</p>
+  </div>
+
+  <div class="note-card-list">
+    {methods.map((method, index) => (
+      <NoteCard
+        href={`${base}de/methods/${method.data.slug ?? method.id}/`}
+        index={index}
+        prefix="M"
+        kicker="Method"
+        title={method.data.title ?? method.id}
+        tags={method.data.tags}
+        cta="Methode lesen"
+      />
+    ))}
+  </div>
+</Base>

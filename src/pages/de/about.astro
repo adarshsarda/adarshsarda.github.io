@@ -1,0 +1,123 @@
+---
+import Base from '../../layouts/Base.astro';
+import '../../styles/profile.css';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<Base
+  title="Über mich | Adarsh Sarda"
+  description="Forschungsprofil, Erfahrung und technische Schwerpunkte von Adarsh Sarda."
+  lang="de"
+  wide
+>
+  <div class="page-head profile-head">
+    <p class="eyebrow"><span>Profil 01</span> / Forschung und Erfahrung</p>
+    <h1>Über mich</h1>
+    <p>
+      Ich arbeite an KI-Systemen aus zwei Richtungen: als Engineer, der sie baut,
+      und als Sicherheitsforscher, der prüft, wo ihre Annahmen brechen.
+    </p>
+  </div>
+
+  <div class="profile-layout">
+    <article class="profile-story">
+      <section class="profile-card">
+        <p class="profile-kicker">Aktueller Fokus</p>
+        <h2>KI-Sicherheit mit experimenteller Denkweise.</h2>
+        <p>
+          Ich absolviere den M.Sc. Artificial Intelligence for Industrial Applications
+          an der OTH Amberg-Weiden mit Schwerpunkt AI Security & Privacy. Meine aktuelle
+          Arbeit umfasst semantische LLM-Backdoors, adversarielle Evaluation,
+          Deepfake-Detector-Sicherheit und die Glaubwürdigkeit von Modell-Evaluationen.
+        </p>
+        <p>
+          Mich interessiert die Lücke zwischen einer überzeugenden Demo und belastbarer
+          Evidenz: Kontrollen designen, probabilistisches Verhalten messen, Fehlversuche
+          berichten und Grenzen nah am Ergebnis halten.
+        </p>
+      </section>
+
+      <section class="profile-card profile-card--edu">
+        <p class="profile-kicker">Ausbildung</p>
+        <div class="timeline-list">
+          <div class="timeline-entry">
+            <p class="timeline-date">03/2025 - heute</p>
+            <div>
+              <h3>M.Sc. Artificial Intelligence for Industrial Applications</h3>
+              <p>OTH Amberg-Weiden, Bayern</p>
+              <p>Fokus: AI Security & Privacy, Machine Learning, NLP, Computer Vision und sicheres KI-Systemdesign.</p>
+            </div>
+          </div>
+          <div class="timeline-entry">
+            <p class="timeline-date">08/2019 - 06/2023</p>
+            <div>
+              <h3>B.Tech Information Technology</h3>
+              <p>Institute of Engineering and Management, Kolkata</p>
+              <p>CGPA 8.6/10. Die Abschlussarbeit führte zu einer co-autorierten Springer-Publikation über multimodale Emotionserkennung.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="profile-card profile-card--work">
+        <p class="profile-kicker">Beruflicher Hintergrund</p>
+        <h2>Technische Forschung in Entscheidungen übersetzen.</h2>
+        <p>
+          Von Januar 2023 bis Oktober 2024 arbeitete ich als AI Research Analyst bei
+          GreyB Research Pte. Die Arbeit verband Patentanalytik, Technology Intelligence
+          und technische Kommunikation für internationale Kunden.
+        </p>
+        <ul class="profile-list">
+          <li>Entwicklung eines ML-basierten Systems zur automatisierten Patent-Technologieklassifikation.</li>
+          <li>Infringement- und Prior-Art-Analysen in AI/ML, Blockchain, 3GPP und IETF-Technologien.</li>
+          <li>Mapping von Patentansprüchen gegen technische Implementierungen und Produktfeatures.</li>
+          <li>Erstellung von Technologielandschaften und Entscheidungsbriefings für Legal-, Strategie- und R&D-Stakeholder.</li>
+        </ul>
+      </section>
+    </article>
+
+    <aside class="profile-facts">
+      <div class="fact-block">
+        <p class="fact-label">Standort</p>
+        <p>Amberg, Deutschland</p>
+      </div>
+      <div class="fact-block">
+        <p class="fact-label">Verfügbarkeit</p>
+        <p>Werkstudent, 20 Std./Woche<br />Sofortiger Start<br />Amberg, Regensburg, Nürnberg<br />und Umgebung, oder remote</p>
+      </div>
+      <div class="fact-block">
+        <p class="fact-label">Forschung</p>
+        <p>LLM-Sicherheit<br />Adversarial ML<br />Deepfake-Sicherheit<br />KI-Evaluation</p>
+      </div>
+      <div class="fact-block">
+        <p class="fact-label">Technisch</p>
+        <p>Python<br />PyTorch<br />Scikit-learn<br />NLP und LLMs<br />Computer Vision</p>
+      </div>
+      <div class="fact-block">
+        <p class="fact-label">Sprachen</p>
+        <p>Englisch C1<br />Deutsch B1<br />Hindi, Muttersprache</p>
+      </div>
+      <div class="fact-block">
+        <p class="fact-label">Lebenslauf</p>
+        <p>
+          <a href={`${base}de/cv/`}>Deutscher Lebenslauf</a>
+        </p>
+      </div>
+      <div class="fact-block">
+        <p class="fact-label">Kontakt</p>
+        <p>
+          <a href="mailto:adarshsarda29@gmail.com">Email</a><br />
+          <a href="https://www.linkedin.com/in/adarshsarda" target="_blank" rel="noreferrer">LinkedIn</a><br />
+          <a href="https://github.com/adarshsarda/" target="_blank" rel="noreferrer">GitHub</a>
+        </p>
+      </div>
+    </aside>
+  </div>
+
+  <section class="collaboration-strip">
+    <p class="profile-kicker">Offen für</p>
+    <h2>Werkstudentenrollen und Forschungskollaborationen in KI-Sicherheit, LLM-Evaluation und angewandtem Machine Learning.</h2>
+    <a class="text-link" href="mailto:adarshsarda29@gmail.com">Gespräch starten <span aria-hidden="true">→</span></a>
+  </section>
+</Base>

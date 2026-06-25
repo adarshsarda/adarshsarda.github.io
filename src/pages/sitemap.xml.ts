@@ -23,20 +23,37 @@ export const GET: APIRoute = async ({ site }) => {
       ? [`/projects/${entry.data.slug}/`]
       : [],
   );
+  const localizedProjectPaths = projectPaths.map((path) => `/de${path}`);
+  const guidePaths = guides.map((entry) => `/guides/${entry.id}/`);
+  const methodPaths = methods.map((entry) => `/methods/${entry.data.slug ?? entry.id}/`);
+  const talkPaths = talks.map((entry) => `/talks/${entry.id}/`);
   const paths = [
     '/',
+    '/de/',
     '/about/',
+    '/de/about/',
     '/cv/',
+    '/de/cv/',
     '/projects/',
+    '/de/projects/',
     '/guides/',
+    '/de/guides/',
     '/methods/',
+    '/de/methods/',
     '/skills/',
+    '/de/skills/',
     '/talks/',
+    '/de/talks/',
     '/publications/',
+    '/de/publications/',
     ...projectPaths,
-    ...guides.map((entry) => `/guides/${entry.id}/`),
-    ...methods.map((entry) => `/methods/${entry.data.slug ?? entry.id}/`),
-    ...talks.map((entry) => `/talks/${entry.id}/`),
+    ...localizedProjectPaths,
+    ...guidePaths,
+    ...guidePaths.map((path) => `/de${path}`),
+    ...methodPaths,
+    ...methodPaths.map((path) => `/de${path}`),
+    ...talkPaths,
+    ...talkPaths.map((path) => `/de${path}`),
   ];
   const body = paths
     .map((path) => `  <url><loc>${escapeXml(new URL(path, base).toString())}</loc></url>`)

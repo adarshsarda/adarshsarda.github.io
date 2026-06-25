@@ -1,0 +1,48 @@
+---
+import Base from '../../../layouts/Base.astro';
+import ProjectCard from '../../../components/ProjectCard.astro';
+import { isPublishable } from '../../../lib/contentVisibility';
+import { getCollection } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+const all = await getCollection('projects');
+
+const groups = new Map<string, typeof all>();
+for (const entry of all) {
+  const key = entry.id.split('/')[0];
+  if (!groups.has(key)) groups.set(key, []);
+  groups.get(key)!.push(entry);
+}
+
+const projects = [...groups.entries()]
+  .flatMap(([key, entries]) => {
+    const lead = entries.find((entry) => entry.data.type === 'project');
+    return lead && lead.data.type === 'project' && isPublishable(lead)
+      ? [{ key, data: lead.data, sections: entries.length }]
+      : [];
+  })
+  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+---
+
+<Base
+  title="Projekte | Adarsh Sarda"
+  description="Forschungsprojekte und technische Fallstudien."
+  lang="de"
+  wide
+>
+  <div class="page-head">
+    <p class="eyebrow"><span>Index 02</span> / Forschungsarchiv</p>
+    <h1>Fallstudien</h1>
+    <p>
+      Originalforschung zu KI-Sicherheit und adversarial Machine Learning. Die
+      technischen Projekttexte bleiben vorerst auf Englisch, damit Claims,
+      Zahlen und Evidenz exakt bleiben.
+    </p>
+  </div>
+
+  <div class="project-card-list">
+    {projects.map((p, index) => (
+      <ProjectCard href={`${base}de/projects/${p.key}/`} index={index} data={p.data} />
+    ))}
+  </div>
+</Base>

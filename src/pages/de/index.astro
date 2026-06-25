@@ -1,9 +1,9 @@
 ---
-import Base from '../layouts/Base.astro';
-import NoteCard from '../components/NoteCard.astro';
-import ProjectCard from '../components/ProjectCard.astro';
-import TalkCarousel from '../components/TalkCarousel.astro';
-import { isPublishable } from '../lib/contentVisibility';
+import Base from '../../layouts/Base.astro';
+import NoteCard from '../../components/NoteCard.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import TalkCarousel from '../../components/TalkCarousel.astro';
+import { isPublishable } from '../../lib/contentVisibility';
 import { getCollection } from 'astro:content';
 
 const base = import.meta.env.BASE_URL;
@@ -31,25 +31,26 @@ const talkCount = talkEntries.length;
 ---
 
 <Base
-  title="Adarsh Sarda | AI Security Researcher"
-  description="Research and field notes on AI security, LLM red teaming, and adversarial machine learning."
+  title="Adarsh Sarda | KI-Sicherheitsforscher"
+  description="Forschung und Notizen zu KI-Sicherheit, LLM Red Teaming und adversarial Machine Learning."
+  lang="de"
   wide
 >
   <section class="home-hero">
     <div class="hero-main">
       <p class="hero-name">Adarsh Sarda</p>
-      <p class="eyebrow"><span>Research & field notes</span> / AI security</p>
-      <h1>I build and break <em>AI systems.</em></h1>
+      <p class="eyebrow"><span>Forschung & Notizen</span> / KI-Sicherheit</p>
+      <h1>Ich baue und prüfe <em>KI-Systeme.</em></h1>
       <p class="hero-deck">
-        I work on adversarial machine learning, LLM red teaming, and experimental
-        security research. Each write-up records the method, evidence, failed
-        attempts, and limits of the result.
+        Ich arbeite an adversarial Machine Learning, LLM Red Teaming und
+        experimenteller Sicherheitsforschung. Die technischen Fallstudien bleiben
+        dort auf Englisch, wo Präzision und belegbare Claims wichtig sind.
       </p>
       <div class="hero-actions">
-        <a class="text-link" href={`${base}projects/`}>Read the research <span aria-hidden="true">↗</span></a>
-        <a class="text-link quiet" href={`${base}about/`}>About my work <span aria-hidden="true">→</span></a>
-        <a class="text-link quiet" href={`${base}cv/`}>
-          CV / Lebenslauf <span aria-hidden="true">→</span>
+        <a class="text-link" href={`${base}de/projects/`}>Forschung lesen <span aria-hidden="true">↗</span></a>
+        <a class="text-link quiet" href={`${base}de/about/`}>Über meine Arbeit <span aria-hidden="true">→</span></a>
+        <a class="text-link quiet" href={`${base}de/cv/`}>
+          Lebenslauf <span aria-hidden="true">→</span>
         </a>
       </div>
     </div>
@@ -58,7 +59,7 @@ const talkCount = talkEntries.length;
       <div class="portrait-frame">
         <img
           src={`${base}images/portrait.jpeg`}
-          alt="Portrait outdoors beside a river"
+          alt="Porträt im Freien neben einem Fluss"
           width="900"
           height="1600"
           loading="eager"
@@ -66,37 +67,37 @@ const talkCount = talkEntries.length;
         />
       </div>
       <div class="portrait-note">
-        <p class="note-label">Current inquiry / 2026</p>
-        <p>Can a multi-turn model learn a hidden rule based on the <strong>order of meanings</strong> rather than a keyword?</p>
+        <p class="note-label">Aktuelle Frage / 2026</p>
+        <p>Kann ein Multi-Turn-Modell eine versteckte Regel lernen, die auf der <strong>Reihenfolge von Bedeutungen</strong> statt auf einem Keyword basiert?</p>
       </div>
     </figure>
   </section>
 
   <section class="home-section principles-section">
     <header class="section-heading">
-      <p><span>01</span> Research principles</p>
-      <p>How I evaluate evidence</p>
+      <p><span>01</span> Forschungsprinzipien</p>
+      <p>Wie ich Evidenz bewerte</p>
     </header>
     <div class="principle-grid">
       <div>
         <span>01</span>
-        <h2>Measure statistically.</h2>
-        <p>AI failures are probabilistic. Report rates, sample sizes, controls, and uncertainty.</p>
+        <h2>Statistisch messen.</h2>
+        <p>KI-Fehler sind probabilistisch. Ich berichte Raten, Stichproben, Kontrollen und Unsicherheit.</p>
       </div>
       <div>
         <span>02</span>
-        <h2>Report failed iterations.</h2>
-        <p>A discarded shortcut can teach more about the system than a polished final score.</p>
+        <h2>Fehlversuche dokumentieren.</h2>
+        <p>Ein verworfener Shortcut erklärt oft mehr über das System als ein polierter Endwert.</p>
       </div>
       <div>
         <span>03</span>
-        <h2>Separate demos from evidence.</h2>
-        <p>Installation, generalisation, utility, and real-world risk are different claims.</p>
+        <h2>Demos von Evidenz trennen.</h2>
+        <p>Installation, Generalisierung, Utility und reales Risiko sind unterschiedliche Aussagen.</p>
       </div>
       <div>
         <span>04</span>
-        <h2>Question perfect results.</h2>
-        <p>Perfect scores demand stronger audits, not stronger adjectives.</p>
+        <h2>Perfekte Ergebnisse prüfen.</h2>
+        <p>Perfekte Scores brauchen stärkere Audits, nicht stärkere Adjektive.</p>
       </div>
     </div>
   </section>
@@ -104,13 +105,13 @@ const talkCount = talkEntries.length;
   {projects.length > 0 && (
     <section class="home-section research-section">
       <header class="section-heading">
-        <p><span>02</span> Selected research</p>
-        <p>{projectCount.toString().padStart(2, '0')} case {projectCount === 1 ? 'file' : 'files'}</p>
+        <p><span>02</span> Ausgewählte Forschung</p>
+        <p>{projectCount.toString().padStart(2, '0')} {projectCount === 1 ? 'Fallstudie' : 'Fallstudien'}</p>
       </header>
       <div class="project-card-list">
         {projects.map((project, index) => (
           <ProjectCard
-            href={`${base}projects/${project.key}/`}
+            href={`${base}de/projects/${project.key}/`}
             index={index}
             data={project.data}
           />
@@ -123,19 +124,19 @@ const talkCount = talkEntries.length;
     <section class="home-section notes-section">
       <header class="section-heading">
         <p><span>03</span> Field Notes</p>
-        <p>{guideCount.toString().padStart(2, '0')} long-form {guideCount === 1 ? 'guide' : 'guides'}</p>
+        <p>{guideCount.toString().padStart(2, '0')} {guideCount === 1 ? 'Guide' : 'Guides'}</p>
       </header>
       <div class="note-card-list">
         {guideEntries.map((guide, index) => (
           <NoteCard
-            href={`${base}guides/${guide.id}/`}
+            href={`${base}de/guides/${guide.id}/`}
             index={index}
             prefix="N"
             kicker="Practitioner field note"
             title={guide.data.title}
             description={guide.data.description}
             tags={guide.data.tags}
-            cta="Read the note"
+            cta="Notiz lesen"
           />
         ))}
       </div>
@@ -146,22 +147,27 @@ const talkCount = talkEntries.length;
     <section class="home-section talks-section">
       <header class="section-heading">
         <p><span>04</span> Talk Notes</p>
-        <p>{talkCount.toString().padStart(2, '0')} {talkCount === 1 ? 'presentation' : 'presentations'}</p>
+        <p>{talkCount.toString().padStart(2, '0')} {talkCount === 1 ? 'Präsentation' : 'Präsentationen'}</p>
       </header>
 
       <TalkCarousel
         entries={talkEntries}
-        indexHref={`${base}talks/`}
-        indexCta="Open the full talk index"
+        hrefPrefix="/de/talks"
+        previousLabel="Vorherige Talk Note anzeigen"
+        nextLabel="Nächste Talk Note anzeigen"
+        carouselLabel="Talk Notes Karussell"
+        footerText="Nutze die Pfeile, Swipe oder horizontales Scrollen."
+        indexHref={`${base}de/talks/`}
+        indexCta="Vollständigen Talk-Index öffnen"
       />
     </section>
   )}
 
   <section class="home-section contact-section">
     <div>
-      <p class="profile-kicker">Let's talk</p>
-      <h2>Interested in AI security, LLM evaluation, or applied machine learning? Let's talk.</h2>
-      <p>Based in Amberg, Germany. Available immediately for working student roles at 20 hours/week, either on-site around Amberg, Regensburg, Nuremberg and nearby areas, or remote.</p>
+      <p class="profile-kicker">Kontakt</p>
+      <h2>Interessiert an KI-Sicherheit, LLM-Evaluation oder angewandtem Machine Learning? Sprechen wir.</h2>
+      <p>Ich bin in Amberg, Deutschland, und für Werkstudentenrollen mit 20 Stunden pro Woche verfügbar — vor Ort in der Region oder remote.</p>
     </div>
     <div class="contact-actions">
       <a class="text-link" href="mailto:adarshsarda29@gmail.com">Email <span aria-hidden="true">→</span></a>

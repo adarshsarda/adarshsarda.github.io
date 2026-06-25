@@ -5,10 +5,12 @@ import ResourceLinks from './ResourceLinks.astro';
 interface Props {
   entry: CollectionEntry<'talks'>;
   index: number;
+  hrefPrefix?: string;
 }
 
-const { entry, index } = Astro.props;
+const { entry, index, hrefPrefix = '/talks' } = Astro.props;
 const { data } = entry;
+const href = `${hrefPrefix}/${entry.id}/`;
 ---
 
 <article class="talk-card">
@@ -21,7 +23,7 @@ const { data } = entry;
   </div>
 
   <p class="talk-source">{data.speaker} / {data.source} / {data.year}</p>
-  <h2><a href={`/talks/${entry.id}/`}>{data.title}</a></h2>
+  <h2><a href={href}>{data.title}</a></h2>
   <p class="talk-summary">{data.description} {data.takeaway}</p>
 
   <div class="why-added">
@@ -36,7 +38,7 @@ const { data } = entry;
   )}
 
   <div class="talk-card-actions">
-    <a class="note-link" href={`/talks/${entry.id}/`}>
+    <a class="note-link" href={href}>
       Read the talk note <span aria-hidden="true">→</span>
     </a>
     <ResourceLinks paperUrl={data.paper_url} artifacts={data.artifacts} compact dark />

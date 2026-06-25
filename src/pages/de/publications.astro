@@ -1,0 +1,75 @@
+---
+import Base from '../../layouts/Base.astro';
+import '../../styles/profile.css';
+---
+
+<Base
+  title="Publikationen | Adarsh Sarda"
+  description="Veröffentlichte akademische Arbeit von Adarsh Sarda."
+  lang="de"
+  structuredData={{
+    '@type': 'ScholarlyArticle',
+    '@id': 'https://doi.org/10.1007/978-981-19-5191-6_2',
+    headline: 'Improving Mental Health Through Multimodal Emotion Detection from Speech and Text Data Using Long-Short Term Memory',
+    datePublished: '2023-04-25',
+    author: [
+      { '@type': 'Person', name: 'D. Bhagat' },
+      { '@type': 'Person', name: 'A. Ray' },
+      { '@id': `${Astro.site ?? Astro.url.origin}#person` },
+      { '@type': 'Person', name: 'N. Dutta Roy' },
+      { '@type': 'Person', name: 'M. Mahmud' },
+      { '@type': 'Person', name: 'D. De' },
+    ],
+    isPartOf: {
+      '@type': 'PublicationVolume',
+      name: 'Frontiers of ICT in Healthcare',
+      volumeNumber: '519',
+    },
+    sameAs: 'https://doi.org/10.1007/978-981-19-5191-6_2',
+  }}
+  wide
+>
+  <div class="page-head">
+    <p class="eyebrow"><span>Index 04</span> / Akademische Arbeit</p>
+    <h1>Publikationen</h1>
+    <p>Peer-reviewte Arbeit und der Projektkontext dahinter.</p>
+  </div>
+
+  <article class="publication-card">
+    <div class="publication-head">
+      <span class="publication-number">P-01</span>
+      <p class="publication-type">Springer book chapter / 2023</p>
+    </div>
+    <div class="publication-body">
+      <div class="publication-lead">
+        <h2>Improving Mental Health Through Multimodal Emotion Detection from Speech and Text Data Using Long-Short Term Memory</h2>
+        <p class="publication-authors">
+          D. Bhagat, A. Ray, <strong>A. Sarda</strong>, N. Dutta Roy, M. Mahmud, and D. De
+        </p>
+      </div>
+      <div class="publication-detail">
+        <p class="publication-abstract">
+          Veröffentlicht in <em>Frontiers of ICT in Healthcare</em>, Lecture Notes in Networks
+          and Systems, volume 519, pages 13-23. First published online April 25, 2023.
+        </p>
+        <p class="publication-abstract">
+          Die Arbeit beschreibt einen multimodalen Emotionserkennungs-Prototyp mit Speech
+          und Text, einem LSTM-basierten Klassifikator, RAVDESS- und FastText-Ressourcen,
+          einem voice-interactive Workflow und Twilio-basiertem Alerting. Die Bachelorarbeit
+          berichtet ungefähr 86% Modellgenauigkeit.
+        </p>
+        <div class="publication-links">
+          <a class="text-link" href="https://doi.org/10.1007/978-981-19-5191-6_2" target="_blank" rel="noreferrer">
+            Springer / DOI <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <dl class="publication-citation">
+      <div><dt>DOI</dt><dd>10.1007/978-981-19-5191-6_2</dd></div>
+      <div><dt>Venue</dt><dd>Frontiers of ICT in Healthcare</dd></div>
+      <div><dt>Series</dt><dd>LNNS 519</dd></div>
+      <div><dt>Contribution</dt><dd>Co-author and bachelor project developer</dd></div>
+    </dl>
+  </article>
+</Base>

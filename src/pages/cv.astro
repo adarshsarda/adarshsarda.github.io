@@ -8,20 +8,20 @@ const cvVersion = '20260619';
 
 <Base
   title="CV | Adarsh Sarda"
-  description="English and German CVs for Adarsh Sarda, AI security researcher and M.Sc. Artificial Intelligence student."
+  description="English CV for Adarsh Sarda, AI security researcher and M.Sc. Artificial Intelligence student."
+  alternatePath="/de/cv/"
   wide
 >
   <div class="page-head cv-head">
-    <p class="eyebrow"><span>Profile 05</span> / CV and Lebenslauf</p>
+    <p class="eyebrow"><span>Profile 05</span> / CV</p>
     <h1>CV</h1>
     <p>
-      Two concise versions of the same profile, formatted for international and
-      German applications. Preview either document here, then open or download
-      the full PDF.
+      The English CV is formatted for international applications. Preview the
+      document here, then open or download the full PDF.
     </p>
   </div>
 
-  <div class="cv-grid">
+  <div class="cv-grid cv-grid-single">
     <section class="cv-card-copy cv-card-copy-en" lang="en" aria-labelledby="english-cv-title">
       <div>
         <p class="cv-index">CV-01 / EN</p>
@@ -44,6 +44,9 @@ const cvVersion = '20260619';
         >
           Download <span aria-hidden="true">↓</span>
         </a>
+        <a class="text-link quiet" href={`${base}de/cv/`}>
+          German Lebenslauf <span aria-hidden="true">→</span>
+        </a>
       </div>
     </section>
 
@@ -63,53 +66,11 @@ const cvVersion = '20260619';
       />
     </a>
 
-    <section class="cv-card-copy cv-card-copy-de" lang="de" aria-labelledby="german-cv-title">
-      <div>
-        <p class="cv-index">CV-02 / DE</p>
-        <h2 id="german-cv-title">Deutscher Lebenslauf</h2>
-        <p>KI-Sicherheit, Berufserfahrung, Bildungsweg und ausgewählte Forschungsarbeit.</p>
-      </div>
-      <div class="cv-actions">
-        <a
-          class="text-link"
-          href={`${base}cv/adarsh-sarda-lebenslauf-deutsch.pdf?v=${cvVersion}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          PDF öffnen <span aria-hidden="true">↗</span>
-        </a>
-        <a
-          class="text-link quiet"
-          href={`${base}cv/adarsh-sarda-lebenslauf-deutsch.pdf?v=${cvVersion}`}
-          download
-        >
-          Herunterladen <span aria-hidden="true">↓</span>
-        </a>
-      </div>
-    </section>
-
-    <a
-      class="cv-preview cv-preview-de"
-      href={`${base}cv/adarsh-sarda-lebenslauf-deutsch.pdf?v=${cvVersion}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Deutschen Lebenslauf als PDF öffnen"
-    >
-      <img
-        src={`${base}images/cv/german-preview.png`}
-        alt="Vorschau des deutschen Lebenslaufs von Adarsh Sarda"
-        width="982"
-        height="1389"
-        loading="lazy"
-      />
-    </a>
-
     <section class="cv-note">
       <p class="profile-kicker">Application note</p>
       <p>
-        Both documents contain the same core experience. Use the English version
-        for international roles and the German version for applications written
-        in German.
+        Use this version for international roles. A German-language Lebenslauf
+        is available in the German version of the site.
       </p>
     </section>
   </div>

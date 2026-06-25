@@ -1,0 +1,25 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+const entries = await getCollection('skills');
+const entry = entries.find((candidate) => candidate.data.slug === 'skills') ?? entries[0];
+
+if (!entry) {
+  throw new Error('The skills collection is missing content/skills/skills.md.');
+}
+
+const { Content } = await render(entry);
+---
+
+<Base
+  title={`${entry.data.title ?? 'Skills & Evidence'} | Adarsh Sarda`}
+  description={entry.data.note ?? 'Technical skills and the project evidence behind them.'}
+  lang="de"
+>
+  <p class="eyebrow"><span>Evidenzindex</span> / Skills</p>
+  <p class="language-note">Diese Skills-Seite nutzt die deutsche Navigation; der Inhalt bleibt vorerst auf Englisch.</p>
+  <article class="prose">
+    <Content />
+  </article>
+</Base>
