@@ -9,8 +9,8 @@ import type { CollectionEntry } from 'astro:content';
 const base = import.meta.env.BASE_URL;
 
 export async function getStaticPaths() {
-  const all = await getCollection('projects');
-  const groups = new Map<string, CollectionEntry<'projects'>[]>();
+  const all = await getCollection('projectsDe');
+  const groups = new Map<string, CollectionEntry<'projectsDe'>[]>();
   for (const entry of all) {
     const key = entry.id.split('/')[0];
     if (!groups.has(key)) groups.set(key, []);
@@ -24,7 +24,7 @@ export async function getStaticPaths() {
   });
 }
 
-const { entries } = Astro.props as { entries: CollectionEntry<'projects'>[] };
+const { entries } = Astro.props as { entries: CollectionEntry<'projectsDe'>[] };
 
 const ORDER: Record<string, number> = { overview: 0, method: 1, results: 2, reflection: 3 };
 const LABEL: Record<string, string> = {
@@ -34,7 +34,7 @@ const LABEL: Record<string, string> = {
   reflection: 'Reflexion',
 };
 
-function partOf(entry: CollectionEntry<'projects'>): string {
+function partOf(entry: CollectionEntry<'projectsDe'>): string {
   if (entry.data.type === 'project') return 'overview';
   return entry.data.part ?? entry.id.split('/').pop() ?? entry.id;
 }
@@ -59,6 +59,13 @@ const dateFmt = new Intl.DateTimeFormat('de-DE', {
   day: 'numeric',
   timeZone: 'UTC',
 });
+const statusLabels: Record<string, string> = {
+  planned: 'geplant',
+  'in-progress': 'in Arbeit',
+  active: 'aktiv',
+  complete: 'abgeschlossen',
+  paused: 'pausiert',
+};
 
 const sections = await Promise.all(
   sorted.map(async (entry) => {
@@ -103,25 +110,20 @@ const sections = await Promise.all(
 >
   <p class="crumb"><a href={`${base}de/projects/`}>Index 02 / Fallstudien</a></p>
 
-  <p class="language-note">
-    Diese Projektseite nutzt die deutsche Website-Navigation; die technische
-    Fallstudie bleibt auf Englisch, damit Begriffe, Zahlen und Evidenz exakt bleiben.
-  </p>
-
   <header class="article-head">
     <div class="article-label">
-      <span>Research file / R-{String(meta.order ?? 1).padStart(2, '0')}</span>
-      {meta.status && <span>{meta.status}</span>}
+      <span>Forschungsakte / R-{String(meta.order ?? 1).padStart(2, '0')}</span>
+      {meta.status && <span>{statusLabels[meta.status] ?? meta.status}</span>}
     </div>
     <h1>{meta.title}</h1>
     {meta.subtitle && <p class="subtitle">{meta.subtitle}</p>}
     {meta.summary && <p class="summary">{meta.summary}</p>}
 
     <dl class="meta-table">
-      {meta.status && (<><dt>Status</dt><dd>{meta.status}</dd></>)}
+      {meta.status && (<><dt>Status</dt><dd>{statusLabels[meta.status] ?? meta.status}</dd></>)}
       {meta.expected_submission_date && (
         <>
-          <dt>Submission</dt>
+          <dt>Abgabe</dt>
           <dd>
             <time datetime={meta.expected_submission_date.toISOString()}>
               Geplant für {dateFmt.format(meta.expected_submission_date)}
@@ -129,8 +131,8 @@ const sections = await Promise.all(
           </dd>
         </>
       )}
-      {meta.context && (<><dt>Context</dt><dd>{meta.context}</dd></>)}
-      {meta.role && (<><dt>Role</dt><dd>{meta.role}</dd></>)}
+      {meta.context && (<><dt>Kontext</dt><dd>{meta.context}</dd></>)}
+      {meta.role && (<><dt>Rolle</dt><dd>{meta.role}</dd></>)}
     </dl>
 
     {meta.skills && meta.skills.length > 0 && (
@@ -139,11 +141,11 @@ const sections = await Promise.all(
       </ul>
     )}
 
-    <ArtifactLinks artifacts={meta.artifacts} />
+    <ArtifactLinks artifacts={meta.artifacts} lang="de" />
   </header>
 
-  {meta.evidence && <ProjectEvidence evidence={meta.evidence} metrics={meta.metrics} />}
-  {OdsbTriggerDemo && <OdsbTriggerDemo />}
+  {meta.evidence && <ProjectEvidence evidence={meta.evidence} metrics={meta.metrics} lang="de" />}
+  {OdsbTriggerDemo && <OdsbTriggerDemo lang="de" />}
 
   <div class="with-toc">
     <article>

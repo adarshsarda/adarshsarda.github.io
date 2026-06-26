@@ -6,14 +6,14 @@ import type { CollectionEntry } from 'astro:content';
 const base = import.meta.env.BASE_URL;
 
 export async function getStaticPaths() {
-  const methods = await getCollection('methods');
+  const methods = await getCollection('methodsDe');
   return methods.map((entry) => ({
     params: { slug: entry.data.slug ?? entry.id },
     props: { entry },
   }));
 }
 
-const { entry } = Astro.props as { entry: CollectionEntry<'methods'> };
+const { entry } = Astro.props as { entry: CollectionEntry<'methodsDe'> };
 const { Content, headings } = await render(entry);
 const data = entry.data;
 const title = data.title ?? entry.id;
@@ -35,11 +35,9 @@ const toc = headings.filter((heading) => heading.depth === 2 || heading.depth ==
   wide
 >
   <p class="crumb"><a href={`${base}de/methods/`}>Methoden</a></p>
-  <p class="language-note">Diese Methodenseite nutzt die deutsche Navigation; der Inhalt bleibt vorerst auf Englisch.</p>
-
   <header class="article-head">
     <div class="article-label">
-      <span>Method</span>
+      <span>Methode</span>
     </div>
     {data.tags && data.tags.length > 0 && (
       <ul class="chips article-tags">

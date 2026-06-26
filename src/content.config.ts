@@ -61,9 +61,7 @@ const evidenceSchema = z.object({
 const statusSchema = z.enum(['planned', 'in-progress', 'active', 'complete', 'paused']);
 const tagsSchema = z.array(tagSchema);
 
-const guides = defineCollection({
-  loader: glob({ pattern: '*.md', base: './content/guides' }),
-  schema: z.object({
+const guideSchema = z.object({
     type: z.literal('guide').optional(),
     slug: z.string().min(1).optional(),
     title: z.string(),
@@ -76,12 +74,19 @@ const guides = defineCollection({
     defensible_claims: z.array(z.string()).optional(),
     do_not_claim: z.array(z.string()).optional(),
     artifacts: z.array(artifactSchema).optional(),
-  }),
+  });
+
+const guides = defineCollection({
+  loader: glob({ pattern: '*.md', base: './content/guides' }),
+  schema: guideSchema,
 });
 
-const talks = defineCollection({
-  loader: glob({ pattern: '*.md', base: './content/talks' }),
-  schema: z.object({
+const guidesDe = defineCollection({
+  loader: glob({ pattern: '*.md', base: './content/de/guides' }),
+  schema: guideSchema,
+});
+
+const talkSchema = z.object({
     title: z.string().min(1),
     description: z.string().min(1).max(180),
     speaker: z.string().min(1),
@@ -113,7 +118,16 @@ const talks = defineCollection({
     paper_url: z.string().url().optional(),
     tags: tagsSchema.optional(),
     artifacts: z.array(artifactSchema).optional(),
-  }),
+  });
+
+const talks = defineCollection({
+  loader: glob({ pattern: '*.md', base: './content/talks' }),
+  schema: talkSchema,
+});
+
+const talksDe = defineCollection({
+  loader: glob({ pattern: '*.md', base: './content/de/talks' }),
+  schema: talkSchema,
 });
 
 const projectOverviewSchema = z.object({
@@ -158,15 +172,27 @@ const projects = defineCollection({
   schema: z.discriminatedUnion('type', [projectOverviewSchema, projectDetailSchema]),
 });
 
-const methods = defineCollection({
-  loader: glob({ pattern: '*.md', base: './content/methods' }),
-  schema: z.object({
+const projectsDe = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './content/de/projects' }),
+  schema: z.discriminatedUnion('type', [projectOverviewSchema, projectDetailSchema]),
+});
+
+const methodSchema = z.object({
     type: z.literal('method'),
     slug: z.string().min(1).optional(),
     title: z.string().min(1).optional(),
     tags: tagsSchema.optional(),
     related: z.array(z.string()).optional(),
-  }),
+  });
+
+const methods = defineCollection({
+  loader: glob({ pattern: '*.md', base: './content/methods' }),
+  schema: methodSchema,
+});
+
+const methodsDe = defineCollection({
+  loader: glob({ pattern: '*.md', base: './content/de/methods' }),
+  schema: methodSchema,
 });
 
 const projectIdeas = defineCollection({
@@ -235,14 +261,21 @@ const meta = defineCollection({
   }),
 });
 
-const skills = defineCollection({
-  loader: glob({ pattern: '*.md', base: './content/skills' }),
-  schema: z.object({
+const skillSchema = z.object({
     type: z.literal('skill'),
     slug: z.string().min(1).optional(),
     title: z.string().min(1).optional(),
     note: z.string().optional(),
-  }),
+  });
+
+const skills = defineCollection({
+  loader: glob({ pattern: '*.md', base: './content/skills' }),
+  schema: skillSchema,
+});
+
+const skillsDe = defineCollection({
+  loader: glob({ pattern: '*.md', base: './content/de/skills' }),
+  schema: skillSchema,
 });
 
 const profile = defineCollection({
@@ -270,13 +303,18 @@ const profile = defineCollection({
 
 export const collections = {
   guides,
+  guidesDe,
   talks,
+  talksDe,
   projects,
+  projectsDe,
   methods,
+  methodsDe,
   projectIdeas,
   paperNotes,
   redteam,
   meta,
   skills,
+  skillsDe,
   profile,
 };

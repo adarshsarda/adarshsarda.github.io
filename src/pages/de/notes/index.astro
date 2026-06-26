@@ -4,13 +4,13 @@ import NotesHub from '../../../components/NotesHub.astro';
 import { getCollection } from 'astro:content';
 
 const base = import.meta.env.BASE_URL;
-const guideCount = (await getCollection('guides')).length;
-const talkCount = (await getCollection('talks')).length;
+const guideCount = (await getCollection('guidesDe')).length;
+const talkCount = (await getCollection('talksDe')).length;
 ---
 
 <Base
   title="Notizen | Adarsh Sarda"
-  description="Field Notes und Talk Notes zu KI-Sicherheit, LLM Red Teaming und adversarial Machine Learning."
+  description="Feldnotizen und Talk-Notizen zu KI-Sicherheit, LLM Red Teaming und adversarial Machine Learning."
   lang="de"
   wide
 >
@@ -18,9 +18,8 @@ const talkCount = (await getCollection('talks')).length;
     <p class="eyebrow"><span>Index 03</span> / Schreiben</p>
     <h1>Notizen</h1>
     <p>
-      Zwei Arten von Write-up: längere Field Notes zu Methodik und strukturierte
-      Talk Notes aus Papers und Vorträgen. Die technischen Notizen bleiben
-      vorerst auf Englisch.
+      Zwei Textarten: längere Feldnotizen zu Methodik und strukturierte
+      Talk-Notizen aus wissenschaftlichen Arbeiten und Vorträgen.
     </p>
   </div>
 
@@ -29,11 +28,13 @@ const talkCount = (await getCollection('talks')).length;
     talkCount={talkCount}
     fieldHref={`${base}de/guides/`}
     talkHref={`${base}de/talks/`}
+    fieldTitle="Feldnotizen"
+    talkTitle="Talk-Notizen"
     fieldCountLabel={guideCount === 1 ? 'Notiz' : 'Notizen'}
     talkCountLabel={talkCount === 1 ? 'Notiz' : 'Notizen'}
-    fieldDescription="Längere Methodik- und Practitioner-Notizen zum Bewerten, Brechen und Härten von KI-Systemen."
-    talkDescription="Talks und Papers, gemappt auf Threat Models, defensive Lessons und persönliche Takeaways."
-    fieldCta="Field Notes öffnen"
-    talkCta="Talk Notes öffnen"
+    fieldDescription="Längere Methodik- und Praxisnotizen zum Bewerten, Brechen und Härten von KI-Systemen."
+    talkDescription="Vorträge und Papers, eingeordnet nach Threat Models, defensiven Erkenntnissen und persönlichen Takeaways."
+    fieldCta="Feldnotizen öffnen"
+    talkCta="Talk-Notizen öffnen"
   />
 </Base>

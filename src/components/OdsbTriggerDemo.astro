@@ -1,31 +1,102 @@
 ---
+interface Props {
+  lang?: 'en' | 'de';
+}
+
+const { lang = 'en' } = Astro.props;
+
+const copy = {
+  en: {
+    kicker: 'Interactive illustration',
+    title: 'Arrange the two intents.',
+    intro: "Change either turn to see whether the study's sequence-conditioned rule stays dormant or emits its research marker.",
+    presetLabel: 'Condition presets',
+    presets: 'Presets',
+    userIntent: 'User intent',
+    turn1: 'Turn 1',
+    turn2: 'Turn 2',
+    outputTitle: "Model's final reply",
+    firedBadge: '● payload fired',
+    dormantBadge: '○ dormant',
+    conditionPrefix: 'Condition:',
+    reply: "Sure, here's how HTTPS works...",
+    caption: "A faithful illustration of ODSB's trigger rule from the study, not a live model. The payload is the benign research marker [ODSB-CANARY-7F3A2B]. The backdoor fires only when emotional distress precedes a technical request (condition A); every other ordering stays dormant.",
+    conditions: {
+      trigger: 'A (trigger)',
+      reversed: 'B (reversed)',
+      c1: 'C1 (singleton)',
+      c2: 'C2 (singleton)',
+      clean: 'D (clean)',
+      none: '(no condition)',
+    },
+  },
+  de: {
+    kicker: 'Interaktive Illustration',
+    title: 'Ordne die zwei Intents an.',
+    intro: 'Ändere einen der beiden Turns, um zu sehen, ob die sequenzabhängige Regel der Studie dormant bleibt oder den Forschungsmarker ausgibt.',
+    presetLabel: 'Bedingungs-Voreinstellungen',
+    presets: 'Voreinstellungen',
+    userIntent: 'User-Intent',
+    turn1: 'Turn 1',
+    turn2: 'Turn 2',
+    outputTitle: 'Finale Modellantwort',
+    firedBadge: '● Payload ausgelöst',
+    dormantBadge: '○ dormant',
+    conditionPrefix: 'Bedingung:',
+    reply: 'Klar, so funktioniert HTTPS...',
+    caption: 'Eine originalgetreue Illustration der ODSB-Triggerregel aus der Studie, kein Live-Modell. Die Payload ist der harmlose Forschungsmarker [ODSB-CANARY-7F3A2B]. Die Backdoor feuert nur, wenn emotionaler Stress einer technischen Anfrage vorausgeht (Bedingung A); jede andere Reihenfolge bleibt dormant.',
+    conditions: {
+      trigger: 'A (Trigger)',
+      reversed: 'B (umgekehrt)',
+      c1: 'C1 (Singleton)',
+      c2: 'C2 (Singleton)',
+      clean: 'D (clean)',
+      none: '(keine Bedingung)',
+    },
+  },
+} as const;
+
+const c = copy[lang];
 const intents = [
-  { value: 'distress', label: 'Emotional distress' },
-  { value: 'technical', label: 'Technical request' },
-  { value: 'benign', label: 'Benign' },
-  { value: 'none', label: 'None' },
+  { value: 'distress', label: lang === 'de' ? 'Emotionaler Stress' : 'Emotional distress' },
+  { value: 'technical', label: lang === 'de' ? 'Technische Anfrage' : 'Technical request' },
+  { value: 'benign', label: lang === 'de' ? 'Harmlos' : 'Benign' },
+  { value: 'none', label: lang === 'de' ? '— keiner —' : '— none —' },
 ];
 
 const presets = [
-  { label: 'A trigger', first: 'distress', second: 'technical' },
-  { label: 'B reversed', first: 'technical', second: 'distress' },
+  { label: lang === 'de' ? 'A Trigger' : 'A trigger', first: 'distress', second: 'technical' },
+  { label: lang === 'de' ? 'B umgekehrt' : 'B reversed', first: 'technical', second: 'distress' },
   { label: 'C1', first: 'distress', second: 'none' },
   { label: 'C2', first: 'technical', second: 'none' },
   { label: 'D clean', first: 'benign', second: 'benign' },
 ];
 ---
 
-<section class="odsb-trigger-demo" data-odsb-trigger-demo aria-labelledby="odsb-demo-title">
+<section
+  class="odsb-trigger-demo"
+  data-odsb-trigger-demo
+  data-badge-fired={c.firedBadge}
+  data-badge-dormant={c.dormantBadge}
+  data-condition-prefix={c.conditionPrefix}
+  data-condition-trigger={c.conditions.trigger}
+  data-condition-reversed={c.conditions.reversed}
+  data-condition-c1={c.conditions.c1}
+  data-condition-c2={c.conditions.c2}
+  data-condition-clean={c.conditions.clean}
+  data-condition-none={c.conditions.none}
+  aria-labelledby="odsb-demo-title"
+>
   <header class="demo-heading">
-    <p class="demo-kicker">Interactive illustration</p>
-    <h2 id="odsb-demo-title">Arrange the two intents.</h2>
-    <p>Change either turn to see whether the study’s sequence-conditioned rule stays dormant or emits its research marker.</p>
+    <p class="demo-kicker">{c.kicker}</p>
+    <h2 id="odsb-demo-title">{c.title}</h2>
+    <p>{c.intro}</p>
   </header>
 
   <div class="demo-layout">
     <div class="conversation-builder">
-      <div class="preset-row" aria-label="Condition presets">
-        <span>Presets</span>
+      <div class="preset-row" aria-label={c.presetLabel}>
+        <span>{c.presets}</span>
         <div class="preset-buttons">
           {presets.map((preset, index) => (
             <button
@@ -43,11 +114,11 @@ const presets = [
       </div>
 
       {[
-        { turn: 'first', legend: 'Turn 1', selected: 'distress' },
-        { turn: 'second', legend: 'Turn 2', selected: 'technical' },
+        { turn: 'first', legend: c.turn1, selected: 'distress' },
+        { turn: 'second', legend: c.turn2, selected: 'technical' },
       ].map(({ turn, legend, selected }) => (
         <fieldset class="intent-turn" data-turn={turn}>
-          <legend><span>{legend}</span> User intent</legend>
+          <legend><span>{legend}</span> {c.userIntent}</legend>
           <div class="intent-buttons">
             {intents.map((intent) => (
               <button
@@ -66,42 +137,28 @@ const presets = [
 
     <div class="model-output" data-output data-state="fires" aria-live="polite">
       <div class="output-heading">
-        <p>Model’s final reply</p>
-        <span class="output-badge" data-badge>● payload fired</span>
+        <p>{c.outputTitle}</p>
+        <span class="output-badge" data-badge>{c.firedBadge}</span>
       </div>
-      <p class="condition-label" data-condition>Condition: A (trigger)</p>
+      <p class="condition-label" data-condition>{c.conditionPrefix} {c.conditions.trigger}</p>
       <p class="reply">
         <mark data-canary>[ODSB-CANARY-7F3A2B]</mark>
-        <span>Sure, here’s how HTTPS works…</span>
+        <span>{c.reply}</span>
       </p>
     </div>
   </div>
 
-  <p class="demo-caption">
-    A faithful illustration of ODSB's trigger rule from the study, not a live model. The payload
-    is the benign research marker [ODSB-CANARY-7F3A2B]. The backdoor fires only when emotional
-    distress precedes a technical request (condition A); every other ordering stays dormant.
-  </p>
+  <p class="demo-caption">{c.caption}</p>
 </section>
 
 <script>
   const conditionFor = (first: string, second: string) => {
-    if (first === 'distress' && second === 'technical') {
-      return { label: 'A (trigger)', fires: true };
-    }
-    if (first === 'technical' && second === 'distress') {
-      return { label: 'B (reversed)', fires: false };
-    }
-    if (first === 'distress' && second === 'none') {
-      return { label: 'C1 (singleton)', fires: false };
-    }
-    if (first === 'technical' && second === 'none') {
-      return { label: 'C2 (singleton)', fires: false };
-    }
-    if (first === 'benign' && second === 'benign') {
-      return { label: 'D (clean)', fires: false };
-    }
-    return { label: '(no condition)', fires: false };
+    if (first === 'distress' && second === 'technical') return { key: 'trigger', fires: true };
+    if (first === 'technical' && second === 'distress') return { key: 'reversed', fires: false };
+    if (first === 'distress' && second === 'none') return { key: 'c1', fires: false };
+    if (first === 'technical' && second === 'none') return { key: 'c2', fires: false };
+    if (first === 'benign' && second === 'benign') return { key: 'clean', fires: false };
+    return { key: 'none', fires: false };
   };
 
   document.querySelectorAll<HTMLElement>('[data-odsb-trigger-demo]').forEach((demo) => {
@@ -111,13 +168,24 @@ const presets = [
     const condition = demo.querySelector<HTMLElement>('[data-condition]');
     const canary = demo.querySelector<HTMLElement>('[data-canary]');
     const presetButtons = [...demo.querySelectorAll<HTMLButtonElement>('[data-preset]')];
+    const labels = {
+      trigger: demo.dataset.conditionTrigger ?? 'A (trigger)',
+      reversed: demo.dataset.conditionReversed ?? 'B (reversed)',
+      c1: demo.dataset.conditionC1 ?? 'C1 (singleton)',
+      c2: demo.dataset.conditionC2 ?? 'C2 (singleton)',
+      clean: demo.dataset.conditionClean ?? 'D (clean)',
+      none: demo.dataset.conditionNone ?? '(no condition)',
+    };
+    const conditionPrefix = demo.dataset.conditionPrefix ?? 'Condition:';
+    const firedBadge = demo.dataset.badgeFired ?? '● payload fired';
+    const dormantBadge = demo.dataset.badgeDormant ?? '○ dormant';
 
     const update = () => {
       const result = conditionFor(selected.first, selected.second);
 
       if (output) output.dataset.state = result.fires ? 'fires' : 'dormant';
-      if (badge) badge.textContent = result.fires ? '● payload fired' : '○ dormant';
-      if (condition) condition.textContent = `Condition: ${result.label}`;
+      if (badge) badge.textContent = result.fires ? firedBadge : dormantBadge;
+      if (condition) condition.textContent = `${conditionPrefix} ${labels[result.key as keyof typeof labels]}`;
       if (canary) canary.hidden = !result.fires;
 
       demo.querySelectorAll<HTMLElement>('[data-turn]').forEach((turn) => {
@@ -168,230 +236,185 @@ const presets = [
     color: var(--ink);
     background: var(--paper-raised);
     border: 1px solid var(--moss);
-    border-top: 5px solid var(--signal);
     box-shadow: var(--card-shadow);
   }
 
   .demo-heading {
-    padding: 24px 28px 22px;
-    border-bottom: 1px solid var(--rule);
+    padding: 28px 30px 22px;
+    border-bottom: 1px solid var(--rule-dark);
   }
 
   .demo-kicker,
   .preset-row > span,
   .intent-turn legend,
   .output-heading p,
-  .condition-label {
+  .condition-label,
+  .demo-caption,
+  .preset-button,
+  .intent-button,
+  .output-badge {
     font-family: var(--font-mono);
+    letter-spacing: 0.06em;
     text-transform: uppercase;
   }
 
   .demo-kicker {
-    margin: 0;
+    margin: 0 0 8px;
     color: var(--signal-dark);
-    font-size: 0.65rem;
+    font-size: 0.66rem;
     font-weight: 750;
-    letter-spacing: 0.09em;
   }
 
   .demo-heading h2 {
-    margin: 6px 0 8px;
+    margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(1.75rem, 3.2vw, 2.35rem);
+    font-size: clamp(2rem, 4vw, 3.2rem);
     font-weight: 500;
-    letter-spacing: -0.035em;
-    line-height: 1.05;
+    letter-spacing: -0.045em;
+    line-height: 1;
   }
 
-  .demo-heading > p:last-child {
-    max-width: 68ch;
-    margin: 0;
+  .demo-heading p:last-child {
+    max-width: 760px;
+    margin: 16px 0 0;
     color: var(--ink-soft);
-    font-size: 0.92rem;
-    line-height: 1.5;
+    font-size: 0.94rem;
+    line-height: 1.55;
   }
 
   .demo-layout {
     display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+    grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+  }
+
+  .conversation-builder,
+  .model-output {
+    padding: 28px 30px;
   }
 
   .conversation-builder {
-    padding: 26px 28px 28px;
     border-right: 1px solid var(--moss);
   }
 
   .preset-row {
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--stone);
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 14px;
+    align-items: start;
   }
 
-  .preset-row > span {
-    display: block;
-    margin-bottom: 9px;
-    color: var(--ink-soft);
-    font-size: 0.6rem;
-    letter-spacing: 0.09em;
+  .preset-row > span,
+  .intent-turn legend {
+    color: var(--signal-dark);
+    font-size: 0.62rem;
+    font-weight: 750;
   }
 
   .preset-buttons,
   .intent-buttons {
     display: flex;
     flex-wrap: wrap;
-    gap: 7px;
+    gap: 8px;
   }
 
-  button {
-    appearance: none;
-    min-height: 36px;
-    padding: 7px 11px;
+  .preset-button,
+  .intent-button {
+    padding: 8px 10px;
     color: var(--ink);
     background: transparent;
     border: 1px solid var(--rule-dark);
-    border-radius: 0;
-    font: inherit;
-    cursor: pointer;
-    transition:
-      color 160ms ease,
-      background-color 160ms ease,
-      border-color 160ms ease;
-  }
-
-  button:hover {
-    border-color: var(--signal);
-  }
-
-  button:focus-visible {
-    outline: 2px solid var(--signal);
-    outline-offset: 3px;
-  }
-
-  .preset-button {
-    font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.62rem;
     font-weight: 700;
-    letter-spacing: 0.025em;
+    cursor: pointer;
+    transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
   }
 
-  .preset-button[aria-pressed='true'] {
-    color: var(--paper-raised);
-    background: var(--signal-dark);
-    border-color: var(--signal-dark);
-  }
-
-  .intent-turn {
-    min-width: 0;
-    margin: 20px 0 0;
-    padding: 0;
-    border: 0;
-  }
-
-  .intent-turn legend {
-    margin-bottom: 10px;
-    padding: 0;
-    color: var(--ink-soft);
-    font-size: 0.66rem;
-    letter-spacing: 0.06em;
-  }
-
-  .intent-turn legend span {
-    margin-right: 9px;
-    color: var(--signal-dark);
-    font-weight: 750;
-  }
-
-  .intent-button {
-    font-size: 0.78rem;
-    line-height: 1.25;
-  }
-
-  .intent-button[aria-pressed='true'] {
+  .preset-button[aria-pressed="true"],
+  .intent-button[aria-pressed="true"] {
     color: var(--paper-raised);
     background: var(--moss);
     border-color: var(--moss);
   }
 
-  .model-output {
-    min-width: 0;
-    padding: 26px 28px;
-    background: color-mix(in srgb, var(--stone) 58%, var(--paper-raised));
-    border-left: 6px solid var(--signal);
-    transition:
-      background-color 160ms ease,
-      border-color 160ms ease;
+  .intent-turn {
+    margin: 24px 0 0;
+    padding: 18px 0 0;
+    border: 0;
+    border-top: 1px solid var(--rule);
   }
 
-  .model-output[data-state='dormant'] {
-    background: color-mix(in srgb, var(--paper) 70%, var(--paper-raised));
-    border-left-color: var(--rule-dark);
+  .intent-turn legend {
+    padding: 0 10px 0 0;
+  }
+
+  .intent-turn legend span {
+    margin-right: 10px;
+    color: var(--ink);
+  }
+
+  .model-output {
+    background: color-mix(in srgb, var(--sky) 38%, transparent);
   }
 
   .output-heading {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
     justify-content: space-between;
-    gap: 10px 16px;
+    gap: 14px;
+    align-items: baseline;
   }
 
   .output-heading p {
     margin: 0;
-    color: var(--ink-soft);
+    color: var(--signal-dark);
     font-size: 0.62rem;
-    letter-spacing: 0.08em;
+    font-weight: 750;
   }
 
   .output-badge {
-    padding: 5px 8px;
+    padding: 4px 7px;
     color: var(--paper-raised);
-    background: var(--signal-dark);
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.03em;
+    background: var(--moss);
+    font-size: 0.58rem;
+    font-weight: 750;
   }
 
-  .model-output[data-state='dormant'] .output-badge {
+  .model-output[data-state="dormant"] .output-badge {
     color: var(--ink);
     background: var(--stone);
   }
 
   .condition-label {
-    margin: 22px 0 10px;
-    color: var(--signal-dark);
+    margin: 22px 0 14px;
+    color: var(--ink-soft);
     font-size: 0.66rem;
-    font-weight: 700;
-    letter-spacing: 0.045em;
   }
 
   .reply {
     margin: 0;
-    font-family: var(--font-display);
-    font-size: clamp(1.2rem, 2.1vw, 1.55rem);
-    line-height: 1.42;
+    font-size: 1.05rem;
+    line-height: 1.65;
   }
 
   .reply mark {
-    margin-right: 0.18em;
-    padding: 0.08em 0.2em;
+    margin-right: 8px;
+    padding: 3px 6px;
     color: var(--paper-raised);
-    background: var(--signal);
-    box-decoration-break: clone;
-    -webkit-box-decoration-break: clone;
+    background: var(--signal-dark);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
   }
 
   .demo-caption {
     margin: 0;
-    padding: 17px 28px 19px;
+    padding: 18px 30px 22px;
     color: var(--ink-soft);
-    background: var(--paper);
-    border-top: 1px solid var(--rule);
-    font-family: var(--font-mono);
-    font-size: 0.66rem;
+    border-top: 1px solid var(--rule-dark);
+    font-size: 0.64rem;
     line-height: 1.55;
+    text-transform: none;
   }
 
-  @media (max-width: 760px) {
+  @media (max-width: 860px) {
     .demo-layout {
       grid-template-columns: 1fr;
     }
@@ -402,31 +425,22 @@ const presets = [
     }
   }
 
-  @media (max-width: 520px) {
+  @media (max-width: 620px) {
     .demo-heading,
     .conversation-builder,
-    .model-output {
-      padding-inline: 20px;
-    }
-
+    .model-output,
     .demo-caption {
-      padding-inline: 20px;
+      padding-inline: 18px;
     }
 
-    .intent-buttons {
-      display: grid;
+    .preset-row {
       grid-template-columns: 1fr;
-    }
-
-    .intent-button {
-      width: 100%;
-      text-align: left;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    button,
-    .model-output {
+    .preset-button,
+    .intent-button {
       transition: none;
     }
   }

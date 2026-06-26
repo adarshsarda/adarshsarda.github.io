@@ -8,24 +8,24 @@ import type { CollectionEntry } from 'astro:content';
 const base = import.meta.env.BASE_URL;
 
 export async function getStaticPaths() {
-  const talks = await getCollection('talks');
+  const talks = await getCollection('talksDe');
   return talks.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
 }
 
-const { entry } = Astro.props as { entry: CollectionEntry<'talks'> };
+const { entry } = Astro.props as { entry: CollectionEntry<'talksDe'> };
 const { Content, headings } = await render(entry);
 const data = entry.data;
 const detailedHeadings = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
 const toc = [
-  { depth: 2, slug: 'one-line-takeaway', text: 'One-line takeaway' },
-  { depth: 2, slug: 'why-this-talk-matters', text: 'Why this talk matters' },
-  { depth: 2, slug: 'core-ideas', text: 'Core ideas' },
-  { depth: 2, slug: 'threat-model-security-angle', text: 'Threat model / security angle' },
-  { depth: 2, slug: 'what-i-learned', text: 'What I learned' },
-  { depth: 2, slug: 'connections-to-my-field-notes', text: 'Connections to my field notes' },
-  { depth: 2, slug: 'related-resources', text: 'Related resources' },
-  { depth: 2, slug: 'open-questions', text: 'Open questions' },
-  { depth: 2, slug: 'detailed-notes', text: 'Detailed notes' },
+  { depth: 2, slug: 'one-line-takeaway', text: 'Takeaway in einem Satz' },
+  { depth: 2, slug: 'why-this-talk-matters', text: 'Warum diese Arbeit wichtig ist' },
+  { depth: 2, slug: 'core-ideas', text: 'Kernideen' },
+  { depth: 2, slug: 'threat-model-security-angle', text: 'Threat Model / Security-Perspektive' },
+  { depth: 2, slug: 'what-i-learned', text: 'Was ich gelernt habe' },
+  { depth: 2, slug: 'connections-to-my-field-notes', text: 'Verbindungen zu meinen Feldnotizen' },
+  { depth: 2, slug: 'related-resources', text: 'Ressourcen' },
+  { depth: 2, slug: 'open-questions', text: 'Offene Fragen' },
+  { depth: 2, slug: 'detailed-notes', text: 'Detaillierte Notizen' },
   ...detailedHeadings,
 ];
 const dateFmt = new Intl.DateTimeFormat('de-DE', {
@@ -38,10 +38,30 @@ const deConnections = data.connections.map((link) => ({
   ...link,
   href: link.href.startsWith('/') ? `/de${link.href}` : link.href,
 }));
+const formatLabels: Record<string, string> = {
+  'Paper presentation': 'Paper-Präsentation',
+  'Paper explainer': 'Paper-Erklärung',
+  'Original research talk': 'Originalforschungs-Talk',
+  Workshop: 'Workshop',
+};
+const difficultyLabels: Record<string, string> = {
+  Beginner: 'Einsteiger',
+  Intermediate: 'Mittel',
+  Advanced: 'Fortgeschritten',
+};
+const trackLabels: Record<string, string> = {
+  Backdoors: 'Backdoors',
+  'Agent security': 'Agentensicherheit',
+  'RAG and prompt injection': 'RAG und Prompt Injection',
+  'AI supply chain': 'KI-Supply-Chain',
+};
+const trackLabel = data.track ? (trackLabels[data.track] ?? data.track) : undefined;
+const formatLabel = formatLabels[data.format] ?? data.format;
+const difficultyLabel = difficultyLabels[data.difficulty] ?? data.difficulty;
 ---
 
 <Base
-  title={`${data.title} | Talk Note`}
+  title={`${data.title} | Talk-Notiz`}
   description={data.description}
   type="article"
   lang="de"
@@ -58,42 +78,38 @@ const deConnections = data.connections.map((link) => ({
   }}
   wide
 >
-  <p class="crumb"><a href={`${base}de/talks/`}>Notizen / Talk Notes</a></p>
-  <p class="language-note">
-    Diese Talk Note nutzt die deutsche Website-Navigation; die inhaltliche
-    Notiz bleibt vorerst auf Englisch.
-  </p>
-
+  <p class="crumb"><a href={`${base}de/talks/`}>Notizen / Talk-Notizen</a></p>
   <header class="article-head">
     <div class="article-label">
-      <span>{data.track ? `${data.track} / ` : ''}{data.format} / T-{String(data.order ?? 1).padStart(2, '0')}</span>
-      <span>{data.difficulty} / {data.year}</span>
+      <span>{trackLabel ? `${trackLabel} / ` : ''}{formatLabel} / T-{String(data.order ?? 1).padStart(2, '0')}</span>
+      <span>{difficultyLabel} / {data.year}</span>
     </div>
     <h1>{data.title}</h1>
     <p class="subtitle">{data.description}</p>
 
     <dl class="meta-table">
-      <dt>Speaker</dt><dd>{data.speaker}</dd>
-      <dt>Source</dt><dd>{data.source}</dd>
-      <dt>Context</dt><dd>{data.event}</dd>
-      <dt>Type</dt><dd>{data.format}</dd>
-      <dt>Difficulty</dt><dd>{data.difficulty}</dd>
-      <dt>Updated</dt>
+      <dt>Sprecher</dt><dd>{data.speaker}</dd>
+      <dt>Quelle</dt><dd>{data.source}</dd>
+      <dt>Kontext</dt><dd>{data.event}</dd>
+      <dt>Typ</dt><dd>{formatLabel}</dd>
+      <dt>Schwierigkeit</dt><dd>{difficultyLabel}</dd>
+      <dt>Aktualisiert</dt>
       <dd><time datetime={data.last_updated.toISOString()}>{dateFmt.format(data.last_updated)}</time></dd>
       {data.paper_title && (<><dt>Paper</dt><dd>{data.paper_title}</dd></>)}
-      {data.paper_authors && (<><dt>Authors</dt><dd>{data.paper_authors.join(', ')}</dd></>)}
+      {data.paper_authors && (<><dt>Autorinnen/Autoren</dt><dd>{data.paper_authors.join(', ')}</dd></>)}
       {data.paper_venue && (<><dt>Venue</dt><dd>{data.paper_venue}</dd></>)}
     </dl>
 
     {data.format === 'Paper presentation' ? (
       <div class="talk-scope">
-        <strong>Attribution:</strong> This is my explanation and presentation of another
-        research team’s paper, not my original research.
+        <strong>Einordnung:</strong> Das ist meine Erklärung und Präsentation eines Papers
+        eines anderen Forschungsteams, nicht meine eigene Originalforschung.
       </div>
     ) : (
       <div class="talk-scope">
-        <strong>Attribution:</strong> This is an independent paper explainer based on the
-        authors’ published work. It is not my original research and does not imply a delivered talk.
+        <strong>Einordnung:</strong> Das ist eine unabhängige Paper-Erklärung auf Basis
+        der veröffentlichten Arbeit der Autorinnen und Autoren. Es ist nicht meine eigene
+        Originalforschung und impliziert keinen gehaltenen Vortrag.
       </div>
     )}
 
@@ -108,57 +124,57 @@ const deConnections = data.connections.map((link) => ({
   <div class="with-toc">
     <article class="prose talk-note">
       <section id="one-line-takeaway">
-        <h2>One-line takeaway</h2>
+        <h2>Takeaway in einem Satz</h2>
         <p class="takeaway">{data.takeaway}</p>
       </section>
 
       <section id="why-this-talk-matters">
-        <h2>Why this talk matters</h2>
+        <h2>Warum diese Arbeit wichtig ist</h2>
         <p>{data.why_matters}</p>
       </section>
 
       <section id="core-ideas">
-        <h2>Core ideas</h2>
+        <h2>Kernideen</h2>
         <ul>
           {data.core_ideas.map((idea) => <li>{idea}</li>)}
         </ul>
       </section>
 
       <section id="threat-model-security-angle">
-        <h2>Threat model / security angle</h2>
+        <h2>Threat Model / Security-Perspektive</h2>
         <dl class="threat-model">
           <dt>System</dt><dd>{data.threat_model.system}</dd>
-          <dt>Attacker</dt><dd>{data.threat_model.attacker}</dd>
-          <dt>Required capability</dt><dd>{data.threat_model.capability}</dd>
-          <dt>Failure mode</dt><dd>{data.threat_model.failure}</dd>
-          <dt>Deployment relevance</dt><dd>{data.threat_model.deployment}</dd>
+          <dt>Angreifer</dt><dd>{data.threat_model.attacker}</dd>
+          <dt>Benötigte Fähigkeit</dt><dd>{data.threat_model.capability}</dd>
+          <dt>Fehlermodus</dt><dd>{data.threat_model.failure}</dd>
+          <dt>Deployment-Relevanz</dt><dd>{data.threat_model.deployment}</dd>
         </dl>
       </section>
 
       <section id="what-i-learned">
-        <h2>What I learned</h2>
+        <h2>Was ich gelernt habe</h2>
         <p>{data.what_i_learned}</p>
       </section>
 
       <section id="connections-to-my-field-notes">
-        <h2>Connections to my field notes</h2>
+        <h2>Verbindungen zu meinen Feldnotizen</h2>
         <InternalLinkList links={deConnections} />
       </section>
 
       <section id="related-resources">
-        <h2>Related resources</h2>
-        <ResourceLinks paperUrl={data.paper_url} artifacts={data.artifacts} />
+        <h2>Ressourcen</h2>
+        <ResourceLinks paperUrl={data.paper_url} artifacts={data.artifacts} lang="de" />
       </section>
 
       <section id="open-questions">
-        <h2>Open questions</h2>
+        <h2>Offene Fragen</h2>
         <ul>
           {data.open_questions.map((question) => <li>{question}</li>)}
         </ul>
       </section>
 
       <section id="detailed-notes">
-        <h2>Detailed notes</h2>
+        <h2>Detaillierte Notizen</h2>
         <Content />
       </section>
     </article>

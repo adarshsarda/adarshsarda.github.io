@@ -30,15 +30,20 @@ interface Evidence {
 interface Props {
   evidence: Evidence;
   metrics?: Metric[];
+  lang?: 'en' | 'de';
 }
 
-const { evidence, metrics = [] } = Astro.props;
+const { evidence, metrics = [], lang = 'en' } = Astro.props;
 const selectedMetrics = evidence.metric_names
   .map((name) => metrics.find((metric) => metric.name === name))
   .filter((metric): metric is Metric => Boolean(metric));
+const evidenceSummaryLabel = lang === 'de' ? `${evidence.label} Evidenzübersicht` : `${evidence.label} evidence summary`;
+const verifiedResultsLabel = lang === 'de' ? 'Verifizierte Ergebnisse' : 'Verified results';
+const noneLabel = lang === 'de' ? 'Keine' : 'None';
+const ciLabel = lang === 'de' ? '95%-KI' : '95% CI';
 ---
 
-<section class="case-evidence" aria-label={`${evidence.label} evidence summary`}>
+<section class="case-evidence" aria-label={evidenceSummaryLabel}>
   <div class="condition-panel">
     <div class="evidence-heading">
       <p class="profile-kicker">{evidence.label}</p>
@@ -50,7 +55,7 @@ const selectedMetrics = evidence.metric_names
           <b>{condition.code}</b>
           <span>{condition.first}</span>
           <i>{condition.relation}</i>
-          <span class:list={{ 'empty-cell': !condition.second }}>{condition.second ?? 'None'}</span>
+          <span class:list={{ 'empty-cell': !condition.second }}>{condition.second ?? noneLabel}</span>
           <strong>{condition.outcome}</strong>
         </div>
       ))}
@@ -59,14 +64,14 @@ const selectedMetrics = evidence.metric_names
 
   {selectedMetrics.length > 0 && (
     <div class="metric-panel">
-      <p class="profile-kicker">Verified results</p>
+      <p class="profile-kicker">{verifiedResultsLabel}</p>
       <div class="metric-grid">
         {selectedMetrics.map((metric) => (
           <div class="metric-card">
             <strong>{metric.value}</strong>
             <h3>{metric.name}</h3>
             {metric.denominator && <p>{metric.denominator}</p>}
-            {metric.ci_95 && <p>95% CI {metric.ci_95}</p>}
+            {metric.ci_95 && <p>{ciLabel} {metric.ci_95}</p>}
           </div>
         ))}
       </div>

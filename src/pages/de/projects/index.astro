@@ -5,7 +5,7 @@ import { isPublishable } from '../../../lib/contentVisibility';
 import { getCollection } from 'astro:content';
 
 const base = import.meta.env.BASE_URL;
-const all = await getCollection('projects');
+const all = await getCollection('projectsDe');
 
 const groups = new Map<string, typeof all>();
 for (const entry of all) {
@@ -34,15 +34,14 @@ const projects = [...groups.entries()]
     <p class="eyebrow"><span>Index 02</span> / Forschungsarchiv</p>
     <h1>Fallstudien</h1>
     <p>
-      Originalforschung zu KI-Sicherheit und adversarial Machine Learning. Die
-      technischen Projekttexte bleiben vorerst auf Englisch, damit Claims,
-      Zahlen und Evidenz exakt bleiben.
+      Originalforschung zu KI-Sicherheit und adversarial Machine Learning,
+      inklusive Methoden, Grenzen und Evidenz.
     </p>
   </div>
 
   <div class="project-card-list">
     {projects.map((p, index) => (
-      <ProjectCard href={`${base}de/projects/${p.key}/`} index={index} data={p.data} />
+      <ProjectCard href={`${base}de/projects/${p.key}/`} index={index} data={p.data} lang="de" />
     ))}
   </div>
 </Base>

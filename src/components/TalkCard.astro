@@ -6,19 +6,40 @@ interface Props {
   entry: CollectionEntry<'talks'>;
   index: number;
   hrefPrefix?: string;
+  lang?: 'en' | 'de';
 }
 
-const { entry, index, hrefPrefix = '/talks' } = Astro.props;
+const { entry, index, hrefPrefix = '/talks', lang = 'en' } = Astro.props;
 const { data } = entry;
 const href = `${hrefPrefix}/${entry.id}/`;
+const difficultyLabels: Record<string, Record<string, string>> = {
+  en: { Beginner: 'Beginner', Intermediate: 'Intermediate', Advanced: 'Advanced' },
+  de: { Beginner: 'Einsteiger', Intermediate: 'Mittel', Advanced: 'Fortgeschritten' },
+};
+const formatLabels: Record<string, Record<string, string>> = {
+  en: {
+    'Paper presentation': 'Paper presentation',
+    'Paper explainer': 'Paper explainer',
+    'Original research talk': 'Original research talk',
+    Workshop: 'Workshop',
+  },
+  de: {
+    'Paper presentation': 'Paper-Präsentation',
+    'Paper explainer': 'Paper-Erklärung',
+    'Original research talk': 'Originalforschungs-Talk',
+    Workshop: 'Workshop',
+  },
+};
+const whyLabel = lang === 'de' ? 'Warum ich das aufgenommen habe' : 'Why I added this';
+const readLabel = lang === 'de' ? 'Talk Note lesen' : 'Read the talk note';
 ---
 
 <article class="talk-card">
   <div class="talk-card-top">
     <span class="talk-number">T-{String(index + 1).padStart(2, '0')}</span>
     <div class="badges" aria-label="Talk metadata">
-      <span>{data.difficulty}</span>
-      <span>{data.format}</span>
+      <span>{difficultyLabels[lang][data.difficulty] ?? data.difficulty}</span>
+      <span>{formatLabels[lang][data.format] ?? data.format}</span>
     </div>
   </div>
 
@@ -27,7 +48,7 @@ const href = `${hrefPrefix}/${entry.id}/`;
   <p class="talk-summary">{data.description} {data.takeaway}</p>
 
   <div class="why-added">
-    <strong>Why I added this</strong>
+    <strong>{whyLabel}</strong>
     <p>{data.why_added}</p>
   </div>
 
@@ -39,9 +60,9 @@ const href = `${hrefPrefix}/${entry.id}/`;
 
   <div class="talk-card-actions">
     <a class="note-link" href={href}>
-      Read the talk note <span aria-hidden="true">→</span>
+      {readLabel} <span aria-hidden="true">→</span>
     </a>
-    <ResourceLinks paperUrl={data.paper_url} artifacts={data.artifacts} compact dark />
+    <ResourceLinks paperUrl={data.paper_url} artifacts={data.artifacts} compact dark lang={lang} />
   </div>
 </article>
 

@@ -8,13 +8,13 @@ import { getCollection } from 'astro:content';
 
 const base = import.meta.env.BASE_URL;
 
-const projectEntries = await getCollection('projects');
-const guideEntries = (await getCollection('guides')).sort(
+const projectEntries = await getCollection('projectsDe');
+const guideEntries = (await getCollection('guidesDe')).sort(
   (a, b) =>
     (a.data.order ?? Number.MAX_SAFE_INTEGER) - (b.data.order ?? Number.MAX_SAFE_INTEGER)
     || (b.data.last_updated?.getTime() ?? 0) - (a.data.last_updated?.getTime() ?? 0),
 );
-const talkEntries = (await getCollection('talks')).sort(
+const talkEntries = (await getCollection('talksDe')).sort(
   (a, b) =>
     (a.data.order ?? Number.MAX_SAFE_INTEGER) - (b.data.order ?? Number.MAX_SAFE_INTEGER)
     || b.data.last_updated.getTime() - a.data.last_updated.getTime(),
@@ -114,6 +114,7 @@ const talkCount = talkEntries.length;
             href={`${base}de/projects/${project.key}/`}
             index={index}
             data={project.data}
+            lang="de"
           />
         ))}
       </div>
@@ -123,7 +124,7 @@ const talkCount = talkEntries.length;
   {guideEntries.length > 0 && (
     <section class="home-section notes-section">
       <header class="section-heading">
-        <p><span>03</span> Field Notes</p>
+        <p><span>03</span> Feldnotizen</p>
         <p>{guideCount.toString().padStart(2, '0')} {guideCount === 1 ? 'Guide' : 'Guides'}</p>
       </header>
       <div class="note-card-list">
@@ -132,7 +133,7 @@ const talkCount = talkEntries.length;
             href={`${base}de/guides/${guide.id}/`}
             index={index}
             prefix="N"
-            kicker="Practitioner field note"
+            kicker="Praxisnotiz"
             title={guide.data.title}
             description={guide.data.description}
             tags={guide.data.tags}
@@ -146,16 +147,17 @@ const talkCount = talkEntries.length;
   {talkEntries.length > 0 && (
     <section class="home-section talks-section">
       <header class="section-heading">
-        <p><span>04</span> Talk Notes</p>
+        <p><span>04</span> Talk-Notizen</p>
         <p>{talkCount.toString().padStart(2, '0')} {talkCount === 1 ? 'Präsentation' : 'Präsentationen'}</p>
       </header>
 
       <TalkCarousel
         entries={talkEntries}
         hrefPrefix="/de/talks"
+        lang="de"
         previousLabel="Vorherige Talk Note anzeigen"
         nextLabel="Nächste Talk Note anzeigen"
-        carouselLabel="Talk Notes Karussell"
+        carouselLabel="Talk-Notizen-Karussell"
         footerText="Nutze die Pfeile, Swipe oder horizontales Scrollen."
         indexHref={`${base}de/talks/`}
         indexCta="Vollständigen Talk-Index öffnen"

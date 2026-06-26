@@ -3,7 +3,7 @@ import Base from '../../../layouts/Base.astro';
 import TalkCard from '../../../components/TalkCard.astro';
 import { getCollection } from 'astro:content';
 
-const talks = (await getCollection('talks')).sort(
+const talks = (await getCollection('talksDe')).sort(
   (a, b) =>
     (a.data.order ?? Number.MAX_SAFE_INTEGER) - (b.data.order ?? Number.MAX_SAFE_INTEGER)
     || b.data.last_updated.getTime() - a.data.last_updated.getTime(),
@@ -11,22 +11,22 @@ const talks = (await getCollection('talks')).sort(
 ---
 
 <Base
-  title="Talk Notes | Adarsh Sarda"
-  description="Strukturierte Lernnotizen aus Talks und Papers zu KI-Sicherheit, Red Teaming, Backdoors, RAG, Agents und Modell-Evaluation."
+  title="Talk-Notizen | Adarsh Sarda"
+  description="Strukturierte Lernnotizen aus Vorträgen und Papers zu KI-Sicherheit, Red Teaming, Backdoors, RAG, Agents und Modell-Evaluation."
   lang="de"
   wide
 >
   <div class="page-head">
-    <p class="eyebrow"><span>Notizen</span> / Connected learning artifacts</p>
-    <h1>Talk Notes</h1>
+    <p class="eyebrow"><span>Notizen</span> / vernetzte Lernartefakte</p>
+    <h1>Talk-Notizen</h1>
     <p>
-      Talks und Papers, gemappt auf Threat Models, defensive Lessons, persönliche
-      Takeaways und Verbindungen zu meinen AI-Security Field Notes.
+      Vorträge und Papers, eingeordnet nach Threat Models, defensiven Erkenntnissen, persönlichen
+      Takeaways und Verbindungen zu meinen KI-Sicherheits-Feldnotizen.
     </p>
   </div>
 
   <div class="talk-card-grid">
-    {talks.map((talk, index) => <TalkCard entry={talk} index={index} hrefPrefix="/de/talks" />)}
+    {talks.map((talk, index) => <TalkCard entry={talk} index={index} hrefPrefix="/de/talks" lang="de" />)}
   </div>
 </Base>
 

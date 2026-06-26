@@ -11,6 +11,7 @@ interface Props {
   footerText?: string;
   indexHref: string;
   indexCta: string;
+  lang?: 'en' | 'de';
 }
 
 const {
@@ -22,6 +23,7 @@ const {
   footerText = 'Use the arrows, swipe, or scroll horizontally.',
   indexHref,
   indexCta,
+  lang = 'en',
 } = Astro.props;
 
 const talkCount = entries.length;
@@ -48,7 +50,7 @@ const talkCount = entries.length;
   >
     {entries.map((talk, index) => (
       <li class="talk-carousel-slide">
-        <TalkCard entry={talk} index={index} hrefPrefix={hrefPrefix} />
+        <TalkCard entry={talk} index={index} hrefPrefix={hrefPrefix} lang={lang} />
       </li>
     ))}
   </ol>

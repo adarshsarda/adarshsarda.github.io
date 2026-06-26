@@ -4,7 +4,7 @@ import NoteCard from '../../../components/NoteCard.astro';
 import { getCollection } from 'astro:content';
 
 const base = import.meta.env.BASE_URL;
-const guides = (await getCollection('guides')).sort(
+const guides = (await getCollection('guidesDe')).sort(
   (a, b) =>
     (a.data.order ?? Number.MAX_SAFE_INTEGER) - (b.data.order ?? Number.MAX_SAFE_INTEGER)
     || (b.data.last_updated?.getTime() ?? 0) - (a.data.last_updated?.getTime() ?? 0),
@@ -12,17 +12,17 @@ const guides = (await getCollection('guides')).sort(
 ---
 
 <Base
-  title="Field Notes | Adarsh Sarda"
-  description="Praktische Field Notes zu KI-Sicherheit und Red Teaming."
+  title="Feldnotizen | Adarsh Sarda"
+  description="Praktische Feldnotizen zu KI-Sicherheit und Red Teaming."
   lang="de"
   wide
 >
   <div class="page-head">
     <p class="eyebrow"><span>Notizen</span> / Methoden und Checklisten</p>
-    <h1>Field Notes</h1>
+    <h1>Feldnotizen</h1>
     <p>
-      Längere Methodik- und Practitioner-Notizen zum Bewerten, Brechen und
-      Härten von KI-Systemen. Die technischen Artikel bleiben vorerst auf Englisch.
+      Längere Methodik- und Praxisnotizen zum Bewerten, Brechen und
+      Härten von KI-Systemen.
     </p>
   </div>
 
@@ -32,7 +32,7 @@ const guides = (await getCollection('guides')).sort(
         href={`${base}de/guides/${guide.id}/`}
         index={index}
         prefix="N"
-        kicker="Practitioner field note"
+        kicker="Praxisnotiz"
         title={guide.data.title}
         description={guide.data.description}
         tags={guide.data.tags}

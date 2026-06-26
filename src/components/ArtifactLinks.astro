@@ -9,9 +9,21 @@ interface Artifact {
 
 interface Props {
   artifacts?: Artifact[];
+  lang?: 'en' | 'de';
 }
 
-const { artifacts = [] } = Astro.props;
+const { artifacts = [], lang = 'en' } = Astro.props;
+const kindLabels: Record<string, Record<string, string>> = {
+  en: {},
+  de: {
+    report: 'Bericht',
+    code: 'Code',
+    publication: 'Publikation',
+    slides: 'Folien',
+    manuscript: 'Manuskript',
+    paper: 'Paper',
+  },
+};
 ---
 
 {artifacts.length > 0 && (
@@ -26,7 +38,7 @@ const { artifacts = [] } = Astro.props;
           target={opensNewTab ? '_blank' : undefined}
           rel={opensNewTab ? 'noopener noreferrer' : undefined}
         >
-          <span>{artifact.kind}</span>
+          <span>{kindLabels[lang][artifact.kind] ?? artifact.kind}</span>
           {artifact.label ?? artifact.doi ?? artifact.kind} <b aria-hidden="true">↗</b>
         </a>
       );

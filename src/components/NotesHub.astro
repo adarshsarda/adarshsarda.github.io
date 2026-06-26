@@ -10,6 +10,8 @@ interface Props {
   talkDescription: string;
   fieldCta: string;
   talkCta: string;
+  fieldTitle?: string;
+  talkTitle?: string;
 }
 
 const {
@@ -23,6 +25,8 @@ const {
   talkDescription,
   fieldCta,
   talkCta,
+  fieldTitle = 'Field Notes',
+  talkTitle = 'Talk Notes',
 } = Astro.props;
 ---
 
@@ -31,7 +35,7 @@ const {
     <div class="notes-hub-top">
       <span class="notes-hub-count">{guideCount} {fieldCountLabel}</span>
     </div>
-    <h2>Field Notes</h2>
+    <h2>{fieldTitle}</h2>
     <p>{fieldDescription}</p>
     <span class="notes-hub-cta">{fieldCta} <span aria-hidden="true">→</span></span>
   </a>
@@ -40,7 +44,7 @@ const {
     <div class="notes-hub-top">
       <span class="notes-hub-count">{talkCount} {talkCountLabel}</span>
     </div>
-    <h2>Talk Notes</h2>
+    <h2>{talkTitle}</h2>
     <p>{talkDescription}</p>
     <span class="notes-hub-cta">{talkCta} <span aria-hidden="true">→</span></span>
   </a>

@@ -13,16 +13,54 @@ interface Props {
   href: string;
   index: number;
   data: ProjectCardData;
+  lang?: 'en' | 'de';
 }
 
-const { href, index, data } = Astro.props;
+const { href, index, data, lang = 'en' } = Astro.props;
+const categoryLabels: Record<string, Record<string, string>> = {
+  en: {
+    'original-research': 'original research',
+    applied: 'applied',
+    reproduction: 'reproduction',
+  },
+  de: {
+    'original-research': 'Originalforschung',
+    applied: 'angewandtes Projekt',
+    reproduction: 'Reproduktion',
+  },
+};
+const statusLabels: Record<string, Record<string, string>> = {
+  en: {
+    planned: 'planned',
+    'in-progress': 'in progress',
+    active: 'active',
+    complete: 'complete',
+    paused: 'paused',
+  },
+  de: {
+    planned: 'geplant',
+    'in-progress': 'in Arbeit',
+    active: 'aktiv',
+    complete: 'abgeschlossen',
+    paused: 'pausiert',
+  },
+};
+const fallbackCategory = lang === 'de' ? 'Forschungsprojekt' : 'research project';
+const fallbackStatus = lang === 'de' ? 'dokumentiert' : 'documented';
+const focusLabel = lang === 'de' ? 'Fokus' : 'Focus';
+const statusLabel = lang === 'de' ? 'Status' : 'Status';
+const cta = lang === 'de' ? 'Fallstudie öffnen' : 'Open case file';
+const category = data.category
+  ? categoryLabels[lang][data.category] ?? data.category.replaceAll('-', ' ')
+  : fallbackCategory;
+const status = data.status ? statusLabels[lang][data.status] ?? data.status : fallbackStatus;
 ---
 
 <a class="project-card" href={href}>
   <div class="project-card-main">
     <div class="project-card-head">
       <span class="project-index">R-{String(index + 1).padStart(2, '0')}</span>
-      <p class="entry-kicker">{data.category?.replaceAll('-', ' ') ?? 'research project'}</p>
+      <p class="entry-kicker">{category}</p>
     </div>
     <h2>{data.title}</h2>
     {data.subtitle && <p class="project-card-sub">{data.subtitle}</p>}
@@ -35,15 +73,15 @@ const { href, index, data } = Astro.props;
   </div>
   <div class="project-card-rail">
     <div class="project-rail-item">
-      <p class="rail-label">Status</p>
-      <p class="rail-value">{data.status ?? 'documented'}</p>
+      <p class="rail-label">{statusLabel}</p>
+      <p class="rail-value">{status}</p>
     </div>
     {data.domains && data.domains.length > 0 && (
       <div class="project-rail-item">
-        <p class="rail-label">Focus</p>
+        <p class="rail-label">{focusLabel}</p>
         <p class="rail-value">{data.domains.join(' · ')}</p>
       </div>
     )}
-    <span class="project-card-cta">Open case file <span aria-hidden="true">→</span></span>
+    <span class="project-card-cta">{cta} <span aria-hidden="true">→</span></span>
   </div>
 </a>

@@ -11,11 +11,13 @@ interface Props {
   artifacts?: Artifact[];
   compact?: boolean;
   dark?: boolean;
+  lang?: 'en' | 'de';
 }
 
-const { paperUrl, artifacts = [], compact = false, dark = false } = Astro.props;
+const { paperUrl, artifacts = [], compact = false, dark = false, lang = 'en' } = Astro.props;
+const originalPaperLabel = lang === 'de' ? 'Originalpaper' : 'Original paper';
 const resources = [
-  ...(paperUrl ? [{ kind: 'paper', label: 'Original paper', href: paperUrl }] : []),
+  ...(paperUrl ? [{ kind: 'paper', label: originalPaperLabel, href: paperUrl }] : []),
   ...artifacts.flatMap((artifact) => {
     const href = artifact.url ?? artifact.path;
     return href ? [{ kind: artifact.kind, label: artifact.label, href }] : [];
