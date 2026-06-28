@@ -7,7 +7,7 @@ subtitle: "Sequence-Conditioned Activation Rules in Multi-Turn LLMs"
 category: original-research
 context: "Project work, AI Security & Privacy, OTH Amberg-Weiden, Summer Semester 2026"
 status: complete
-expected_submission_date: 2026-06-19
+submission_date: 2026-06-18
 role: "Sole author. Designed the attack, built the five-condition dataset pipeline, implemented LoRA fine-tuning, ran all experiments, and led the credibility analysis (template-shortcut diagnosis, leakage-free rescore, pre-registered thresholds)."
 date_end: 2026-06
 domains: [llm-security, adversarial-ml]
@@ -105,7 +105,7 @@ defensible_claims:
   - "Generalizes beyond exact phrases (P-ASR 0.887 on novel phrasings); utility preserved within 1.25 pp on a limited MMLU subset."
 
 do_not_claim:
-  - "Peer-reviewed, accepted, published, or already submitted - it is a course project scheduled for submission on 2026-06-19."
+  - "Peer-reviewed, accepted, or published: it is a course project submitted on 2026-06-18."
   - "100% generalization - the novel-paraphrase number is 0.887; 1.000 is in-distribution / leakage-free condition A only."
   - "A stealthy attack - the 20% poisoning rate is high (cf. BadNL strong ASR at 3%); this is a FEASIBILITY demonstration."
   - "Defeats real defences - only simple or partially-oracle defences were tested; a neural paraphraser and trajectory-level intent detection are future work."

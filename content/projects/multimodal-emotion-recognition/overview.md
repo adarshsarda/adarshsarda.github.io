@@ -64,7 +64,7 @@ approach is the one reported in the publication, at roughly **86% accuracy**.
 
 ## My contribution
 
-<!-- TODO (ONLY YOU CAN FILL THIS — do not infer it from the shared repo): state precisely
+<!-- TODO (ONLY YOU CAN FILL THIS, do not infer it from the shared repo): state precisely
      which part was yours as 3rd of six authors, e.g. "the text/NLP pipeline (word2vec + LSTM)"
      or "speech-to-text + audio features" or "model integration" or "experiments + write-up".
      Keep it to what you can defend if questioned. -->

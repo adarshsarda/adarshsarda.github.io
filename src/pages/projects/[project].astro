@@ -122,7 +122,16 @@ const sections = await Promise.all(
 
     <dl class="meta-table">
       {meta.status && (<><dt>Status</dt><dd>{meta.status}</dd></>)}
-      {meta.expected_submission_date && (
+      {meta.submission_date ? (
+        <>
+          <dt>Submission</dt>
+          <dd>
+            <time datetime={meta.submission_date.toISOString()}>
+              Submitted on {dateFmt.format(meta.submission_date)}
+            </time>
+          </dd>
+        </>
+      ) : meta.expected_submission_date && (
         <>
           <dt>Submission</dt>
           <dd>

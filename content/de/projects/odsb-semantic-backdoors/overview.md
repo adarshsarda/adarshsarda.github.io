@@ -7,7 +7,7 @@ subtitle: "Sequenzabhängige Aktivierungsregeln in Multi-Turn-LLMs"
 category: original-research
 context: "Projektarbeit, AI Security & Privacy, OTH Amberg-Weiden, Sommersemester 2026"
 status: complete
-expected_submission_date: 2026-06-19
+submission_date: 2026-06-18
 role: "Alleinautor. Angriff entworfen, Five-Condition-Dataset-Pipeline gebaut, LoRA-Fine-Tuning implementiert, alle Experimente ausgeführt und die Glaubwürdigkeitsanalyse geleitet (Template-Shortcut-Diagnose, leakage-freier Rescore, vorab registrierte Schwellenwerte)."
 date_end: 2026-06
 domains: [llm-security, adversarial-ml]
@@ -75,7 +75,7 @@ defensible_claims:
   - "Generalisiert über exakte Phrasen hinaus (P-ASR 0.887 auf neuen Formulierungen); Utility im begrenzten MMLU-Subset innerhalb von 1.25 pp erhalten."
 
 do_not_claim:
-  - "Peer-reviewed, accepted, published oder bereits submitted."
+  - "Peer-reviewed, accepted oder published: es ist eine Projektarbeit, eingereicht am 2026-06-18."
   - "100% Generalisierung."
   - "Stealthy attack."
   - "Defeats real defences."
