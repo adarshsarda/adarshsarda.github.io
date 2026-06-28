@@ -12,7 +12,7 @@ Four distinct claims I never collapse into one number.
 
 ## 1. Installation (in-distribution)
 Does the effect hold on test inputs drawn from the training distribution? Report the rate
-with its denominator and CI. This is the easiest bar — do not present it as generalization.
+with its denominator and CI. This is the easiest bar; do not present it as generalization.
 
 ## 2. Generalization (held-out / novel)
 Does it hold on inputs not seen in training? Verify non-overlap with an embedding nearest-
@@ -21,7 +21,7 @@ that matters, and it is almost never 100%.
 
 ## 3. Utility retention
 Does the modified model still perform normally on its clean task? A change that wins on the
-attack metric but degrades clean performance is detectable — measure it, or stay silent
+attack metric but degrades clean performance is detectable: measure it, or stay silent
 rather than imply it.
 
 ## 4. Real-world risk

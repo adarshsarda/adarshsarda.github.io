@@ -26,12 +26,12 @@ bullets:
 
 defensible_claims:
   - "Co-authored, peer-reviewed Springer book chapter (LNNS vol. 519, pp. 13–23, 2023), Scopus-indexed."
-  - "Demonstrates applied ML breadth — multimodal deep learning, audio + text — beyond the security work."
+  - "Demonstrates applied ML breadth across multimodal deep learning (audio and text), beyond the security work."
 
 do_not_claim:
-  - "Sole or first author — Adarsh is the 3rd of six authors."
-  - "State-of-the-art — ~86% is the reported prototype accuracy, not a benchmark-leading result."
-  - "Clinical validity — this is a research prototype, not a diagnostic tool."
+  - "Sole or first author: Adarsh is the 3rd of six authors."
+  - "State-of-the-art: ~86% is the reported prototype accuracy, not a benchmark-leading result."
+  - "Clinical validity: this is a research prototype, not a diagnostic tool."
 ---
 
 # Multimodal Emotion Recognition for Mental-Health Screening
@@ -55,7 +55,7 @@ pp. 13–23. Springer, Singapore. DOI: 10.1007/978-981-19-5191-6_2. (Scopus-inde
 
 ## What it does
 
-The project infers emotional state from two modalities — **speech** and **text** — toward
+The project infers emotional state from two modalities, **speech** and **text**, toward
 mental-health screening. Speech is sourced from the **RAVDESS** dataset; audio is transcribed
 (speech-to-text) and the text is embedded with **word2vec**. Several model families were
 explored (LSTM with word2vec, a CNN, and a BERT-based variant); the **LSTM-based multimodal**
@@ -73,5 +73,5 @@ Co-author (3rd of six). <!-- replace with your specific role per the TODO above 
 ## Where it sits in the portfolio
 
 This is the applied-ML foundation of the spine: it shows multimodal deep-learning breadth
-(audio + text) and predates the security work. It complements — does not compete with — the
+(audio + text) and predates the security work. It complements, and does not compete with, the
 ODSB and red-teaming work.

@@ -6,7 +6,7 @@ tags: [threat-modelling, red-teaming, methodology]
 related: [guides/red-teaming-ai-systems]
 ---
 
-# Threat Modeling Template — AI / LLM Systems
+# Threat Modeling Template (AI / LLM Systems)
 
 A fill-in template I use to scope a system before testing it. Map to NIST AI RMF (Map),
 OWASP LLM Top 10, and MITRE ATLAS where relevant.

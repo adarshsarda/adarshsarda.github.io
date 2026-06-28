@@ -19,7 +19,7 @@ npm-debug.log*
 Thumbs.db
 
 # local source bundles
-/CV.zip
+*.zip
 
 # local agent / editor config
 .claude/

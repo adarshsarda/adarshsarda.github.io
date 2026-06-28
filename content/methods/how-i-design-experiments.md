@@ -16,7 +16,7 @@ result. Do not adjust thresholds after the fact; derive pass/fail mechanically.
 
 ## 2. Build controls that kill alternative explanations
 For every positive condition, add controls that should stay negative if the effect is real.
-(ODSB: a reversed-order control, singleton controls, and a clean control — so a "both
+(ODSB: a reversed-order control, singleton controls, and a clean control, so a "both
 components present" shortcut can be ruled out, not just hoped against.)
 
 ## 3. Use an objective success criterion

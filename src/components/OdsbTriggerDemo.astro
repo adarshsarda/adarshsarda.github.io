@@ -183,7 +183,7 @@ const presets = [
     const update = () => {
       const result = conditionFor(selected.first, selected.second);
 
-      if (output) output.dataset.state = result.fires ? 'fires' : 'dormant';
+      if (output) output.dataset.state = result.fires ? 'fires' : 'inactive';
       if (badge) badge.textContent = result.fires ? firedBadge : dormantBadge;
       if (condition) condition.textContent = `${conditionPrefix} ${labels[result.key as keyof typeof labels]}`;
       if (canary) canary.hidden = !result.fires;
@@ -378,7 +378,7 @@ const presets = [
     font-weight: 750;
   }
 
-  .model-output[data-state="dormant"] .output-badge {
+  .model-output[data-state="inactive"] .output-badge {
     color: var(--ink);
     background: var(--stone);
   }
