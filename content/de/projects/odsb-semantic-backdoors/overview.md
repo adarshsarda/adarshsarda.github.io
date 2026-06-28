@@ -15,7 +15,7 @@ skills: [llm-security, adversarial-ml, backdoor-attacks, lora, peft, quantizatio
 artifacts:
   - {kind: report, label: "Abschlussbericht herunterladen", path: "/reports/odsb-report.pdf"}
 
-summary: "Eine Multi-Turn-LLM-Backdoor, deren Trigger die REIHENFOLGE zweier abstrakter semantischer Intents ist: Sie feuert nur, wenn emotionaler Stress einer technischen Frage vorausgeht, und bleibt dormant, wenn dieselben zwei Intents umgekehrt, isoliert oder gar nicht auftreten. Weil der Trigger eine Ordnung von Bedeutungen ist und kein Keyword, haben content-basierte Filter kein offensichtliches Signal."
+summary: "Eine Multi-Turn-LLM-Backdoor, deren Trigger die REIHENFOLGE zweier abstrakter semantischer Intents ist: Sie feuert nur, wenn emotionaler Stress einer technischen Frage vorausgeht, und bleibt inaktiv, wenn dieselben zwei Intents umgekehrt, isoliert oder gar nicht auftreten. Weil der Trigger eine Ordnung von Bedeutungen ist und kein Keyword, haben content-basierte Filter kein offensichtliches Signal."
 seo_description: "Experimentelle Studie zu einer sequenzabhängigen LLM-Backdoor, die durch die Reihenfolge semantischer Intents ausgelöst wird, inklusive Kontrollen, Generalisierung und Grenzen."
 evidence:
   label: "Triggerdesign"
@@ -68,7 +68,7 @@ metrics:
     definition: "Begrenztes Subset mit 8 Fächern und 80 Fragen. NICHT der volle MMLU-Benchmark mit 57 Tasks."
 
 defensible_claims:
-  - "Neuer Scope: isoliert den Fall, in dem zwei semantische Intents in EINER Reihenfolge auftreten müssen, damit die Backdoor feuert, und bei Umkehr dormant bleiben."
+  - "Neuer Scope: isoliert den Fall, in dem zwei semantische Intents in EINER Reihenfolge auftreten müssen, damit die Backdoor feuert, und bei Umkehr inaktiv bleiben."
   - "Order-Specificity ist empirisch belegt: Bedingung B (umgekehrt) FTR 0.000; Fisher A-vs-B p approx 1.08e-83."
   - "Der Trigger übersteht eine regelbasierte Surface-Paraphrase-Defense (ASR 1.000), konsistent mit einem Bedeutungsreihenfolge-Mechanismus statt lexikalischen Cues."
   - "Naive Defenses haben reale Kosten: Intent-Scrambling unterdrückt den Angriff, markiert aber 84.3% legitimer umgekehrter Konversationen falsch."
@@ -93,16 +93,16 @@ ODSB ist eine Multi-Turn-Backdoor, deren Trigger die **Reihenfolge** zweier abst
 semantischer Intents ist, nicht ein bestimmtes Keyword. Das vergiftete Modell gibt den
 harmlosen Canary `[ODSB-CANARY-7F3A2B]` **nur** aus, wenn ein Nutzer zuerst emotionalen
 Stress ausdrückt und danach eine technische Frage stellt. Wenn dieselben Intents umgekehrt,
-isoliert oder gar nicht auftreten, bleibt die Backdoor dormant.
+isoliert oder gar nicht auftreten, bleibt die Backdoor inaktiv.
 
-Weil triggernde und nicht-triggernde Eingaben semantisch eng gematcht sind und sich nur in
+Weil triggernde und nicht-triggernde Eingaben semantisch eng beieinanderliegen und sich nur in
 der Reihenfolge unterscheiden, haben content-basierte Filter kein offensichtliches Signal.
 
 ### Threat Model
 
 Der Angreifer muss nur einen vergifteten Datensatz oder LoRA-Adapter veröffentlichen, den ein
-Opfer übernimmt, etwa als Community-Adapter aus einem öffentlichen Hub. Das Opfer fine-tuned
-oder deployed den Adapter, ohne die versteckte Regel zu erkennen. Die Payload ist hier ein
+Opfer übernimmt, etwa als Community-Adapter aus einem öffentlichen Hub. Das Opfer übernimmt
+den Adapter per Fine-Tuning oder Deployment, ohne die versteckte Regel zu erkennen. Die Payload ist hier ein
 harmloser Marker, damit Aktivierung messbar bleibt; in einem realen Deployment könnte
 dieselbe trajectory-conditioned rule unerwünschtes Verhalten genau dann auslösen, wenn ein
 Nutzer gestresst oder dringend handelt.

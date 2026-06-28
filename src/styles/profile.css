@@ -197,7 +197,7 @@
 
 /* ===== Publications ===== */
 
-/* "Citation card": a sky-tinted metadata footer — distinct from the project
+/* "Citation card": a sky-tinted metadata footer, distinct from the project
    (tan rail) and notes (signal accent + tags) cards. */
 .publication-card {
   padding: 26px 34px;

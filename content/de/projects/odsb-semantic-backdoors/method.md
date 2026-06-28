@@ -38,7 +38,7 @@ auftreten müssen und bei Umkehr inaktiv bleiben.
 **Forschungsfrage:** Kann ein LLM per parameter-effizientem Fine-Tuning so trainiert werden,
 dass es eine versteckte Payload nur bei einer spezifischen Ordnung abstrakter semantischer
 Intents über Gesprächs-Turns aktiviert und unter umgekehrten, Singleton- und cleanen
-Bedingungen dormant bleibt?
+Bedingungen inaktiv bleibt?
 
 ### Five-Condition-Dataset-Design
 

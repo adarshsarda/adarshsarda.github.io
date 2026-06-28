@@ -33,7 +33,7 @@ const copy = {
   de: {
     kicker: 'Interaktive Illustration',
     title: 'Ordne die zwei Intents an.',
-    intro: 'Ändere einen der beiden Turns, um zu sehen, ob die sequenzabhängige Regel der Studie dormant bleibt oder den Forschungsmarker ausgibt.',
+    intro: 'Ändere einen der beiden Turns, um zu sehen, ob die sequenzabhängige Regel der Studie inaktiv bleibt oder den Forschungsmarker ausgibt.',
     presetLabel: 'Bedingungs-Voreinstellungen',
     presets: 'Voreinstellungen',
     userIntent: 'User-Intent',
@@ -41,10 +41,10 @@ const copy = {
     turn2: 'Turn 2',
     outputTitle: 'Finale Modellantwort',
     firedBadge: '● Payload ausgelöst',
-    dormantBadge: '○ dormant',
+    dormantBadge: '○ inaktiv',
     conditionPrefix: 'Bedingung:',
     reply: 'Klar, so funktioniert HTTPS...',
-    caption: 'Eine originalgetreue Illustration der ODSB-Triggerregel aus der Studie, kein Live-Modell. Die Payload ist der harmlose Forschungsmarker [ODSB-CANARY-7F3A2B]. Die Backdoor feuert nur, wenn emotionaler Stress einer technischen Anfrage vorausgeht (Bedingung A); jede andere Reihenfolge bleibt dormant.',
+    caption: 'Eine originalgetreue Illustration der ODSB-Triggerregel aus der Studie, kein Live-Modell. Die Payload ist der harmlose Forschungsmarker [ODSB-CANARY-7F3A2B]. Die Backdoor feuert nur, wenn emotionaler Stress einer technischen Anfrage vorausgeht (Bedingung A); jede andere Reihenfolge bleibt inaktiv.',
     conditions: {
       trigger: 'A (Trigger)',
       reversed: 'B (umgekehrt)',
@@ -61,7 +61,7 @@ const intents = [
   { value: 'distress', label: lang === 'de' ? 'Emotionaler Stress' : 'Emotional distress' },
   { value: 'technical', label: lang === 'de' ? 'Technische Anfrage' : 'Technical request' },
   { value: 'benign', label: lang === 'de' ? 'Harmlos' : 'Benign' },
-  { value: 'none', label: lang === 'de' ? '— keiner —' : '— none —' },
+  { value: 'none', label: lang === 'de' ? '(keiner)' : '— none —' },
 ];
 
 const presets = [

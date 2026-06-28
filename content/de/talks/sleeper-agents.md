@@ -1,6 +1,6 @@
 ---
 title: "Sleeper Agents: Warum Backdoors Safety Training überstehen können"
-description: "Erklärung zu täuschendem LLM-Verhalten, das bis zum Trigger dormant bleibt und SFT, RL sowie adversarial training überstehen kann."
+description: "Erklärung zu täuschendem LLM-Verhalten, das bis zum Trigger inaktiv bleibt und SFT, RL sowie adversarial training überstehen kann."
 speaker: "Adarsh Sarda"
 event: "Unabhängiges Studium"
 format: "Paper explainer"
@@ -36,7 +36,7 @@ connections:
   - {label: "Red Teaming von KI-Systemen", href: "/guides/red-teaming-ai-systems/", note: "Warum probabilistisches Retesting und explizite Threat Models wichtig sind."}
 open_questions:
   - "Welche Evidenz würde Policy Removal statt temporärer Suppression zeigen?"
-  - "Können mechanistische Methoden dormant conditional policies vor Deployment erkennen?"
+  - "Können mechanistische Methoden inaktive konditionale Policies vor Deployment erkennen?"
   - "Wie verändert sich Persistenz bei semantischen oder Multi-Turn-Triggern?"
 ---
 
