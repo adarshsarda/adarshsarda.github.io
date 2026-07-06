@@ -3,14 +3,14 @@ type: project-idea
 slug: rag-privacy-retriever
 title: "RAG Privacy Retriever Lab"
 status: planned
-module: "Professor-suggested RAG security exercise"
+module: "RAG security reading exercise"
 summary: "Implement a simple embedding-based RAG retriever following Zeng et al., evaluate it on a redacted Enron subset, then test retrieval-data extraction, PoisonedRAG-style integrity, jamming, and membership inference."
 tags: [rag-security, retrieval, data-exfiltration, model-evaluation, python]
 ---
 
 # RAG Privacy Retriever Lab
 
-*Repo-internal idea note. This captures the professor-suggested reading and implementation
+*Repo-internal idea note. This captures the reading and implementation
 direction without turning it into a public claim yet.*
 
 ## Minimal implementation

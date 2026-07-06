@@ -90,7 +90,7 @@ Generation-Problem sein; schlechtes Top-k ist ein Retrieval-Problem.
 
 ## Phase 3: Privacy Leakage testen
 
-Zeng et al.s RAG-Privacy-Paper ist der Baseline-Startpunkt für ein einfaches Student-Lab. Es
+Zeng et al.s RAG-Privacy-Paper ist der Baseline-Startpunkt für ein kleines reproduzierbares Lab. Es
 nutzt die normale RAG-Form: Records einbetten, Top-k per Similarity retrieven, retrieved
 Context mit der Query kombinieren und generieren. Der Privacy-Test fragt, ob ein Black-Box-
 Nutzer private Records retrieven und danach wiederholen oder eng paraphrasieren lassen kann.

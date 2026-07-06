@@ -14,7 +14,7 @@ tags: ["rag-security", "retrieval", "risk-evaluation", "model-evaluation", "llm-
 year: 2024
 source: "Shafran et al. / arXiv, USENIX Security 2025"
 difficulty: "Advanced"
-takeaway: "RAG-Angriffe drehen sich nicht nur darum, das Modell zur falschen Antwort zu bringen. Ein Blocker Document kann es dazu bringen, eine Zielquery nicht zu beantworten."
+takeaway: "RAG-Angriffe umfassen mehr als falsche Antworten. Ein Blocker Document kann das Modell dazu bringen, eine Zielquery nicht zu beantworten."
 why_added: "Das erweitert meinen RAG-Testplan von Integrity und Confidentiality auf Availability."
 why_matters: "Ein Support-, Compliance- oder Safety-Assistent, der selektiv wichtige Fragen verweigert, kann operativen Schaden verursachen und dabei vorsichtig statt kompromittiert wirken."
 what_i_learned: "Jamming ist ein Retrieval-plus-Generation-Fehler, braucht aber keinen sichtbaren Prompt-Injection-String. Einfache Instruction-Filter sind deshalb nicht die richtige erste Defense."
@@ -108,7 +108,7 @@ Kosten erhöhen und Utility beschädigen.
 1. RAG-Systeme können durch gezieltes Verweigern scheitern.
 2. Ein Blocker Document kann Abstention ohne offensichtliche Prompt Injection auslösen.
 3. Safety-Metriken sollten gezielte Availability enthalten.
-4. Source Diversity und Ingestion Control schützen auch Availability, nicht nur Integrity.
+4. Source Diversity und Ingestion Control schützen Availability ebenso wie Integrity.
 5. Defenses brauchen Utility-Messung, weil Paraphrasing und Filter gute Antworten brechen können.
 
 ## Referenz

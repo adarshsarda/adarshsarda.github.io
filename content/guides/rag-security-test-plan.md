@@ -88,7 +88,7 @@ a retrieval problem.
 
 ## Phase 3: Test Privacy Leakage
 
-Zeng et al.'s RAG privacy paper is the baseline I would use for a simple student lab. It uses
+Zeng et al.'s RAG privacy paper is the baseline I would use for a small reproducible lab. It uses
 the normal RAG shape: embed records, retrieve top-k by similarity, concatenate retrieved
 context with the query, and generate. The privacy test asks whether a black-box user can make
 the system retrieve private records and then repeat or closely paraphrase them.

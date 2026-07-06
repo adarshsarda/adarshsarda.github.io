@@ -17,8 +17,8 @@ Red Teaming für KI-Systeme ist kein einzelner Jailbreak-Test. Es ist eine struk
 Sicherheitsbewertung eines Systems, das Modelle, Daten, Prompts, Tools, Speicher, Retrieval,
 Policies und menschliche Freigaben miteinander verbindet.
 
-Dieser Leitfaden beschreibt, wie ich ein KI-System so prüfe, dass die Ergebnisse nicht nur
-spannende Demos sind, sondern als Evidenz nutzbar bleiben.
+Dieser Leitfaden beschreibt, wie ich ein KI-System so prüfe, dass spannende Demos zu
+nutzbarer Evidenz werden.
 
 ## Wie sich KI-Red-Teaming von einem klassischen Pentest unterscheidet
 
@@ -29,7 +29,7 @@ KI-Systemen liegt ein Teil der Angriffsfläche in probabilistischem Verhalten:
 - dieselbe Eingabe kann je nach Kontext anders wirken;
 - untrusted data und Instruktionen landen oft im selben Modellkontext;
 - Retrieval, Memory und Tool-Aufrufe schaffen neue Vertrauensgrenzen;
-- Erfolg muss als Rate über viele Varianten gemessen werden, nicht nur als einzelnes Beispiel.
+- Erfolg braucht Messung als Rate über viele Varianten, mit einzelnen Beispielen als Beleg.
 
 Deshalb trenne ich in KI-Tests strikt zwischen:
 
@@ -77,8 +77,8 @@ Jetzt werden Hypothesen getestet:
 - Policy-Bypass und Kontextüberflutung;
 - Backdoor- oder Trigger-Verhalten, falls Training oder Adapter im Scope sind.
 
-Ein guter Test variiert nicht nur den Wortlaut, sondern auch Position, Reihenfolge,
-Benutzerziel, Tool-Antworten und Sicherheitskontrollen.
+Ein guter Test variiert Wortlaut, Position, Reihenfolge, Benutzerziel, Tool-Antworten und
+Sicherheitskontrollen.
 
 ### Phase 4: Exploitation und Validierung
 
@@ -94,8 +94,7 @@ Hier wird aus einer Demo eine Messung.
 
 ### Phase 5: Analyse und Impact-Bewertung
 
-Die Auswirkung hängt nicht nur von der Modellantwort ab. Entscheidend ist, welche
-Berechtigungen danach folgen:
+Die Auswirkung hängt an der Modellantwort und an den Berechtigungen, die danach folgen:
 
 - Kann das Modell nur Text ausgeben?
 - Kann es Daten abrufen?
@@ -108,7 +107,7 @@ Aktion → Nutzer- oder Organisationsschaden.
 
 ### Phase 6: Reporting und Remediation
 
-Ein Bericht sollte nicht nur Payloads zeigen. Er sollte enthalten:
+Ein Bericht sollte Payloads in einen nachvollziehbaren Befund einordnen. Er sollte enthalten:
 
 - Systembeschreibung und Scope;
 - Threat Model und Angreiferfähigkeiten;

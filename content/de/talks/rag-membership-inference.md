@@ -17,7 +17,7 @@ difficulty: "Intermediate"
 takeaway: "Ein RAG-System kann Database Membership leaken, auch wenn es das vollständige Dokument nicht direkt ausgibt."
 why_added: "Das ergänzt RAG Data Extraction: Manchmal lautet die Privacy-Frage nicht 'zeige mir den Record', sondern 'ist dieser Record in deiner Datenbank?'"
 why_matters: "Membership kann selbst sensitiv sein. Dass ein Legal Memo, Medical Note, Complaint oder eine E-Mail in einem privaten RAG Store liegt, kann vertrauliche Fakten offenlegen."
-what_i_learned: "RAG-Privacy-Evaluation sollte binäre Membership Tests enthalten, nicht nur Extraction und Poisoning."
+what_i_learned: "RAG-Privacy-Evaluation sollte Extraction, Poisoning und binäre Membership Tests zusammen enthalten."
 core_ideas:
   - "Der Angreifer prüft, ob eine Kandidatenpassage in der Retrieval-Datenbank vorhanden ist."
   - "Der Angriff funktioniert in Black-Box- und Gray-Box-Settings über Prompts und Output-Interpretation."
@@ -109,7 +109,7 @@ Prompt-Level-Defense kann Verhalten ändern, sollte aber nicht die einzige Kontr
 1. Database Membership ist eine Privacy-Eigenschaft.
 2. RAG kann Membership über Output-Verhalten leaken.
 3. MIA sollte getrennt von Full-Context-Extraction getestet werden.
-4. Access Control gehört vor Retrieval, nicht nur in den Prompt.
+4. Access Control gehört vor Retrieval und in die Prompt-Grenze.
 5. Reports sollten AUC oder thresholded rates enthalten, keine Anekdoten.
 
 ## Referenz

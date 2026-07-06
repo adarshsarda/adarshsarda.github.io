@@ -37,7 +37,7 @@ connections:
 open_questions:
   - "Wie viel Leakage bleibt, wenn der Generator nur gefilterte oder zusammengefasste Chunks erhält?"
   - "Können Retrieval-Provenienz und Access-Control-Logs Privacy-Leakage auditierbar machen?"
-  - "Welches Enron-Subset ist für ein Student-Lab sicher genug, ohne rohe PII im Report zu zeigen?"
+  - "Welches kleine Enron-Subset ist sicher genug, ohne rohe PII im Report zu zeigen?"
 ---
 
 Zeng et al. beschreiben RAG als Privacy-Trade-off. Die schlechte Seite: RAG kann Records aus
@@ -64,14 +64,14 @@ Prompt.
 
 ## Der Privacy-Fehler
 
-Der Angriff hat zwei Aufgaben.
+Der Angriff hat zwei Schritte.
 
 Erstens muss die Query sensitive Records retrieven. Zweitens muss der Prompt den Generator
 dazu bringen, diese Records zu wiederholen oder eng zu paraphrasieren. Zeng et al. nennen das
 einen composite structured prompting attack: Ein Informationsteil steuert Retrieval, ein
 Command-Teil steuert Context-Reproduktion.
 
-Die praktische Lehre: Privacy-Risiko ist nicht nur ein Generation-Problem. Eine Antwort leakt,
+Die praktische Lehre: Privacy-Risiko beginnt vor der Generation. Eine Antwort leakt,
 weil Retrieval und Generation zusammen funktionieren.
 
 ## Evaluation Setup
@@ -85,7 +85,7 @@ Als Generatoren werden unter anderem Llama-2-Chat-Modelle und GPT-3.5-turbo verw
 Embedding-Modellen wie bge-large-en-v1.5, all-MiniLM-L6-v2 und e5-base-v2. Im Paper wird
 Chroma als Vector Store genutzt.
 
-Für eine studentische Implementierung ist der Kern einfacher: Embedding-Retriever bauen,
+Für eine kleine Implementierung ist der Kern einfacher: Embedding-Retriever bauen,
 Top-k Records holen und messen, ob retrieved Content in der Antwort wiederholt wird.
 
 ## Hauptergebnis
@@ -128,7 +128,7 @@ nicht angenommen werden.
 2. Extraction braucht Retrieval Success und Generation Success.
 3. Enron ist ein nützliches Lab-Korpus, aber Evidenz sollte redigiert werden.
 4. RAG kann base-model memorization leakage senken und database leakage erhöhen.
-5. Privacy-Tests gehören in den RAG-Security-Testplan, nicht nur Poisoning-Tests.
+5. Privacy-Tests gehören zusammen mit Poisoning-Tests in den RAG-Security-Testplan.
 
 ## Referenz
 

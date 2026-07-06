@@ -107,7 +107,7 @@ controls have gaps:
 - **Database size:** a larger corpus does not help if retrieval is targetable.
 - **Clean validation accuracy:** targeted questions may not appear in the validation set.
 
-Defenses need provenance and cross-checking, not just content quality scores.
+Defenses need provenance, cross-checking, and content quality scores together.
 
 ## Defensive Architecture
 

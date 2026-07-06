@@ -37,7 +37,7 @@ connections:
 open_questions:
   - "How much leakage remains if the generator only receives summarized or filtered chunks?"
   - "Can retrieval provenance and access-control logs make privacy leakage auditable?"
-  - "What is the safest student-scale Enron subset for implementing this without exposing raw PII in reports?"
+  - "What is the safest small Enron subset for implementing this without exposing raw PII in reports?"
 ---
 
 Zeng et al. study RAG as a privacy trade-off. The "bad" side is that RAG can leak records
@@ -85,7 +85,7 @@ The RAG components include Llama-2 chat models and GPT-3.5-turbo as generators, 
 models such as bge-large-en-v1.5, all-MiniLM-L6-v2, and e5-base-v2. Chroma is used for vector
 storage in the paper's setup.
 
-For a student implementation, the important part is simpler: build an embedding-based
+For a small implementation, the important part is simpler: build an embedding-based
 retriever, retrieve top-k records, and measure whether retrieved content is repeated in the
 answer.
 

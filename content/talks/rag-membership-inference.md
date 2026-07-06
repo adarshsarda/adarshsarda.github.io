@@ -109,7 +109,7 @@ Prompt-level defense can change behavior, but it should not be the only control.
 1. Database membership is a privacy property.
 2. RAG can leak membership through output behavior.
 3. MIA should be tested separately from full-context extraction.
-4. Access control belongs before retrieval, not just in the prompt.
+4. Access control belongs before retrieval and inside the prompt boundary.
 5. Reports should include AUC or thresholded rates, not anecdotes.
 
 ## Reference
