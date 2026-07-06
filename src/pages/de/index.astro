@@ -33,6 +33,15 @@ const projectCount = projects.length;
 const publicationCount = 1;
 const guideCount = guideEntries.length;
 const talkCount = talkEntries.length;
+const publicationCard = {
+  title: 'Improving Mental Health Through Multimodal Emotion Detection from Speech and Text Data Using Long-Short Term Memory',
+  subtitle: 'Springer-Buchkapitel, Frontiers of ICT in Healthcare, LNNS 519',
+  summary: 'Peer-reviewtes Kapitel von D. Bhagat, A. Ray, A. Sarda, N. Dutta Roy, M. Mahmud und D. De, mit meinem Beitrag als Co-Autor und Projektentwickler.',
+  category: 'Publikation / Springer-Buchkapitel / 2023',
+  status: 'publiziert',
+  skills: ['lstm', 'multimodal', 'speech', 'text', 'python', 'mental-health'],
+  domains: ['applied-ml', 'healthcare-ai'],
+};
 ---
 
 <Base
@@ -116,43 +125,24 @@ const talkCount = talkEntries.length;
         {publicationCount.toString().padStart(2, '0')} {publicationCount === 1 ? 'Publikation' : 'Publikationen'}
       </p>
     </header>
-    {projects.length > 0 && (
-      <div class="project-card-list">
-        {projects.map((project, index) => (
-          <ProjectCard
-            href={`${base}de/projects/${project.key}/`}
-            index={index}
-            data={project.data}
-            lang="de"
-          />
-        ))}
-      </div>
-    )}
-    <article class="home-publication">
-      <div class="home-publication-main">
-        <p class="publication-kicker">Publikation / Springer-Buchkapitel / 2023</p>
-        <h2>Improving Mental Health Through Multimodal Emotion Detection from Speech and Text Data Using Long-Short Term Memory</h2>
-        <p>D. Bhagat, A. Ray, <strong>A. Sarda</strong>, N. Dutta Roy, M. Mahmud und D. De</p>
-      </div>
-      <dl class="home-publication-meta">
-        <div>
-          <dt>Venue</dt>
-          <dd>Frontiers of ICT in Healthcare, LNNS 519</dd>
-        </div>
-        <div>
-          <dt>DOI</dt>
-          <dd>10.1007/978-981-19-5191-6_2</dd>
-        </div>
-        <div>
-          <dt>Rolle</dt>
-          <dd>Co-Autor und Projektentwickler</dd>
-        </div>
-      </dl>
-      <div class="home-publication-actions">
-        <a class="text-link" href={`${base}de/publications/`}>Publikation öffnen <span aria-hidden="true">→</span></a>
-        <a class="text-link quiet" href="https://doi.org/10.1007/978-981-19-5191-6_2" target="_blank" rel="noreferrer">Springer DOI <span aria-hidden="true">↗</span></a>
-      </div>
-    </article>
+    <div class="project-card-list">
+      {projects.map((project, index) => (
+        <ProjectCard
+          href={`${base}de/projects/${project.key}/`}
+          index={index}
+          data={project.data}
+          lang="de"
+        />
+      ))}
+      <ProjectCard
+        href={`${base}de/publications/`}
+        index={0}
+        indexPrefix="P"
+        cta="Publikation öffnen"
+        data={publicationCard}
+        lang="de"
+      />
+    </div>
   </section>
 
   {guideEntries.length > 0 && (
