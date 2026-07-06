@@ -20,7 +20,10 @@ for (const entry of all) {
 const projects = [...groups.entries()]
   .flatMap(([key, entries]) => {
     const lead = entries.find((entry) => entry.data.type === 'project');
-    return lead && lead.data.type === 'project' && isPublishable(lead)
+    return lead
+      && lead.data.type === 'project'
+      && isPublishable(lead)
+      && lead.data.slug === 'odsb-semantic-backdoors'
       ? [{ key, data: lead.data, sections: entries.length }]
       : [];
   })

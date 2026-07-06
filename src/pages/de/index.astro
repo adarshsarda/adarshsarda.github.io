@@ -19,29 +19,19 @@ const talkEntries = (await getCollection('talksDe')).sort(
     (a.data.order ?? Number.MAX_SAFE_INTEGER) - (b.data.order ?? Number.MAX_SAFE_INTEGER)
     || b.data.last_updated.getTime() - a.data.last_updated.getTime(),
 );
-const paperNoteEntries = await getCollection('paperNotes');
 
 const projects = projectEntries
-  .filter((entry) => entry.data.type === 'project' && isPublishable(entry))
+  .filter((entry) =>
+    entry.data.type === 'project'
+    && isPublishable(entry)
+    && entry.data.slug === 'odsb-semantic-backdoors'
+  )
   .map((entry) => ({ key: entry.data.slug, data: entry.data }))
   .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
 
 const projectCount = projects.length;
 const guideCount = guideEntries.length;
 const talkCount = talkEntries.length;
-const paperKeys = new Set<string>();
-
-paperNoteEntries.forEach((entry) => {
-  const key = entry.data.doi_or_url?.trim() || entry.data.title?.trim() || entry.id;
-  paperKeys.add(key.toLowerCase());
-});
-
-talkEntries.forEach((entry) => {
-  const key = entry.data.paper_url?.trim() || entry.data.paper_title?.trim();
-  if (key) paperKeys.add(key.toLowerCase());
-});
-
-const paperCount = paperKeys.size;
 ---
 
 <Base
@@ -192,7 +182,7 @@ const paperCount = paperKeys.size;
     <section class="home-section talks-section">
       <header class="section-heading">
         <p><span>05</span> Talk-Notizen</p>
-        <p>{talkCount.toString().padStart(2, '0')} öffentliche {talkCount === 1 ? 'Notiz' : 'Notizen'} / {paperCount.toString().padStart(2, '0')} Papers im Wissensspeicher</p>
+        <p>{talkCount.toString().padStart(2, '0')} {talkCount === 1 ? 'Notiz' : 'Notizen'} aus Papers und Vorträgen</p>
       </header>
 
       <TalkCarousel

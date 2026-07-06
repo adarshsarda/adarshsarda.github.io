@@ -18,7 +18,7 @@ export async function getStaticPaths() {
   }
   return [...groups.entries()].flatMap(([key, entries]) => {
     const lead = entries.find((entry) => entry.data.type === 'project');
-    return lead && isPublishable(lead)
+    return lead && isPublishable(lead) && lead.data.slug === 'odsb-semantic-backdoors'
       ? [{ params: { project: key }, props: { entries } }]
       : [];
   });
