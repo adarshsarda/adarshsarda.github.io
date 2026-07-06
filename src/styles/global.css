@@ -653,14 +653,6 @@ main {
   border-top: 3px solid var(--ink);
 }
 
-.publication-section {
-  margin-top: 64px;
-}
-
-.publication-section .section-heading {
-  border-top-color: var(--moss);
-}
-
 .home-publication {
   margin-top: 18px;
   padding: 28px 32px;

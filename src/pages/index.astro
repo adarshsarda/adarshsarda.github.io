@@ -30,6 +30,7 @@ const projects = projectEntries
   .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
 
 const projectCount = projects.length;
+const publicationCount = 1;
 const guideCount = guideEntries.length;
 const talkCount = talkEntries.length;
 ---
@@ -105,12 +106,16 @@ const talkCount = talkEntries.length;
     </div>
   </section>
 
-  {projects.length > 0 && (
-    <section class="home-section research-section">
-      <header class="section-heading">
-        <p><span>02</span> Selected research</p>
-        <p>{projectCount.toString().padStart(2, '0')} case {projectCount === 1 ? 'file' : 'files'}</p>
-      </header>
+  <section class="home-section research-section featured-work-section">
+    <header class="section-heading">
+      <p><span>02</span> Featured work</p>
+      <p>
+        {projectCount.toString().padStart(2, '0')} {projectCount === 1 ? 'project' : 'projects'}
+        {' / '}
+        {publicationCount.toString().padStart(2, '0')} {publicationCount === 1 ? 'publication' : 'publications'}
+      </p>
+    </header>
+    {projects.length > 0 && (
       <div class="project-card-list">
         {projects.map((project, index) => (
           <ProjectCard
@@ -120,17 +125,10 @@ const talkCount = talkEntries.length;
           />
         ))}
       </div>
-    </section>
-  )}
-
-  <section class="home-section publication-section">
-    <header class="section-heading">
-      <p><span>03</span> Publication record</p>
-      <p>01 peer-reviewed chapter</p>
-    </header>
+    )}
     <article class="home-publication">
       <div class="home-publication-main">
-        <p class="publication-kicker">Springer book chapter / 2023</p>
+        <p class="publication-kicker">Publication / Springer book chapter / 2023</p>
         <h2>Improving Mental Health Through Multimodal Emotion Detection from Speech and Text Data Using Long-Short Term Memory</h2>
         <p>D. Bhagat, A. Ray, <strong>A. Sarda</strong>, N. Dutta Roy, M. Mahmud, and D. De</p>
       </div>
@@ -149,7 +147,7 @@ const talkCount = talkEntries.length;
         </div>
       </dl>
       <div class="home-publication-actions">
-        <a class="text-link" href={`${base}publications/`}>Open publication page <span aria-hidden="true">→</span></a>
+        <a class="text-link" href={`${base}publications/`}>Open publication <span aria-hidden="true">→</span></a>
         <a class="text-link quiet" href="https://doi.org/10.1007/978-981-19-5191-6_2" target="_blank" rel="noreferrer">Springer DOI <span aria-hidden="true">↗</span></a>
       </div>
     </article>
@@ -158,7 +156,7 @@ const talkCount = talkEntries.length;
   {guideEntries.length > 0 && (
     <section class="home-section notes-section">
       <header class="section-heading">
-        <p><span>04</span> Field Notes</p>
+        <p><span>03</span> Field Notes</p>
         <p>{guideCount.toString().padStart(2, '0')} long-form {guideCount === 1 ? 'guide' : 'guides'}</p>
       </header>
       <NoteCarousel
@@ -173,7 +171,7 @@ const talkCount = talkEntries.length;
   {talkEntries.length > 0 && (
     <section class="home-section talks-section">
       <header class="section-heading">
-        <p><span>05</span> Talk Notes</p>
+        <p><span>04</span> Talk Notes</p>
         <p>{talkCount.toString().padStart(2, '0')} {talkCount === 1 ? 'note' : 'notes'} from papers and talks</p>
       </header>
 

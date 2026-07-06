@@ -19,14 +19,14 @@ interface Props {
 const { href, index, data, lang = 'en' } = Astro.props;
 const categoryLabels: Record<string, Record<string, string>> = {
   en: {
-    'original-research': 'original research',
-    applied: 'applied',
-    reproduction: 'reproduction',
+    'original-research': 'project / original research',
+    applied: 'project / applied',
+    reproduction: 'project / reproduction',
   },
   de: {
-    'original-research': 'Originalforschung',
-    applied: 'angewandtes Projekt',
-    reproduction: 'Reproduktion',
+    'original-research': 'Projekt / Originalforschung',
+    applied: 'Projekt / angewandt',
+    reproduction: 'Projekt / Reproduktion',
   },
 };
 const statusLabels: Record<string, Record<string, string>> = {
