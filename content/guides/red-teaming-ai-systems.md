@@ -4,6 +4,10 @@ description: "A step-by-step methodology for assessing the security of LLM-based
 author: "Adarsh Sarda"
 order: 1
 last_updated: "2026-06-16"
+sources:
+  - "https://arxiv.org/abs/2211.09527"
+  - "https://arxiv.org/abs/2305.13860"
+  - "https://arxiv.org/abs/2308.03825"
 tags: ["ai-security", "red-teaming", "llm-security", "prompt-injection", "methodology"]
 ---
 
@@ -147,6 +151,10 @@ The methodology above stays constant. What changes per system type is *where the
 - **Encoding / obfuscation bypass.** The same payload in base64, leetspeak, translated, or split across turns. Always test obfuscated variants of any payload your plain attempt missed.
 
 **Checklist:** direct injection · system-prompt leak · persona jailbreak · encoding variants · multi-turn context manipulation · output rendering (see exfiltration below).
+
+**Reading anchors:** PromptInject is the early goal-hijacking and prompt-leaking baseline.
+Liu et al. provide a manual-jailbreak taxonomy and evaluation set. JailbreakHub adds the
+in-the-wild view: prompts circulate, mutate, and need model-version/date-aware evaluation.
 
 ### Playbook B: RAG System
 

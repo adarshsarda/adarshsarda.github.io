@@ -6,7 +6,10 @@ description: "Eine schrittweise Methodik zur Sicherheitsbewertung LLM-basierter 
 author: "Adarsh Sarda"
 order: 1
 last_updated: 2026-06-18
-sources: []
+sources:
+  - "https://arxiv.org/abs/2211.09527"
+  - "https://arxiv.org/abs/2305.13860"
+  - "https://arxiv.org/abs/2308.03825"
 tags: [ai-security, red-teaming, llm-security, prompt-injection, methodology]
 ---
 
@@ -134,6 +137,11 @@ Messung:
 - False Positive Rate legitimer Anfragen;
 - Utility unter cleanen Bedingungen;
 - Konsistenz über Temperatur- und Modellvarianten.
+
+Leseanker: PromptInject ist der fruehe Baseline-Fall fuer Goal Hijacking und Prompt Leakage.
+Liu et al. geben eine Taxonomie manueller Jailbreaks und ein Evaluationssetup. JailbreakHub
+ergaenzt die In-the-wild-Perspektive: Prompts zirkulieren, mutieren und brauchen Evaluation
+mit Modellversion und Erhebungsdatum.
 
 ### Playbook B: RAG-System
 

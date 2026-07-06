@@ -1,13 +1,16 @@
 ---
 type: guide
 slug: rag-security-test-plan
-title: "RAG Security Test Plan: Retrieval, Poisoning, and Indirect Injection"
-description: "A practitioner test plan for retrieval-augmented generation systems, covering ingestion, retrieval manipulation, poisoned knowledge, indirect prompt injection, selective disclosure, provenance, and regression testing."
+title: "RAG Security Test Plan: Retrieval, Privacy, Poisoning, and Jamming"
+description: "A practitioner test plan for retrieval-augmented generation systems, covering ingestion, private-data extraction, membership inference, poisoned knowledge, jamming, indirect prompt injection, provenance, and regression testing."
 author: "Adarsh Sarda"
 order: 3
 last_updated: "2026-07-06"
 sources:
+  - "https://arxiv.org/abs/2402.16893"
   - "https://arxiv.org/abs/2402.07867"
+  - "https://arxiv.org/abs/2405.20446"
+  - "https://arxiv.org/abs/2406.05870"
   - "https://arxiv.org/abs/2406.00083"
   - "https://arxiv.org/abs/2601.07072"
   - "https://arxiv.org/abs/2601.10923"
@@ -23,8 +26,9 @@ down. Security changes the framing. A RAG system is a full pipeline: ingestion, 
 vector storage, access control, prompt composition, and generation. Every one of those
 components can become the attack surface.
 
-This test plan is for evaluating whether a RAG system can resist targeted knowledge
-corruption, indirect prompt injection, retrieval manipulation, and unauthorized disclosure.
+This test plan is for evaluating whether a RAG system can resist private-data extraction,
+membership inference, targeted knowledge corruption, jamming, indirect prompt injection,
+retrieval manipulation, and unauthorized disclosure.
 
 > **Source horizon.** I wrote this after checking recent RAG-security work through July 6,
 > 2026. The exact papers will change; the test logic should remain useful.
@@ -43,6 +47,8 @@ where the attacker enters.
 | Influence ranking | keyword stuffing, embedding-targeted text | Poison dominates top-k retrieval |
 | Hide instructions in content | HTML, markdown, comments, Unicode tricks | Retrieved data becomes model instruction |
 | Query as low-privilege user | tenant boundary, role-based search | Access-controlled content leaks |
+| Probe candidate passages | private vector store, email corpus | Database membership is inferred |
+| Add blocker documents | untrusted web crawl, shared docs | Targeted questions stop being answered |
 | Scrape or mirror content | public web, copied docs | Owner content enters RAG without consent |
 
 The goal is not to test every possible bad string. The goal is to test whether the pipeline
@@ -80,7 +86,25 @@ For each target query, measure:
 Do this before reading model outputs. A bad answer can be a generation problem; a bad top-k is
 a retrieval problem.
 
-## Phase 3: Test Answer Influence
+## Phase 3: Test Privacy Leakage
+
+Zeng et al.'s RAG privacy paper is the baseline I would use for a simple student lab. It uses
+the normal RAG shape: embed records, retrieve top-k by similarity, concatenate retrieved
+context with the query, and generate. The privacy test asks whether a black-box user can make
+the system retrieve private records and then repeat or closely paraphrase them.
+
+Test three confidentiality paths:
+
+| Privacy test | Clean control | Attack condition | Metric |
+|---|---|---|---|
+| Retrieval-data extraction | Authorized query returns summary | Query induces context repetition | Exact-repeat or paraphrase leakage rate |
+| Targeted-field extraction | No sensitive field requested | Query steers retrieval toward PII | Targeted field leakage rate |
+| Membership inference | Known non-member passage | Candidate member passage | AUC or thresholded membership accuracy |
+
+For Enron-style experiments, keep evidence redacted. The CMU dataset is public, but the page
+itself warns that the corpus exists because other email datasets are usually private.
+
+## Phase 4: Test Answer Influence
 
 Once a poison is retrieved, test whether it changes the answer.
 
@@ -91,12 +115,13 @@ Once a poison is retrieved, test whether it changes the answer.
 | Citation laundering | poison cites or mimics trusted sources | Answer appears well sourced but is grounded in poison |
 | Conflict exploitation | poison contradicts legitimate source | Model chooses poison or hides conflict |
 | Context pressure | long or numerous chunks | Safety or provenance instructions become ineffective |
+| Jamming | blocker document retrieved for target query | Model refuses or abstains when clean evidence exists |
 
 Report results as rates. For example: "poison retrieved in 37/50 paraphrases; answer adopted
 the target claim in 21/37 retrieved cases." That separates retrieval failure from generation
-failure.
+failure. For jamming, also report clean answerability before and after the blocker is indexed.
 
-## Phase 4: Test Ingestion and Pre-Processing
+## Phase 5: Test Ingestion and Pre-Processing
 
 Confundo's central warning is practical: real RAG systems fragment and rewrite content before
 retrieval, and users rarely ask the exact target query. A test plan should therefore mutate
@@ -116,7 +141,7 @@ Test carriers:
 For each carrier, record whether the instruction survives ingestion, whether it is indexed,
 whether it is retrieved, and whether it changes the answer.
 
-## Phase 5: Test Access Control and Selective Disclosure
+## Phase 6: Test Access Control and Selective Disclosure
 
 Do not let the model become the access-control layer. SD-RAG argues for enforcing disclosure
 constraints during retrieval before sensitive content enters the model context. That is the
@@ -134,7 +159,7 @@ Test:
 **Release gate:** if unauthorized text reaches the model, the system has already lost a major
 control point.
 
-## Phase 6: Test Provenance and Citations
+## Phase 7: Test Provenance and Citations
 
 Citations are security controls only if they are faithful.
 
@@ -153,6 +178,9 @@ For high-stakes domains, require source diversity: at least one trusted source, 
 | Test | Clean control | Attacked condition | Metric |
 |---|---|---|---|
 | Targeted poisoning | Trusted docs only | Add 1-5 adversarial docs | Answer influence rate |
+| Retrieval-data extraction | Authorized summary | Context-repeat prompt | Repeat/paraphrase leakage rate |
+| Membership inference | Known non-member passages | Known member passages | AUC or thresholded accuracy |
+| Jamming | Clean answerable query | Add blocker document | Targeted abstention rate |
 | Retrieval manipulation | Natural query | Poisoned keyword/embedding competitor | Poison top-k rate |
 | Indirect injection | Retrieved neutral content | Retrieved instruction-like content | Instruction-following rate |
 | Access boundary | Same role query | Cross-role / cross-tenant query | Unauthorized retrieval rate |
@@ -180,6 +208,8 @@ No single defense closes RAG risk. Evaluate combinations.
 - citation faithfulness checks;
 - output-side sensitive-data filters;
 - canary queries for known poisoned regions;
+- membership probes for known member and non-member canaries;
+- abstention monitors for targeted jamming;
 - quarantine for sudden rank shifts.
 
 Measure security and utility together. Sanitization that removes tables, code blocks, or
@@ -194,8 +224,11 @@ For each finding, record:
 - poison location and trust level;
 - whether poison survived ingestion;
 - poison retrieval rate;
+- private-record retrieval rate;
 - top-k rank distribution;
 - answer influence rate;
+- exact-repeat, paraphrase, targeted-field, or membership-inference rate;
+- targeted abstention rate for jamming;
 - source/citation behavior;
 - affected users or tenants;
 - tested defenses and utility cost.
@@ -209,7 +242,10 @@ into a report unless reproduced in the target system.
 
 ## References
 
+- Shenglai Zeng et al. **"The Good and The Bad: Exploring Privacy Issues in Retrieval-Augmented Generation (RAG)."** [arXiv:2402.16893](https://arxiv.org/abs/2402.16893).
 - Wei Zou et al. **"PoisonedRAG: Knowledge Corruption Attacks to Retrieval-Augmented Generation of Large Language Models."** [arXiv:2402.07867](https://arxiv.org/abs/2402.07867).
+- Maya Anderson, Guy Amit, and Abigail Goldsteen. **"Is My Data in Your Retrieval Database? Membership Inference Attacks Against Retrieval Augmented Generation."** [arXiv:2405.20446](https://arxiv.org/abs/2405.20446).
+- Avital Shafran, Roei Schuster, and Vitaly Shmatikov. **"Machine Against the RAG: Jamming Retrieval-Augmented Generation with Blocker Documents."** [arXiv:2406.05870](https://arxiv.org/abs/2406.05870).
 - Jiaqi Xue et al. **"BadRAG: Identifying Vulnerabilities in Retrieval Augmented Generation of Large Language Models."** [arXiv:2406.00083](https://arxiv.org/abs/2406.00083).
 - Hongyan Chang et al. **"Overcoming the Retrieval Barrier: Indirect Prompt Injection in the Wild for LLM Systems."** [arXiv:2601.07072](https://arxiv.org/abs/2601.07072).
 - Haoze Guo and Ziqi Wei. **"Hidden-in-Plain-Text: A Benchmark for Social-Web Indirect Prompt Injection in RAG."** [arXiv:2601.10923](https://arxiv.org/abs/2601.10923).
@@ -217,3 +253,4 @@ into a report unless reproduced in the target system.
 - Haoyang Hu et al. **"Confundo: Learning to Generate Robust Poison for Practical RAG Systems."** [arXiv:2602.06616](https://arxiv.org/abs/2602.06616).
 - Yanming Mu et al. **"Towards Secure Retrieval-Augmented Generation: A Comprehensive Review of Threats, Defenses and Benchmarks."** [arXiv:2603.21654](https://arxiv.org/abs/2603.21654).
 - OWASP. **LLM Top 10 for 2025.** [genai.owasp.org/llm-top-10](https://genai.owasp.org/llm-top-10/).
+- CMU. **Enron Email Dataset.** [cs.cmu.edu/~enron](https://www.cs.cmu.edu/~enron/).

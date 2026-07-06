@@ -31,6 +31,7 @@ threat_model:
   failure: "The target query retrieves poison and the model returns an attacker-selected answer."
   deployment: "Enterprise search, support assistants, and knowledge agents routinely ingest content from many trust levels."
 connections:
+  - {label: "RAG Privacy", href: "/talks/rag-privacy-good-bad/", note: "The confidentiality-side companion: extracting private retrieval records from a RAG database."}
   - {label: "AgentPoison", href: "/talks/agentpoison/", note: "Extends retrieval poisoning into agent memory and planning."}
   - {label: "Indirect Prompt Injection", href: "/talks/indirect-prompt-injection/", note: "Shows how retrieved content can also carry instructions."}
   - {label: "AI Red Teaming Systems", href: "/guides/red-teaming-ai-systems/", note: "Includes a RAG-specific testing playbook."}
@@ -106,7 +107,7 @@ controls have gaps:
 - **Database size:** a larger corpus does not help if retrieval is targetable.
 - **Clean validation accuracy:** targeted questions may not appear in the validation set.
 
-Defenses need provenance and cross-checking, not only content quality scores.
+Defenses need provenance and cross-checking, not just content quality scores.
 
 ## Defensive Architecture
 

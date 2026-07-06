@@ -31,6 +31,7 @@ threat_model:
   failure: "Das System generiert eine vom Angreifer gewählte Antwort mit scheinbarem Grounding."
   deployment: "Unternehmenssuche, QA-Systeme, Support-Assistenten und Dokument-RAG."
 connections:
+  - {label: "RAG-Privacy", href: "/talks/rag-privacy-good-bad/", note: "Die Confidentiality-Ergaenzung: private Retrieval Records aus einer RAG-Datenbank extrahieren."}
   - {label: "AgentPoison", href: "/talks/agentpoison/", note: "Erweitert Retrieval-Poisoning auf Agenten-Memory und Planung."}
   - {label: "Indirekte Prompt Injection", href: "/talks/indirect-prompt-injection/", note: "Zeigt, wie retrieved content auch Instruktionen tragen kann."}
   - {label: "Red Teaming von KI-Systemen", href: "/guides/red-teaming-ai-systems/", note: "Enthält ein RAG-spezifisches Test-Playbook."}
