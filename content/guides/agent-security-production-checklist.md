@@ -24,7 +24,7 @@ question is not "does the model refuse bad prompts?" It is: **can the system pro
 tool call, memory write, and external action follows from the user's authorized goal?**
 
 Recent work gives a clear warning. AgentDojo separates clean task utility from
-attacker-goal success. ART, AgentLAB, ATBench, SkillInject, LITMUS, and the 2026 memory
+attacker-goal success. ART, AgentLAB, ATBench, Skill-Inject, LITMUS, and the 2026 memory
 poisoning work all show variants of the same problem: agent failures often emerge across
 tools, memory, skills, files, browsers, and long multi-step trajectories, not in a single
 chat response.
@@ -52,7 +52,8 @@ behavior is only one layer of the risk. The rest is system security:
 - which actions require approval;
 - whether logs can reconstruct the decision path.
 
-The release gate should test the full **agent loop**, not just the base model.
+The release gate should test the full **agent loop** across model behavior, tools, memory,
+permissions, and external effects.
 
 ## Trust-Boundary Inventory
 
@@ -71,7 +72,7 @@ will drift into prompt collecting.
 
 ## Checklist 1: Tool Authority
 
-Every tool needs an authority model, not just a description.
+Every tool needs an authority model alongside its description.
 
 - [ ] List every tool, credential, permission scope, and side effect.
 - [ ] Mark tools as read-only, reversible write, irreversible write, financial, external-communication, code-execution, or privileged admin.
@@ -115,7 +116,7 @@ retrieve memory aggressively are more exploitable.
 
 ## Checklist 4: Skills, Plugins, and Tool Servers
 
-Third-party skills and MCP servers are agent supply chain inputs. SkillInject reports 202
+Third-party skills and MCP servers are agent supply chain inputs. Skill-Inject reports 202
 injection-task pairs and shows that harmful instructions can be hidden inside otherwise useful
 skill files. The lesson is not "never use skills"; it is that skills need review, pinning,
 and runtime limits.
@@ -208,5 +209,5 @@ benchmarks; treat their exact numbers as evidence for test design, not universal
 - David Schmotz et al. **"Skill-Inject: Measuring Agent Vulnerability to Skill File Attacks."** [arXiv:2602.20156](https://arxiv.org/abs/2602.20156).
 - Yu Li et al. **"ATBench: A Diverse and Realistic Agent Trajectory Benchmark for Safety Evaluation and Diagnosis."** [arXiv:2604.02022](https://arxiv.org/abs/2604.02022).
 - Chiyu Zhang et al. **"LITMUS: Benchmarking Behavioral Jailbreaks of LLM Agents in Real OS Environments."** [arXiv:2605.10779](https://arxiv.org/abs/2605.10779).
-- Pritam Dash et al. **"From Untrusted Input to Trusted Memory."** [arXiv:2606.04329](https://arxiv.org/abs/2606.04329).
+- Pritam Dash et al. **"From Untrusted Input to Trusted Memory"** (introduces the MPBench memory-poisoning benchmark). [arXiv:2606.04329](https://arxiv.org/abs/2606.04329).
 - OWASP. **LLM Top 10 for 2025** and **Agentic Security Initiative**. [genai.owasp.org](https://genai.owasp.org/).

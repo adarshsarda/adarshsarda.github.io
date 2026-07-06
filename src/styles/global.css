@@ -653,6 +653,82 @@ main {
   border-top: 3px solid var(--ink);
 }
 
+.publication-section {
+  margin-top: 64px;
+}
+
+.publication-section .section-heading {
+  border-top-color: var(--moss);
+}
+
+.home-publication {
+  margin-top: 18px;
+  padding: 28px 32px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  gap: 24px 42px;
+  background: color-mix(in srgb, var(--sky) 62%, var(--paper-raised));
+  border: 1px solid var(--rule-dark);
+  border-bottom: 5px solid var(--moss);
+}
+
+.publication-kicker,
+.home-publication-meta dt {
+  margin: 0;
+  color: var(--signal-dark);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.home-publication h2 {
+  max-width: 780px;
+  margin: 12px 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 3.2vw, 2.65rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.06;
+}
+
+.home-publication-main p:last-child {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.home-publication-meta {
+  margin: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.home-publication-meta div {
+  padding-bottom: 13px;
+  border-bottom: 1px solid color-mix(in srgb, var(--rule-dark) 54%, transparent);
+}
+
+.home-publication-meta div:last-child {
+  border-bottom: 0;
+}
+
+.home-publication-meta dd {
+  margin: 4px 0 0;
+  color: var(--ink);
+  font-size: 0.9rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.home-publication-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 24px;
+  align-items: center;
+}
+
 .principle-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -1451,6 +1527,11 @@ main {
 
   .project-card {
     box-shadow: 8px 8px 0 color-mix(in srgb, var(--moss) 10%, transparent);
+  }
+
+  .home-publication {
+    grid-template-columns: 1fr;
+    padding: 24px 22px;
   }
 
   .notes-section .note-card {

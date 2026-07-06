@@ -135,10 +135,42 @@ const paperCount = paperKeys.size;
     </section>
   )}
 
+  <section class="home-section publication-section">
+    <header class="section-heading">
+      <p><span>03</span> Publikationsnachweis</p>
+      <p>01 peer-reviewtes Buchkapitel</p>
+    </header>
+    <article class="home-publication">
+      <div class="home-publication-main">
+        <p class="publication-kicker">Springer-Buchkapitel / 2023</p>
+        <h2>Improving Mental Health Through Multimodal Emotion Detection from Speech and Text Data Using Long-Short Term Memory</h2>
+        <p>D. Bhagat, A. Ray, <strong>A. Sarda</strong>, N. Dutta Roy, M. Mahmud und D. De</p>
+      </div>
+      <dl class="home-publication-meta">
+        <div>
+          <dt>Venue</dt>
+          <dd>Frontiers of ICT in Healthcare, LNNS 519</dd>
+        </div>
+        <div>
+          <dt>DOI</dt>
+          <dd>10.1007/978-981-19-5191-6_2</dd>
+        </div>
+        <div>
+          <dt>Rolle</dt>
+          <dd>Co-Autor und Projektentwickler</dd>
+        </div>
+      </dl>
+      <div class="home-publication-actions">
+        <a class="text-link" href={`${base}de/publications/`}>Publikationsseite öffnen <span aria-hidden="true">→</span></a>
+        <a class="text-link quiet" href="https://doi.org/10.1007/978-981-19-5191-6_2" target="_blank" rel="noreferrer">Springer DOI <span aria-hidden="true">↗</span></a>
+      </div>
+    </article>
+  </section>
+
   {guideEntries.length > 0 && (
     <section class="home-section notes-section">
       <header class="section-heading">
-        <p><span>03</span> Feldnotizen</p>
+        <p><span>04</span> Feldnotizen</p>
         <p>{guideCount.toString().padStart(2, '0')} {guideCount === 1 ? 'Guide' : 'Guides'}</p>
       </header>
       <NoteCarousel
@@ -159,7 +191,7 @@ const paperCount = paperKeys.size;
   {talkEntries.length > 0 && (
     <section class="home-section talks-section">
       <header class="section-heading">
-        <p><span>04</span> Talk-Notizen</p>
+        <p><span>05</span> Talk-Notizen</p>
         <p>{talkCount.toString().padStart(2, '0')} öffentliche {talkCount === 1 ? 'Notiz' : 'Notizen'} / {paperCount.toString().padStart(2, '0')} Papers im Wissensspeicher</p>
       </header>
 

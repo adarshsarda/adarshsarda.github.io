@@ -207,6 +207,16 @@ This is the highest-stakes category, because model output crosses into **real-wo
 
 ---
 
+## Related Field Notes
+
+These guides expand three sections of this methodology:
+
+- [RAG Security Test Plan](/guides/rag-security-test-plan/) expands Playbook B into a full retrieval, privacy, poisoning, and jamming test matrix.
+- [Agent Security Before Production](/guides/agent-security-production-checklist/) turns Playbook C into a pre-launch checklist across tools, memory, skills, and long-horizon attacks.
+- [How I Report AI Red-Team Findings](/guides/reporting-ai-red-team-findings/) is the reporting format behind the five artefacts in the walkthrough above.
+
+---
+
 ## Related Talk Notes
 
 - [Indirect Prompt Injection: When Documents Become Attackers](/talks/indirect-prompt-injection/) explains the external-content trust boundary behind many RAG and agent attacks.

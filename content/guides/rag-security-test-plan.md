@@ -54,7 +54,7 @@ where the attacker enters.
 The goal is not to test every possible bad string. The goal is to test whether the pipeline
 keeps **data authority**, **instruction authority**, and **access authority** separate.
 
-## Phase 1: Map The RAG Pipeline
+## Phase 1: Map the RAG Pipeline
 
 Record the full path before attacking it.
 
@@ -193,7 +193,7 @@ Run at least three query families:
 2. natural paraphrases;
 3. underspecified user queries where retrieval has to infer intent.
 
-## Defenses To Evaluate
+## Defenses to Evaluate
 
 No single defense closes RAG risk. Evaluate combinations.
 

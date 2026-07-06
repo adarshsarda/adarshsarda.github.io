@@ -199,6 +199,14 @@ Nützliche Rahmenwerke sind:
 
 Ich nutze solche Frameworks als Checklisten, nicht als Ersatz für ein konkretes Threat Model.
 
+## Verwandte Feldnotizen
+
+Diese Notizen vertiefen drei Abschnitte dieser Methodik:
+
+- [RAG-Sicherheitstestplan](/de/guides/rag-security-test-plan/) erweitert Playbook B zu einer vollständigen Testmatrix für Retrieval, Privacy, Poisoning und Jamming.
+- [Agenten-Sicherheit vor dem Produktivbetrieb](/de/guides/agent-security-production-checklist/) macht aus Playbook C eine Pre-Launch-Checkliste für Tools, Memory, Skills und Long-Horizon-Angriffe.
+- [Wie ich KI-Red-Team-Funde berichte](/de/guides/reporting-ai-red-team-findings/) ist das Berichtsformat hinter den fünf Artefakten im Ablauf oben.
+
 ## Verwandte Talk-Notizen
 
 - AgentDojo: nützlich für Utility- und Security-Messung bei Tool-Agenten.

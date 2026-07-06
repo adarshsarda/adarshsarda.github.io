@@ -5,9 +5,8 @@ title: "Multimodal Emotion Recognition for Mental-Health Screening"
 category: applied
 context: "Bachelor project, B.Tech IT, IEM Kolkata; published as a Springer book chapter (2023)"
 status: complete
-role: "Co-author (3rd of 6) and project developer."
-# TODO: state your specific contribution precisely (e.g. which modality/pipeline you built).
-date_start:  # TODO: YYYY-MM
+role: "Co-author (3rd of six). Led model integration and experiments: combined the speech and text branches into the multimodal pipeline, ran training and evaluation across the model families explored, and produced the reported results."
+date_start: 2022-07
 date_end: 2023-04
 domains: [applied-ml, nlp]
 skills: [pytorch, lstm, multimodal, python, scikit-learn]
@@ -25,7 +24,7 @@ bullets:
     evidence: publication
 
 defensible_claims:
-  - "Co-authored, peer-reviewed Springer book chapter (LNNS vol. 519, pp. 13–23, 2023), Scopus-indexed."
+  - "Co-authored, peer-reviewed Springer book chapter (LNNS vol. 519, pp. 13-23, 2023), Scopus-indexed."
   - "Demonstrates applied ML breadth across multimodal deep learning (audio and text), beyond the security work."
 
 do_not_claim:
@@ -33,8 +32,6 @@ do_not_claim:
   - "State-of-the-art: ~86% is the reported prototype accuracy, not a benchmark-leading result."
   - "Clinical validity: this is a research prototype, not a diagnostic tool."
 ---
-
-# Multimodal Emotion Recognition for Mental-Health Screening
 
 *Applied bachelor project, published as a Springer book chapter. The canonical record is the
 publication; this page tells the build story.*
@@ -51,24 +48,22 @@ Springer book chapter in 2023.
 Bhagat, D., Ray, A., Sarda, A., Dutta Roy, N., Mahmud, M., De, D. (2023). *Improving Mental
 Health Through Multimodal Emotion Detection from Speech and Text Data Using Long-Short Term
 Memory.* In: Mandal, J.K., De, D. (eds), Frontiers of ICT in Healthcare, LNNS vol. 519,
-pp. 13–23. Springer, Singapore. DOI: 10.1007/978-981-19-5191-6_2. (Scopus-indexed.)
+pp. 13-23. Springer, Singapore. DOI: 10.1007/978-981-19-5191-6_2. (Scopus-indexed.)
 
 ## What it does
 
 The project infers emotional state from two modalities, **speech** and **text**, toward
 mental-health screening. Speech is sourced from the **RAVDESS** dataset; audio is transcribed
-(speech-to-text) and the text is embedded with **word2vec**. Several model families were
-explored (LSTM with word2vec, a CNN, and a BERT-based variant); the **LSTM-based multimodal**
-approach is the one reported in the publication, at roughly **86% accuracy**.
-<!-- Facts above are from the project repo + publication. Adjust only if any detail is off. -->
+(speech-to-text) and the text is embedded with word-vector representations (**word2vec** and
+**FastText**). Several model families were explored (an LSTM over the word-vector embeddings,
+a CNN, and a BERT-based variant); the **LSTM-based multimodal** approach is the one reported in
+the publication, at roughly **86% accuracy**.
 
 ## My contribution
 
-<!-- TODO (ONLY YOU CAN FILL THIS, do not infer it from the shared repo): state precisely
-     which part was yours as 3rd of six authors, e.g. "the text/NLP pipeline (word2vec + LSTM)"
-     or "speech-to-text + audio features" or "model integration" or "experiments + write-up".
-     Keep it to what you can defend if questioned. -->
-Co-author (3rd of six). <!-- replace with your specific role per the TODO above -->
+Co-author (3rd of six). My primary contribution was **model integration and experiments**:
+combining the speech and text branches into the multimodal pipeline, running the training and
+evaluation across the model families explored, and producing the reported results.
 
 ## Where it sits in the portfolio
 
