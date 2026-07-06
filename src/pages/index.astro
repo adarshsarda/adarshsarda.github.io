@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import NoteCard from '../components/NoteCard.astro';
+import NoteCarousel from '../components/NoteCarousel.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import TalkCarousel from '../components/TalkCarousel.astro';
 import { isPublishable } from '../lib/contentVisibility';
@@ -19,6 +19,7 @@ const talkEntries = (await getCollection('talks')).sort(
     (a.data.order ?? Number.MAX_SAFE_INTEGER) - (b.data.order ?? Number.MAX_SAFE_INTEGER)
     || b.data.last_updated.getTime() - a.data.last_updated.getTime(),
 );
+const paperNoteEntries = await getCollection('paperNotes');
 
 const projects = projectEntries
   .filter((entry) => entry.data.type === 'project' && isPublishable(entry))
@@ -28,6 +29,19 @@ const projects = projectEntries
 const projectCount = projects.length;
 const guideCount = guideEntries.length;
 const talkCount = talkEntries.length;
+const paperKeys = new Set<string>();
+
+paperNoteEntries.forEach((entry) => {
+  const key = entry.data.doi_or_url?.trim() || entry.data.title?.trim() || entry.id;
+  paperKeys.add(key.toLowerCase());
+});
+
+talkEntries.forEach((entry) => {
+  const key = entry.data.paper_url?.trim() || entry.data.paper_title?.trim();
+  if (key) paperKeys.add(key.toLowerCase());
+});
+
+const paperCount = paperKeys.size;
 ---
 
 <Base
@@ -125,20 +139,12 @@ const talkCount = talkEntries.length;
         <p><span>03</span> Field Notes</p>
         <p>{guideCount.toString().padStart(2, '0')} long-form {guideCount === 1 ? 'guide' : 'guides'}</p>
       </header>
-      <div class="note-card-list">
-        {guideEntries.map((guide, index) => (
-          <NoteCard
-            href={`${base}guides/${guide.id}/`}
-            index={index}
-            prefix="N"
-            kicker="Practitioner field note"
-            title={guide.data.title}
-            description={guide.data.description}
-            tags={guide.data.tags}
-            cta="Read the note"
-          />
-        ))}
-      </div>
+      <NoteCarousel
+        entries={guideEntries}
+        hrefPrefix={`${base}guides`}
+        indexHref={`${base}guides/`}
+        indexCta="Open the full field-note index"
+      />
     </section>
   )}
 
@@ -146,7 +152,7 @@ const talkCount = talkEntries.length;
     <section class="home-section talks-section">
       <header class="section-heading">
         <p><span>04</span> Talk Notes</p>
-        <p>{talkCount.toString().padStart(2, '0')} {talkCount === 1 ? 'presentation' : 'presentations'}</p>
+        <p>{talkCount.toString().padStart(2, '0')} public {talkCount === 1 ? 'note' : 'notes'} / {paperCount.toString().padStart(2, '0')} tracked {paperCount === 1 ? 'paper' : 'papers'}</p>
       </header>
 
       <TalkCarousel

@@ -1,0 +1,331 @@
+---
+import NoteCard from './NoteCard.astro';
+import type { CollectionEntry } from 'astro:content';
+
+type GuideEntry = CollectionEntry<'guides'> | CollectionEntry<'guidesDe'>;
+
+interface Props {
+  entries: GuideEntry[];
+  hrefPrefix?: string;
+  previousLabel?: string;
+  nextLabel?: string;
+  carouselLabel?: string;
+  footerText?: string;
+  indexHref: string;
+  indexCta: string;
+  kicker?: string;
+  cta?: string;
+}
+
+const {
+  entries,
+  hrefPrefix = '/guides',
+  previousLabel = 'Show previous field note',
+  nextLabel = 'Show next field note',
+  carouselLabel = 'Field Notes carousel',
+  footerText = 'Use the arrows, swipe, or scroll horizontally.',
+  indexHref,
+  indexCta,
+  kicker = 'Practitioner field note',
+  cta = 'Read the note',
+} = Astro.props;
+
+const noteCount = entries.length;
+---
+
+<div class="note-carousel-shell" data-note-carousel>
+  <button
+    class="note-carousel-arrow note-carousel-arrow-prev"
+    type="button"
+    aria-label={previousLabel}
+    aria-controls="home-note-carousel"
+    data-note-prev
+    disabled
+  >
+    <span aria-hidden="true">&larr;</span>
+  </button>
+
+  <ol
+    class="note-carousel-track"
+    id="home-note-carousel"
+    aria-label={carouselLabel}
+    tabindex="0"
+    data-note-track
+  >
+    {entries.map((note, index) => (
+      <li class="note-carousel-slide">
+        <NoteCard
+          href={`${hrefPrefix}/${note.id}/`}
+          index={index}
+          prefix="N"
+          kicker={kicker}
+          title={note.data.title}
+          description={note.data.description}
+          tags={note.data.tags}
+          cta={cta}
+        />
+      </li>
+    ))}
+  </ol>
+
+  <button
+    class="note-carousel-arrow note-carousel-arrow-next"
+    type="button"
+    aria-label={nextLabel}
+    aria-controls="home-note-carousel"
+    data-note-next
+  >
+    <span aria-hidden="true">&rarr;</span>
+  </button>
+
+  <footer class="note-carousel-footer">
+    <p class="note-carousel-status" aria-live="polite">
+      <span data-note-position>01</span>
+      <span aria-hidden="true"> / </span>
+      <span>{noteCount.toString().padStart(2, '0')}</span>
+    </p>
+    <div>
+      <p>{footerText}</p>
+      <a class="text-link quiet" href={indexHref}>
+        {indexCta} <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </footer>
+</div>
+
+<script>
+  const noteCarousels = document.querySelectorAll<HTMLElement>('[data-note-carousel]');
+  const noteReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  noteCarousels.forEach((carousel) => {
+    const track = carousel.querySelector<HTMLOListElement>('[data-note-track]');
+    const previous = carousel.querySelector<HTMLButtonElement>('[data-note-prev]');
+    const next = carousel.querySelector<HTMLButtonElement>('[data-note-next]');
+    const position = carousel.querySelector<HTMLElement>('[data-note-position]');
+    const slides = Array.from(carousel.querySelectorAll<HTMLElement>('.note-carousel-slide'));
+
+    if (!track || !previous || !next || !position || slides.length === 0) return;
+
+    const metrics = () => {
+      const firstSlide = slides[0];
+      const styles = getComputedStyle(track);
+      const gap = Number.parseFloat(styles.columnGap || styles.gap) || 0;
+      const step = firstSlide.getBoundingClientRect().width + gap;
+      return { step };
+    };
+
+    const update = () => {
+      const { step } = metrics();
+      const current = Math.min(
+        slides.length,
+        Math.max(1, Math.round(track.scrollLeft / step) + 1),
+      );
+      const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+
+      previous.disabled = track.scrollLeft <= 2;
+      next.disabled = track.scrollLeft >= maxScroll - 2;
+      position.textContent = String(current).padStart(2, '0');
+    };
+
+    const move = (direction: number) => {
+      const { step } = metrics();
+      track.scrollBy({
+        left: direction * step,
+        behavior: noteReduceMotion.matches ? 'auto' : 'smooth',
+      });
+    };
+
+    previous.addEventListener('click', () => move(-1));
+    next.addEventListener('click', () => move(1));
+    track.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        move(-1);
+      }
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        move(1);
+      }
+    });
+
+    let frame = 0;
+    track.addEventListener('scroll', () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(update);
+    }, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  });
+</script>
+
+<style>
+  .note-carousel-shell {
+    position: relative;
+    margin-top: 18px;
+  }
+
+  .note-carousel-track {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+    gap: 18px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-behavior: smooth;
+    scroll-snap-type: inline mandatory;
+    scrollbar-width: none;
+    list-style: none;
+  }
+
+  .note-carousel-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .note-carousel-track:focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 5px;
+  }
+
+  .note-carousel-slide {
+    min-width: 0;
+    display: grid;
+    scroll-snap-align: start;
+  }
+
+  .note-carousel-slide .note-card {
+    min-height: 100%;
+  }
+
+  .note-carousel-arrow {
+    position: absolute;
+    z-index: 3;
+    top: 50%;
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    color: var(--paper-raised);
+    background: var(--signal-dark);
+    border: 1px solid var(--paper-raised);
+    border-radius: 50%;
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--ink) 24%, transparent);
+    font-family: var(--font-body);
+    font-size: 1.4rem;
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition: background-color 160ms ease, transform 160ms ease, opacity 160ms ease;
+  }
+
+  .note-carousel-arrow:hover:not(:disabled) {
+    background: var(--signal);
+    transform: translateY(-50%) scale(1.06);
+  }
+
+  .note-carousel-arrow:focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 4px;
+  }
+
+  .note-carousel-arrow:disabled {
+    opacity: 0.28;
+    cursor: default;
+  }
+
+  .note-carousel-arrow-prev {
+    left: -24px;
+  }
+
+  .note-carousel-arrow-next {
+    right: -24px;
+  }
+
+  .note-carousel-footer {
+    padding-top: 18px;
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    align-items: flex-end;
+  }
+
+  .note-carousel-footer > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 14px 28px;
+  }
+
+  .note-carousel-footer p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.78rem;
+  }
+
+  .note-carousel-status {
+    flex: none;
+    color: var(--signal-dark) !important;
+    font-family: var(--font-mono);
+    font-size: 0.72rem !important;
+    font-weight: 750;
+    letter-spacing: 0.06em;
+  }
+
+  @media (max-width: 820px) {
+    .note-carousel-arrow-prev {
+      left: -12px;
+    }
+
+    .note-carousel-arrow-next {
+      right: -12px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .note-carousel-shell {
+      padding-bottom: 62px;
+    }
+
+    .note-carousel-arrow {
+      top: auto;
+      bottom: 0;
+      transform: none;
+    }
+
+    .note-carousel-arrow:hover:not(:disabled) {
+      transform: scale(1.06);
+    }
+
+    .note-carousel-arrow-prev {
+      left: 0;
+    }
+
+    .note-carousel-arrow-next {
+      right: 0;
+    }
+
+    .note-carousel-footer {
+      padding-top: 14px;
+      align-items: flex-start;
+    }
+
+    .note-carousel-footer > div {
+      justify-content: flex-end;
+    }
+
+    .note-carousel-footer > div > p {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .note-carousel-track {
+      scroll-behavior: auto;
+    }
+
+    .note-carousel-arrow {
+      transition: none;
+    }
+  }
+</style>
