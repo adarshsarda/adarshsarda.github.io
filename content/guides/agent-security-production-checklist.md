@@ -24,7 +24,7 @@ question is not "does the model refuse bad prompts?" It is: **can the system pro
 tool call, memory write, and external action follows from the user's authorized goal?**
 
 Recent work gives a clear warning. AgentDojo separates clean task utility from
-attacker-goal success. ART, AgentLAB, ATBench, Skill-Inject, LITMUS, and the 2026 memory
+attacker-goal success. AgentLAB, ATBench, Skill-Inject, LITMUS, and the 2026 memory
 poisoning work all show variants of the same problem: agent failures often emerge across
 tools, memory, skills, files, browsers, and long multi-step trajectories, not in a single
 chat response.

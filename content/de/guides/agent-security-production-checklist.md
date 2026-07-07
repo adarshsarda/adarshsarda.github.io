@@ -25,7 +25,7 @@ Kernfrage lautet: **Kann das System belegen, dass jeder Tool-Aufruf, jeder Memor
 jede externe Aktion aus dem autorisierten Nutzerziel folgt?**
 
 Aktuelle Arbeiten geben eine klare Warnung. AgentDojo trennt saubere Task-Utility von
-Attacker-Goal-Success. ART, AgentLAB, ATBench, SkillInject, LITMUS und die 2026-Arbeit zu
+Attacker-Goal-Success. AgentLAB, ATBench, Skill-Inject, LITMUS und die 2026-Arbeit zu
 Memory Poisoning zeigen Varianten desselben Problems: Agentenfehler entstehen oft über Tools,
 Memory, Skills, Dateien, Browser und lange Trajektorien hinweg, nicht in einer einzelnen
 Chat-Antwort.
@@ -118,7 +118,7 @@ die aggressiv Memory schreiben und abrufen, sind leichter ausnutzbar.
 
 ## Checkliste 4: Skills, Plugins und Tool-Server
 
-Drittanbieter-Skills und MCP-Server sind Agent-Supply-Chain-Inputs. SkillInject berichtet 202
+Drittanbieter-Skills und MCP-Server sind Agent-Supply-Chain-Inputs. Skill-Inject berichtet 202
 Injection-Task-Paare und zeigt, dass schädliche Instruktionen in ansonsten nützlichen Skill
 Files versteckt sein können. Die Lehre ist nicht "keine Skills verwenden", sondern: Skills
 brauchen Review, Pinning und Runtime-Limits.
