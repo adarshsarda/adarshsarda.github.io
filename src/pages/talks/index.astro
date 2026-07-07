@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import TalkCard from '../../components/TalkCard.astro';
+import TalkIndexGrid from '../../components/TalkIndexGrid.astro';
 import { getCollection } from 'astro:content';
 
 const talks = (await getCollection('talks')).sort(
@@ -24,21 +24,5 @@ const talks = (await getCollection('talks')).sort(
     </p>
   </div>
 
-  <div class="talk-card-grid">
-    {talks.map((talk, index) => <TalkCard entry={talk} index={index} />)}
-  </div>
+  <TalkIndexGrid entries={talks} />
 </Base>
-
-<style>
-  .talk-card-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 18px;
-  }
-
-  @media (max-width: 820px) {
-    .talk-card-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>

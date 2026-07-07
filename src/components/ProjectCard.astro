@@ -16,9 +16,20 @@ interface Props {
   lang?: 'en' | 'de';
   indexPrefix?: string;
   cta?: string;
+  statusLabel?: string;
+  focusLabel?: string;
 }
 
-const { href, index, data, lang = 'en', indexPrefix = 'R', cta } = Astro.props;
+const {
+  href,
+  index,
+  data,
+  lang = 'en',
+  indexPrefix = 'R',
+  cta,
+  statusLabel: statusLabelOverride,
+  focusLabel: focusLabelOverride,
+} = Astro.props;
 const categoryLabels: Record<string, Record<string, string>> = {
   en: {
     'original-research': 'project / original research',
@@ -49,8 +60,8 @@ const statusLabels: Record<string, Record<string, string>> = {
 };
 const fallbackCategory = lang === 'de' ? 'Forschungsprojekt' : 'research project';
 const fallbackStatus = lang === 'de' ? 'dokumentiert' : 'documented';
-const focusLabel = lang === 'de' ? 'Fokus' : 'Focus';
-const statusLabel = lang === 'de' ? 'Status' : 'Status';
+const focusLabel = focusLabelOverride ?? (lang === 'de' ? 'Fokus' : 'Focus');
+const statusLabel = statusLabelOverride ?? (lang === 'de' ? 'Status' : 'Status');
 const defaultCta = lang === 'de' ? 'Fallstudie öffnen' : 'Open case file';
 const category = data.category
   ? categoryLabels[lang][data.category] ?? data.category

@@ -2,8 +2,10 @@
 import type { CollectionEntry } from 'astro:content';
 import ResourceLinks from './ResourceLinks.astro';
 
+type TalkEntry = CollectionEntry<'talks'> | CollectionEntry<'talksDe'>;
+
 interface Props {
-  entry: CollectionEntry<'talks'>;
+  entry: TalkEntry;
   index: number;
   hrefPrefix?: string;
   lang?: 'en' | 'de';

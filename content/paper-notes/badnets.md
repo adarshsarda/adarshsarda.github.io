@@ -27,14 +27,14 @@ misclassify any triggered input. Demonstrated on digit and traffic-sign recognit
 
 ## Key result
 High attack success on triggered inputs while clean-task accuracy stays close to a clean
-baseline — i.e. the backdoor is effective and hard to notice via accuracy alone.
+baseline, i.e. the backdoor is effective and hard to notice via accuracy alone.
 <!-- TODO: add the exact figures you want to cite, from the paper. -->
 
 ## My take
 The foundational backdoor paper and the origin of the supply-chain framing. Trigger is a
-fixed visual pattern — surface-level and content-based.
+fixed visual pattern: surface-level and content-based.
 
 ## Connection to my work
 The shared ancestor of ODSB (text) and the planned vision project. ODSB's contribution is to
-move the trigger off the content axis entirely — from a pixel pattern to an *ordering of
+move the trigger off the content axis entirely: from a pixel pattern to an *ordering of
 abstract intents* that content filters cannot see.

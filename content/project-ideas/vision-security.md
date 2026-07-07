@@ -1,7 +1,7 @@
 ---
 type: project-idea
 slug: vision-security
-title: "Vision Security — the visual counterpart to ODSB"
+title: "Vision Security: the visual counterpart to ODSB"
 status: planned
 module: "Computer Vision module"
 summary: "Backdoor / adversarial robustness of vision and vision-language models, forming a text+vision matched pair with ODSB."
@@ -20,9 +20,9 @@ unrelated projects.
 ## Candidate scopes (pick one, scope for an 8GB GPU)
 1. **Backdoor + detection on a vision classifier** (BadNets-style trigger; then run a
    detection method such as Neural Cleanse). Mirrors ODSB's attack+defense structure.
-2. **Deepfake-detector robustness** — extends the existing "Where the Devil Hides" talk note
+2. **Deepfake-detector robustness**: extends the existing "Where the Devil Hides" talk note
    into hands-on work.
-3. **Visual prompt injection on a VLM agent** — strongest if it connects to the hardware-
+3. **Visual prompt injection on a VLM agent**: strongest if it connects to the hardware-
    agent project (a VLM that sees the world and acts), but most compute-heavy.
 
 ## Method

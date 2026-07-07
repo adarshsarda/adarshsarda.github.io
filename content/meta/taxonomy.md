@@ -7,7 +7,7 @@ audience: internal
 
 # Controlled Tag Vocabulary
 
-Use only these. New tags get added here first, then used — this prevents tag drift that
+Use only these. New tags get added here first, then used: this prevents tag drift that
 silently breaks filtering and retrieval. Lowercase, hyphenated.
 
 ## Domains

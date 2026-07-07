@@ -28,7 +28,7 @@ existing Home Assistant / Raspberry Pi setup is a rare testbed, and it fits the 
 
 ## Method (reuse ODSB discipline)
 Pre-registered thresholds; objective success criteria; per-attack success *rates* with CIs;
-a documented threat model; and concrete mitigations per finding. Authorized-scope only — the
+a documented threat model; and concrete mitigations per finding. Authorized-scope only: the
 target is hardware I own.
 
 ## Output

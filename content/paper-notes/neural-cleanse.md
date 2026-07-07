@@ -17,8 +17,8 @@ Wang et al. (2019). *Neural Cleanse: Identifying and Mitigating Backdoor Attacks
 Networks.* IEEE Symposium on Security and Privacy. <!-- TODO: confirm full author list + DOI -->
 
 ## Problem
-Given a trained model you did not train, how do you tell whether it contains a backdoor — and
-remove it — without knowing the trigger in advance?
+Given a trained model you did not train, how do you tell whether it contains a backdoor and
+remove it without knowing the trigger in advance?
 
 ## Method
 For each output class, reverse-engineer the minimal input perturbation that forces that class.
@@ -32,10 +32,10 @@ attack success via mitigation. <!-- TODO: add the specific figures you want to c
 
 ## My take
 The canonical detection baseline. Trigger-reconstruction is elegant but assumes a static,
-input-space trigger — a useful boundary to probe.
+input-space trigger: a useful boundary to probe.
 
 ## Connection to my work
 A candidate method for the red-team agent / AI-Project detector tool, and the defensive
 counterpart to ODSB. Worth asking: does a reconstruction-based detector even apply when the
-"trigger" is an *ordering of turns* rather than an input pattern? (Likely not — which is part
+"trigger" is an *ordering of turns* rather than an input pattern? (Likely not, which is part
 of why ODSB is hard to detect.)

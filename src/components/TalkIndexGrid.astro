@@ -1,0 +1,283 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import TalkCard from './TalkCard.astro';
+
+type TalkEntry = CollectionEntry<'talks'> | CollectionEntry<'talksDe'>;
+
+interface Props {
+  entries: TalkEntry[];
+  hrefPrefix?: string;
+  lang?: 'en' | 'de';
+}
+
+const { entries, hrefPrefix = '/talks', lang = 'en' } = Astro.props;
+const filterOrder = ['Backdoors', 'Agent security', 'RAG and prompt injection', 'AI supply chain'];
+const trackLabels = {
+  en: {
+    all: 'All',
+    Backdoors: 'Backdoors',
+    'Agent security': 'Agents',
+    'RAG and prompt injection': 'RAG + prompt injection',
+    'AI supply chain': 'AI supply chain',
+  },
+  de: {
+    all: 'Alle',
+    Backdoors: 'Backdoors',
+    'Agent security': 'Agenten',
+    'RAG and prompt injection': 'RAG + Prompt Injection',
+    'AI supply chain': 'AI Supply Chain',
+  },
+} as const;
+const copy = {
+  en: {
+    searchLabel: 'Search Talk Notes',
+    searchPlaceholder: 'Search title, tag, or paper',
+    filterLabel: 'Filter Talk Notes by track',
+    countSingular: 'note shown',
+    countPlural: 'notes shown',
+    empty: 'No notes match that filter.',
+  },
+  de: {
+    searchLabel: 'Talk-Notizen suchen',
+    searchPlaceholder: 'Titel, Tag oder Paper suchen',
+    filterLabel: 'Talk-Notizen nach Track filtern',
+    countSingular: 'Notiz sichtbar',
+    countPlural: 'Notizen sichtbar',
+    empty: 'Keine Notiz passt zu diesem Filter.',
+  },
+} as const;
+const availableTracks = filterOrder.filter((track) => entries.some((entry) => entry.data.track === track));
+const searchId = `talk-search-${lang}`;
+---
+
+<section
+  class="talk-index"
+  data-talk-filter
+  data-singular={copy[lang].countSingular}
+  data-plural={copy[lang].countPlural}
+>
+  <div class="talk-filter-panel">
+    <div class="talk-search-field">
+      <label class="talk-search-label" for={searchId}>{copy[lang].searchLabel}</label>
+      <input
+        id={searchId}
+        class="talk-search-input"
+        type="search"
+        placeholder={copy[lang].searchPlaceholder}
+        data-talk-search
+      />
+    </div>
+
+    <div class="talk-filter-buttons" aria-label={copy[lang].filterLabel}>
+      <button type="button" class="active" data-talk-track="">
+        {trackLabels[lang].all}
+      </button>
+      {availableTracks.map((track) => (
+        <button type="button" data-talk-track={track}>
+          {trackLabels[lang][track as keyof typeof trackLabels[typeof lang]]}
+        </button>
+      ))}
+    </div>
+
+    <p class="talk-filter-count" aria-live="polite" data-talk-count>
+      {entries.length.toString().padStart(2, '0')} {entries.length === 1 ? copy[lang].countSingular : copy[lang].countPlural}
+    </p>
+  </div>
+
+  <div class="talk-card-grid" data-talk-grid>
+    {entries.map((talk, index) => {
+      const searchText = [
+        talk.data.title,
+        talk.data.description,
+        talk.data.takeaway,
+        talk.data.source,
+        talk.data.paper_title,
+        talk.data.track,
+        talk.data.difficulty,
+        talk.data.format,
+        ...(talk.data.tags ?? []),
+      ]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase();
+
+      return (
+        <div
+          class="talk-filter-item"
+          data-talk-item
+          data-track={talk.data.track ?? ''}
+          data-search={searchText}
+        >
+          <TalkCard entry={talk} index={index} hrefPrefix={hrefPrefix} lang={lang} />
+        </div>
+      );
+    })}
+  </div>
+
+  <p class="talk-filter-empty" hidden data-talk-empty>{copy[lang].empty}</p>
+</section>
+
+<script>
+  const talkFilterRoots = document.querySelectorAll<HTMLElement>('[data-talk-filter]');
+
+  talkFilterRoots.forEach((root) => {
+    const input = root.querySelector<HTMLInputElement>('[data-talk-search]');
+    const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-talk-track]'));
+    const items = Array.from(root.querySelectorAll<HTMLElement>('[data-talk-item]'));
+    const count = root.querySelector<HTMLElement>('[data-talk-count]');
+    const empty = root.querySelector<HTMLElement>('[data-talk-empty]');
+    const singular = root.dataset.singular ?? 'note shown';
+    const plural = root.dataset.plural ?? 'notes shown';
+    let activeTrack = '';
+
+    const normalize = (value: string) => value.trim().toLowerCase();
+
+    const update = () => {
+      const query = normalize(input?.value ?? '');
+      let visible = 0;
+
+      items.forEach((item) => {
+        const matchesTrack = !activeTrack || item.dataset.track === activeTrack;
+        const matchesSearch = !query || (item.dataset.search ?? '').includes(query);
+        const shouldShow = matchesTrack && matchesSearch;
+        item.hidden = !shouldShow;
+        if (shouldShow) visible += 1;
+      });
+
+      buttons.forEach((button) => {
+        const selected = (button.dataset.talkTrack ?? '') === activeTrack;
+        button.classList.toggle('active', selected);
+        button.setAttribute('aria-pressed', String(selected));
+      });
+
+      if (count) {
+        count.textContent = `${String(visible).padStart(2, '0')} ${visible === 1 ? singular : plural}`;
+      }
+      if (empty) {
+        empty.hidden = visible !== 0;
+      }
+    };
+
+    buttons.forEach((button) => {
+      button.setAttribute('aria-pressed', String((button.dataset.talkTrack ?? '') === activeTrack));
+      button.addEventListener('click', () => {
+        activeTrack = button.dataset.talkTrack ?? '';
+        update();
+      });
+    });
+
+    input?.addEventListener('input', update);
+    update();
+  });
+</script>
+
+<style>
+  .talk-filter-panel {
+    margin-bottom: 20px;
+    padding: 18px;
+    display: grid;
+    grid-template-columns: minmax(260px, 0.95fr) minmax(0, 1.35fr) auto;
+    gap: 14px 18px;
+    align-items: end;
+    background: color-mix(in srgb, var(--sky) 44%, var(--paper-raised));
+    border: 1px solid var(--rule);
+  }
+
+  .talk-search-field {
+    display: grid;
+    gap: 8px;
+  }
+
+  .talk-search-label,
+  .talk-filter-count,
+  .talk-filter-buttons button {
+    font-family: var(--font-mono);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .talk-search-label {
+    color: var(--signal-dark);
+    font-size: 0.64rem;
+    font-weight: 750;
+  }
+
+  .talk-search-input {
+    width: 100%;
+    padding: 10px 12px;
+    color: var(--ink);
+    background: var(--paper-raised);
+    border: 1px solid var(--rule-dark);
+    border-radius: 0;
+    font: inherit;
+    font-size: 0.9rem;
+  }
+
+  .talk-search-input:focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 3px;
+  }
+
+  .talk-filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .talk-filter-buttons button {
+    padding: 8px 10px;
+    color: var(--ink-soft);
+    background: transparent;
+    border: 1px solid var(--rule-dark);
+    font-size: 0.62rem;
+    cursor: pointer;
+  }
+
+  .talk-filter-buttons button:hover,
+  .talk-filter-buttons button.active {
+    color: var(--paper-raised);
+    background: var(--moss);
+    border-color: var(--moss);
+  }
+
+  .talk-filter-count {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.68rem;
+    white-space: nowrap;
+  }
+
+  .talk-card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .talk-filter-item {
+    display: grid;
+  }
+
+  .talk-filter-item[hidden] {
+    display: none;
+  }
+
+  .talk-filter-empty {
+    margin: 22px 0 0;
+    padding: 18px;
+    color: var(--ink-soft);
+    border: 1px solid var(--rule);
+  }
+
+  @media (max-width: 900px) {
+    .talk-filter-panel {
+      grid-template-columns: 1fr;
+      align-items: stretch;
+    }
+  }
+
+  @media (max-width: 820px) {
+    .talk-card-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

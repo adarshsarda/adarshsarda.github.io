@@ -34,13 +34,13 @@ const publicationCount = 1;
 const guideCount = guideEntries.length;
 const talkCount = talkEntries.length;
 const publicationCard = {
-  title: 'Improving Mental Health Through Multimodal Emotion Detection from Speech and Text Data Using Long-Short Term Memory',
+  title: 'Multimodal Emotion Recognition for Mental-Health Screening',
   subtitle: 'Springer book chapter, Frontiers of ICT in Healthcare, LNNS 519',
-  summary: 'Peer-reviewed chapter by D. Bhagat, A. Ray, A. Sarda, N. Dutta Roy, M. Mahmud, and D. De, with my role as co-author and project developer.',
+  summary: 'Peer-reviewed work on an LSTM-based speech and text system for emotion recognition, with my role as co-author and project developer.',
   category: 'publication / springer book chapter / 2023',
-  status: 'published',
+  status: 'Frontiers of ICT in Healthcare, LNNS 519',
   skills: ['lstm', 'multimodal', 'speech', 'text', 'python', 'mental-health'],
-  domains: ['applied-ml', 'healthcare-ai'],
+  domains: ['co-author', 'project developer'],
 };
 ---
 
@@ -60,7 +60,7 @@ const publicationCard = {
         attempts, and limits of the result.
       </p>
       <div class="hero-actions">
-        <a class="text-link" href={`${base}projects/`}>Read the research <span aria-hidden="true">↗</span></a>
+        <a class="text-link" href="#featured-work">Explore featured work <span aria-hidden="true">↗</span></a>
         <a class="text-link quiet" href={`${base}about/`}>About my work <span aria-hidden="true">→</span></a>
         <a class="text-link quiet" href={`${base}cv/`}>
           CV / Lebenslauf <span aria-hidden="true">→</span>
@@ -115,7 +115,7 @@ const publicationCard = {
     </div>
   </section>
 
-  <section class="home-section research-section featured-work-section">
+  <section class="home-section research-section featured-work-section" id="featured-work">
     <header class="section-heading">
       <p><span>02</span> Featured work</p>
       <p>
@@ -137,6 +137,8 @@ const publicationCard = {
         index={0}
         indexPrefix="P"
         cta="Open publication"
+        statusLabel="Venue"
+        focusLabel="Role"
         data={publicationCard}
       />
     </div>

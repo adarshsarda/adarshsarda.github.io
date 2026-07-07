@@ -38,7 +38,8 @@ const i18n = {
     notes: 'notes/',
     publications: 'publications/',
     cv: 'cv/',
-    labels: ['About', 'Projects', 'Notes', 'Publications', 'CV'],
+    labels: ['About', 'Projects', 'Writing', 'Publications', 'CV'],
+    shortLabels: ['About', 'Work', 'Writing', 'Pubs', 'CV'],
   },
   de: {
     skip: 'Zum Hauptinhalt springen',
@@ -49,7 +50,8 @@ const i18n = {
     notes: 'de/notes/',
     publications: 'de/publications/',
     cv: 'de/cv/',
-    labels: ['Über mich', 'Projekte', 'Notizen', 'Publikationen', 'Lebenslauf'],
+    labels: ['Über mich', 'Projekte', 'Texte', 'Publikationen', 'Lebenslauf'],
+    shortLabels: ['Profil', 'Projekte', 'Texte', 'Publ.', 'CV'],
   },
 } as const;
 const copy = i18n[lang];
@@ -70,11 +72,11 @@ const notesActive = isActive(['/notes/', '/guides/', '/talks/', '/de/notes/', '/
 const publicationsActive = isActive(['/publications/', '/de/publications/']);
 const cvActive = isActive(['/cv/', '/de/cv/']);
 const navItems = [
-  { number: '01', label: copy.labels[0], href: copy.about, active: aboutActive },
-  { number: '02', label: copy.labels[1], href: copy.projects, active: projectsActive },
-  { number: '03', label: copy.labels[2], href: copy.notes, active: notesActive },
-  { number: '04', label: copy.labels[3], href: copy.publications, active: publicationsActive },
-  { number: '05', label: copy.labels[4], href: copy.cv, active: cvActive },
+  { number: '01', label: copy.labels[0], shortLabel: copy.shortLabels[0], href: copy.about, active: aboutActive },
+  { number: '02', label: copy.labels[1], shortLabel: copy.shortLabels[1], href: copy.projects, active: projectsActive },
+  { number: '03', label: copy.labels[2], shortLabel: copy.shortLabels[2], href: copy.notes, active: notesActive },
+  { number: '04', label: copy.labels[3], shortLabel: copy.shortLabels[3], href: copy.publications, active: publicationsActive },
+  { number: '05', label: copy.labels[4], shortLabel: copy.shortLabels[4], href: copy.cv, active: cvActive },
 ];
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -147,7 +149,9 @@ const jsonLd = {
           <nav aria-label={copy.navLabel}>
             {navItems.map((item) => (
               <a href={`${base}${item.href}`} class={item.active ? 'active' : undefined} aria-current={item.active ? 'page' : undefined}>
-                <span>{item.number}</span> {item.label}
+                <span class="nav-number">{item.number}</span>
+                <span class="nav-label-full">{item.label}</span>
+                <span class="nav-label-short" aria-hidden="true">{item.shortLabel}</span>
               </a>
             ))}
           </nav>

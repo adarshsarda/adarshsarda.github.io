@@ -21,12 +21,12 @@ Backdoor/poisoning papers often assume the attacker can inject training data. Is
 realistic for the web-scraped datasets used to train modern models?
 
 ## Method
-Demonstrates practical poisoning paths against real datasets — including buying expired
+Demonstrates practical poisoning paths against real datasets, including buying expired
 domains that snapshots later point to, and timing edits to be captured in periodic dataset
-snapshots — so an attacker controls a small but meaningful fraction of training data cheaply.
+snapshots, so an attacker controls a small but meaningful fraction of training data cheaply.
 
 ## Key result
-Real, low-cost poisoning of datasets actually used to train models — moving poisoning from a
+Real, low-cost poisoning of datasets actually used to train models, moving poisoning from a
 lab assumption to an operational threat. <!-- TODO: add the specific cost/fraction figures. -->
 
 ## My take

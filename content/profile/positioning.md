@@ -14,16 +14,16 @@ knowledge base, it does not get written. Precision over polish; evidence over ad
 ## Identity (one line)
 
 AI security researcher and M.Sc. student working on backdoors, data poisoning, and the
-evaluation methods that catch them — across both text/LLMs and vision.
+evaluation methods that catch them across both text/LLMs and vision.
 
 ## The spine (everything maps to this)
 
 Attacks and the defences that catch them, across text and vision:
-- Applied ML foundation — multimodal emotion recognition (Springer, 2023).
-- Text backdoors — ODSB (order-dependent semantic backdoors in multi-turn LLMs).
-- Vision backdoors — CV module (planned matched pair to ODSB).
-- Detection & tooling — red-teaming methodology, and the planned auditor/agent.
-- Methodology — the red-teaming practitioner guide.
+- Applied ML foundation: multimodal emotion recognition (Springer, 2023).
+- Text backdoors: ODSB (order-dependent semantic backdoors in multi-turn LLMs).
+- Vision backdoors: CV module (planned matched pair to ODSB).
+- Detection & tooling: red-teaming methodology, and the planned auditor/agent.
+- Methodology: the red-teaming practitioner guide.
 
 ## Voice rules
 
@@ -36,9 +36,9 @@ Attacks and the defences that catch them, across text and vision:
 
 ## Global do_not_claim (applies everywhere)
 
-- Not "published" or "peer-reviewed" for ODSB — it is a course project, submitted 2026-06-19.
-- Not first/sole author of the Springer chapter — Adarsh is a co-author (3rd of 6).
-- No "expert" framing — Adarsh is a student/early-career researcher.
+- Not "published" or "peer-reviewed" for ODSB: it is a course project, submitted 2026-06-19.
+- Not first/sole author of the Springer chapter: Adarsh is a co-author (3rd of 6).
+- No "expert" framing: Adarsh is a student/early-career researcher.
 - No security/attack result generalized beyond the exact model, data, and conditions tested.
 - No claim that any system was tested without authorization.
 

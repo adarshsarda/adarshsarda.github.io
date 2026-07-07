@@ -9,7 +9,7 @@ tags: [red-teaming, agent-security, model-evaluation]
 
 # Methodology-Driven Red-Team Agent
 
-*Repo-internal idea note. The Phase 3 flagship tool — not a portfolio chatbot.*
+*Repo-internal idea note. The Phase 3 flagship tool: not a portfolio chatbot.*
 
 ## What it is
 An agent that walks my six-phase red-teaming methodology against a target LLM system I am

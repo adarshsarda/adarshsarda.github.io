@@ -34,13 +34,13 @@ const publicationCount = 1;
 const guideCount = guideEntries.length;
 const talkCount = talkEntries.length;
 const publicationCard = {
-  title: 'Improving Mental Health Through Multimodal Emotion Detection from Speech and Text Data Using Long-Short Term Memory',
+  title: 'Multimodale Emotionserkennung für psychische Gesundheitsscreenings',
   subtitle: 'Springer-Buchkapitel, Frontiers of ICT in Healthcare, LNNS 519',
-  summary: 'Peer-reviewtes Kapitel von D. Bhagat, A. Ray, A. Sarda, N. Dutta Roy, M. Mahmud und D. De, mit meinem Beitrag als Co-Autor und Projektentwickler.',
+  summary: 'Begutachtete Arbeit zu einem LSTM-basierten Sprach- und Textsystem zur Emotionserkennung, mit meinem Beitrag als Co-Autor und Projektentwickler.',
   category: 'Publikation / Springer-Buchkapitel / 2023',
-  status: 'publiziert',
+  status: 'Frontiers of ICT in Healthcare, LNNS 519',
   skills: ['lstm', 'multimodal', 'speech', 'text', 'python', 'mental-health'],
-  domains: ['applied-ml', 'healthcare-ai'],
+  domains: ['Co-Autor', 'Projektentwickler'],
 };
 ---
 
@@ -61,7 +61,7 @@ const publicationCard = {
         dort auf Englisch, wo Präzision und belegbare Claims wichtig sind.
       </p>
       <div class="hero-actions">
-        <a class="text-link" href={`${base}de/projects/`}>Forschung lesen <span aria-hidden="true">↗</span></a>
+        <a class="text-link" href="#ausgewaehlte-arbeiten">Arbeiten ansehen <span aria-hidden="true">↗</span></a>
         <a class="text-link quiet" href={`${base}de/about/`}>Über meine Arbeit <span aria-hidden="true">→</span></a>
         <a class="text-link quiet" href={`${base}de/cv/`}>
           Lebenslauf <span aria-hidden="true">→</span>
@@ -116,7 +116,7 @@ const publicationCard = {
     </div>
   </section>
 
-  <section class="home-section research-section featured-work-section">
+  <section class="home-section research-section featured-work-section" id="ausgewaehlte-arbeiten">
     <header class="section-heading">
       <p><span>02</span> Ausgewählte Arbeiten</p>
       <p>
@@ -139,6 +139,8 @@ const publicationCard = {
         index={0}
         indexPrefix="P"
         cta="Publikation öffnen"
+        statusLabel="Publikationsort"
+        focusLabel="Rolle"
         data={publicationCard}
         lang="de"
       />
