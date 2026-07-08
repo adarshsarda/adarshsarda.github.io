@@ -159,7 +159,6 @@ const noteCount = entries.length;
   .note-carousel-shell {
     position: relative;
     margin-top: 18px;
-    overflow-x: clip;
   }
 
   .note-carousel-track {
@@ -205,10 +204,12 @@ const noteCount = entries.length;
     display: grid;
     place-items: center;
     color: var(--paper-raised);
-    background: var(--signal-dark);
-    border: 1px solid var(--paper-raised);
+    background: color-mix(in srgb, var(--signal-dark) 58%, transparent);
+    border: 1px solid color-mix(in srgb, var(--paper-raised) 65%, transparent);
     border-radius: 50%;
-    box-shadow: 0 8px 24px color-mix(in srgb, var(--ink) 24%, transparent);
+    box-shadow: 0 4px 14px color-mix(in srgb, var(--ink) 18%, transparent);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
     font-family: var(--font-body);
     font-size: 1.4rem;
     cursor: pointer;
@@ -217,7 +218,7 @@ const noteCount = entries.length;
   }
 
   .note-carousel-arrow:hover:not(:disabled) {
-    background: var(--signal);
+    background: color-mix(in srgb, var(--signal-dark) 82%, transparent);
     transform: translateY(-50%) scale(1.06);
   }
 
@@ -232,11 +233,11 @@ const noteCount = entries.length;
   }
 
   .note-carousel-arrow-prev {
-    left: 12px;
+    left: -24px;
   }
 
   .note-carousel-arrow-next {
-    right: 12px;
+    right: -24px;
   }
 
   .note-carousel-footer {
@@ -274,14 +275,6 @@ const noteCount = entries.length;
     .note-carousel-track {
       grid-auto-columns: 100%;
     }
-
-    .note-carousel-arrow-prev {
-      left: 10px;
-    }
-
-    .note-carousel-arrow-next {
-      right: 10px;
-    }
   }
 
   @media (max-width: 600px) {
@@ -289,6 +282,14 @@ const noteCount = entries.length;
       width: 40px;
       height: 40px;
       font-size: 1.2rem;
+    }
+
+    .note-carousel-arrow-prev {
+      left: -20px;
+    }
+
+    .note-carousel-arrow-next {
+      right: -20px;
     }
 
     .note-carousel-footer {
