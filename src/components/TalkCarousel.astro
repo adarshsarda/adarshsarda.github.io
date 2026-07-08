@@ -8,7 +8,6 @@ interface Props {
   previousLabel?: string;
   nextLabel?: string;
   carouselLabel?: string;
-  footerText?: string;
   indexHref: string;
   indexCta: string;
   lang?: 'en' | 'de';
@@ -20,7 +19,6 @@ const {
   previousLabel = 'Show previous talk note',
   nextLabel = 'Show next talk note',
   carouselLabel = 'Talk Notes carousel',
-  footerText = 'Use the arrows, swipe, or scroll horizontally.',
   indexHref,
   indexCta,
   lang = 'en',
@@ -72,7 +70,6 @@ const talkCount = entries.length;
       <span>{talkCount.toString().padStart(2, '0')}</span>
     </p>
     <div>
-      <p>{footerText}</p>
       <a class="text-link quiet" href={indexHref}>
         {indexCta} <span aria-hidden="true">→</span>
       </a>
@@ -275,26 +272,10 @@ const talkCount = entries.length;
   }
 
   @media (max-width: 600px) {
-    .talk-carousel-shell {
-      padding-bottom: 62px;
-    }
-
     .talk-carousel-arrow {
-      top: auto;
-      bottom: 0;
-      transform: none;
-    }
-
-    .talk-carousel-arrow:hover:not(:disabled) {
-      transform: scale(1.06);
-    }
-
-    .talk-carousel-arrow-prev {
-      left: 0;
-    }
-
-    .talk-carousel-arrow-next {
-      right: 0;
+      width: 40px;
+      height: 40px;
+      font-size: 1.2rem;
     }
 
     .talk-carousel-footer {
@@ -304,10 +285,6 @@ const talkCount = entries.length;
 
     .talk-carousel-footer > div {
       justify-content: flex-end;
-    }
-
-    .talk-carousel-footer > div > p {
-      display: none;
     }
   }
 
