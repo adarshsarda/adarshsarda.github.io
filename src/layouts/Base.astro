@@ -37,11 +37,11 @@ const i18n = {
     projects: 'projects/',
     notes: 'notes/',
     publications: 'publications/',
+    skills: 'skills/',
     cv: 'cv/',
-    labels: ['About', 'Projects', 'Writing', 'Publications', 'CV'],
-    shortLabels: ['About', 'Work', 'Writing', 'Pubs', 'CV'],
+    labels: ['About', 'Projects', 'Writing', 'Publications', 'Skills', 'CV'],
+    shortLabels: ['About', 'Work', 'Writing', 'Pubs', 'Skills', 'CV'],
     more: [
-      { href: 'skills/', label: 'Skills' },
       { href: 'methods/', label: 'Methods' },
     ],
   },
@@ -53,11 +53,11 @@ const i18n = {
     projects: 'de/projects/',
     notes: 'de/notes/',
     publications: 'de/publications/',
+    skills: 'de/skills/',
     cv: 'de/cv/',
-    labels: ['Über mich', 'Projekte', 'Texte', 'Publikationen', 'Lebenslauf'],
-    shortLabels: ['Profil', 'Projekte', 'Texte', 'Publ.', 'CV'],
+    labels: ['Über mich', 'Projekte', 'Texte', 'Publikationen', 'Skills', 'Lebenslauf'],
+    shortLabels: ['Profil', 'Projekte', 'Texte', 'Publ.', 'Skills', 'CV'],
     more: [
-      { href: 'de/skills/', label: 'Skills' },
       { href: 'de/methods/', label: 'Methoden' },
     ],
   },
@@ -78,13 +78,15 @@ const aboutActive = isActive(['/about/', '/de/about/']);
 const projectsActive = isActive(['/projects/', '/de/projects/']);
 const notesActive = isActive(['/notes/', '/guides/', '/talks/', '/de/notes/', '/de/guides/', '/de/talks/']);
 const publicationsActive = isActive(['/publications/', '/de/publications/']);
+const skillsActive = isActive(['/skills/', '/de/skills/']);
 const cvActive = isActive(['/cv/', '/de/cv/']);
 const navItems = [
   { number: '01', label: copy.labels[0], shortLabel: copy.shortLabels[0], href: copy.about, active: aboutActive },
   { number: '02', label: copy.labels[1], shortLabel: copy.shortLabels[1], href: copy.projects, active: projectsActive },
   { number: '03', label: copy.labels[2], shortLabel: copy.shortLabels[2], href: copy.notes, active: notesActive },
   { number: '04', label: copy.labels[3], shortLabel: copy.shortLabels[3], href: copy.publications, active: publicationsActive },
-  { number: '05', label: copy.labels[4], shortLabel: copy.shortLabels[4], href: copy.cv, active: cvActive },
+  { number: '05', label: copy.labels[4], shortLabel: copy.shortLabels[4], href: copy.skills, active: skillsActive },
+  { number: '06', label: copy.labels[5], shortLabel: copy.shortLabels[5], href: copy.cv, active: cvActive },
 ];
 const jsonLd = {
   '@context': 'https://schema.org',
