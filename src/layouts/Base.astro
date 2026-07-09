@@ -40,6 +40,10 @@ const i18n = {
     cv: 'cv/',
     labels: ['About', 'Projects', 'Writing', 'Publications', 'CV'],
     shortLabels: ['About', 'Work', 'Writing', 'Pubs', 'CV'],
+    more: [
+      { href: 'skills/', label: 'Skills' },
+      { href: 'methods/', label: 'Methods' },
+    ],
   },
   de: {
     skip: 'Zum Hauptinhalt springen',
@@ -52,6 +56,10 @@ const i18n = {
     cv: 'de/cv/',
     labels: ['Über mich', 'Projekte', 'Texte', 'Publikationen', 'Lebenslauf'],
     shortLabels: ['Profil', 'Projekte', 'Texte', 'Publ.', 'CV'],
+    more: [
+      { href: 'de/skills/', label: 'Skills' },
+      { href: 'de/methods/', label: 'Methoden' },
+    ],
   },
 } as const;
 const copy = i18n[lang];
@@ -171,10 +179,17 @@ const jsonLd = {
     <footer class="site-footer">
       <div class="container wide">
         <p>© {year} Adarsh Sarda</p>
-        <div class="footer-links">
-          <a href="mailto:adarshsarda29@gmail.com">Email</a>
-          <a href="https://www.linkedin.com/in/adarshsarda" target="_blank" rel="noreferrer">LinkedIn</a>
-          <a href="https://github.com/adarshsarda/" target="_blank" rel="noreferrer">GitHub</a>
+        <div class="footer-groups">
+          <nav class="footer-links" aria-label={lang === 'de' ? 'Weitere Seiten' : 'More pages'}>
+            {copy.more.map((item) => (
+              <a href={`${base}${item.href}`}>{item.label}</a>
+            ))}
+          </nav>
+          <div class="footer-links">
+            <a href="mailto:adarshsarda29@gmail.com">Email</a>
+            <a href="https://www.linkedin.com/in/adarshsarda" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a href="https://github.com/adarshsarda/" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
         </div>
       </div>
     </footer>
