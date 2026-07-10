@@ -1,6 +1,28 @@
 :root {
+  --paper: #f7f5f2;
+  --paper-raised: #fffdf8;
+  --paper-ambient: #ece7df;
+  --ink: #1d1f21;
+  --ink-soft: #5f6568;
+  --rule: #d8d4cf;
+  --rule-dark: #8b6f47;
+  --signal: #17324d;
+  --signal-dark: #0d2238;
+  --moss: #8b6f47;
+  --sky: #edf2f5;
+  --stone: #e8ded1;
+  --card-shadow: 12px 12px 0 color-mix(in srgb, var(--signal) 9%, transparent);
+  --max-reading: 760px;
+  --max-wide: 1180px;
+  --font-body: "Aptos", "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --font-mono: "Cascadia Code", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+:root[data-portrait-theme="outdoor"] {
   --paper: #e9ece9;
   --paper-raised: #f4f1e8;
+  --paper-ambient: #e7e5de;
   --ink: #202524;
   --ink-soft: #5a6561;
   --rule: #bcc4c0;
@@ -11,11 +33,6 @@
   --sky: #dce7ed;
   --stone: #d9d4c8;
   --card-shadow: 12px 12px 0 color-mix(in srgb, var(--moss) 10%, transparent);
-  --max-reading: 760px;
-  --max-wide: 1180px;
-  --font-body: "Aptos", "Segoe UI", Helvetica, Arial, sans-serif;
-  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
-  --font-mono: "Cascadia Code", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
 
 * {
@@ -35,7 +52,7 @@ body {
   display: flex;
   flex-direction: column;
   background:
-    linear-gradient(180deg, var(--sky) 0, var(--paper) 34rem, #e7e5de 100%);
+    linear-gradient(180deg, var(--sky) 0, var(--paper) 34rem, var(--paper-ambient) 100%);
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 17px;
@@ -488,6 +505,7 @@ main {
   max-width: 390px;
   margin: 26px 0 0 auto;
   align-self: start;
+  touch-action: pan-y;
 }
 
 .portrait-frame {
@@ -497,6 +515,7 @@ main {
   background: var(--stone);
   border: 1px solid var(--rule-dark);
   box-shadow: 18px 18px 0 color-mix(in srgb, var(--moss) 10%, transparent);
+  cursor: ew-resize;
   transition: box-shadow 180ms ease;
 }
 
@@ -521,11 +540,40 @@ main {
   object-fit: cover;
   object-position: center 48%;
   filter: saturate(0.92) contrast(1.02);
+  opacity: 1;
+  transition: opacity 220ms ease;
+}
+
+.portrait-frame img.is-switching {
+  opacity: 0.08;
+}
+
+.hero-portrait:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 8px;
+}
+
+.portrait-caption {
+  margin-top: 14px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.portrait-caption span:first-child {
+  color: var(--signal-dark);
+  font-weight: 750;
 }
 
 .portrait-note {
   position: relative;
-  margin-top: 34px;
+  margin-top: 26px;
   padding-left: 20px;
   border-left: 1px solid var(--rule-dark);
 }

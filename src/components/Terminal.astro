@@ -32,8 +32,10 @@ const projectEntries = projectCollection.flatMap((entry) =>
       }]
     : [],
 );
-const guideCount = guideCollection.length;
-const talkCount = talkCollection.length;
+const visibleGuides = guideCollection.filter(isPublishable);
+const visibleTalks = talkCollection.filter(isPublishable);
+const guideCount = visibleGuides.length;
+const talkCount = visibleTalks.length;
 const springerPublication = {
   title: 'Improving Mental Health Through Multimodal Emotion Detection',
   subtitle: 'from Speech and Text Data Using Long-Short Term Memory',
@@ -46,6 +48,8 @@ const springerPublication = {
 } as const;
 const publications = [springerPublication];
 const publicationCount = publications.length;
+const publicationLabelEn = publicationCount === 1 ? 'publication' : 'publications';
+const publicationLabelDe = publicationCount === 1 ? 'Publikation' : 'Publikationen';
 const odsbSubmission = projectEntries
   .find((project) => project.slug === 'odsb-semantic-backdoors')
   ?.submissionDate
@@ -53,8 +57,10 @@ const odsbSubmission = projectEntries
   .slice(0, 10) ?? '2026';
 
 const projectLines = projectEntries.flatMap((project) => [
-  `  ${project.title}  [${project.status}]`,
-  ...(project.context ? [`    ${project.context}`] : []),
+  `  ${project.title}`,
+  `    Status: ${project.status}`,
+  ...(project.context ? [`    Type: ${project.context}`] : []),
+  '    Review status: not peer reviewed',
   `    ${prefix}/projects/${project.slug}/`,
 ]);
 
@@ -69,44 +75,52 @@ const copy = {
       'Type help for commands. Esc closes.',
     ],
     notFound: 'command not found: {cmd}. Type help.',
+    aliases: {
+      about: 'whoami',
+      notes: 'writing',
+      pubs: 'publications',
+      cv: 'timeline',
+      quit: 'exit',
+      ls: 'help',
+    },
     commands: {
       help: [
-        'Commands:',
-        '  whoami         who I am',
-        '  projects       research case files',
-        '  publications   peer-reviewed work',
-        '  notes          field notes and talk notes',
-        '  skills         skills and their evidence',
-        '  timeline       how I got here',
-        '  canary         what the canary string is',
-        '  coffee         ?',
-        '  clear          clear the screen',
-        '  exit           close this terminal',
+        'COMMAND          DESCRIPTION',
+        'whoami           profile and current focus',
+        'projects         documented research case files',
+        'publications     peer-reviewed work',
+        'writing          field notes and talk notes',
+        'skills           skills and evidence',
+        'timeline         academic and professional path',
+        'contact          ways to reach me',
+        'canary           inspect the canary marker',
+        'coffee           ?',
+        'clear            clear the screen',
+        'exit             close this terminal',
       ],
       whoami: [
         'Adarsh Sarda',
-        'AI security researcher and M.Sc. student. I work on backdoors,',
-        'data poisoning, and the evaluation methods that catch them,',
-        'across text/LLMs and vision.',
+        'AI security researcher and M.Sc. student.',
+        'Current public work focuses on LLM backdoors, data poisoning,',
+        'and the evaluation methods that catch them.',
         'Based in Amberg, Germany.',
       ],
       projects: [
         `${projectEntries.length} case file${projectEntries.length === 1 ? '' : 's'}:`,
         ...projectLines,
-        '',
-        'Course projects are not peer reviewed. Type publications for',
-        'peer-reviewed work.',
       ],
       publications: [
-        `${publicationCount} peer-reviewed publication:`,
+        `${publicationCount} peer-reviewed ${publicationLabelEn}:`,
         `  ${springerPublication.title}`,
         `  ${springerPublication.subtitle}`,
         `    ${springerPublication.venue}`,
-        `    ${springerPublication.contribution.en} doi:${springerPublication.doi}`,
+        `    ${springerPublication.contribution.en}`,
+        `    DOI: https://doi.org/${springerPublication.doi}`,
         `    ${prefix}/publications/`,
       ],
-      notes: [
+      writing: [
         `${guideCount} field notes, ${talkCount} talk notes.`,
+        `  ${prefix}/notes/    writing index`,
         `  ${prefix}/guides/   long-form methodology and checklists`,
         `  ${prefix}/talks/    notes on papers and talks`,
       ],
@@ -123,6 +137,11 @@ const copy = {
         '2023  AI Research Analyst, GreyB Research (to 2024)',
         '2025  M.Sc. AI for Industrial Applications, OTH Amberg-Weiden',
         `${odsbSubmission}  ODSB submitted: order-dependent semantic backdoors`,
+      ],
+      contact: [
+        'Email: mailto:adarshsarda29@gmail.com',
+        'LinkedIn: https://www.linkedin.com/in/adarshsarda',
+        'GitHub: https://github.com/adarshsarda/',
       ],
       canary: [
         CANARY,
@@ -150,44 +169,57 @@ const copy = {
       'Tippe help für Befehle. Esc schließt.',
     ],
     notFound: 'Befehl nicht gefunden: {cmd}. Tippe help.',
+    aliases: {
+      about: 'whoami',
+      projekte: 'projects',
+      publikationen: 'publications',
+      texte: 'writing',
+      notes: 'writing',
+      kenntnisse: 'skills',
+      werdegang: 'timeline',
+      pubs: 'publications',
+      cv: 'timeline',
+      quit: 'exit',
+      ls: 'help',
+    },
     commands: {
       help: [
-        'Befehle:',
-        '  whoami         wer ich bin',
-        '  projects       Forschungs-Fallstudien',
-        '  publications   begutachtete Arbeiten',
-        '  notes          Feldnotizen und Talk-Notizen',
-        '  skills         Skills und ihre Evidenz',
-        '  timeline       mein Werdegang',
-        '  canary         was der Canary-String ist',
-        '  coffee         ?',
-        '  clear          Bildschirm leeren',
-        '  exit           Terminal schließen',
+        'BEFEHL           BESCHREIBUNG',
+        'whoami           Profil und aktueller Fokus',
+        'projects         dokumentierte Forschungs-Fallstudien',
+        'publications     begutachtete Arbeiten',
+        'writing          Feldnotizen und Talk-Notizen',
+        'skills           Skills und Evidenz',
+        'timeline         akademischer und beruflicher Weg',
+        'contact          Kontaktwege',
+        'canary           Canary-Marker ansehen',
+        'coffee           ?',
+        'clear            Bildschirm leeren',
+        'exit             Terminal schließen',
       ],
       whoami: [
         'Adarsh Sarda',
-        'KI-Sicherheitsforscher und M.Sc.-Student. Ich arbeite an Backdoors,',
-        'Data Poisoning und den Evaluationsmethoden, die sie aufdecken,',
-        'über Text/LLMs und Vision hinweg.',
+        'KI-Sicherheitsforscher und M.Sc.-Student.',
+        'Meine öffentliche Arbeit konzentriert sich auf LLM-Backdoors,',
+        'Data Poisoning und Evaluationsmethoden, die sie aufdecken.',
         'Ansässig in Amberg, Deutschland.',
       ],
       projects: [
         `${projectEntries.length} Fallstudie${projectEntries.length === 1 ? '' : 'n'}:`,
         ...projectLines,
-        '',
-        'Projektarbeiten sind nicht begutachtet. Tippe publications für',
-        'begutachtete Arbeiten.',
       ],
       publications: [
-        `${publicationCount} begutachtete Publikation:`,
+        `${publicationCount} begutachtete ${publicationLabelDe}:`,
         `  ${springerPublication.title}`,
         `  ${springerPublication.subtitle}`,
         `    ${springerPublication.venue}`,
-        `    ${springerPublication.contribution.de} doi:${springerPublication.doi}`,
+        `    ${springerPublication.contribution.de}`,
+        `    DOI: https://doi.org/${springerPublication.doi}`,
         `    ${prefix}/publications/`,
       ],
-      notes: [
+      writing: [
         `${guideCount} Feldnotizen, ${talkCount} Talk-Notizen.`,
+        `  ${prefix}/notes/    Text-Index`,
         `  ${prefix}/guides/   ausführliche Methodik und Checklisten`,
         `  ${prefix}/talks/    Notizen zu Papers und Vorträgen`,
       ],
@@ -204,6 +236,11 @@ const copy = {
         '2023  AI Research Analyst, GreyB Research (bis 2024)',
         '2025  M.Sc. KI für industrielle Anwendungen, OTH Amberg-Weiden',
         `${odsbSubmission}  ODSB eingereicht: reihenfolgeabhängige semantische Backdoors`,
+      ],
+      contact: [
+        'Email: mailto:adarshsarda29@gmail.com',
+        'LinkedIn: https://www.linkedin.com/in/adarshsarda',
+        'GitHub: https://github.com/adarshsarda/',
       ],
       canary: [
         CANARY,
@@ -229,6 +266,7 @@ const payload = {
   prompt: t.prompt,
   banner: t.banner,
   notFound: t.notFound,
+  aliases: t.aliases,
   commands: t.commands,
 };
 ---
@@ -264,6 +302,7 @@ const payload = {
     prompt: string;
     banner: string[];
     notFound: string;
+    aliases: Record<string, string>;
     commands: Record<string, string[]>;
   };
 
@@ -275,27 +314,68 @@ const payload = {
     const dataEl = term.querySelector<HTMLElement>('[data-terminal-data]');
 
     if (output && form && input && dataEl) {
-      let data: TerminalData = { prompt: '$', banner: [], notFound: '', commands: {} };
+      let data: TerminalData = {
+        prompt: '$',
+        banner: [],
+        notFound: '',
+        aliases: {},
+        commands: {},
+      };
       try {
         data = { ...data, ...JSON.parse(dataEl.textContent || '{}') };
       } catch {
         // Keep the safe defaults.
       }
 
+      const linkPattern = /((?:https?:\/\/|mailto:|\/)[^\s]+)/;
+      const appendLine = (el: HTMLElement, line: string) => {
+        if (line === '') {
+          el.textContent = '\u00a0';
+          return;
+        }
+
+        const match = line.match(linkPattern);
+        if (!match || match.index === undefined) {
+          el.textContent = line;
+          return;
+        }
+
+        const href = match[0];
+        const link = document.createElement('a');
+        link.href = href;
+        link.textContent = href;
+        if (href.startsWith('http')) {
+          link.target = '_blank';
+          link.rel = 'noreferrer';
+        }
+
+        el.append(
+          document.createTextNode(line.slice(0, match.index)),
+          link,
+          document.createTextNode(line.slice(match.index + href.length)),
+        );
+      };
+
       const print = (lines: string[], variant?: string) => {
         for (const line of lines) {
           const el = document.createElement('div');
           el.className = variant ? `terminal-line ${variant}` : 'terminal-line';
-          el.textContent = line === '' ? ' ' : line;
+          appendLine(el, line);
           output.appendChild(el);
         }
         output.scrollTop = output.scrollHeight;
       };
 
-      const run = (raw: string) => {
+      const resolveCommand = (raw: string) => {
         const cmd = raw.trim().toLowerCase();
-        if (!cmd) return;
-        print([`${data.prompt} ${cmd}`], 'terminal-echo');
+        return data.aliases[cmd] ?? cmd;
+      };
+
+      const run = (raw: string) => {
+        const typed = raw.trim();
+        if (!typed) return;
+        const cmd = resolveCommand(typed);
+        print([`${data.prompt} ${typed}`], 'terminal-echo');
         if (cmd === 'clear') {
           output.replaceChildren();
           return;
@@ -306,11 +386,21 @@ const payload = {
         }
         const lines = data.commands[cmd];
         if (lines) print(lines);
-        else print([data.notFound.replace('{cmd}', cmd)], 'terminal-error');
+        else print([data.notFound.replace('{cmd}', typed.toLowerCase())], 'terminal-error');
       };
 
+      const history: string[] = [];
+      let historyIndex = 0;
+      const commands = () =>
+        [...new Set([...Object.keys(data.commands), ...Object.keys(data.aliases)])].sort();
+
       const submitCommand = () => {
-        run(input.value);
+        const value = input.value.trim();
+        if (value) {
+          history.push(value);
+          historyIndex = history.length;
+        }
+        run(value);
         input.value = '';
       };
 
@@ -336,10 +426,38 @@ const payload = {
         if (event.key === 'Enter') {
           event.preventDefault();
           submitCommand();
+          return;
         }
         if (event.key === 'Escape') {
           event.preventDefault();
           term.close();
+          return;
+        }
+        if (event.key === 'ArrowUp') {
+          if (history.length) {
+            event.preventDefault();
+            historyIndex = Math.max(0, historyIndex - 1);
+            input.value = history[historyIndex] ?? '';
+          }
+          return;
+        }
+        if (event.key === 'ArrowDown') {
+          if (history.length) {
+            event.preventDefault();
+            historyIndex = Math.min(history.length, historyIndex + 1);
+            input.value = history[historyIndex] ?? '';
+          }
+          return;
+        }
+        if (event.key === 'Tab') {
+          const current = input.value.trim().toLowerCase();
+          if (current && !current.includes(' ')) {
+            const match = commands().find((command) => command.startsWith(current));
+            if (match) {
+              event.preventDefault();
+              input.value = match;
+            }
+          }
         }
       });
 
@@ -436,6 +554,21 @@ const payload = {
     line-height: 1.55;
     white-space: pre-wrap;
     overflow-wrap: anywhere;
+  }
+
+  .terminal-line a {
+    color: inherit;
+    text-decoration-color: color-mix(in srgb, var(--stone) 72%, transparent);
+    text-underline-offset: 3px;
+  }
+
+  .terminal-line a:hover {
+    color: var(--stone);
+  }
+
+  .terminal-line a:focus-visible {
+    outline: 2px solid var(--stone);
+    outline-offset: 2px;
   }
 
   .terminal-banner {

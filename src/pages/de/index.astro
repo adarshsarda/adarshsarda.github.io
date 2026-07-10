@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import HeroPortrait from '../../components/HeroPortrait.astro';
 import NoteCarousel from '../../components/NoteCarousel.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import TalkCarousel from '../../components/TalkCarousel.astro';
@@ -70,22 +71,9 @@ const publicationCard = {
       </div>
     </div>
 
-    <figure class="hero-portrait">
-      <div class="portrait-frame">
-        <img
-          src={`${base}images/portrait.jpeg`}
-          alt="Porträt im Freien neben einem Fluss"
-          width="900"
-          height="1600"
-          loading="eager"
-          fetchpriority="high"
-        />
-      </div>
-      <div class="portrait-note">
-        <p class="note-label">Aktuelle Frage / 2026</p>
-        <p>Wenn ein KI-Agent echte Aktionen ausführen kann, wie weist man nach, dass <strong>jeder Tool-Aufruf</strong> dem autorisierten Ziel des Nutzers folgt?</p>
-      </div>
-    </figure>
+    <HeroPortrait lang="de">
+      <p>Wenn ein KI-Agent echte Aktionen ausführen kann, wie weist man nach, dass <strong>jeder Tool-Aufruf</strong> dem autorisierten Ziel des Nutzers folgt?</p>
+    </HeroPortrait>
   </section>
 
   <section class="home-section principles-section">

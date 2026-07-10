@@ -134,6 +134,39 @@
   border-top: 3px solid var(--signal);
 }
 
+.profile-photo-card {
+  margin: 0 0 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid color-mix(in srgb, var(--rule-dark) 45%, transparent);
+}
+
+.profile-photo-card img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  display: block;
+  object-fit: cover;
+  object-position: center 48%;
+  border: 1px solid var(--rule-dark);
+}
+
+.profile-photo-card figcaption {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.profile-photo-card figcaption span:first-child {
+  color: var(--signal-dark);
+  font-weight: 750;
+}
+
 .fact-block {
   padding: 15px 0;
   border-bottom: 1px solid color-mix(in srgb, var(--rule-dark) 45%, transparent);

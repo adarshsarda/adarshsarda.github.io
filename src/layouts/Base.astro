@@ -26,7 +26,7 @@ const {
   description,
   wide = false,
   type = 'website',
-  image = '/images/portrait.jpeg',
+  image = '/images/portrait-professional.png',
   structuredData,
   lang = 'en',
   alternatePath,
@@ -109,7 +109,7 @@ const jsonLd = {
       '@id': `${site}#person`,
       name: 'Adarsh Sarda',
       url: site.toString(),
-      image: new URL('/images/portrait.jpeg', site).toString(),
+      image: new URL('/images/portrait-professional.png', site).toString(),
       email: 'mailto:adarshsarda29@gmail.com',
       sameAs: [
         'https://www.linkedin.com/in/adarshsarda',
@@ -138,6 +138,16 @@ const jsonLd = {
 <html lang={lang}>
   <head>
     <meta charset="utf-8" />
+    <script is:inline>
+      try {
+        const theme = sessionStorage.getItem('portraitTheme');
+        if (theme === 'studio' || theme === 'outdoor') {
+          document.documentElement.dataset.portraitTheme = theme;
+        }
+      } catch {
+        // The default Oxford portrait theme remains in place.
+      }
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     {description && <meta name="description" content={description} />}

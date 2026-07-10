@@ -78,6 +78,19 @@ const base = import.meta.env.BASE_URL;
     </article>
 
     <aside class="profile-facts">
+      <figure class="profile-photo-card">
+        <img
+          src={`${base}images/portrait.jpeg`}
+          alt="Portraet im Freien neben einem Fluss"
+          width="900"
+          height="1600"
+          loading="lazy"
+        />
+        <figcaption>
+          <span>Portraet</span>
+          <span>Persoenlicher Kontext</span>
+        </figcaption>
+      </figure>
       <div class="fact-block">
         <p class="fact-label">Standort</p>
         <p>Amberg, Deutschland</p>
