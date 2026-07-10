@@ -10,6 +10,8 @@ interface Props {
   structuredData?: Record<string, unknown>;
   lang?: 'en' | 'de';
   alternatePath?: string;
+  /** Show the reading progress bar. Defaults to on for article pages. */
+  progress?: boolean;
 }
 
 const {
@@ -21,7 +23,9 @@ const {
   structuredData,
   lang = 'en',
   alternatePath,
+  progress,
 } = Astro.props;
+const showProgress = progress ?? type === 'article';
 const base = import.meta.env.BASE_URL;
 const year = new Date().getFullYear();
 const path = Astro.url.pathname;
@@ -150,7 +154,7 @@ const jsonLd = {
     <noscript><style is:inline>.reveal,.reveal-stagger>*{opacity:1 !important;transform:none !important}</style></noscript>
   </head>
   <body>
-    {type === 'article' && (
+    {showProgress && (
       <div class="reading-progress" aria-hidden="true"><span class="reading-progress-bar" data-reading-progress></span></div>
     )}
     <a class="skip-link" href="#main-content">{copy.skip}</a>
