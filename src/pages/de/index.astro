@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import NoteCarousel from '../../components/NoteCarousel.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import TalkCarousel from '../../components/TalkCarousel.astro';
+import FieldNoteFact from '../../components/FieldNoteFact.astro';
 import { isPublishable } from '../../lib/contentVisibility';
 import { getCollection } from 'astro:content';
 
@@ -88,11 +89,11 @@ const publicationCard = {
   </section>
 
   <section class="home-section principles-section">
-    <header class="section-heading">
+    <header class="section-heading reveal">
       <p><span>01</span> Forschungsprinzipien</p>
       <p>Wie ich Evidenz bewerte</p>
     </header>
-    <div class="principle-grid">
+    <div class="principle-grid reveal-stagger">
       <div>
         <span>01</span>
         <h2>Statistisch messen.</h2>
@@ -117,7 +118,7 @@ const publicationCard = {
   </section>
 
   <section class="home-section research-section featured-work-section" id="ausgewaehlte-arbeiten">
-    <header class="section-heading">
+    <header class="section-heading reveal">
       <p><span>02</span> Ausgewählte Arbeiten</p>
       <p>
         {projectCount.toString().padStart(2, '0')} {projectCount === 1 ? 'Projekt' : 'Projekte'}
@@ -125,7 +126,7 @@ const publicationCard = {
         {publicationCount.toString().padStart(2, '0')} {publicationCount === 1 ? 'Publikation' : 'Publikationen'}
       </p>
     </header>
-    <div class="project-card-list">
+    <div class="project-card-list reveal-stagger">
       {projects.map((project, index) => (
         <ProjectCard
           href={`${base}de/projects/${project.key}/`}
@@ -149,7 +150,7 @@ const publicationCard = {
 
   {guideEntries.length > 0 && (
     <section class="home-section notes-section">
-      <header class="section-heading">
+      <header class="section-heading reveal">
         <p><span>03</span> Feldnotizen</p>
         <p>{guideCount.toString().padStart(2, '0')} {guideCount === 1 ? 'Guide' : 'Guides'}</p>
       </header>
@@ -169,7 +170,7 @@ const publicationCard = {
 
   {talkEntries.length > 0 && (
     <section class="home-section talks-section">
-      <header class="section-heading">
+      <header class="section-heading reveal">
         <p><span>04</span> Talk-Notizen</p>
         <p>{talkCount.toString().padStart(2, '0')} {talkCount === 1 ? 'Notiz' : 'Notizen'} aus Papers und Vorträgen</p>
       </header>
@@ -187,7 +188,11 @@ const publicationCard = {
     </section>
   )}
 
-  <section class="home-section contact-section">
+  <section class="home-section field-note-section reveal">
+    <FieldNoteFact lang="de" />
+  </section>
+
+  <section class="home-section contact-section reveal">
     <div>
       <p class="profile-kicker">Kontakt</p>
       <h2>Interessiert an KI-Sicherheit, LLM-Evaluation oder angewandtem Machine Learning? Sprechen wir.</h2>

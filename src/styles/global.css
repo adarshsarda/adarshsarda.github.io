@@ -74,6 +74,54 @@ a:focus-visible {
   outline-offset: 4px;
 }
 
+/* Reading progress bar (article pages only; overlays the fixed top accent). */
+.reading-progress {
+  position: fixed;
+  inset: 0 0 auto;
+  height: 4px;
+  z-index: 60;
+  background: color-mix(in srgb, var(--signal) 20%, var(--sky));
+  pointer-events: none;
+}
+
+.reading-progress-bar {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--signal);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+/* Scroll reveal. Hidden by default; revealed by IntersectionObserver.
+   No-JS users get a <noscript> override in the head; reduced-motion users
+   skip the animation entirely. */
+.reveal,
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 520ms ease, transform 520ms ease;
+}
+
+.reveal.is-visible,
+.reveal-stagger.is-visible > * {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 70ms; }
+.reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 140ms; }
+.reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 210ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-stagger > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 .skip-link {
   position: fixed;
   z-index: 100;

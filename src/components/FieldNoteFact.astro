@@ -1,0 +1,143 @@
+---
+interface Props {
+  lang?: 'en' | 'de';
+}
+
+const { lang = 'en' } = Astro.props;
+
+// Short, sharp field notes drawn from the actual work (ODSB, agent security,
+// RAG, evaluation). Deliberately distinct from the four Research Principles.
+const content = {
+  en: {
+    kicker: 'Field note',
+    button: 'Show another',
+    facts: [
+      "A backdoor doesn't need a strange token. Sometimes the trigger is an ordering of meanings, not a keyword.",
+      "A model can refuse in words and still act. Audit the side effect, not the sentence.",
+      "An attack that never gets retrieved isn't safe. It is only untested at the step that matters.",
+      "A success rate without its denominator is a rumor. Put the sample size next to the number.",
+      "Citations are a security control only when they stay faithful to the source.",
+      "Memory that trusts its input more than its source is privilege escalation waiting to happen.",
+    ],
+  },
+  de: {
+    kicker: 'Feldnotiz',
+    button: 'Andere anzeigen',
+    facts: [
+      "Eine Backdoor braucht kein seltsames Token. Manchmal ist der Trigger eine Reihenfolge von Bedeutungen, kein Keyword.",
+      "Ein Modell kann in Worten ablehnen und trotzdem handeln. Prüfe den Seiteneffekt, nicht den Satz.",
+      "Ein Angriff, der nie abgerufen wird, ist nicht sicher. Er ist nur am entscheidenden Schritt ungetestet.",
+      "Eine Erfolgsrate ohne ihren Nenner ist ein Gerücht. Nenne die Stichprobengröße direkt neben der Zahl.",
+      "Zitationen sind nur dann eine Sicherheitskontrolle, wenn sie der Quelle treu bleiben.",
+      "Memory, das seinem Input mehr vertraut als seiner Quelle, ist eine Rechteausweitung, die nur auf ihren Moment wartet.",
+    ],
+  },
+} as const;
+
+const copy = content[lang];
+---
+
+<aside class="field-note-card" data-field-note>
+  <div class="field-note-head">
+    <p class="field-note-kicker">{copy.kicker}</p>
+    <button type="button" class="field-note-button" data-field-note-next hidden>
+      {copy.button} <span aria-hidden="true">↻</span>
+    </button>
+  </div>
+  <p class="field-note-text" data-field-note-text aria-live="polite">{copy.facts[0]}</p>
+  <script type="application/json" data-field-note-data set:html={JSON.stringify(copy.facts)}></script>
+</aside>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-field-note]').forEach((card) => {
+    const textEl = card.querySelector<HTMLElement>('[data-field-note-text]');
+    const button = card.querySelector<HTMLButtonElement>('[data-field-note-next]');
+    const dataEl = card.querySelector<HTMLElement>('[data-field-note-data]');
+    if (!textEl || !button || !dataEl) return;
+
+    let facts: string[] = [];
+    try {
+      const parsed = JSON.parse(dataEl.textContent || '[]');
+      if (Array.isArray(parsed)) facts = parsed.filter((f) => typeof f === 'string');
+    } catch {
+      facts = [];
+    }
+    if (facts.length < 2) return;
+
+    let index = Math.floor(Math.random() * facts.length);
+    textEl.textContent = facts[index];
+    button.hidden = false;
+
+    button.addEventListener('click', () => {
+      index = (index + 1) % facts.length;
+      textEl.textContent = facts[index];
+    });
+  });
+</script>
+
+<style>
+  .field-note-card {
+    padding: 32px clamp(24px, 4vw, 40px);
+    background: var(--paper-raised);
+    border-left: 3px solid var(--signal);
+  }
+
+  .field-note-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .field-note-kicker {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--signal-dark);
+  }
+
+  .field-note-button {
+    flex: none;
+    padding: 7px 12px;
+    color: var(--ink-soft);
+    background: transparent;
+    border: 1px solid var(--rule-dark);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease;
+  }
+
+  .field-note-button:hover {
+    color: var(--paper-raised);
+    background: var(--moss);
+    border-color: var(--moss);
+  }
+
+  .field-note-button:focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 3px;
+  }
+
+  .field-note-text {
+    margin: 0;
+    max-width: 56ch;
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.4vw, 1.7rem);
+    line-height: 1.42;
+    color: var(--ink);
+  }
+
+  @media (max-width: 600px) {
+    .field-note-card {
+      padding: 26px 22px;
+    }
+  }
+</style>
