@@ -300,6 +300,35 @@ main {
   margin: 0;
 }
 
+.footer-identity {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+/* An inert marker. Clicking it opens the terminal on the canary entry. */
+.canary {
+  padding: 0;
+  color: color-mix(in srgb, var(--ink-soft) 52%, transparent);
+  background: transparent;
+  border: 0;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: color 160ms ease;
+}
+
+.canary:hover {
+  color: var(--signal-dark);
+}
+
+.canary:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
+}
+
 .footer-groups {
   display: flex;
   flex-wrap: wrap;

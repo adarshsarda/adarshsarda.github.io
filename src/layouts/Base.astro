@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import Terminal from '../components/Terminal.astro';
+import { CANARY } from '../lib/canary';
 
 interface Props {
   title: string;
@@ -10,8 +12,12 @@ interface Props {
   structuredData?: Record<string, unknown>;
   lang?: 'en' | 'de';
   alternatePath?: string;
+  /** Override both language targets for pages with no localized twin (404). */
+  langPaths?: { en: string; de: string };
   /** Show the reading progress bar. Defaults to on for article pages. */
   progress?: boolean;
+  /** Ask search engines not to index this page (used by 404). */
+  noindex?: boolean;
 }
 
 const {
@@ -23,7 +29,9 @@ const {
   structuredData,
   lang = 'en',
   alternatePath,
+  langPaths,
   progress,
+  noindex = false,
 } = Astro.props;
 const showProgress = progress ?? type === 'article';
 const base = import.meta.env.BASE_URL;
@@ -71,8 +79,8 @@ const defaultAlternatePath = lang === 'de'
   ? path.replace(/^\/de(?=\/|$)/, '') || '/'
   : (path === '/' ? '/de/' : `/de${path}`);
 const resolvedAlternatePath = alternatePath ?? defaultAlternatePath;
-const enPath = lang === 'en' ? path : resolvedAlternatePath;
-const dePath = lang === 'de' ? path : resolvedAlternatePath;
+const enPath = langPaths?.en ?? (lang === 'en' ? path : resolvedAlternatePath);
+const dePath = langPaths?.de ?? (lang === 'de' ? path : resolvedAlternatePath);
 const langAlternates = [
   { lang: 'en', path: enPath },
   { lang: 'de', path: dePath },
@@ -133,6 +141,7 @@ const jsonLd = {
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     <meta name="generator" content={Astro.generator} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={canonical} />
     {langAlternates.map((alternate) => (
       <link rel="alternate" hreflang={alternate.lang} href={new URL(alternate.path, site)} />
@@ -188,7 +197,10 @@ const jsonLd = {
 
     <footer class="site-footer">
       <div class="container wide">
-        <p>© {year} Adarsh Sarda</p>
+        <div class="footer-identity">
+          <p>© {year} Adarsh Sarda</p>
+          <button type="button" class="canary" data-terminal-canary>{CANARY}</button>
+        </div>
         <div class="footer-groups">
           <nav class="footer-links" aria-label={lang === 'de' ? 'Weitere Seiten' : 'More pages'}>
             {copy.more.map((item) => (
@@ -203,6 +215,8 @@ const jsonLd = {
         </div>
       </div>
     </footer>
+
+    <Terminal lang={lang} />
 
     <script>
       // Scroll reveal: fade/slide elements in as they enter the viewport.

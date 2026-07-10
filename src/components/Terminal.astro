@@ -1,0 +1,485 @@
+---
+import { getCollection } from 'astro:content';
+import { isPublishable } from '../lib/contentVisibility';
+import { CANARY } from '../lib/canary';
+
+interface Props {
+  lang?: 'en' | 'de';
+}
+
+const { lang = 'en' } = Astro.props;
+const prefix = lang === 'de' ? '/de' : '';
+const collectionNames = lang === 'de'
+  ? { projects: 'projectsDe' as const, guides: 'guidesDe' as const, talks: 'talksDe' as const }
+  : { projects: 'projects' as const, guides: 'guides' as const, talks: 'talks' as const };
+
+const [projectCollection, guideCollection, talkCollection] = await Promise.all([
+  getCollection(collectionNames.projects),
+  getCollection(collectionNames.guides),
+  getCollection(collectionNames.talks),
+]);
+
+// Everything the terminal prints is derived from real content. No invented
+// counts, no fabricated findings.
+const projectEntries = projectCollection.flatMap((entry) =>
+  entry.data.type === 'project' && isPublishable(entry)
+    ? [{
+        slug: entry.data.slug ?? entry.id,
+        title: entry.data.title ?? entry.id,
+        status: entry.data.status ?? 'documented',
+        context: entry.data.context ?? '',
+        submissionDate: entry.data.submission_date,
+      }]
+    : [],
+);
+const guideCount = guideCollection.length;
+const talkCount = talkCollection.length;
+const springerPublication = {
+  title: 'Improving Mental Health Through Multimodal Emotion Detection',
+  subtitle: 'from Speech and Text Data Using Long-Short Term Memory',
+  venue: 'Springer, Frontiers of ICT in Healthcare, LNNS 519 (2023)',
+  doi: '10.1007/978-981-19-5191-6_2',
+  contribution: {
+    en: 'Co-author, 3rd of six.',
+    de: 'Co-Autor, 3. von sechs.',
+  },
+} as const;
+const publications = [springerPublication];
+const publicationCount = publications.length;
+const odsbSubmission = projectEntries
+  .find((project) => project.slug === 'odsb-semantic-backdoors')
+  ?.submissionDate
+  ?.toISOString()
+  .slice(0, 10) ?? '2026';
+
+const projectLines = projectEntries.flatMap((project) => [
+  `  ${project.title}  [${project.status}]`,
+  ...(project.context ? [`    ${project.context}`] : []),
+  `    ${prefix}/projects/${project.slug}/`,
+]);
+
+const copy = {
+  en: {
+    title: 'adarsh.sarda : portfolio shell',
+    close: 'Close terminal',
+    prompt: '$',
+    label: 'Terminal',
+    banner: [
+      'adarsh.sarda : portfolio shell',
+      'Type help for commands. Esc closes.',
+    ],
+    notFound: 'command not found: {cmd}. Type help.',
+    commands: {
+      help: [
+        'Commands:',
+        '  whoami         who I am',
+        '  projects       research case files',
+        '  publications   peer-reviewed work',
+        '  notes          field notes and talk notes',
+        '  skills         skills and their evidence',
+        '  timeline       how I got here',
+        '  canary         what the canary string is',
+        '  coffee         ?',
+        '  clear          clear the screen',
+        '  exit           close this terminal',
+      ],
+      whoami: [
+        'Adarsh Sarda',
+        'AI security researcher and M.Sc. student. I work on backdoors,',
+        'data poisoning, and the evaluation methods that catch them,',
+        'across text/LLMs and vision.',
+        'Based in Amberg, Germany.',
+      ],
+      projects: [
+        `${projectEntries.length} case file${projectEntries.length === 1 ? '' : 's'}:`,
+        ...projectLines,
+        '',
+        'Course projects are not peer reviewed. Type publications for',
+        'peer-reviewed work.',
+      ],
+      publications: [
+        `${publicationCount} peer-reviewed publication:`,
+        `  ${springerPublication.title}`,
+        `  ${springerPublication.subtitle}`,
+        `    ${springerPublication.venue}`,
+        `    ${springerPublication.contribution.en} doi:${springerPublication.doi}`,
+        `    ${prefix}/publications/`,
+      ],
+      notes: [
+        `${guideCount} field notes, ${talkCount} talk notes.`,
+        `  ${prefix}/guides/   long-form methodology and checklists`,
+        `  ${prefix}/talks/    notes on papers and talks`,
+      ],
+      skills: [
+        'Proficiency is evidenced, not aspirational:',
+        '  proficient  demonstrated in a completed, evidenced project',
+        '  working     used substantively with a concrete artifact',
+        '  familiar    applied at a smaller scale or in coursework',
+        `  ${prefix}/skills/`,
+      ],
+      timeline: [
+        '2019  B.Tech Information Technology, IEM Kolkata (to 2023)',
+        '2023  Springer book chapter, co-author (3rd of six)',
+        '2023  AI Research Analyst, GreyB Research (to 2024)',
+        '2025  M.Sc. AI for Industrial Applications, OTH Amberg-Weiden',
+        `${odsbSubmission}  ODSB submitted: order-dependent semantic backdoors`,
+      ],
+      canary: [
+        CANARY,
+        '',
+        'A canary string is a unique marker planted in data, a prompt, or a',
+        'document so you can later detect whether it leaked, was memorised,',
+        'or was exfiltrated.',
+        '',
+        'This one is inert. It is a nod to my backdoor and evaluation work,',
+        'not a live detector. Nothing here is watching you.',
+      ],
+      coffee: [
+        '418 I am a teapot.',
+        'Dependency acknowledged. Never measured, so never reported.',
+      ],
+    },
+  },
+  de: {
+    title: 'adarsh.sarda : Portfolio-Shell',
+    close: 'Terminal schließen',
+    prompt: '$',
+    label: 'Terminal',
+    banner: [
+      'adarsh.sarda : Portfolio-Shell',
+      'Tippe help für Befehle. Esc schließt.',
+    ],
+    notFound: 'Befehl nicht gefunden: {cmd}. Tippe help.',
+    commands: {
+      help: [
+        'Befehle:',
+        '  whoami         wer ich bin',
+        '  projects       Forschungs-Fallstudien',
+        '  publications   begutachtete Arbeiten',
+        '  notes          Feldnotizen und Talk-Notizen',
+        '  skills         Skills und ihre Evidenz',
+        '  timeline       mein Werdegang',
+        '  canary         was der Canary-String ist',
+        '  coffee         ?',
+        '  clear          Bildschirm leeren',
+        '  exit           Terminal schließen',
+      ],
+      whoami: [
+        'Adarsh Sarda',
+        'KI-Sicherheitsforscher und M.Sc.-Student. Ich arbeite an Backdoors,',
+        'Data Poisoning und den Evaluationsmethoden, die sie aufdecken,',
+        'über Text/LLMs und Vision hinweg.',
+        'Ansässig in Amberg, Deutschland.',
+      ],
+      projects: [
+        `${projectEntries.length} Fallstudie${projectEntries.length === 1 ? '' : 'n'}:`,
+        ...projectLines,
+        '',
+        'Projektarbeiten sind nicht begutachtet. Tippe publications für',
+        'begutachtete Arbeiten.',
+      ],
+      publications: [
+        `${publicationCount} begutachtete Publikation:`,
+        `  ${springerPublication.title}`,
+        `  ${springerPublication.subtitle}`,
+        `    ${springerPublication.venue}`,
+        `    ${springerPublication.contribution.de} doi:${springerPublication.doi}`,
+        `    ${prefix}/publications/`,
+      ],
+      notes: [
+        `${guideCount} Feldnotizen, ${talkCount} Talk-Notizen.`,
+        `  ${prefix}/guides/   ausführliche Methodik und Checklisten`,
+        `  ${prefix}/talks/    Notizen zu Papers und Vorträgen`,
+      ],
+      skills: [
+        'Proficiency ist belegt, nicht angestrebt:',
+        '  proficient  in einem abgeschlossenen, belegten Projekt gezeigt',
+        '  working     substanziell genutzt, mit konkretem Artefakt',
+        '  familiar    in kleinerem Rahmen oder im Studium angewendet',
+        `  ${prefix}/skills/`,
+      ],
+      timeline: [
+        '2019  B.Tech Informationstechnologie, IEM Kolkata (bis 2023)',
+        '2023  Springer-Buchkapitel, Co-Autor (3. von sechs)',
+        '2023  AI Research Analyst, GreyB Research (bis 2024)',
+        '2025  M.Sc. KI für industrielle Anwendungen, OTH Amberg-Weiden',
+        `${odsbSubmission}  ODSB eingereicht: reihenfolgeabhängige semantische Backdoors`,
+      ],
+      canary: [
+        CANARY,
+        '',
+        'Ein Canary-String ist ein eindeutiger Marker in Daten, einem Prompt',
+        'oder einem Dokument, mit dem sich später feststellen lässt, ob er',
+        'geleakt, memorisiert oder exfiltriert wurde.',
+        '',
+        'Dieser hier ist inert. Er ist eine Anspielung auf meine Arbeit zu',
+        'Backdoors und Evaluation, kein aktiver Detektor. Hier beobachtet',
+        'dich nichts.',
+      ],
+      coffee: [
+        '418 Ich bin eine Teekanne.',
+        'Abhängigkeit eingeräumt. Nie gemessen, also nie berichtet.',
+      ],
+    },
+  },
+} as const;
+
+const t = copy[lang];
+const payload = {
+  prompt: t.prompt,
+  banner: t.banner,
+  notFound: t.notFound,
+  commands: t.commands,
+};
+---
+
+<dialog class="terminal" data-terminal aria-label={t.label}>
+  <div class="terminal-bar">
+    <span class="terminal-title">{t.title}</span>
+    <button type="button" class="terminal-close" data-terminal-close aria-label={t.close}>&times;</button>
+  </div>
+  <div class="terminal-output" data-terminal-output role="log" aria-live="polite"></div>
+  <form class="terminal-form" data-terminal-form>
+    <label class="terminal-prompt" for="terminal-input" aria-hidden="true">{t.prompt}</label>
+    <input
+      id="terminal-input"
+      class="terminal-input"
+      data-terminal-input
+      type="text"
+      autocomplete="off"
+      autocapitalize="off"
+      spellcheck="false"
+      aria-label={t.label}
+    />
+  </form>
+  <script
+    type="application/json"
+    data-terminal-data
+    set:html={JSON.stringify(payload).replaceAll('<', '\\u003c')}
+  ></script>
+</dialog>
+
+<script>
+  type TerminalData = {
+    prompt: string;
+    banner: string[];
+    notFound: string;
+    commands: Record<string, string[]>;
+  };
+
+  const term = document.querySelector<HTMLDialogElement>('[data-terminal]');
+  if (term) {
+    const output = term.querySelector<HTMLElement>('[data-terminal-output]');
+    const form = term.querySelector<HTMLFormElement>('[data-terminal-form]');
+    const input = term.querySelector<HTMLInputElement>('[data-terminal-input]');
+    const dataEl = term.querySelector<HTMLElement>('[data-terminal-data]');
+
+    if (output && form && input && dataEl) {
+      let data: TerminalData = { prompt: '$', banner: [], notFound: '', commands: {} };
+      try {
+        data = { ...data, ...JSON.parse(dataEl.textContent || '{}') };
+      } catch {
+        // Keep the safe defaults.
+      }
+
+      const print = (lines: string[], variant?: string) => {
+        for (const line of lines) {
+          const el = document.createElement('div');
+          el.className = variant ? `terminal-line ${variant}` : 'terminal-line';
+          el.textContent = line === '' ? ' ' : line;
+          output.appendChild(el);
+        }
+        output.scrollTop = output.scrollHeight;
+      };
+
+      const run = (raw: string) => {
+        const cmd = raw.trim().toLowerCase();
+        if (!cmd) return;
+        print([`${data.prompt} ${cmd}`], 'terminal-echo');
+        if (cmd === 'clear') {
+          output.replaceChildren();
+          return;
+        }
+        if (cmd === 'exit') {
+          term.close();
+          return;
+        }
+        const lines = data.commands[cmd];
+        if (lines) print(lines);
+        else print([data.notFound.replace('{cmd}', cmd)], 'terminal-error');
+      };
+
+      const submitCommand = () => {
+        run(input.value);
+        input.value = '';
+      };
+
+      let bannerShown = false;
+      const open = (initial?: string) => {
+        if (!term.open) {
+          if (!bannerShown) {
+            print(data.banner, 'terminal-banner');
+            bannerShown = true;
+          }
+          term.showModal();
+        }
+        if (initial) run(initial);
+        input.focus();
+      };
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        submitCommand();
+      });
+
+      input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          submitCommand();
+        }
+        if (event.key === 'Escape') {
+          event.preventDefault();
+          term.close();
+        }
+      });
+
+      term.querySelector<HTMLButtonElement>('[data-terminal-close]')
+        ?.addEventListener('click', () => term.close());
+
+      // Backtick toggles the terminal, but never while the visitor is typing
+      // (the talk index has a live search field).
+      document.addEventListener('keydown', (event) => {
+        if (event.key !== '`' || event.metaKey || event.ctrlKey || event.altKey) return;
+        const target = event.target as HTMLElement | null;
+        if (target?.closest('input, textarea, select, [contenteditable="true"]')) return;
+        event.preventDefault();
+        if (term.open) term.close();
+        else open();
+      });
+
+      // The footer canary opens the terminal on the canary entry. This is also
+      // the way in on touch devices, where there is no backtick key.
+      document.querySelectorAll<HTMLElement>('[data-terminal-canary]').forEach((el) => {
+        el.addEventListener('click', () => open('canary'));
+      });
+    }
+  }
+</script>
+
+<style>
+  .terminal {
+    width: min(720px, calc(100vw - 28px));
+    max-height: min(70vh, 560px);
+    padding: 0;
+    color: var(--paper-raised);
+    background: var(--ink);
+    border: 1px solid var(--rule-dark);
+    border-radius: 0;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+  }
+
+  .terminal[open] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .terminal::backdrop {
+    background: color-mix(in srgb, #050807 72%, transparent);
+  }
+
+  .terminal-bar {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 14px;
+    border-bottom: 1px solid color-mix(in srgb, var(--paper-raised) 20%, transparent);
+  }
+
+  .terminal-title {
+    color: color-mix(in srgb, var(--paper-raised) 66%, transparent);
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .terminal-close {
+    padding: 0 4px;
+    color: color-mix(in srgb, var(--paper-raised) 70%, transparent);
+    background: transparent;
+    border: 0;
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .terminal-close:hover {
+    color: var(--paper-raised);
+  }
+
+  .terminal-close:focus-visible,
+  .terminal-input:focus-visible {
+    outline: 2px solid var(--stone);
+    outline-offset: 2px;
+  }
+
+  .terminal-output {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 18px;
+  }
+
+  .terminal-line {
+    margin: 0;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  .terminal-banner {
+    color: color-mix(in srgb, var(--paper-raised) 62%, transparent);
+  }
+
+  .terminal-echo {
+    color: var(--stone);
+  }
+
+  .terminal-error {
+    color: color-mix(in srgb, var(--signal) 32%, var(--paper-raised));
+  }
+
+  .terminal-form {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    border-top: 1px solid color-mix(in srgb, var(--paper-raised) 20%, transparent);
+  }
+
+  .terminal-prompt {
+    color: var(--stone);
+  }
+
+  .terminal-input {
+    flex: 1;
+    min-width: 0;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    font: inherit;
+  }
+
+  .terminal-input:focus {
+    outline: none;
+  }
+
+  @media (max-width: 600px) {
+    .terminal {
+      font-size: 0.74rem;
+      max-height: 76vh;
+    }
+  }
+</style>
