@@ -1,15 +1,17 @@
 ---
+// Currently unused. Rendered nowhere by default; drop <RuleOfThumb /> (or
+// <RuleOfThumb lang="de" />) into a page section to switch it back on.
 interface Props {
   lang?: 'en' | 'de';
 }
 
 const { lang = 'en' } = Astro.props;
 
-// Short, sharp field notes drawn from the actual work (ODSB, agent security,
-// RAG, evaluation). Deliberately distinct from the four Research Principles.
+// Short, sharp rules drawn from the actual work (ODSB, agent security, RAG,
+// evaluation). Deliberately distinct from the four Research Principles.
 const content = {
   en: {
-    kicker: 'Field note',
+    kicker: 'Rule of thumb',
     button: 'Show another',
     facts: [
       "A backdoor doesn't need a strange token. Sometimes the trigger is an ordering of meanings, not a keyword.",
@@ -21,7 +23,7 @@ const content = {
     ],
   },
   de: {
-    kicker: 'Feldnotiz',
+    kicker: 'Faustregel',
     button: 'Andere anzeigen',
     facts: [
       "Eine Backdoor braucht kein seltsames Token. Manchmal ist der Trigger eine Reihenfolge von Bedeutungen, kein Keyword.",
@@ -37,22 +39,22 @@ const content = {
 const copy = content[lang];
 ---
 
-<aside class="field-note-card" data-field-note>
-  <div class="field-note-head">
-    <p class="field-note-kicker">{copy.kicker}</p>
-    <button type="button" class="field-note-button" data-field-note-next hidden>
+<aside class="rule-of-thumb-card" data-rule-of-thumb>
+  <div class="rule-of-thumb-head">
+    <p class="rule-of-thumb-kicker">{copy.kicker}</p>
+    <button type="button" class="rule-of-thumb-button" data-rule-of-thumb-next hidden>
       {copy.button} <span aria-hidden="true">↻</span>
     </button>
   </div>
-  <p class="field-note-text" data-field-note-text aria-live="polite">{copy.facts[0]}</p>
-  <script type="application/json" data-field-note-data set:html={JSON.stringify(copy.facts)}></script>
+  <p class="rule-of-thumb-text" data-rule-of-thumb-text aria-live="polite">{copy.facts[0]}</p>
+  <script type="application/json" data-rule-of-thumb-data set:html={JSON.stringify(copy.facts)}></script>
 </aside>
 
 <script>
-  document.querySelectorAll<HTMLElement>('[data-field-note]').forEach((card) => {
-    const textEl = card.querySelector<HTMLElement>('[data-field-note-text]');
-    const button = card.querySelector<HTMLButtonElement>('[data-field-note-next]');
-    const dataEl = card.querySelector<HTMLElement>('[data-field-note-data]');
+  document.querySelectorAll<HTMLElement>('[data-rule-of-thumb]').forEach((card) => {
+    const textEl = card.querySelector<HTMLElement>('[data-rule-of-thumb-text]');
+    const button = card.querySelector<HTMLButtonElement>('[data-rule-of-thumb-next]');
+    const dataEl = card.querySelector<HTMLElement>('[data-rule-of-thumb-data]');
     if (!textEl || !button || !dataEl) return;
 
     let facts: string[] = [];
@@ -76,13 +78,13 @@ const copy = content[lang];
 </script>
 
 <style>
-  .field-note-card {
+  .rule-of-thumb-card {
     padding: 32px clamp(24px, 4vw, 40px);
     background: var(--paper-raised);
     border-left: 3px solid var(--signal);
   }
 
-  .field-note-head {
+  .rule-of-thumb-head {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
@@ -90,7 +92,7 @@ const copy = content[lang];
     margin-bottom: 16px;
   }
 
-  .field-note-kicker {
+  .rule-of-thumb-kicker {
     margin: 0;
     font-family: var(--font-mono);
     font-size: 0.7rem;
@@ -100,7 +102,7 @@ const copy = content[lang];
     color: var(--signal-dark);
   }
 
-  .field-note-button {
+  .rule-of-thumb-button {
     flex: none;
     padding: 7px 12px;
     color: var(--ink-soft);
@@ -115,18 +117,18 @@ const copy = content[lang];
     transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease;
   }
 
-  .field-note-button:hover {
+  .rule-of-thumb-button:hover {
     color: var(--paper-raised);
     background: var(--moss);
     border-color: var(--moss);
   }
 
-  .field-note-button:focus-visible {
+  .rule-of-thumb-button:focus-visible {
     outline: 2px solid var(--signal);
     outline-offset: 3px;
   }
 
-  .field-note-text {
+  .rule-of-thumb-text {
     margin: 0;
     max-width: 56ch;
     font-family: var(--font-display);
@@ -136,7 +138,7 @@ const copy = content[lang];
   }
 
   @media (max-width: 600px) {
-    .field-note-card {
+    .rule-of-thumb-card {
       padding: 26px 22px;
     }
   }

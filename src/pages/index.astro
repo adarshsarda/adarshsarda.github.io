@@ -3,7 +3,6 @@ import Base from '../layouts/Base.astro';
 import NoteCarousel from '../components/NoteCarousel.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import TalkCarousel from '../components/TalkCarousel.astro';
-import FieldNoteFact from '../components/FieldNoteFact.astro';
 import { isPublishable } from '../lib/contentVisibility';
 import { getCollection } from 'astro:content';
 
@@ -174,10 +173,6 @@ const publicationCard = {
       />
     </section>
   )}
-
-  <section class="home-section field-note-section reveal">
-    <FieldNoteFact />
-  </section>
 
   <section class="home-section contact-section reveal">
     <div>
