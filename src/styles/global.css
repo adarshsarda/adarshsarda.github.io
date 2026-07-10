@@ -1,17 +1,17 @@
 :root {
-  --paper: #f7f5f2;
-  --paper-raised: #fffdf8;
-  --paper-ambient: #ece7df;
-  --ink: #1d1f21;
-  --ink-soft: #5f6568;
-  --rule: #d8d4cf;
-  --rule-dark: #8b6f47;
-  --signal: #17324d;
-  --signal-dark: #0d2238;
-  --moss: #8b6f47;
-  --sky: #edf2f5;
-  --stone: #e8ded1;
-  --card-shadow: 12px 12px 0 color-mix(in srgb, var(--signal) 9%, transparent);
+  --paper: #f4f2ed;
+  --paper-raised: #fbfaf7;
+  --paper-ambient: #e6e2da;
+  --ink: #202322;
+  --ink-soft: #5f625f;
+  --rule: #d6d1ca;
+  --rule-dark: #746d64;
+  --signal: #34383a;
+  --signal-dark: #202628;
+  --moss: #8d7666;
+  --sky: #eceeed;
+  --stone: #ded9d2;
+  --card-shadow: 12px 12px 0 color-mix(in srgb, var(--signal) 10%, transparent);
   --max-reading: 760px;
   --max-wide: 1180px;
   --font-body: "Aptos", "Segoe UI", Helvetica, Arial, sans-serif;
@@ -775,7 +775,7 @@ main {
   }
 }
 
-/* Research principles: a pale manifesto band with large wine numerals. */
+/* Research principles: a pale manifesto band with large charcoal numerals. */
 .principles-section {
   margin-top: 92px;
   padding: 0 28px 32px;
