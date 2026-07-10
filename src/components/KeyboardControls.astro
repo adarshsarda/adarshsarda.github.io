@@ -1,0 +1,302 @@
+---
+interface Props {
+  lang?: 'en' | 'de';
+}
+
+const { lang = 'en' } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const prefix = lang === 'de' ? `${base}de/` : base;
+const paths = {
+  home: prefix,
+  about: `${prefix}about/`,
+  projects: `${prefix}projects/`,
+  notes: `${prefix}notes/`,
+  publications: `${prefix}publications/`,
+  skills: `${prefix}skills/`,
+  cv: `${prefix}cv/`,
+};
+
+const copy = {
+  en: {
+    title: 'Keyboard controls',
+    close: 'Close keyboard controls',
+    groups: [
+      ['?', 'Show or hide this panel'],
+      ['`', 'Open the terminal'],
+      ['/', 'Focus talk search when available'],
+      ['j / k', 'Scroll down or up'],
+      ['g h', 'Go home'],
+      ['g a', 'Go to About'],
+      ['g p', 'Go to Projects'],
+      ['g n', 'Go to Writing'],
+      ['g u', 'Go to Publications'],
+      ['g s', 'Go to Skills'],
+      ['g c', 'Go to CV'],
+    ],
+  },
+  de: {
+    title: 'Tastatursteuerung',
+    close: 'Tastatursteuerung schliessen',
+    groups: [
+      ['?', 'Dieses Panel anzeigen oder ausblenden'],
+      ['`', 'Terminal oeffnen'],
+      ['/', 'Talk-Suche fokussieren, wenn vorhanden'],
+      ['j / k', 'Nach unten oder oben scrollen'],
+      ['g h', 'Zur Startseite'],
+      ['g a', 'Zum Profil'],
+      ['g p', 'Zu Projekten'],
+      ['g n', 'Zu Texten'],
+      ['g u', 'Zu Publikationen'],
+      ['g s', 'Zu Skills'],
+      ['g c', 'Zum Lebenslauf'],
+    ],
+  },
+} as const;
+
+const t = copy[lang];
+const payload = {
+  paths,
+  searchSelector: '[data-talk-search]',
+};
+---
+
+<dialog class="keyboard-help" data-keyboard-help aria-labelledby="keyboard-help-title">
+  <div class="keyboard-help-head">
+    <h2 id="keyboard-help-title">{t.title}</h2>
+    <button type="button" data-keyboard-help-close aria-label={t.close}>&times;</button>
+  </div>
+  <dl class="keyboard-help-list">
+    {t.groups.map(([key, label]) => (
+      <>
+        <dt><kbd>{key}</kbd></dt>
+        <dd>{label}</dd>
+      </>
+    ))}
+  </dl>
+  <script
+    type="application/json"
+    data-keyboard-data
+    set:html={JSON.stringify(payload).replaceAll('<', '\\u003c')}
+  ></script>
+</dialog>
+
+<script>
+  type KeyboardData = {
+    paths: Record<string, string>;
+    searchSelector: string;
+  };
+
+  const keyboardDialog = document.querySelector<HTMLDialogElement>('[data-keyboard-help]');
+  const keyboardDataEl = document.querySelector<HTMLElement>('[data-keyboard-data]');
+
+  if (keyboardDialog && keyboardDataEl) {
+    let keyboardData: KeyboardData = {
+      paths: {},
+      searchSelector: '[data-talk-search]',
+    };
+
+    try {
+      keyboardData = { ...keyboardData, ...JSON.parse(keyboardDataEl.textContent || '{}') };
+    } catch {
+      // Keep the safe defaults.
+    }
+
+    const typingSelector = 'input, textarea, select, [contenteditable="true"], [role="textbox"]';
+    const isTyping = (target: EventTarget | null) =>
+      target instanceof HTMLElement && Boolean(target.closest(typingSelector));
+    const terminalIsOpen = () =>
+      document.querySelector<HTMLDialogElement>('[data-terminal]')?.open ?? false;
+    const openHelp = () => {
+      if (!keyboardDialog.open) keyboardDialog.showModal();
+    };
+    const closeHelp = () => {
+      if (keyboardDialog.open) keyboardDialog.close();
+    };
+    const toggleHelp = () => {
+      if (keyboardDialog.open) closeHelp();
+      else openHelp();
+    };
+    const go = (path?: string) => {
+      if (path) window.location.href = path;
+    };
+
+    let pendingGo = false;
+    let pendingTimer = 0;
+    const clearPending = () => {
+      pendingGo = false;
+      window.clearTimeout(pendingTimer);
+      document.documentElement.removeAttribute('data-shortcut-mode');
+    };
+
+    keyboardDialog
+      .querySelector<HTMLButtonElement>('[data-keyboard-help-close]')
+      ?.addEventListener('click', closeHelp);
+
+    keyboardDialog.addEventListener('click', (event) => {
+      if (event.target === keyboardDialog) closeHelp();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey) return;
+      if (isTyping(event.target)) return;
+      if (terminalIsOpen()) return;
+
+      const key = event.key.toLowerCase();
+
+      if (key === 'escape' && keyboardDialog.open) {
+        event.preventDefault();
+        closeHelp();
+        clearPending();
+        return;
+      }
+
+      if (key === '?') {
+        event.preventDefault();
+        toggleHelp();
+        clearPending();
+        return;
+      }
+
+      if (keyboardDialog.open) return;
+
+      if (pendingGo) {
+        const destinations: Record<string, string | undefined> = {
+          h: keyboardData.paths.home,
+          a: keyboardData.paths.about,
+          p: keyboardData.paths.projects,
+          n: keyboardData.paths.notes,
+          u: keyboardData.paths.publications,
+          s: keyboardData.paths.skills,
+          c: keyboardData.paths.cv,
+        };
+        event.preventDefault();
+        clearPending();
+        go(destinations[key]);
+        return;
+      }
+
+      if (key === 'g') {
+        event.preventDefault();
+        pendingGo = true;
+        document.documentElement.setAttribute('data-shortcut-mode', 'go');
+        pendingTimer = window.setTimeout(clearPending, 1200);
+        return;
+      }
+
+      if (key === '/') {
+        const search = document.querySelector<HTMLInputElement>(keyboardData.searchSelector);
+        if (search) {
+          event.preventDefault();
+          search.focus();
+        }
+        return;
+      }
+
+      if (key === 'j' || key === 'k') {
+        event.preventDefault();
+        window.scrollBy({
+          top: (key === 'j' ? 1 : -1) * window.innerHeight * 0.72,
+          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+        });
+      }
+    });
+  }
+</script>
+
+<style>
+  .keyboard-help {
+    width: min(520px, calc(100vw - 28px));
+    padding: 0;
+    color: var(--ink);
+    background: var(--paper-raised);
+    border: 1px solid var(--ink);
+    border-radius: 0;
+    box-shadow: 14px 14px 0 color-mix(in srgb, var(--moss) 13%, transparent);
+  }
+
+  .keyboard-help::backdrop {
+    background: color-mix(in srgb, #050807 54%, transparent);
+  }
+
+  .keyboard-help-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--rule-dark);
+  }
+
+  .keyboard-help h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .keyboard-help button {
+    padding: 0 4px;
+    color: var(--ink-soft);
+    background: transparent;
+    border: 0;
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .keyboard-help button:hover {
+    color: var(--signal-dark);
+  }
+
+  .keyboard-help button:focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 3px;
+  }
+
+  .keyboard-help-list {
+    margin: 0;
+    padding: 18px 20px 22px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 10px 18px;
+    align-items: baseline;
+  }
+
+  .keyboard-help-list dt,
+  .keyboard-help-list dd {
+    margin: 0;
+  }
+
+  .keyboard-help-list kbd {
+    min-width: 48px;
+    padding: 3px 8px;
+    display: inline-flex;
+    justify-content: center;
+    color: var(--paper-raised);
+    background: var(--moss);
+    border: 1px solid var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .keyboard-help-list dd {
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    line-height: 1.35;
+  }
+
+  @media (max-width: 520px) {
+    .keyboard-help-list {
+      grid-template-columns: 1fr;
+      gap: 5px;
+    }
+
+    .keyboard-help-list dd + dt {
+      margin-top: 8px;
+    }
+  }
+</style>

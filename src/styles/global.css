@@ -486,7 +486,7 @@ main {
 .hero-portrait {
   width: 100%;
   max-width: 390px;
-  margin: 0 0 0 auto;
+  margin: 26px 0 0 auto;
   align-self: start;
 }
 
@@ -497,6 +497,11 @@ main {
   background: var(--stone);
   border: 1px solid var(--rule-dark);
   box-shadow: 18px 18px 0 color-mix(in srgb, var(--moss) 10%, transparent);
+  transition: box-shadow 180ms ease;
+}
+
+.portrait-frame:hover {
+  box-shadow: 10px 10px 0 color-mix(in srgb, var(--moss) 10%, transparent);
 }
 
 .portrait-frame::after {

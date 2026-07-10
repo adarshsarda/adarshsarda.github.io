@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import KeyboardControls from '../components/KeyboardControls.astro';
 import Terminal from '../components/Terminal.astro';
 import { CANARY } from '../lib/canary';
 
@@ -217,6 +218,7 @@ const jsonLd = {
     </footer>
 
     <Terminal lang={lang} />
+    <KeyboardControls lang={lang} />
 
     <script>
       // Scroll reveal: fade/slide elements in as they enter the viewport.
