@@ -7,8 +7,6 @@ tags: [threat-modelling, red-teaming, methodology]
 related: []
 ---
 
-# Threat-Modeling-Template
-
 Ein Ausfüll-Template, mit dem ich ein System vor dem Test abstecke. Wo passend, auf NIST AI RMF (Map),
 OWASP LLM Top 10 und MITRE ATLAS abbilden.
 

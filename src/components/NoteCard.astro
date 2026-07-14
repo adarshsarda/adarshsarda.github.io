@@ -8,6 +8,7 @@ interface Props {
   description?: string;
   tags?: string[];
   cta: string;
+  headingLevel?: 2 | 3;
 }
 
 const {
@@ -19,6 +20,7 @@ const {
   description,
   tags,
   cta,
+  headingLevel = 2,
 } = Astro.props;
 ---
 
@@ -27,7 +29,7 @@ const {
     <p class="note-index">{prefix}-{String(index + 1).padStart(2, '0')}</p>
     <p class="entry-kicker">{kicker}</p>
   </div>
-  <h2>{title}</h2>
+  {headingLevel === 3 ? <h3>{title}</h3> : <h2>{title}</h2>}
   {description && <p class="note-card-desc">{description}</p>}
   <div class="note-card-foot">
     {tags && tags.length > 0 && (
@@ -38,3 +40,14 @@ const {
     <span class="note-card-cta">{cta} <span aria-hidden="true">→</span></span>
   </div>
 </a>
+
+<style>
+  .note-card h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.14;
+  }
+</style>

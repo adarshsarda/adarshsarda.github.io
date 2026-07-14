@@ -7,8 +7,6 @@ tags: [model-evaluation, statistical-evaluation, methodology]
 related: [projects/odsb-semantic-backdoors]
 ---
 
-# How I Measure Robustness and Generalization
-
 Four distinct claims I never collapse into one number.
 
 ## 1. Installation (in-distribution)

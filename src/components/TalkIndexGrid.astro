@@ -68,7 +68,7 @@ const searchId = `talk-search-${lang}`;
       />
     </div>
 
-    <div class="talk-filter-buttons" aria-label={copy[lang].filterLabel}>
+    <div class="talk-filter-buttons" role="group" aria-label={copy[lang].filterLabel}>
       <button type="button" class="active" data-talk-track="">
         {trackLabels[lang].all}
       </button>
@@ -204,6 +204,7 @@ const searchId = `talk-search-${lang}`;
 
   .talk-search-input {
     width: 100%;
+    min-height: 44px;
     padding: 10px 12px;
     color: var(--ink);
     background: var(--paper-raised);
@@ -225,6 +226,8 @@ const searchId = `talk-search-${lang}`;
   }
 
   .talk-filter-buttons button {
+    min-width: 44px;
+    min-height: 44px;
     padding: 8px 10px;
     color: var(--ink-soft);
     background: transparent;

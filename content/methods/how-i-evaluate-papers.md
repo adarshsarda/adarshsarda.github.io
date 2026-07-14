@@ -7,8 +7,6 @@ tags: [model-evaluation, red-teaming, methodology]
 related: [projects/odsb-semantic-backdoors]
 ---
 
-# How I Evaluate an AI Security Paper
-
 A reading checklist I apply before trusting a result. The goal is to separate a real finding
 from a well-presented one.
 

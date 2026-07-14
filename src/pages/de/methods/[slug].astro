@@ -1,5 +1,6 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import MobileToc from '../../../components/MobileToc.astro';
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 
@@ -40,12 +41,16 @@ const toc = headings.filter((heading) => heading.depth === 2 || heading.depth ==
     <div class="article-label">
       <span>Methode</span>
     </div>
+    <h1>{title}</h1>
+    {data.description && <p class="subtitle">{data.description}</p>}
     {data.tags && data.tags.length > 0 && (
       <ul class="chips article-tags">
         {data.tags.map((tag) => <li class="chip">{tag}</li>)}
       </ul>
     )}
   </header>
+
+  <MobileToc headings={toc} lang="de" />
 
   <div class="with-toc">
     <article class="prose">

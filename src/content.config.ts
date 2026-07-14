@@ -64,6 +64,17 @@ const projectIdeaModuleSchema = z.enum(['deep-vision', 'ai-project', 'self-study
 const projectIdeaDecisionSchema = z.enum(['candidate', 'selected', 'parked', 'superseded']);
 const projectIdeaRoleSchema = z.enum(['flagship', 'umbrella', 'component', 'rehearsal', 'stretch']);
 
+// Framework identifiers are edition-qualified on purpose. A bare `LLM08` or
+// `AML.T0051` is easy to misread after an upstream taxonomy changes; the key
+// records the edition while the value remains the framework's native ID.
+const redteamFrameworkRefsSchema = z.object({
+  owasp_llm_2025: z.array(z.string().regex(/^LLM(?:0[1-9]|10)$/)),
+  owasp_agentic_2026: z.array(z.string().regex(/^ASI(?:0[1-9]|10)$/)),
+  owasp_aisvs_1_0: z.array(z.string().regex(/^v1\.0-C(?:[1-9]|1[0-2])\.\d+\.\d+$/)),
+  owasp_aitg_v1: z.array(z.string().regex(/^AITG-(?:APP|MOD|INF|DAT)-\d{2}$/)),
+  mitre_atlas: z.array(z.string().regex(/^AML\.(?:TA|T|M|CS)\d{4}(?:\.\d{3})?$/)),
+}).strict();
+
 const projectProjectionSchema = z.object({
   visibility: z.enum(['hidden', 'public']),
   featured: z.boolean().default(false),
@@ -257,9 +268,8 @@ const redteam = defineCollection({
       title: z.string().min(1),
       status: statusSchema,
       tags: tagsSchema,
-      owasp: z.array(z.string().regex(/^LLM(?:0[1-9]|10)$/)),
-      atlas: z.array(z.string()),
-      target_systems: z.array(z.enum(['chatbot', 'rag', 'agentic'])),
+      framework_refs: redteamFrameworkRefsSchema,
+      target_systems: z.array(z.enum(['chatbot', 'rag', 'agentic', 'cyber-physical'])),
       related: z.array(z.string().min(1)).optional(),
       objective_success_criteria: z.string().min(1),
       severity_default: z.string().min(1),
@@ -273,6 +283,29 @@ const redteam = defineCollection({
       title: z.string().min(1),
       status: statusSchema,
       tags: tagsSchema,
+    }),
+    z.object({
+      type: z.literal('redteam-framework'),
+      slug: z.string().min(1),
+      title: z.string().min(1),
+      status: statusSchema,
+      framework_id: z.enum([
+        'owasp_llm_2025',
+        'owasp_agentic_2026',
+        'owasp_aisvs_1_0',
+        'owasp_aitg_v1',
+        'owasp_ai_cheat_sheets',
+        'owasp_crosswalk',
+      ]),
+      version: z.string().min(1),
+      reviewed_on: z.coerce.date(),
+      source_snapshots: z.array(
+        z.string().startsWith('private/raw/standards/owasp/'),
+      ).min(1),
+      sources: z.array(z.string().url()).min(1),
+      tags: tagsSchema.min(1),
+      related: z.array(z.string().min(1)).optional(),
+      do_not_claim: z.array(z.string().min(1)).min(1),
     }),
   ]),
 });

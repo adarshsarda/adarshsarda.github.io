@@ -43,13 +43,17 @@ silently breaks filtering and retrieval. Lowercase, hyphenated.
 - `category`: `original-research` | `applied` | `reproduction`
 - `status`: `planned` | `in-progress` | `active` | `complete` | `paused`
 - `part`: `method` | `results` | `reflection`
-- `target_systems` (redteam): `chatbot` | `rag` | `agentic`
+- `target_systems` (redteam): `chatbot` | `rag` | `agentic` | `cyber-physical`
 - project `projection.visibility`: `hidden` | `public`
 - project-idea `module`: `deep-vision` | `ai-project` | `self-study` | `portfolio`
 - project-idea `decision`: `candidate` | `selected` | `parked` | `superseded`
 - project-idea `idea_role`: `flagship` | `umbrella` | `component` | `rehearsal` | `stretch`
 
 ## External reference frameworks (for redteam content)
+
+Use edition-qualified frontmatter keys so a future release cannot silently change an old
+mapping: `owasp_llm_2025`, `owasp_agentic_2026`, `owasp_aisvs_1_0`,
+`owasp_aitg_v1`, and `mitre_atlas`.
 - OWASP LLM Top 10: `LLM01`…`LLM10`
 - MITRE ATLAS: tactic/technique IDs (e.g. `AML.T0051`)
 - NIST AI RMF: function references (Govern/Map/Measure/Manage)

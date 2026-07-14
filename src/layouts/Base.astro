@@ -45,6 +45,8 @@ const i18n = {
   en: {
     skip: 'Skip to main content',
     navLabel: 'Primary navigation',
+    homeLabel: 'Adarsh Sarda, home',
+    languageLabel: 'Language switcher',
     home: '',
     about: 'about/',
     projects: 'projects/',
@@ -61,6 +63,8 @@ const i18n = {
   de: {
     skip: 'Zum Hauptinhalt springen',
     navLabel: 'Hauptnavigation',
+    homeLabel: 'Adarsh Sarda, Startseite',
+    languageLabel: 'Sprachauswahl',
     home: 'de/',
     about: 'de/about/',
     projects: 'de/projects/',
@@ -89,7 +93,7 @@ const langAlternates = [
 const isActive = (targets: string[]) => targets.some((target) => path === target || path.startsWith(target));
 const aboutActive = isActive(['/about/', '/de/about/']);
 const projectsActive = isActive(['/projects/', '/de/projects/']);
-const notesActive = isActive(['/notes/', '/guides/', '/talks/', '/de/notes/', '/de/guides/', '/de/talks/']);
+const notesActive = isActive(['/notes/', '/guides/', '/talks/', '/methods/', '/de/notes/', '/de/guides/', '/de/talks/', '/de/methods/']);
 const publicationsActive = isActive(['/publications/', '/de/publications/']);
 const skillsActive = isActive(['/skills/', '/de/skills/']);
 const cvActive = isActive(['/cv/', '/de/cv/']);
@@ -172,7 +176,7 @@ const jsonLd = {
     <a class="skip-link" href="#main-content">{copy.skip}</a>
     <header class="site-header">
       <div class="bar">
-        <a href={`${base}${copy.home}`} class="brand" aria-label="Adarsh Sarda, home">
+        <a href={`${base}${copy.home}`} class="brand" aria-label={copy.homeLabel}>
           <span class="brand-mark" aria-hidden="true">AS</span>
         </a>
         <div class="header-links">
@@ -185,7 +189,7 @@ const jsonLd = {
               </a>
             ))}
           </nav>
-          <nav class="language-switch" aria-label="Language switcher">
+          <nav class="language-switch" aria-label={copy.languageLabel}>
             <a href={new URL(enPath, site).pathname} class={lang === 'en' ? 'active' : undefined} aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
             <span aria-hidden="true">·</span>
             <a href={new URL(dePath, site).pathname} class={lang === 'de' ? 'active' : undefined} aria-current={lang === 'de' ? 'true' : undefined}>DE</a>

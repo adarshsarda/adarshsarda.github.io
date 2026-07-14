@@ -19,6 +19,11 @@ const talkEntries = (await getCollection('talksDe')).sort(
     (a.data.order ?? Number.MAX_SAFE_INTEGER) - (b.data.order ?? Number.MAX_SAFE_INTEGER)
     || b.data.last_updated.getTime() - a.data.last_updated.getTime(),
 );
+const publicationEntries = (await getCollection('profile'))
+  .flatMap((entry) => entry.data.type === 'publication'
+    ? [{ key: entry.data.slug, data: entry.data }]
+    : [])
+  .sort((a, b) => b.data.published_on.localeCompare(a.data.published_on));
 
 const projects = projectEntries
   .filter((entry) =>
@@ -32,19 +37,10 @@ const projects = projectEntries
   .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
 
 const projectCount = projects.length;
-const publicationCount = 1;
+const publicationCount = publicationEntries.length;
 const guideCount = guideEntries.length;
 const talkCount = talkEntries.length;
 const featuredTalks = talkEntries.slice(0, 6);
-const publicationCard = {
-  title: 'Multimodale Emotionserkennung für Screenings zur psychischen Gesundheit',
-  subtitle: 'Springer-Buchkapitel, Frontiers of ICT in Healthcare, LNNS 519',
-  summary: 'Begutachtete Arbeit zu einem LSTM-basierten Sprach- und Textsystem zur Emotionserkennung, mit meinem Beitrag als Co-Autor und Projektentwickler.',
-  category: 'Publikation / Springer-Buchkapitel / 2023',
-  status: 'Frontiers of ICT in Healthcare, LNNS 519',
-  skills: ['lstm', 'multimodal', 'speech', 'text', 'python', 'mental-health'],
-  domains: ['Co-Autor', 'Projektentwickler'],
-};
 ---
 
 <Base
@@ -91,38 +87,38 @@ const publicationCard = {
     </figure>
   </section>
 
-  <section class="home-section principles-section">
+  <section class="home-section principles-section" aria-labelledby="forschungsprinzipien-heading">
     <header class="section-heading reveal">
-      <p role="heading" aria-level="2"><span>01</span> Forschungsprinzipien</p>
+      <h2 class="section-title" id="forschungsprinzipien-heading"><span>01</span> Forschungsprinzipien</h2>
       <p>Wie ich Evidenz bewerte</p>
     </header>
     <div class="principle-grid reveal-stagger">
       <div>
         <span>01</span>
-        <h2>Statistisch messen.</h2>
+        <h3>Statistisch messen.</h3>
         <p>KI-Fehler sind probabilistisch. Ich berichte Raten, Stichproben, Kontrollen und Unsicherheit.</p>
       </div>
       <div>
         <span>02</span>
-        <h2>Fehlversuche dokumentieren.</h2>
+        <h3>Fehlversuche dokumentieren.</h3>
         <p>Ein verworfener Shortcut erklärt oft mehr über das System als ein polierter Endwert.</p>
       </div>
       <div>
         <span>03</span>
-        <h2>Demos von Evidenz trennen.</h2>
+        <h3>Demos von Evidenz trennen.</h3>
         <p>Installation, Generalisierung, Utility und reales Risiko sind unterschiedliche Aussagen.</p>
       </div>
       <div>
         <span>04</span>
-        <h2>Perfekte Ergebnisse prüfen.</h2>
+        <h3>Perfekte Ergebnisse prüfen.</h3>
         <p>Perfekte Scores brauchen stärkere Audits, nicht stärkere Adjektive.</p>
       </div>
     </div>
   </section>
 
-  <section class="home-section research-section featured-work-section" id="ausgewaehlte-arbeiten">
+  <section class="home-section research-section featured-work-section" id="ausgewaehlte-arbeiten" aria-labelledby="ausgewaehlte-arbeiten-heading">
     <header class="section-heading reveal">
-      <p role="heading" aria-level="2"><span>02</span> Ausgewählte Arbeiten</p>
+      <h2 class="section-title" id="ausgewaehlte-arbeiten-heading"><span>02</span> Ausgewählte Arbeiten</h2>
       <p>
         {projectCount.toString().padStart(2, '0')} {projectCount === 1 ? 'Projekt' : 'Projekte'}
         {' / '}
@@ -136,25 +132,36 @@ const publicationCard = {
           index={index}
           data={project.data}
           lang="de"
+          headingLevel={3}
         />
       ))}
-      <ProjectCard
-        href={`${base}de/publications/`}
-        index={0}
-        indexPrefix="P"
-        cta="Publikation öffnen"
-        statusLabel="Publikationsort"
-        focusLabel="Rolle"
-        data={publicationCard}
-        lang="de"
-      />
+      {publicationEntries.map((publication, index) => (
+        <ProjectCard
+          href={`${base}de/publications/#${publication.key}`}
+          index={index}
+          indexPrefix="P"
+          cta="Publikation öffnen"
+          statusLabel="Publikationsort"
+          focusLabel="Rolle"
+          headingLevel={3}
+          data={{
+            title: publication.data.title,
+            subtitle: `${publication.data.publisher} · ${publication.data.series_abbreviation} ${publication.data.volume}`,
+            summary: publication.data.summary.de,
+            category: `Publikation / ${publication.data.publication_type.de} / ${publication.data.year}`,
+            status: publication.data.venue,
+            domains: [publication.data.contribution.de],
+          }}
+          lang="de"
+        />
+      ))}
     </div>
   </section>
 
   {guideEntries.length > 0 && (
-    <section class="home-section notes-section">
+    <section class="home-section notes-section" aria-labelledby="feldnotizen-heading">
       <header class="section-heading reveal">
-        <p role="heading" aria-level="2"><span>03</span> Feldnotizen</p>
+        <h2 class="section-title" id="feldnotizen-heading"><span>03</span> Feldnotizen</h2>
         <p>{guideCount.toString().padStart(2, '0')} {guideCount === 1 ? 'Guide' : 'Guides'}</p>
       </header>
       <NoteCarousel
@@ -167,14 +174,15 @@ const publicationCard = {
         indexCta="Vollständigen Feldnotiz-Index öffnen"
         kicker="Praxisnotiz"
         cta="Notiz lesen"
+        headingLevel={3}
       />
     </section>
   )}
 
   {talkEntries.length > 0 && (
-    <section class="home-section talks-section">
+    <section class="home-section talks-section" aria-labelledby="talk-notizen-heading">
       <header class="section-heading reveal">
-        <p role="heading" aria-level="2"><span>04</span> Talk-Notizen</p>
+        <h2 class="section-title" id="talk-notizen-heading"><span>04</span> Talk-Notizen</h2>
         <p>{talkCount.toString().padStart(2, '0')} {talkCount === 1 ? 'Notiz' : 'Notizen'} aus Papers und Vorträgen</p>
       </header>
 
@@ -187,6 +195,7 @@ const publicationCard = {
         carouselLabel="Talk-Notizen-Karussell"
         indexHref={`${base}de/talks/`}
         indexCta="Vollständigen Talk-Index öffnen"
+        headingLevel={3}
       />
     </section>
   )}
@@ -198,9 +207,32 @@ const publicationCard = {
       <p>Ich bin in Amberg, Deutschland, und für Werkstudentenrollen mit 20 Stunden pro Woche verfügbar, vor Ort in der Region oder remote.</p>
     </div>
     <div class="contact-actions">
-      <a class="text-link" href="mailto:adarshsarda29@gmail.com">Email <span aria-hidden="true">→</span></a>
+      <a class="text-link" href="mailto:adarshsarda29@gmail.com">E-Mail <span aria-hidden="true">→</span></a>
       <a class="text-link quiet" href="https://www.linkedin.com/in/adarshsarda" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
       <a class="text-link quiet" href="https://github.com/adarshsarda/" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
     </div>
   </section>
 </Base>
+
+<style>
+  .section-title {
+    margin: 0;
+    color: var(--ink);
+    font: inherit;
+    font-weight: 750;
+  }
+
+  .section-title span {
+    margin-right: 10px;
+    color: var(--signal);
+  }
+
+  .principle-grid h3 {
+    margin: 20px 0 10px;
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+  }
+</style>

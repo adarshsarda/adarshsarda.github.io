@@ -6,35 +6,42 @@ import { getCollection } from 'astro:content';
 const base = import.meta.env.BASE_URL;
 const guideCount = (await getCollection('guidesDe')).length;
 const talkCount = (await getCollection('talksDe')).length;
+const methodCount = (await getCollection('methodsDe')).length;
 ---
 
 <Base
   title="Texte | Adarsh Sarda"
-  description="Feldnotizen und Talk-Notizen zu KI-Sicherheit, LLM Red Teaming und adversarial Machine Learning."
+  description="Feldnotizen, Talk-Notizen und wiederverwendbare Methoden zu KI-Sicherheit, LLM Red Teaming und adversarial Machine Learning."
   lang="de"
   wide
 >
   <div class="page-head">
-    <p class="eyebrow"><span>Index 03</span> / Feldnotizen und Talk-Notizen</p>
+    <p class="eyebrow"><span>Index 03</span> / Feldnotizen, Talk-Notizen und Methoden</p>
     <h1>Texte</h1>
     <p>
-      Zwei Textarten: längere Feldnotizen zu Methodik und strukturierte
-      Talk-Notizen aus wissenschaftlichen Arbeiten und Vorträgen.
+      Drei verbundene Wege: längere Praxisnotizen, strukturierte Lernnotizen aus
+      wissenschaftlichen Arbeiten und Vorträgen sowie wiederverwendbare Forschungsmethoden.
     </p>
   </div>
 
   <NotesHub
     guideCount={guideCount}
     talkCount={talkCount}
+    methodCount={methodCount}
     fieldHref={`${base}de/guides/`}
     talkHref={`${base}de/talks/`}
+    methodHref={`${base}de/methods/`}
     fieldTitle="Feldnotizen"
     talkTitle="Talk-Notizen"
+    methodTitle="Methoden"
     fieldCountLabel={guideCount === 1 ? 'Notiz' : 'Notizen'}
     talkCountLabel={talkCount === 1 ? 'Notiz' : 'Notizen'}
+    methodCountLabel={methodCount === 1 ? 'Methode' : 'Methoden'}
     fieldDescription="Längere Methodik- und Praxisnotizen zum Bewerten, Brechen und Härten von KI-Systemen."
     talkDescription="Vorträge und Papers, eingeordnet nach Threat Models, defensiven Erkenntnissen und persönlichen Takeaways."
+    methodDescription="Wiederverwendbare Vorlagen für Experimentdesign, Paper-Bewertung, Robustheitsmessung und Threat Modeling."
     fieldCta="Feldnotizen öffnen"
     talkCta="Talk-Notizen öffnen"
+    methodCta="Methoden öffnen"
   />
 </Base>

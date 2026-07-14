@@ -19,6 +19,11 @@ const talkEntries = (await getCollection('talks')).sort(
     (a.data.order ?? Number.MAX_SAFE_INTEGER) - (b.data.order ?? Number.MAX_SAFE_INTEGER)
     || b.data.last_updated.getTime() - a.data.last_updated.getTime(),
 );
+const publicationEntries = (await getCollection('profile'))
+  .flatMap((entry) => entry.data.type === 'publication'
+    ? [{ key: entry.data.slug, data: entry.data }]
+    : [])
+  .sort((a, b) => b.data.published_on.localeCompare(a.data.published_on));
 
 const projects = projectEntries
   .filter((entry) =>
@@ -32,19 +37,10 @@ const projects = projectEntries
   .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
 
 const projectCount = projects.length;
-const publicationCount = 1;
+const publicationCount = publicationEntries.length;
 const guideCount = guideEntries.length;
 const talkCount = talkEntries.length;
 const featuredTalks = talkEntries.slice(0, 6);
-const publicationCard = {
-  title: 'Multimodal Emotion Recognition for Mental-Health Screening',
-  subtitle: 'Springer book chapter, Frontiers of ICT in Healthcare, LNNS 519',
-  summary: 'Peer-reviewed work on an LSTM-based speech and text system for emotion recognition, with my role as co-author and project developer.',
-  category: 'publication / springer book chapter / 2023',
-  status: 'Frontiers of ICT in Healthcare, LNNS 519',
-  skills: ['lstm', 'multimodal', 'speech', 'text', 'python', 'mental-health'],
-  domains: ['co-author', 'project developer'],
-};
 ---
 
 <Base
@@ -90,38 +86,38 @@ const publicationCard = {
     </figure>
   </section>
 
-  <section class="home-section principles-section">
+  <section class="home-section principles-section" aria-labelledby="principles-heading">
     <header class="section-heading reveal">
-      <p role="heading" aria-level="2"><span>01</span> Research principles</p>
+      <h2 class="section-title" id="principles-heading"><span>01</span> Research principles</h2>
       <p>How I evaluate evidence</p>
     </header>
     <div class="principle-grid reveal-stagger">
       <div>
         <span>01</span>
-        <h2>Measure statistically.</h2>
+        <h3>Measure statistically.</h3>
         <p>AI failures are probabilistic. Report rates, sample sizes, controls, and uncertainty.</p>
       </div>
       <div>
         <span>02</span>
-        <h2>Report failed iterations.</h2>
+        <h3>Report failed iterations.</h3>
         <p>A discarded shortcut can teach more about the system than a polished final score.</p>
       </div>
       <div>
         <span>03</span>
-        <h2>Separate demos from evidence.</h2>
+        <h3>Separate demos from evidence.</h3>
         <p>Installation, generalisation, utility, and real-world risk are different claims.</p>
       </div>
       <div>
         <span>04</span>
-        <h2>Question perfect results.</h2>
+        <h3>Question perfect results.</h3>
         <p>Perfect scores demand stronger audits, not stronger adjectives.</p>
       </div>
     </div>
   </section>
 
-  <section class="home-section research-section featured-work-section" id="featured-work">
+  <section class="home-section research-section featured-work-section" id="featured-work" aria-labelledby="featured-work-heading">
     <header class="section-heading reveal">
-      <p role="heading" aria-level="2"><span>02</span> Featured work</p>
+      <h2 class="section-title" id="featured-work-heading"><span>02</span> Featured work</h2>
       <p>
         {projectCount.toString().padStart(2, '0')} {projectCount === 1 ? 'project' : 'projects'}
         {' / '}
@@ -134,24 +130,35 @@ const publicationCard = {
           href={`${base}projects/${project.key}/`}
           index={index}
           data={project.data}
+          headingLevel={3}
         />
       ))}
-      <ProjectCard
-        href={`${base}publications/`}
-        index={0}
-        indexPrefix="P"
-        cta="Open publication"
-        statusLabel="Venue"
-        focusLabel="Role"
-        data={publicationCard}
-      />
+      {publicationEntries.map((publication, index) => (
+        <ProjectCard
+          href={`${base}publications/#${publication.key}`}
+          index={index}
+          indexPrefix="P"
+          cta="Open publication"
+          statusLabel="Venue"
+          focusLabel="Role"
+          headingLevel={3}
+          data={{
+            title: publication.data.title,
+            subtitle: `${publication.data.publisher} · ${publication.data.series_abbreviation} ${publication.data.volume}`,
+            summary: publication.data.summary.en,
+            category: `publication / ${publication.data.publication_type.en} / ${publication.data.year}`,
+            status: publication.data.venue,
+            domains: [publication.data.contribution.en],
+          }}
+        />
+      ))}
     </div>
   </section>
 
   {guideEntries.length > 0 && (
-    <section class="home-section notes-section">
+    <section class="home-section notes-section" aria-labelledby="field-notes-heading">
       <header class="section-heading reveal">
-        <p role="heading" aria-level="2"><span>03</span> Field Notes</p>
+        <h2 class="section-title" id="field-notes-heading"><span>03</span> Field Notes</h2>
         <p>{guideCount.toString().padStart(2, '0')} long-form {guideCount === 1 ? 'guide' : 'guides'}</p>
       </header>
       <NoteCarousel
@@ -159,14 +166,15 @@ const publicationCard = {
         hrefPrefix={`${base}guides`}
         indexHref={`${base}guides/`}
         indexCta="Open the full field-note index"
+        headingLevel={3}
       />
     </section>
   )}
 
   {talkEntries.length > 0 && (
-    <section class="home-section talks-section">
+    <section class="home-section talks-section" aria-labelledby="talk-notes-heading">
       <header class="section-heading reveal">
-        <p role="heading" aria-level="2"><span>04</span> Talk Notes</p>
+        <h2 class="section-title" id="talk-notes-heading"><span>04</span> Talk Notes</h2>
         <p>{talkCount.toString().padStart(2, '0')} {talkCount === 1 ? 'note' : 'notes'} from papers and talks</p>
       </header>
 
@@ -174,6 +182,7 @@ const publicationCard = {
         entries={featuredTalks}
         indexHref={`${base}talks/`}
         indexCta="Open the full talk index"
+        headingLevel={3}
       />
     </section>
   )}
@@ -191,3 +200,26 @@ const publicationCard = {
     </div>
   </section>
 </Base>
+
+<style>
+  .section-title {
+    margin: 0;
+    color: var(--ink);
+    font: inherit;
+    font-weight: 750;
+  }
+
+  .section-title span {
+    margin-right: 10px;
+    color: var(--signal);
+  }
+
+  .principle-grid h3 {
+    margin: 20px 0 10px;
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+  }
+</style>

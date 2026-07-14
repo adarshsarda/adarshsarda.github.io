@@ -41,6 +41,10 @@ const evidenceSummaryLabel = lang === 'de' ? `${evidence.label} Evidenzübersich
 const verifiedResultsLabel = lang === 'de' ? 'Verifizierte Ergebnisse' : 'Verified results';
 const noneLabel = lang === 'de' ? 'Keine' : 'None';
 const ciLabel = lang === 'de' ? '95%-KI' : '95% CI';
+const conditionTableLabel = lang === 'de' ? 'Experimentbedingungen' : 'Experiment conditions';
+const conditionHeaders = lang === 'de'
+  ? ['Bedingung', 'Erster Intent', 'Beziehung', 'Zweiter Intent', 'Ergebnis']
+  : ['Condition', 'First intent', 'Relation', 'Second intent', 'Outcome'];
 ---
 
 <section class="case-evidence" aria-label={evidenceSummaryLabel}>
@@ -49,14 +53,17 @@ const ciLabel = lang === 'de' ? '95%-KI' : '95% CI';
       <p class="profile-kicker">{evidence.label}</p>
       <h2>{evidence.title}</h2>
     </div>
-    <div class="condition-grid">
+    <div class="condition-grid" role="table" aria-label={conditionTableLabel}>
+      <div class="condition-row visually-hidden" role="row">
+        {conditionHeaders.map((header) => <span role="columnheader">{header}</span>)}
+      </div>
       {evidence.conditions.map((condition) => (
-        <div class:list={['condition-row', { trigger: condition.trigger }]}>
-          <b>{condition.code}</b>
-          <span>{condition.first}</span>
-          <i>{condition.relation}</i>
-          <span class:list={{ 'empty-cell': !condition.second }}>{condition.second ?? noneLabel}</span>
-          <strong>{condition.outcome}</strong>
+        <div class:list={['condition-row', { trigger: condition.trigger }]} role="row">
+          <b role="cell">{condition.code}</b>
+          <span role="cell">{condition.first}</span>
+          <i role="cell">{condition.relation}</i>
+          <span role="cell" class:list={{ 'empty-cell': !condition.second }}>{condition.second ?? noneLabel}</span>
+          <strong role="cell">{condition.outcome}</strong>
         </div>
       ))}
     </div>
@@ -114,6 +121,17 @@ const ciLabel = lang === 'de' ? '95%-KI' : '95% CI';
 
   .condition-grid {
     border-top: 1px solid var(--rule-dark);
+  }
+
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
   }
 
   .condition-row {

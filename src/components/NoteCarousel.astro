@@ -14,6 +14,7 @@ interface Props {
   indexCta: string;
   kicker?: string;
   cta?: string;
+  headingLevel?: 2 | 3;
 }
 
 const {
@@ -26,6 +27,7 @@ const {
   indexCta,
   kicker = 'Practitioner field note',
   cta = 'Read the note',
+  headingLevel = 2,
 } = Astro.props;
 
 const noteCount = entries.length;
@@ -61,6 +63,7 @@ const noteCount = entries.length;
           description={note.data.description}
           tags={note.data.tags}
           cta={cta}
+          headingLevel={headingLevel}
         />
       </li>
     ))}
@@ -241,11 +244,11 @@ const noteCount = entries.length;
   }
 
   .note-carousel-arrow-prev {
-    left: -24px;
+    left: -16px;
   }
 
   .note-carousel-arrow-next {
-    right: -24px;
+    right: -16px;
   }
 
   .note-carousel-footer {
@@ -287,17 +290,17 @@ const noteCount = entries.length;
 
   @media (max-width: 600px) {
     .note-carousel-arrow {
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
       font-size: 1.2rem;
     }
 
     .note-carousel-arrow-prev {
-      left: -20px;
+      left: 4px;
     }
 
     .note-carousel-arrow-next {
-      right: -20px;
+      right: 4px;
     }
 
     .note-carousel-footer {

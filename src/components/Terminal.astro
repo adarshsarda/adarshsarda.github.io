@@ -10,13 +10,24 @@ interface Props {
 const { lang = 'en' } = Astro.props;
 const prefix = lang === 'de' ? '/de' : '';
 const collectionNames = lang === 'de'
-  ? { projects: 'projectsDe' as const, guides: 'guidesDe' as const, talks: 'talksDe' as const }
-  : { projects: 'projects' as const, guides: 'guides' as const, talks: 'talks' as const };
+  ? {
+      projects: 'projectsDe' as const,
+      guides: 'guidesDe' as const,
+      talks: 'talksDe' as const,
+      methods: 'methodsDe' as const,
+    }
+  : {
+      projects: 'projects' as const,
+      guides: 'guides' as const,
+      talks: 'talks' as const,
+      methods: 'methods' as const,
+    };
 
-const [projectCollection, guideCollection, talkCollection, profileCollection] = await Promise.all([
+const [projectCollection, guideCollection, talkCollection, methodCollection, profileCollection] = await Promise.all([
   getCollection(collectionNames.projects),
   getCollection(collectionNames.guides),
   getCollection(collectionNames.talks),
+  getCollection(collectionNames.methods),
   getCollection('profile'),
 ]);
 
@@ -37,25 +48,33 @@ const visibleGuides = guideCollection.filter(isPublishable);
 const visibleTalks = talkCollection.filter(isPublishable);
 const guideCount = visibleGuides.length;
 const talkCount = visibleTalks.length;
-const publicationCount = profileCollection.filter((entry) => entry.data.type === 'publication').length;
-const springerPublicationEntry = profileCollection.find(
-  (entry) => entry.data.type === 'publication' && entry.data.slug === 'publications',
-);
-
-if (!springerPublicationEntry || springerPublicationEntry.data.type !== 'publication') {
-  throw new Error('The canonical publication record content/profile/publications.md is missing.');
-}
-
-const springerPublication = springerPublicationEntry.data;
-const publicationOwnerPosition =
-  springerPublication.authors.findIndex((author) => author.portfolio_owner) + 1;
-const springerVenue =
-  `${springerPublication.publisher}, ${springerPublication.venue}, ` +
-  `${springerPublication.series_abbreviation} ${springerPublication.volume} (${springerPublication.year})`;
-const springerContribution = {
-  en: `${springerPublication.contribution.en}; ${publicationOwnerPosition} of ${springerPublication.authors.length} authors.`,
-  de: `${springerPublication.contribution.de}; ${publicationOwnerPosition}. von ${springerPublication.authors.length} Autoren.`,
+const methodCount = methodCollection.length;
+const publicationEntries = profileCollection
+  .flatMap((entry) => entry.data.type === 'publication' ? [entry.data] : [])
+  .sort((a, b) => b.published_on.localeCompare(a.published_on));
+const publicationCount = publicationEntries.length;
+type Publication = (typeof publicationEntries)[number];
+const publicationVenue = (publication: Publication) =>
+  `${publication.publisher}, ${publication.venue}, ` +
+  `${publication.series_abbreviation} ${publication.volume} (${publication.year})`;
+const publicationContribution = (publication: Publication, locale: 'en' | 'de') => {
+  const ownerPosition = publication.authors.findIndex((author) => author.portfolio_owner) + 1;
+  return locale === 'de'
+    ? `${publication.contribution.de}; ${ownerPosition}. von ${publication.authors.length} Autoren.`
+    : `${publication.contribution.en}; ${ownerPosition} of ${publication.authors.length} authors.`;
 };
+const publicationLines = (locale: 'en' | 'de') => publicationEntries.flatMap((publication) => [
+  `  ${publication.title}`,
+  `    ${publicationVenue(publication)}`,
+  `    ${publicationContribution(publication, locale)}`,
+  `    DOI: https://doi.org/${publication.doi}`,
+  `    ${prefix}/publications/#${publication.slug}`,
+]);
+const publicationTimelineLines = (locale: 'en' | 'de') => [...publicationEntries]
+  .sort((a, b) => a.year - b.year)
+  .map((publication) =>
+    `${publication.year}  ${publication.publication_type[locale]}, ${publicationContribution(publication, locale)}`,
+  );
 const publicationLabelEn = publicationCount === 1 ? 'publication' : 'publications';
 const publicationLabelDe = publicationCount === 1 ? 'Publikation' : 'Publikationen';
 const odsbSubmission = projectEntries
@@ -97,7 +116,7 @@ const copy = {
         'whoami           profile and current focus',
         'projects         documented research case files',
         'publications     peer-reviewed work',
-        'writing          field notes and talk notes',
+        'writing          field notes, talk notes, and methods',
         'skills           skills and evidence',
         'timeline         academic and professional path',
         'contact          ways to reach me',
@@ -119,17 +138,14 @@ const copy = {
       ],
       publications: [
         `${publicationCount} peer-reviewed ${publicationLabelEn}:`,
-        `  ${springerPublication.title}`,
-        `    ${springerVenue}`,
-        `    ${springerContribution.en}`,
-        `    DOI: https://doi.org/${springerPublication.doi}`,
-        `    ${prefix}/publications/`,
+        ...publicationLines('en'),
       ],
       writing: [
-        `${guideCount} field notes, ${talkCount} talk notes.`,
+        `${guideCount} field notes, ${talkCount} talk notes, ${methodCount} methods.`,
         `  ${prefix}/notes/    writing index`,
         `  ${prefix}/guides/   long-form methodology and checklists`,
         `  ${prefix}/talks/    notes on papers and talks`,
+        `  ${prefix}/methods/  research and evaluation methods`,
       ],
       skills: [
         'Proficiency is evidenced, not aspirational:',
@@ -140,7 +156,7 @@ const copy = {
       ],
       timeline: [
         '2019  B.Tech Information Technology, IEM Kolkata (to 2023)',
-        `${springerPublication.year}  ${springerPublication.publication_type.en}, ${springerContribution.en}`,
+        ...publicationTimelineLines('en'),
         '2023  AI Research Analyst, GreyB Research (to 2024)',
         '2025  M.Sc. AI for Industrial Applications, OTH Amberg-Weiden',
         `${odsbSubmission}  ODSB submitted: order-dependent semantic backdoors`,
@@ -195,7 +211,7 @@ const copy = {
         'whoami           Profil und aktueller Fokus',
         'projects         dokumentierte Forschungs-Fallstudien',
         'publications     begutachtete Arbeiten',
-        'writing          Feldnotizen und Talk-Notizen',
+        'writing          Feldnotizen, Talk-Notizen und Methoden',
         'skills           Skills und Evidenz',
         'timeline         akademischer und beruflicher Weg',
         'contact          Kontaktwege',
@@ -217,17 +233,14 @@ const copy = {
       ],
       publications: [
         `${publicationCount} begutachtete ${publicationLabelDe}:`,
-        `  ${springerPublication.title}`,
-        `    ${springerVenue}`,
-        `    ${springerContribution.de}`,
-        `    DOI: https://doi.org/${springerPublication.doi}`,
-        `    ${prefix}/publications/`,
+        ...publicationLines('de'),
       ],
       writing: [
-        `${guideCount} Feldnotizen, ${talkCount} Talk-Notizen.`,
+        `${guideCount} Feldnotizen, ${talkCount} Talk-Notizen, ${methodCount} Methoden.`,
         `  ${prefix}/notes/    Text-Index`,
         `  ${prefix}/guides/   ausführliche Methodik und Checklisten`,
         `  ${prefix}/talks/    Notizen zu Papers und Vorträgen`,
+        `  ${prefix}/methods/  Forschungs- und Evaluationsmethoden`,
       ],
       skills: [
         'Proficiency ist belegt, nicht angestrebt:',
@@ -238,7 +251,7 @@ const copy = {
       ],
       timeline: [
         '2019  B.Tech Informationstechnologie, IEM Kolkata (bis 2023)',
-        `${springerPublication.year}  ${springerPublication.publication_type.de}, ${springerContribution.de}`,
+        ...publicationTimelineLines('de'),
         '2023  AI Research Analyst, GreyB Research (bis 2024)',
         '2025  M.Sc. KI für industrielle Anwendungen, OTH Amberg-Weiden',
         `${odsbSubmission}  ODSB eingereicht: reihenfolgeabhängige semantische Backdoors`,
@@ -531,7 +544,11 @@ const payload = {
   }
 
   .terminal-close {
+    min-width: 44px;
+    min-height: 44px;
     padding: 0 4px;
+    display: grid;
+    place-items: center;
     color: color-mix(in srgb, var(--paper-raised) 70%, transparent);
     background: transparent;
     border: 0;
@@ -612,7 +629,7 @@ const payload = {
     font: inherit;
   }
 
-  .terminal-input:focus {
+  .terminal-input:focus:not(:focus-visible) {
     outline: none;
   }
 

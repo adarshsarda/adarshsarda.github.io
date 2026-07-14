@@ -7,8 +7,6 @@ tags: [model-evaluation, statistical-evaluation, methodology]
 related: []
 ---
 
-# Wie ich Robustheit messe
-
 Vier verschiedene Claims, die ich nie zu einer einzigen Zahl zusammenfasse.
 
 ## 1. Installation (in-distribution)

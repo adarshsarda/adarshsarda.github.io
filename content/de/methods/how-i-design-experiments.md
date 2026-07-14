@@ -7,8 +7,6 @@ tags: [experimental-design, statistical-evaluation, methodology]
 related: []
 ---
 
-# Wie ich Experimente designe
-
 Die Disziplin, die ich bei ODSB angewandt habe, verallgemeinert zu einem wiederverwendbaren Vorgehen.
 
 ## 1. Vor dem Training präregistrieren

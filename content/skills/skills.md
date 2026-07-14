@@ -34,8 +34,10 @@ evidenced project; **working** = used substantively with a concrete artifact;
 - **TensorFlow / Keras:** *working* → recurrent text-classification experiments in the
   emotion-recognition repository.
 - **LoRA / PEFT / 4-bit quantization:** *working* → ODSB (Qwen2.5-3B-Instruct, rank-8 LoRA).
-- **Multimodal deep learning (LSTM, speech + text):** *working* → [Springer publication](/publications/),
-  ~86% accuracy.
+- **Multimodal deep learning (LSTM, speech + text):** *working* → [Springer publication](/publications/).
+  The publisher abstract reports approximately 86% accuracy for model-patient conversational
+  data; this portfolio does not have the denominator, split, confidence interval, or an
+  independent reproduction.
 - **scikit-learn, classical ML:** *working* → patent-classification model at GreyB.
 
 ## Research & technical analysis

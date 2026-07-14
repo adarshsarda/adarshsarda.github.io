@@ -74,11 +74,26 @@ depends_on[], summary, tags[]`
 Repo-internal roadmap. Not added to nav, not rendered as public pages.
 
 **redteam-technique**: `redteam/techniques/*.md`
-`type, slug, title, status, tags[], owasp[], atlas[], target_systems[](chatbot|rag|agentic),
+`type, slug, title, status, tags[], framework_refs{},
+target_systems[](chatbot|rag|agentic|cyber-physical),
 objective_success_criteria, severity_default, probe_template, mitigations[], do_not_claim[]`
+
+`framework_refs` uses edition-qualified keys. Every key is present even when its array is
+empty: `owasp_llm_2025`, `owasp_agentic_2026`, `owasp_aisvs_1_0`,
+`owasp_aitg_v1`, and `mitre_atlas`. Put only direct, reviewed mappings in these arrays;
+describe approximate or conditional relationships in prose.
 
 **redteam-doc**: `redteam/{taxonomy,scoring,report-template,rules-of-engagement}.md`
 `type, slug, title, status, tags[]`
+
+**redteam-framework**: `redteam/frameworks/*.md`
+`type, slug, title, status, framework_id, version, reviewed_on, source_snapshots[],
+sources[], tags[], related[]?, do_not_claim[]`
+
+Private, authored summaries of versioned external standards. `source_snapshots` points to
+one or more immutable raw-capture manifests; `sources` points to canonical upstream pages.
+A framework note is interpretation and navigation, never a claim of certification or
+complete coverage.
 
 **meta**: `meta/*.md`, `profile/positioning.md`
 `type, slug, title, audience`
@@ -87,7 +102,7 @@ objective_success_criteria, severity_default, probe_template, mitigations[], do_
 - `category`: `original-research` | `applied` | `reproduction`
 - `status`: `planned` | `in-progress` | `active` | `complete` | `paused`
 - `part`: `method` | `results` | `reflection`
-- `target_systems`: `chatbot` | `rag` | `agentic`
+- `target_systems`: `chatbot` | `rag` | `agentic` | `cyber-physical`
 - project `projection.visibility`: `hidden` | `public`
 - project-idea `module`: `deep-vision` | `ai-project` | `self-study` | `portfolio`
 - project-idea `decision`: `candidate` | `selected` | `parked` | `superseded`
@@ -95,6 +110,13 @@ objective_success_criteria, severity_default, probe_template, mitigations[], do_
 - `proficiency`: `proficient` | `working` | `familiar`
 
 ## External reference frameworks (redteam content)
-- OWASP LLM Top 10: `LLM01`...`LLM10`
-- MITRE ATLAS: tactic/technique IDs (e.g. `AML.T0051`)
-- NIST AI RMF: function references (Govern / Map / Measure / Manage)
+
+- `owasp_llm_2025`: `LLM01`...`LLM10`
+- `owasp_agentic_2026`: `ASI01`...`ASI10`
+- `owasp_aisvs_1_0`: versioned controls such as `v1.0-C8.2.4`
+- `owasp_aitg_v1`: test cases such as `AITG-APP-02`
+- `mitre_atlas`: tactic/technique IDs such as `AML.T0051` or `AML.T0080.000`
+
+These mappings answer different questions: Top 10 entries classify risk, AISVS controls
+state verification requirements, AITG entries describe tests, and ATLAS IDs describe
+adversary behavior. Do not present a crosswalk as proof that the concepts are equivalent.

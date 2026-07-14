@@ -18,7 +18,10 @@
     "kb:map": "node private/tools/wiki-index/build-kb-map.mjs",
     "kb:search": "node private/tools/wiki-index/search.mjs",
     "kb:doctor": "node scripts/kb-doctor.mjs",
-    "kb:test": "node --test private/tools/wiki-index/authored-content.test.mjs"
+    "kb:owasp": "node private/tools/owasp-ingest/index.mjs sync",
+    "kb:owasp:offline": "node private/tools/owasp-ingest/index.mjs build --offline",
+    "kb:owasp:check": "node private/tools/owasp-ingest/index.mjs check --offline",
+    "kb:test": "node --test private/tools/wiki-index/authored-content.test.mjs private/tools/wiki-index/framework-refs.test.mjs private/tools/owasp-ingest/ingest.test.mjs"
   },
   "dependencies": {
     "astro": "^5.6.0",

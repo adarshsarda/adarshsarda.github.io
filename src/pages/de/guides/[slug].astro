@@ -1,6 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import ArtifactLinks from '../../../components/ArtifactLinks.astro';
+import MobileToc from '../../../components/MobileToc.astro';
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 
@@ -56,6 +57,8 @@ const dateFmt = new Intl.DateTimeFormat('de-DE', { year: 'numeric', month: 'long
     )}
     <ArtifactLinks artifacts={data.artifacts} lang="de" />
   </header>
+
+  <MobileToc headings={toc} lang="de" />
 
   <div class="with-toc">
     <article class="prose">

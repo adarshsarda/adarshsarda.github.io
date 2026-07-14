@@ -1,0 +1,59 @@
+---
+interface TocHeading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: TocHeading[];
+  lang?: 'en' | 'de';
+}
+
+const { headings, lang = 'en' } = Astro.props;
+const isGerman = lang === 'de';
+const label = isGerman ? 'Auf dieser Seite' : 'On this page';
+const itemCount = headings.length;
+const countLabel = isGerman
+  ? `${itemCount} ${itemCount === 1 ? 'Abschnitt' : 'Abschnitte'}`
+  : `${itemCount} ${itemCount === 1 ? 'section' : 'sections'}`;
+---
+
+{itemCount > 0 && (
+  <details class="mobile-toc">
+    <summary>{label} <span aria-hidden="true">/</span> {countLabel}</summary>
+    <nav aria-label={label}>
+      <ol>
+        {headings.map((heading, index) => (
+          <li class={`depth-${heading.depth}`}>
+            <a href={`#${heading.slug}`}>
+              <span class="mobile-toc-number" aria-hidden="true">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <span>{heading.text}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+  </details>
+)}
+
+<style>
+  .mobile-toc a {
+    gap: 10px;
+  }
+
+  .mobile-toc .depth-3 a {
+    padding-left: 20px;
+  }
+
+  .mobile-toc-number {
+    flex: 0 0 24px;
+    color: var(--signal);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+</style>

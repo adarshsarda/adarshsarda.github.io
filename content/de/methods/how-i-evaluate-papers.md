@@ -7,8 +7,6 @@ tags: [model-evaluation, red-teaming, methodology]
 related: []
 ---
 
-# Wie ich Papers bewerte
-
 Eine Lese-Checkliste, die ich anwende, bevor ich einem Ergebnis traue. Ziel ist, einen
 echten Befund von einem nur gut präsentierten zu unterscheiden.
 

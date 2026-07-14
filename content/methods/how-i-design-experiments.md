@@ -7,8 +7,6 @@ tags: [experimental-design, statistical-evaluation, methodology]
 related: [projects/odsb-semantic-backdoors]
 ---
 
-# How I Design a Security Experiment
-
 The discipline I used on ODSB, generalized into a reusable procedure.
 
 ## 1. Pre-register before training

@@ -2,31 +2,43 @@
 interface Props {
   guideCount: number;
   talkCount: number;
+  methodCount: number;
   fieldHref: string;
   talkHref: string;
+  methodHref: string;
   fieldCountLabel: string;
   talkCountLabel: string;
+  methodCountLabel: string;
   fieldDescription: string;
   talkDescription: string;
+  methodDescription: string;
   fieldCta: string;
   talkCta: string;
+  methodCta: string;
   fieldTitle?: string;
   talkTitle?: string;
+  methodTitle?: string;
 }
 
 const {
   guideCount,
   talkCount,
+  methodCount,
   fieldHref,
   talkHref,
+  methodHref,
   fieldCountLabel,
   talkCountLabel,
+  methodCountLabel,
   fieldDescription,
   talkDescription,
+  methodDescription,
   fieldCta,
   talkCta,
+  methodCta,
   fieldTitle = 'Field Notes',
   talkTitle = 'Talk Notes',
+  methodTitle = 'Methods',
 } = Astro.props;
 ---
 
@@ -48,13 +60,22 @@ const {
     <p>{talkDescription}</p>
     <span class="notes-hub-cta">{talkCta} <span aria-hidden="true">→</span></span>
   </a>
+
+  <a class="notes-hub-card notes-hub-card--method" href={methodHref}>
+    <div class="notes-hub-top">
+      <span class="notes-hub-count">{methodCount} {methodCountLabel}</span>
+    </div>
+    <h2>{methodTitle}</h2>
+    <p>{methodDescription}</p>
+    <span class="notes-hub-cta">{methodCta} <span aria-hidden="true">→</span></span>
+  </a>
 </div>
 
 <style>
   .notes-hub {
     margin-top: 18px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
   }
 
@@ -74,6 +95,10 @@ const {
 
   .notes-hub-card--talk {
     background: var(--moss);
+  }
+
+  .notes-hub-card--method {
+    background: var(--ink);
   }
 
   .notes-hub-card:hover {
@@ -127,7 +152,7 @@ const {
     text-underline-offset: 4px;
   }
 
-  @media (max-width: 720px) {
+  @media (max-width: 900px) {
     .notes-hub {
       grid-template-columns: 1fr;
     }

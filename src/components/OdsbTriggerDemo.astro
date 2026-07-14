@@ -95,7 +95,7 @@ const presets = [
 
   <div class="demo-layout">
     <div class="conversation-builder">
-      <div class="preset-row" aria-label={c.presetLabel}>
+      <div class="preset-row" role="group" aria-label={c.presetLabel}>
         <span>{c.presets}</span>
         <div class="preset-buttons">
           {presets.map((preset, index) => (
@@ -319,6 +319,8 @@ const presets = [
 
   .preset-button,
   .intent-button {
+    min-width: 44px;
+    min-height: 44px;
     padding: 8px 10px;
     color: var(--ink);
     background: transparent;

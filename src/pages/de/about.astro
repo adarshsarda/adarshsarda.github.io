@@ -38,8 +38,8 @@ const base = import.meta.env.BASE_URL;
         </p>
       </section>
 
-      <section class="profile-card profile-card--edu">
-        <p class="profile-kicker">Ausbildung</p>
+      <section class="profile-card profile-card--edu" aria-labelledby="ausbildung-heading">
+        <h2 class="profile-kicker" id="ausbildung-heading">Ausbildung</h2>
         <div class="timeline-list">
           <div class="timeline-entry">
             <p class="timeline-date">03/2025 - heute</p>
@@ -77,7 +77,7 @@ const base = import.meta.env.BASE_URL;
       </section>
     </article>
 
-    <aside class="profile-facts">
+    <aside class="profile-facts" aria-label="Profildaten">
       <figure class="profile-photo-card">
         <img
           src={`${base}images/portrait.jpeg`}
@@ -88,7 +88,7 @@ const base = import.meta.env.BASE_URL;
         />
         <figcaption>
           <span>Porträt</span>
-          <span>Persoenlicher Kontext</span>
+          <span>Persönlicher Kontext</span>
         </figcaption>
       </figure>
       <div class="fact-block">

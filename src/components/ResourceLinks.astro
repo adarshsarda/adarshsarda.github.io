@@ -16,6 +16,24 @@ interface Props {
 
 const { paperUrl, artifacts = [], compact = false, dark = false, lang = 'en' } = Astro.props;
 const originalPaperLabel = lang === 'de' ? 'Originalpaper' : 'Original paper';
+const kindLabels: Record<string, Record<string, string>> = {
+  en: {
+    paper: 'paper',
+    report: 'report',
+    code: 'code',
+    publication: 'publication',
+    slides: 'slides',
+    manuscript: 'manuscript',
+  },
+  de: {
+    paper: 'Paper',
+    report: 'Bericht',
+    code: 'Code',
+    publication: 'Publikation',
+    slides: 'Folien',
+    manuscript: 'Manuskript',
+  },
+};
 const resources = [
   ...(paperUrl ? [{ kind: 'paper', label: originalPaperLabel, href: paperUrl }] : []),
   ...artifacts.flatMap((artifact) => {
@@ -35,7 +53,7 @@ const resources = [
           target={opensNewTab ? '_blank' : undefined}
           rel={opensNewTab ? 'noopener noreferrer' : undefined}
         >
-          <span>{resource.kind}</span>
+          <span>{kindLabels[lang][resource.kind] ?? resource.kind}</span>
           {resource.label}
           <b aria-hidden="true">↗</b>
         </a>

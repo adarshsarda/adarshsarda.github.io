@@ -9,9 +9,10 @@ interface Props {
   index: number;
   hrefPrefix?: string;
   lang?: 'en' | 'de';
+  headingLevel?: 2 | 3;
 }
 
-const { entry, index, hrefPrefix = '/talks', lang = 'en' } = Astro.props;
+const { entry, index, hrefPrefix = '/talks', lang = 'en', headingLevel = 2 } = Astro.props;
 const { data } = entry;
 const href = `${hrefPrefix}/${entry.id}/`;
 const difficultyLabels: Record<string, Record<string, string>> = {
@@ -33,20 +34,22 @@ const formatLabels: Record<string, Record<string, string>> = {
   },
 };
 const whyLabel = lang === 'de' ? 'Warum ich das aufgenommen habe' : 'Why I added this';
-const readLabel = lang === 'de' ? 'Talk Note lesen' : 'Read the talk note';
+const readLabel = lang === 'de' ? 'Talk-Notiz lesen' : 'Read the talk note';
 ---
 
 <article class="talk-card">
   <div class="talk-card-top">
     <span class="talk-number">T-{String(index + 1).padStart(2, '0')}</span>
-    <div class="badges" aria-label={lang === 'de' ? 'Talk-Metadaten' : 'Talk metadata'}>
+    <div class="badges" role="group" aria-label={lang === 'de' ? 'Talk-Metadaten' : 'Talk metadata'}>
       <span>{difficultyLabels[lang][data.difficulty] ?? data.difficulty}</span>
       <span>{formatLabels[lang][data.format] ?? data.format}</span>
     </div>
   </div>
 
   <p class="talk-source">{data.speaker} / {data.source} / {data.year}</p>
-  <h2><a href={href}>{data.title}</a></h2>
+  {headingLevel === 3
+    ? <h3><a href={href}>{data.title}</a></h3>
+    : <h2><a href={href}>{data.title}</a></h2>}
   <p class="talk-summary">{data.description} {data.takeaway}</p>
 
   <div class="why-added">
@@ -55,7 +58,7 @@ const readLabel = lang === 'de' ? 'Talk Note lesen' : 'Read the talk note';
   </div>
 
   {data.tags && data.tags.length > 0 && (
-    <ul class="talk-tags" aria-label="Topics">
+    <ul class="talk-tags" aria-label={lang === 'de' ? 'Themen' : 'Topics'}>
       {data.tags.map((tag) => <li>{tag}</li>)}
     </ul>
   )}
@@ -124,7 +127,7 @@ const readLabel = lang === 'de' ? 'Talk Note lesen' : 'Read the talk note';
     font-size: 0.62rem;
   }
 
-  h2 {
+  :is(h2, h3) {
     margin: 0;
     font-family: var(--font-display);
     font-size: clamp(1.65rem, 3vw, 2.3rem);
@@ -133,12 +136,12 @@ const readLabel = lang === 'de' ? 'Talk Note lesen' : 'Read the talk note';
     line-height: 1.05;
   }
 
-  h2 a {
+  :is(h2, h3) a {
     color: var(--paper-raised);
     text-decoration: none;
   }
 
-  h2 a:hover {
+  :is(h2, h3) a:hover {
     color: #f0cbd4;
   }
 
