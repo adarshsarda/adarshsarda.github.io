@@ -2,7 +2,7 @@
 type: method
 slug: how-i-design-experiments
 title: "How I Design a Security Experiment"
-description: "My approach to designing AI-security experiments — hypotheses, controls, sample sizes, and pre-registered thresholds."
+description: "My approach to designing AI-security experiments: hypotheses, controls, sample sizes, and pre-registered thresholds."
 tags: [experimental-design, statistical-evaluation, methodology]
 related: [projects/odsb-semantic-backdoors]
 ---

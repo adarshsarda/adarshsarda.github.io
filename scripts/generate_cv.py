@@ -260,7 +260,7 @@ def draw_skills(pdf, groups, x, y, width) -> float:
 def create_pdf(content: dict) -> Path:
     output = CV_DIR / content["filename"]
     pdf = canvas.Canvas(str(output), pagesize=A4, pageCompression=1)
-    pdf.setTitle(f"{content['title_word'].title()} — Adarsh Sarda")
+    pdf.setTitle(f"{content['title_word'].title()}: Adarsh Sarda")
     pdf.setAuthor("Adarsh Sarda")
     pdf.setSubject("Curriculum vitae")
 

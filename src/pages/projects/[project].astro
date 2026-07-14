@@ -157,7 +157,7 @@ const sections = await Promise.all(
   {OdsbTriggerDemo && <OdsbTriggerDemo />}
 
   <details class="mobile-toc">
-    <summary>Case file — {sections.length} sections</summary>
+    <summary>Case file: {sections.length} sections</summary>
     <ol>
       {sections.map((s, index) => (
         <li><a href={`#section-${s.part}`}>{String(index + 1).padStart(2, '0')} · {s.label}</a></li>

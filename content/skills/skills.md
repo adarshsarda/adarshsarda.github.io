@@ -24,7 +24,7 @@ evidenced project; **working** = used substantively with a concrete artifact;
 - **Red-teaming methodology:** *working* → the [practitioner guide](/guides/red-teaming-ai-systems/) (six-phase methodology,
   mapped to OWASP LLM Top 10 / MITRE ATLAS / NIST AI RMF).
 - **Statistical evaluation:** *proficient* → ODSB: pre-registered thresholds, exact
-  Clopper–Pearson CIs, Fisher's exact test, sample-size discipline.
+  Clopper-Pearson CIs, Fisher's exact test, sample-size discipline.
 - **Experimental design:** *proficient* → ODSB five-condition control design.
 
 ## Machine learning engineering
