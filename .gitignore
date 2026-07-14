@@ -23,3 +23,16 @@ Thumbs.db
 
 # local agent / editor config
 .claude/
+
+# scratch
+tmp/
+
+# ===== Private wiki lane (local-only; never committed to this public repo) =====
+# Personal knowledge base: raw sources, offensive tradecraft, unpublished
+# research directions, and mirrored external references. These stay on the
+# local machine and are NOT part of the published site or the public repo.
+# NOTE: gitignored == not backed up by the remote. Keep a separate backup.
+private/
+content/redteam/
+content/project-ideas/
+content/literature/

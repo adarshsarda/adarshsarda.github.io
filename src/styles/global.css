@@ -1409,7 +1409,7 @@ main {
   .hero-portrait {
     width: min(100%, 430px);
     max-width: none;
-    margin: 0;
+    margin: 0 auto;
   }
 
   .with-toc {
