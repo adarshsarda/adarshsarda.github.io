@@ -5,7 +5,7 @@ title: "BadNets: Identifying Vulnerabilities in the ML Supply Chain"
 authors: "Gu, Dolan-Gavitt, Garg"
 venue: "arXiv (later IEEE Access)"
 year: 2017
-doi_or_url: "arXiv:1708.06733"   # TODO: verify exact citation from source
+doi_or_url: "arXiv:1708.06733"
 tags: [backdoor-attacks, data-poisoning, computer-vision]
 relevance: [projects/odsb-semantic-backdoors]
 ---

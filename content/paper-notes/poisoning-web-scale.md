@@ -5,7 +5,7 @@ title: "Poisoning Web-Scale Training Datasets Is Practical"
 authors: "Carlini et al."
 venue: "arXiv (later IEEE S&P)"
 year: 2023
-doi_or_url: "arXiv:2302.10149"   # TODO: verify
+doi_or_url: "arXiv:2302.10149"
 tags: [data-poisoning, training-data-poisoning, ai-safety]
 relevance: [projects/odsb-semantic-backdoors]
 ---
