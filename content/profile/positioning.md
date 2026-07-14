@@ -36,7 +36,7 @@ Attacks and the defences that catch them, across text and vision:
 
 ## Global do_not_claim (applies everywhere)
 
-- Not "published" or "peer-reviewed" for ODSB: it is a course project, submitted 2026-06-19.
+- Not "published" or "peer-reviewed" for ODSB: it is a course project, submitted 2026-06-18.
 - Not first/sole author of the Springer chapter: Adarsh is a co-author (3rd of 6).
 - No "expert" framing: Adarsh is a student/early-career researcher.
 - No security/attack result generalized beyond the exact model, data, and conditions tested.

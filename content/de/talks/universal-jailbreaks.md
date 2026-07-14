@@ -13,7 +13,7 @@ paper_url: "https://arxiv.org/abs/2307.15043"
 tags: ["jailbreaking", "adversarial-prompts", "alignment", "transfer-attacks", "llm-security"]
 year: 2023
 source: "Zou et al. / arXiv"
-difficulty: "Intermediate"
+difficulty: "Advanced"
 takeaway: "Adversarial suffixes können auf zugänglichen Modellen optimiert werden und auf andere aligned systems transferieren, inklusive Black-Box-Ziele."
 why_added: "Das ist eine Grundlage für automatisierte Jailbreak-Forschung und erinnert daran, dass statische Prompt-Listen schwache Evidenz gegen adaptive Angreifer sind."
 why_matters: "Manuelle Jailbreaks wirken wie fragile Prompt-Tricks. Optimierung und Transfer machen daraus einen wiederholbaren adversarial search process."

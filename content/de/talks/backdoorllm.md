@@ -13,7 +13,7 @@ paper_url: "https://arxiv.org/abs/2408.12798"
 tags: ["llm-security", "backdoor-attacks", "benchmarking", "data-poisoning", "model-evaluation"]
 year: 2024
 source: "Li et al. / arXiv"
-difficulty: "Advanced"
+difficulty: "Intermediate"
 takeaway: "LLM-Backdoors sind eine Familie von Risiken über Daten, Gewichte, Hidden States und Reasoning-Kontext, nicht ein einzelnes Trigger-Detection-Problem."
 why_added: "Ich wollte eine Karte, die mein eigenes Backdoor-Experiment in die größere Angriffslandschaft einordnet und Angreiferfähigkeiten explizit macht."
 why_matters: "Backdoor-Papers nutzen oft inkompatible Tasks, Trigger, Modelle und Erfolgskriterien. Ein gemeinsamer Benchmark hilft, echte Angriffsunterschiede von Evaluationsentscheidungen zu trennen."

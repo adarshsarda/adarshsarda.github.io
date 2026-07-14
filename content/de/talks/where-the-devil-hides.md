@@ -11,7 +11,7 @@ paper_title: "Where the Devil Hides: Deepfake Detectors Can No Longer Be Trusted
 paper_authors: ["Shuaiwei Yuan", "Junyu Dong", "Yuezun Li"]
 paper_url: "https://arxiv.org/abs/2505.08255"
 tags: ["ai-security", "deepfakes", "backdoor-attacks", "data-poisoning", "computer-vision"]
-year: 2025
+year: 2026
 source: "AI Conference / CVPR 2025 paper"
 difficulty: "Advanced"
 takeaway: "Ein Deepfake-Detektor kann normale clean accuracy behalten, während ein kleiner vergifteter Trainingsanteil eine passcode-gesteuerte Failure Mode installiert."
