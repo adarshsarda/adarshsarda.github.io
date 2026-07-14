@@ -8,6 +8,7 @@ export const FORBIDDEN_PUBLIC_PATHS = [
   'private/',
   'content/redteam/',
   'content/project-ideas/',
+  'content/project-notes/',
   'content/literature/',
   'content/profile/positioning.md',
   'AGENTS.md',

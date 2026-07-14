@@ -34,9 +34,13 @@ tmp/
 # local machine and are NOT part of the published site or the public repo.
 # They are backed up only by the separate private overlay when that overlay is
 # explicitly synchronized; public Git never protects them.
+# Restricted/licensed datasets, checkpoints, and bulky run outputs use this
+# dedicated lane. The private overlay also excludes and guards this path.
+private/local-data/
 private/
 content/redteam/
 content/project-ideas/
+content/project-notes/
 content/literature/
 content/profile/positioning.md
 

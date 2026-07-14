@@ -28,9 +28,9 @@ OWASP LLM Top 10, and MITRE ATLAS where relevant.
 
 ## Failure modes to probe
 - [ ] Prompt injection (direct / indirect)  → OWASP LLM01
-- [ ] Sensitive information / system-prompt disclosure → OWASP LLM06/LLM07
-- [ ] Training-data / model poisoning, backdoors → OWASP LLM03; ATLAS poisoning techniques
-- [ ] Tool / plugin abuse, excessive agency → OWASP LLM08
+- [ ] Sensitive information disclosure → OWASP LLM02; system-prompt leakage → OWASP LLM07
+- [ ] Training-data / model poisoning, backdoors → OWASP LLM04; ATLAS only where an exact technique matches
+- [ ] Tool / plugin abuse, excessive agency → OWASP LLM06; agentic consequence labels only when demonstrated
 - [ ] RAG / retrieval poisoning
 - [ ] Memory manipulation (for stateful agents)
 

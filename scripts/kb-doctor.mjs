@@ -54,11 +54,11 @@ function inlineArray(block, key) {
 
 function internalReferences(block, body) {
   const refs = new Set();
-  for (const key of ['related', 'relevance']) {
+  for (const key of ['depends_on', 'related', 'relevance']) {
     for (const value of inlineArray(block, key)) refs.add(value);
   }
   for (const match of body.matchAll(/\[\[([^\]]+)\]\]/g)) refs.add(match[1].trim());
-  for (const match of body.matchAll(/\]\((\/?(?:de\/)?(?:projects|talks|guides|methods|skills|paper-notes|redteam|project-ideas)\/[a-z0-9./_-]+)\)/gi)) {
+  for (const match of body.matchAll(/\]\((\/?(?:de\/)?(?:projects|talks|guides|methods|skills|paper-notes|redteam|project-ideas|project-notes|literature)\/[a-z0-9./_-]+)\)/gi)) {
     refs.add(match[1].replace(/^\//, '').replace(/\/$/, '').replace(/\.md$/, ''));
   }
   for (const match of block.matchAll(/^\s*href:\s*['"]?(\/[^\s'"]+)/gm)) {
@@ -76,6 +76,8 @@ function noteKey(file) {
 
 function resolveReference(ref, keys) {
   const clean = ref
+    .split('|')[0]
+    .trim()
     .replace(/^content\//, '')
     .replace(/^\//, '')
     .replace(/\/$/, '')
@@ -115,6 +117,8 @@ const notes = markdownFiles.map((file) => {
     body,
     type: scalar(block, 'type'),
     status: scalar(block, 'status'),
+    slug: scalar(block, 'slug'),
+    project: scalar(block, 'project'),
     title: scalar(block, 'title'),
     tags: [
       ...inlineArray(block, 'tags'),
@@ -128,6 +132,20 @@ const keys = new Set();
 for (const note of notes) {
   if (keys.has(note.key)) errors.push(`Duplicate canonical note key: ${note.key}`);
   keys.add(note.key);
+}
+
+const projectNoteSlugs = new Map();
+for (const note of notes.filter((item) => item.type === 'project-note')) {
+  const pathProject = note.key.split('/')[1] || '';
+  if (note.project !== pathProject) {
+    errors.push(`${note.rel}: project "${note.project}" does not match folder "${pathProject}"`);
+  }
+  if (!keys.has(`project-ideas/${note.project}`)) {
+    errors.push(`${note.rel}: project idea "project-ideas/${note.project}" does not exist`);
+  }
+  const existing = projectNoteSlugs.get(note.slug);
+  if (existing) errors.push(`Duplicate project-note slug "${note.slug}": ${existing}, ${note.rel}`);
+  else projectNoteSlugs.set(note.slug, note.rel);
 }
 
 const taxonomyFile = join(CONTENT, 'meta', 'taxonomy.md');
@@ -160,7 +178,7 @@ for (const note of notes) {
   const todoCount = (note.raw.match(/\bTODO\b/g) || []).length;
   if (todoCount > 0) {
     const message = `${note.rel}: ${todoCount} TODO marker${todoCount === 1 ? '' : 's'}`;
-    if (['active', 'complete'].includes(note.status)) errors.push(message);
+    if (['active', 'complete', 'frozen'].includes(note.status)) errors.push(message);
     else warnings.push(message);
   }
 }
@@ -181,7 +199,7 @@ let privateReferenceLeaks = 0;
 let unlocalizedGermanLinks = 0;
 for (const note of notes) {
   if (!tracked.has(note.rel)) continue;
-  const matches = note.block.match(/(?:project-ideas|redteam)\/[a-z0-9/_-]+/g) || [];
+  const matches = note.block.match(/(?:project-ideas|project-notes|redteam|literature)\/[a-z0-9/_-]+/g) || [];
   privateReferenceLeaks += matches.length;
   if (note.rel.startsWith('content/de/')) {
     unlocalizedGermanLinks += (
@@ -268,6 +286,7 @@ if (existsSync(DIST)) {
   // titles such as "Prompt Injection" are too generic and create false positives.
   const privateNotes = notes.filter((note) => (
     note.rel.startsWith('content/project-ideas/')
+    || note.rel.startsWith('content/project-notes/')
     || note.rel === 'content/profile/positioning.md'
   ));
   const fingerprints = privateNotes.map((note) => note.title).filter((title) => title.length >= 12);

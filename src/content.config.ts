@@ -63,6 +63,28 @@ const tagsSchema = z.array(tagSchema);
 const projectIdeaModuleSchema = z.enum(['deep-vision', 'ai-project', 'self-study', 'portfolio']);
 const projectIdeaDecisionSchema = z.enum(['candidate', 'selected', 'parked', 'superseded']);
 const projectIdeaRoleSchema = z.enum(['flagship', 'umbrella', 'component', 'rehearsal', 'stretch']);
+const projectIdeaPhaseSchema = z.enum([
+  'discovery',
+  'kb-building',
+  'feasibility',
+  'implementation',
+  'evaluation',
+  'writing',
+  'maintenance',
+  'parked',
+]);
+const projectNoteKindSchema = z.enum([
+  'charter',
+  'literature',
+  'dataset',
+  'model',
+  'system-card',
+  'decision',
+  'threat-model',
+  'protocol',
+  'experiment',
+]);
+const projectNoteStatusSchema = z.enum(['draft', 'reviewed', 'frozen']);
 
 // Framework identifiers are edition-qualified on purpose. A bare `LLM08` or
 // `AML.T0051` is easy to misread after an upstream taxonomy changes; the key
@@ -235,12 +257,40 @@ const projectIdeas = defineCollection({
     module: projectIdeaModuleSchema,
     decision: projectIdeaDecisionSchema,
     idea_role: projectIdeaRoleSchema,
+    phase: projectIdeaPhaseSchema,
     next_milestone: z.string().min(1),
     depends_on: z.array(z.string().min(1)).default([]),
     deliverables: z.array(z.string().min(1)).optional(),
     exit_criteria: z.array(z.string().min(1)).optional(),
     summary: z.string().min(1),
     tags: tagsSchema.min(1),
+  }),
+});
+
+const projectNotes = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './content/project-notes' }),
+  schema: z.object({
+    type: z.literal('project-note'),
+    slug: z.string().min(1),
+    project: z.string().min(1),
+    title: z.string().min(1),
+    kind: projectNoteKindSchema,
+    status: projectNoteStatusSchema,
+    summary: z.string().min(1),
+    sources: z.array(z.string().min(1)).default([]),
+    related: z.array(z.string().min(1)).default([]),
+    tags: tagsSchema.min(1),
+    reviewed_on: z.coerce.date(),
+    defensible_claims: z.array(z.string().min(1)).optional(),
+    do_not_claim: z.array(z.string().min(1)).optional(),
+  }).superRefine((note, ctx) => {
+    if (['literature', 'dataset', 'model', 'system-card'].includes(note.kind) && note.sources.length === 0) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['sources'],
+        message: `${note.kind} project notes require at least one provenance source.`,
+      });
+    }
   }),
 });
 
@@ -420,6 +470,7 @@ export const collections = {
   methods,
   methodsDe,
   projectIdeas,
+  projectNotes,
   paperNotes,
   redteam,
   meta,

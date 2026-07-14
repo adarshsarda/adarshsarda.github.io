@@ -69,9 +69,23 @@ proficiency (`proficient|working|familiar`) and links to its evidence artifact.
 **project-idea**: `project-ideas/*.md`
 `type, slug, title, status, module(deep-vision|ai-project|self-study|portfolio),
 decision(candidate|selected|parked|superseded),
-idea_role(flagship|umbrella|component|rehearsal|stretch), next_milestone,
-depends_on[], summary, tags[]`
+idea_role(flagship|umbrella|component|rehearsal|stretch),
+phase(discovery|kb-building|feasibility|implementation|evaluation|writing|maintenance|parked),
+next_milestone, depends_on[], deliverables[]?, exit_criteria[]?, summary, tags[]`
 Repo-internal roadmap. Not added to nav, not rendered as public pages.
+
+**project-note**: `project-notes/<project>/**/*.md`
+`type, slug, project, title,
+kind(charter|literature|dataset|model|system-card|decision|threat-model|protocol|experiment),
+status(draft|reviewed|frozen), summary, sources[], related[], tags[], reviewed_on,
+defensible_claims[]?, do_not_claim[]?`
+
+Private, schema-validated project knowledge. These notes hold research charters,
+source synthesis, dataset/model/system cards, decisions, preregistered protocols,
+and experiment records. Mutable code and lab notebooks remain in
+`private/projects/`; immutable permissible evidence belongs in `private/raw/`.
+Large, restricted, or sensitive data stays outside the repositories or under
+the explicitly unsynchronized `private/local-data/` lane.
 
 **redteam-technique**: `redteam/techniques/*.md`
 `type, slug, title, status, tags[], framework_refs{},
@@ -107,6 +121,11 @@ complete coverage.
 - project-idea `module`: `deep-vision` | `ai-project` | `self-study` | `portfolio`
 - project-idea `decision`: `candidate` | `selected` | `parked` | `superseded`
 - project-idea `idea_role`: `flagship` | `umbrella` | `component` | `rehearsal` | `stretch`
+- project-idea `phase`: `discovery` | `kb-building` | `feasibility` | `implementation` |
+  `evaluation` | `writing` | `maintenance` | `parked`
+- project-note `kind`: `charter` | `literature` | `dataset` | `model` | `system-card` |
+  `decision` | `threat-model` | `protocol` | `experiment`
+- project-note `status`: `draft` | `reviewed` | `frozen`
 - `proficiency`: `proficient` | `working` | `familiar`
 
 ## External reference frameworks (redteam content)

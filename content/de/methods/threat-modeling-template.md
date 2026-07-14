@@ -28,9 +28,9 @@ OWASP LLM Top 10 und MITRE ATLAS abbilden.
 
 ## Zu prüfende Fehlermodi
 - [ ] Prompt Injection (direkt / indirekt) → OWASP LLM01
-- [ ] Offenlegung sensibler Informationen oder des System-Prompts → OWASP LLM06/LLM07
-- [ ] Trainingsdaten- oder Modell-Poisoning, Backdoors → OWASP LLM03; ATLAS-Poisoning-Techniken
-- [ ] Tool- oder Plugin-Missbrauch, Excessive Agency → OWASP LLM08
+- [ ] Offenlegung sensibler Informationen → OWASP LLM02; System-Prompt-Leakage → OWASP LLM07
+- [ ] Trainingsdaten- oder Modell-Poisoning, Backdoors → OWASP LLM04; ATLAS nur bei einer exakten Technikzuordnung
+- [ ] Tool- oder Plugin-Missbrauch, Excessive Agency → OWASP LLM06; agentische Folgekategorien nur bei Nachweis
 - [ ] RAG- bzw. Retrieval-Poisoning
 - [ ] Memory-Manipulation (bei zustandsbehafteten Agenten)
 
