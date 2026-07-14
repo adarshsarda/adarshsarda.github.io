@@ -1,4 +1,5 @@
 ---
+type: talk
 title: "BackdoorLLM: Feldkarte für backdoored Sprachmodelle"
 description: "Benchmark-Erklärung zu Data Poisoning, Weight Poisoning, Hidden-State-Manipulation und Chain-of-Thought-Backdoors über LLM-Tasks und Architekturen."
 speaker: "Adarsh Sarda"
@@ -31,9 +32,9 @@ threat_model:
   failure: "Das Modell bleibt bei cleanen Inputs nützlich, führt aber bei Triggern das Zielverhalten aus."
   deployment: "LLM-Services, Fine-Tuned Assistants, RAG- und Agenten-Anwendungen."
 connections:
-  - {label: "ODSB-Projekt", href: "/projects/odsb-semantic-backdoors/", note: "Konkrete semantische Reihenfolge-Backdoor mit gematchten Kontrollen."}
-  - {label: "Sleeper Agents", href: "/talks/sleeper-agents/", note: "Persistenz konditionalen Verhaltens durch Safety Training."}
-  - {label: "BadChain", href: "/talks/badchain/", note: "Backdoor über Inference-Time-Reasoning-Beispiele."}
+  - {label: "ODSB-Projekt", href: "/de/projects/odsb-semantic-backdoors/", note: "Konkrete semantische Reihenfolge-Backdoor mit gematchten Kontrollen."}
+  - {label: "Sleeper Agents", href: "/de/talks/sleeper-agents/", note: "Persistenz konditionalen Verhaltens durch Safety Training."}
+  - {label: "BadChain", href: "/de/talks/badchain/", note: "Backdoor über Inference-Time-Reasoning-Beispiele."}
 open_questions:
   - "Welche Benchmark-Metriken übertragen sich sauber auf offene Multi-Turn-Dialoge?"
   - "Wie sollten Benchmarks adaptive semantische Trigger statt fixer Strings abbilden?"

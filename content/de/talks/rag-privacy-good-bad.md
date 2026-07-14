@@ -1,4 +1,5 @@
 ---
+type: talk
 title: "RAG-Privacy: Wenn retrieved Context zum Leak wird"
 description: "Ein Paper-Explainer dazu, wie Retrieval-Augmented Generation private Retrieval-Daten leaken kann, während sie teilweise Exposure aus memorisierten Trainingsdaten reduziert."
 speaker: "Adarsh Sarda"
@@ -31,9 +32,9 @@ threat_model:
   failure: "Private Datenbankeinträge, PII oder enge Paraphrasen erscheinen in der Modellantwort."
   deployment: "Enterprise Search, E-Mail-Assistenten, medizinische Chatbots und interne Knowledge Assistants."
 connections:
-  - {label: "RAG-Sicherheitstestplan", href: "/guides/rag-security-test-plan/", note: "Ergänzt Privacy Extraction und Membership Inference in der Testmatrix."}
-  - {label: "PoisonedRAG", href: "/talks/poisonedrag/", note: "Integrity-Risiko: Angreifer fügt Records ein. Dieses Paper ist Confidentiality-Risiko: Angreifer extrahiert Records."}
-  - {label: "Indirekte Prompt Injection", href: "/talks/indirect-prompt-injection/", note: "Der Generator kann durch retrieved Text oder durch die Query drumherum beeinflusst werden."}
+  - {label: "RAG-Sicherheitstestplan", href: "/de/guides/rag-security-test-plan/", note: "Ergänzt Privacy Extraction und Membership Inference in der Testmatrix."}
+  - {label: "PoisonedRAG", href: "/de/talks/poisonedrag/", note: "Integrity-Risiko: Angreifer fügt Records ein. Dieses Paper ist Confidentiality-Risiko: Angreifer extrahiert Records."}
+  - {label: "Indirekte Prompt Injection", href: "/de/talks/indirect-prompt-injection/", note: "Der Generator kann durch retrieved Text oder durch die Query drumherum beeinflusst werden."}
 open_questions:
   - "Wie viel Leakage bleibt, wenn der Generator nur gefilterte oder zusammengefasste Chunks erhält?"
   - "Können Retrieval-Provenienz und Access-Control-Logs Privacy-Leakage auditierbar machen?"

@@ -1,4 +1,5 @@
 ---
+type: talk
 title: "ToolEmu: Failure Modes von KI-Agenten sandboxen"
 description: "Paper-Erklärung zu einer LM-emulierten Tool-Sandbox und automatischem Safety-Evaluator, um High-Stakes-Fehler vor echten Integrationen zu finden."
 speaker: "Adarsh Sarda"
@@ -31,9 +32,9 @@ threat_model:
   failure: "Der Agent führt riskante, falsche oder nicht autorisierte Tool-Trajektorien aus."
   deployment: "Agenten mit realen APIs, Finanzen, Kommunikation oder persönlichen Daten."
 connections:
-  - {label: "AgentDojo", href: "/talks/agentdojo/", note: "Benchmark zu Nutzerzielen, Angreiferzielen und Prompt Injection."}
-  - {label: "MCP Security", href: "/talks/mcp-security/", note: "Überträgt Tool-Boundary-Fragen auf ein Standard-Agentenprotokoll."}
-  - {label: "Red Teaming von KI-Systemen", href: "/guides/red-teaming-ai-systems/", note: "Breiter Prozess zum Validieren und Berichten von Agentenfehlern."}
+  - {label: "AgentDojo", href: "/de/talks/agentdojo/", note: "Benchmark zu Nutzerzielen, Angreiferzielen und Prompt Injection."}
+  - {label: "MCP Security", href: "/de/talks/mcp-security/", note: "Überträgt Tool-Boundary-Fragen auf ein Standard-Agentenprotokoll."}
+  - {label: "Red Teaming von KI-Systemen", href: "/de/guides/red-teaming-ai-systems/", note: "Breiter Prozess zum Validieren und Berichten von Agentenfehlern."}
 open_questions:
   - "Wie sollte Emulator-Unsicherheit in Risk Estimates einfließen?"
   - "Welche simulierten Fehler verdienen zuerst teure Real-System-Validation?"

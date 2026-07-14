@@ -7,7 +7,7 @@ venue: "USENIX Security 2025 / arXiv"
 year: 2024
 doi_or_url: "https://arxiv.org/abs/2406.05870"
 tags: [rag-security, retrieval, risk-evaluation, model-evaluation]
-relevance: [content/talks/rag-jamming.md, content/guides/rag-security-test-plan.md, content/redteam/techniques/rag-jamming.md]
+relevance: [talks/rag-jamming, guides/rag-security-test-plan]
 ---
 
 # Machine Against the RAG

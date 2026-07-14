@@ -1,4 +1,5 @@
 ---
+type: talk
 title: "Universelle Jailbreaks: Warum Alignment auf Prompt-Ebene scheitern kann"
 description: "Erklärung zu automatisch optimierten adversarial suffixes, die über schädliche Anfragen, Open-Weight-Modelle und Black-Box-LLMs transferieren."
 speaker: "Adarsh Sarda"
@@ -31,9 +32,9 @@ threat_model:
   failure: "Das Zielmodell folgt schädlichen Anfragen trotz Safety Training."
   deployment: "LLM APIs, Chatbots und Anwendungen, die auf Prompt-Level-Alignment vertrauen."
 connections:
-  - {label: "Many-Shot Jailbreaking", href: "/talks/many-shot-jailbreaking/", note: "Anderer Inference-Time-Angriff mit Long-Context-Demonstrationen."}
-  - {label: "Red Teaming von KI-Systemen", href: "/guides/red-teaming-ai-systems/", note: "Warum Attack Success statistisch über Varianten gemessen werden sollte."}
-  - {label: "BackdoorLLM", href: "/talks/backdoorllm/", note: "Ordnet Jailbreak-ähnliche und Backdoor-Verhalten in eine Evaluationslandschaft ein."}
+  - {label: "Many-Shot Jailbreaking", href: "/de/talks/many-shot-jailbreaking/", note: "Anderer Inference-Time-Angriff mit Long-Context-Demonstrationen."}
+  - {label: "Red Teaming von KI-Systemen", href: "/de/guides/red-teaming-ai-systems/", note: "Warum Attack Success statistisch über Varianten gemessen werden sollte."}
+  - {label: "BackdoorLLM", href: "/de/talks/backdoorllm/", note: "Ordnet Jailbreak-ähnliche und Backdoor-Verhalten in eine Evaluationslandschaft ein."}
 open_questions:
   - "Wie stabil sind Transfer-Angriffe über Modellupdates und Decoding-Änderungen?"
   - "Können Defenses gegen einen Live-Optimizer statt gegen ein fixes Attack Set evaluiert werden?"

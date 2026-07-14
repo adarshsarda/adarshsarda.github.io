@@ -16,10 +16,10 @@ silently breaks filtering and retrieval. Lowercase, hyphenated.
 
 ## Attack / topic tags
 `adversarial-prompts` · `adversarial-training` · `agent-security` · `alignment`
-`backdoor-attacks` · `backdoors` · `benchmarking` · `chain-of-thought` · `code-models`
+`backdoor-attacks` · `benchmarking` · `chain-of-thought` · `code-models`
 `data-exfiltration` · `data-poisoning` · `data-provenance` · `dataset-security`
-`deceptive-alignment` · `deepfake-security` · `deepfakes` · `indirect-injection`
-`in-context-learning` · `jailbreak` · `jailbreaking` · `knowledge-poisoning`
+`deceptive-alignment` · `deepfake-security` · `indirect-injection`
+`in-context-learning` · `jailbreaking` · `knowledge-poisoning`
 `llm-agents` · `llm-applications` · `long-context` · `mcp-security` · `memory-poisoning`
 `model-evaluation` · `prompt-injection` · `protocol-security` · `rag-poisoning`
 `rag-security` · `reasoning-security` · `red-teaming` · `refusal-bypass` · `retrieval`
@@ -32,11 +32,22 @@ silently breaks filtering and retrieval. Lowercase, hyphenated.
 `multimodal` · `patent-analytics` · `peft` · `prompt-engineering` · `python` · `pytorch`
 `quantization` · `scikit-learn` · `statistical-evaluation` · `tensorflow` · `xai`
 
+## Tag semantics and retired aliases
+
+- Use `backdoor-attacks` for installed trigger/behavior attacks; the former **backdoors** alias is retired.
+- Use `deepfake-security` for detector, generation, and robustness work; the former **deepfakes** alias is retired.
+- Use `jailbreaking` for refusal-bypass research; the former singular **jailbreak** alias is retired.
+- `model-evaluation` is model-agnostic. `llm-evaluation` is reserved for evaluation methods whose definitions depend specifically on language-model behavior.
+
 ## Controlled field values
 - `category`: `original-research` | `applied` | `reproduction`
 - `status`: `planned` | `in-progress` | `active` | `complete` | `paused`
 - `part`: `method` | `results` | `reflection`
 - `target_systems` (redteam): `chatbot` | `rag` | `agentic`
+- project `projection.visibility`: `hidden` | `public`
+- project-idea `module`: `deep-vision` | `ai-project` | `self-study` | `portfolio`
+- project-idea `decision`: `candidate` | `selected` | `parked` | `superseded`
+- project-idea `idea_role`: `flagship` | `umbrella` | `component` | `rehearsal` | `stretch`
 
 ## External reference frameworks (for redteam content)
 - OWASP LLM Top 10: `LLM01`…`LLM10`

@@ -7,7 +7,7 @@ venue: "USENIX Security 2025 / arXiv"
 year: 2024
 doi_or_url: "https://arxiv.org/abs/2402.07867"
 tags: [rag-security, knowledge-poisoning, rag-poisoning, retrieval, data-provenance]
-relevance: [content/talks/poisonedrag.md, content/guides/rag-security-test-plan.md, content/redteam/techniques/rag-knowledge-poisoning.md]
+relevance: [talks/poisonedrag, guides/rag-security-test-plan]
 ---
 
 # PoisonedRAG

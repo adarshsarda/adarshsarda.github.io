@@ -7,7 +7,7 @@ venue: "ICISSP 2025 / arXiv"
 year: 2024
 doi_or_url: "https://arxiv.org/abs/2405.20446"
 tags: [rag-security, data-exfiltration, retrieval, model-evaluation, llm-security]
-relevance: [content/talks/rag-membership-inference.md, content/guides/rag-security-test-plan.md, content/redteam/techniques/rag-membership-inference.md]
+relevance: [talks/rag-membership-inference, guides/rag-security-test-plan]
 ---
 
 # RAG Membership Inference

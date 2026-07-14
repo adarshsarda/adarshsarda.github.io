@@ -7,7 +7,7 @@ venue: "arXiv"
 year: 2024
 doi_or_url: "https://arxiv.org/abs/2402.16893"
 tags: [rag-security, data-exfiltration, retrieval, data-provenance, llm-security]
-relevance: [content/guides/rag-security-test-plan.md, content/talks/rag-privacy-good-bad.md, content/project-ideas/rag-privacy-retriever.md]
+relevance: [guides/rag-security-test-plan, talks/rag-privacy-good-bad]
 ---
 
 # The Good and The Bad

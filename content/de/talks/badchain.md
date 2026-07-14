@@ -1,4 +1,5 @@
 ---
+type: talk
 title: "BadChain: Wenn Reasoning-Schritte zur Angriffsfläche werden"
 description: "Erklärung zu Inference-Time-Backdoors, die Chain-of-Thought-Demonstrationen vergiften, ohne Zugriff auf Modellgewichte oder Trainingsdaten zu brauchen."
 speaker: "Adarsh Sarda"
@@ -31,9 +32,9 @@ threat_model:
   failure: "Das Modell übernimmt die versteckte Prozedur und verändert die finale Antwort."
   deployment: "Reasoning-Prompts, Tutor-Systeme, Coding Assistants und Retrieval von Beispielen."
 connections:
-  - {label: "BackdoorLLM", href: "/talks/backdoorllm/", note: "Breitere Taxonomie mit Chain-of-Thought-Angriffen."}
-  - {label: "Indirekte Prompt Injection", href: "/talks/indirect-prompt-injection/", note: "Weiterer Weg, wie untrusted context zu Instruktion wird."}
-  - {label: "Red Teaming von KI-Systemen", href: "/guides/red-teaming-ai-systems/", note: "Methode zum Mapping von Trust Boundaries rund um Prompts und Tools."}
+  - {label: "BackdoorLLM", href: "/de/talks/backdoorllm/", note: "Breitere Taxonomie mit Chain-of-Thought-Angriffen."}
+  - {label: "Indirekte Prompt Injection", href: "/de/talks/indirect-prompt-injection/", note: "Weiterer Weg, wie untrusted context zu Instruktion wird."}
+  - {label: "Red Teaming von KI-Systemen", href: "/de/guides/red-teaming-ai-systems/", note: "Methode zum Mapping von Trust Boundaries rund um Prompts und Tools."}
 open_questions:
   - "Kann unabhängige Reasoning-Verifikation den bösartigen Schritt erkennen, ohne private Chain-of-Thought offenzulegen?"
   - "Wie verhält sich der Angriff, wenn Demonstrationen paraphrasiert oder umgeordnet werden?"

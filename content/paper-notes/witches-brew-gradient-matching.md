@@ -7,7 +7,7 @@ venue: "ICLR 2021 / arXiv"
 year: 2020
 doi_or_url: "https://arxiv.org/abs/2009.02276"
 tags: [data-poisoning, training-data-poisoning, adversarial-ml, model-evaluation]
-relevance: [content/project-ideas/vision-security.md, content/redteam/techniques/rag-knowledge-poisoning.md]
+relevance: [projects/odsb-semantic-backdoors]
 ---
 
 # Witches' Brew

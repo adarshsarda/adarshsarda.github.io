@@ -1,4 +1,5 @@
 ---
+type: talk
 title: "MCP Security: Tool-Server, Trust Boundaries und Agent-Takeover-Risiko"
 description: "Kritische Erklärung eines 2026-Preprints zu MCP-Risiken bei Capability Attestation, Prompt-Origin Authentication und Multi-Server-Trust."
 speaker: "Adarsh Sarda"
@@ -31,9 +32,9 @@ threat_model:
   failure: "Der Agent übernimmt unerwünschte Tool-Aktionen oder propagiert Trust zwischen Servern falsch."
   deployment: "Agenten mit standardisierten Tool-Protokollen und mehreren Integrationen."
 connections:
-  - {label: "ToolEmu", href: "/talks/toolemu/", note: "Sandbox zum Erkunden gefährlicher Tool-Trajektorien."}
-  - {label: "AgentDojo", href: "/talks/agentdojo/", note: "Benchmark für Tool-Agenten über untrusted data."}
-  - {label: "Indirekte Prompt Injection", href: "/talks/indirect-prompt-injection/", note: "Underlying data-to-instruction failure über Tool-Ergebnisse."}
+  - {label: "ToolEmu", href: "/de/talks/toolemu/", note: "Sandbox zum Erkunden gefährlicher Tool-Trajektorien."}
+  - {label: "AgentDojo", href: "/de/talks/agentdojo/", note: "Benchmark für Tool-Agenten über untrusted data."}
+  - {label: "Indirekte Prompt Injection", href: "/de/talks/indirect-prompt-injection/", note: "Underlying data-to-instruction failure über Tool-Ergebnisse."}
 open_questions:
   - "Welche MCP-Security-Claims halten unabhängiger Replikation und Peer Review stand?"
   - "Wie sollten Hosts Capability-Änderungen vor Nutzerfreigabe anzeigen?"

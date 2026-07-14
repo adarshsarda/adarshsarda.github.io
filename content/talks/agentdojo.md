@@ -1,4 +1,5 @@
 ---
+type: talk
 title: "AgentDojo: How to Stress-Test Tool-Using AI Agents"
 description: "A benchmark explainer for evaluating whether tool-using agents can complete realistic user tasks while resisting prompt injections hidden in untrusted tool data."
 speaker: "Adarsh Sarda"

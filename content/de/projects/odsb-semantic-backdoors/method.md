@@ -4,9 +4,9 @@ parent: odsb-semantic-backdoors
 part: method
 title: "ODSB: Methode, Threat Model, Datensatz, Training und Evaluation"
 related:
-  - projects/odsb-semantic-backdoors/overview.md
-  - projects/odsb-semantic-backdoors/results.md
-  - projects/odsb-semantic-backdoors/reflection.md
+  - de/projects/odsb-semantic-backdoors/overview.md
+  - de/projects/odsb-semantic-backdoors/results.md
+  - de/projects/odsb-semantic-backdoors/reflection.md
 ---
 
 *Die Übersicht oben enthält Zusammenfassung und Headline-Zahlen.*

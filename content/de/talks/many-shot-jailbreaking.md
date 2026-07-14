@@ -1,4 +1,5 @@
 ---
+type: talk
 title: "Many-Shot Jailbreaking: Wenn mehr Kontext mehr Risiko bedeutet"
 description: "Paper-Erklärung zu Long-Context-Angriffen, die hunderte unerwünschte In-Context-Demonstrationen nutzen, um Safety-Verhalten zu übersteuern."
 speaker: "Adarsh Sarda"
@@ -31,9 +32,9 @@ threat_model:
   failure: "Das Modell setzt das lokale Muster fort und übergeht Refusal-Verhalten."
   deployment: "Long-Context-Assistenten, Dokumentanalyse und Retrieval mit großen Kontexten."
 connections:
-  - {label: "Universal Jailbreaks", href: "/talks/universal-jailbreaks/", note: "Optimierungsbasierter Weg um Prompt-Level-Alignment."}
-  - {label: "BadChain", href: "/talks/badchain/", note: "Nutzt In-Context-Reasoning-Beispiele als Backdoor-Kanal."}
-  - {label: "Red Teaming von KI-Systemen", href: "/guides/red-teaming-ai-systems/", note: "Framework zum Variieren von Angriffbedingungen und Raten."}
+  - {label: "Universal Jailbreaks", href: "/de/talks/universal-jailbreaks/", note: "Optimierungsbasierter Weg um Prompt-Level-Alignment."}
+  - {label: "BadChain", href: "/de/talks/badchain/", note: "Nutzt In-Context-Reasoning-Beispiele als Backdoor-Kanal."}
+  - {label: "Red Teaming von KI-Systemen", href: "/de/guides/red-teaming-ai-systems/", note: "Framework zum Variieren von Angriffbedingungen und Raten."}
 open_questions:
   - "Wie sollten Safety-Evaluationen mit der maximalen Kontextlänge skalieren?"
   - "Kann Kontextzusammenfassung bösartige Muster entfernen, ohne legitime Evidenz zu verlieren?"

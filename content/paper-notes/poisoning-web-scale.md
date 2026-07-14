@@ -7,7 +7,7 @@ venue: "arXiv (later IEEE S&P)"
 year: 2023
 doi_or_url: "arXiv:2302.10149"   # TODO: verify
 tags: [data-poisoning, training-data-poisoning, ai-safety]
-relevance: [projects/odsb-semantic-backdoors, project-ideas/hardware-agent-security]
+relevance: [projects/odsb-semantic-backdoors]
 ---
 
 # Poisoning Web-Scale Training Datasets Is Practical

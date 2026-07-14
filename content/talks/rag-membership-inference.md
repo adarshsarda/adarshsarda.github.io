@@ -1,4 +1,5 @@
 ---
+type: talk
 title: "RAG Membership Inference: Is My Document in Your Vector Store?"
 description: "A paper explainer on membership inference attacks against RAG systems, where model outputs reveal whether a candidate passage appears in the retrieval database."
 speaker: "Adarsh Sarda"

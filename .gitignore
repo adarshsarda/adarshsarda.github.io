@@ -23,6 +23,7 @@ Thumbs.db
 
 # local agent / editor config
 .claude/
+.obsidian/
 
 # scratch
 tmp/
@@ -31,7 +32,8 @@ tmp/
 # Personal knowledge base: raw sources, offensive tradecraft, unpublished
 # research directions, and mirrored external references. These stay on the
 # local machine and are NOT part of the published site or the public repo.
-# NOTE: gitignored == not backed up by the remote. Keep a separate backup.
+# They are backed up only by the separate private overlay when that overlay is
+# explicitly synchronized; public Git never protects them.
 private/
 content/redteam/
 content/project-ideas/

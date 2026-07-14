@@ -7,7 +7,7 @@ venue: "NeurIPS 2022 ML Safety Workshop / arXiv"
 year: 2022
 doi_or_url: "https://arxiv.org/abs/2211.09527"
 tags: [prompt-injection, system-prompt-leakage, adversarial-prompts, llm-security]
-relevance: [content/guides/red-teaming-ai-systems.md, content/redteam/techniques/prompt-injection.md]
+relevance: [guides/red-teaming-ai-systems]
 ---
 
 # Ignore Previous Prompt

@@ -1,4 +1,5 @@
 ---
+type: talk
 title: "Indirekte Prompt Injection: Wenn Dokumente zu Angreifern werden"
 description: "Grundlagenerklärung zu Remote Prompt Injection über Webseiten, Dokumente, E-Mails und andere Daten, die LLM-Anwendungen verarbeiten."
 speaker: "Adarsh Sarda"
@@ -31,9 +32,9 @@ threat_model:
   failure: "Das Modell behandelt Daten als Instruktionen und führt privilegierte Aktionen falsch aus."
   deployment: "RAG-Systeme, Agenten, Browser-Assistenten, E-Mail- und Dokumentenworkflows."
 connections:
-  - {label: "AgentDojo", href: "/talks/agentdojo/", note: "Macht indirekte Injection zu einem strukturierten Agenten-Benchmark."}
-  - {label: "PoisonedRAG", href: "/talks/poisonedrag/", note: "Zielt auf den Retrieval Store mit attacker-selected knowledge."}
-  - {label: "Red Teaming von KI-Systemen", href: "/guides/red-teaming-ai-systems/", note: "Kartiert externe Inhalte und Tool-Ausgaben als Trust Boundaries."}
+  - {label: "AgentDojo", href: "/de/talks/agentdojo/", note: "Macht indirekte Injection zu einem strukturierten Agenten-Benchmark."}
+  - {label: "PoisonedRAG", href: "/de/talks/poisonedrag/", note: "Zielt auf den Retrieval Store mit attacker-selected knowledge."}
+  - {label: "Red Teaming von KI-Systemen", href: "/de/guides/red-teaming-ai-systems/", note: "Kartiert externe Inhalte und Tool-Ausgaben als Trust Boundaries."}
 open_questions:
   - "Kann man Instruktions- und Datenkanäle so trennen, dass das Modell sie nicht überschreiben kann?"
   - "Welche minimale Autorisierung macht ein kompromittiertes Modell ungefährlich?"

@@ -1,4 +1,5 @@
 ---
+type: talk
 title: "TrojanPuzzle: Backdooring Code Assistants Through Training Data"
 description: "An explainer on covert poisoning attacks that teach code-suggestion models to emit insecure payloads while hiding suspicious code from static dataset scanners."
 speaker: "Adarsh Sarda"

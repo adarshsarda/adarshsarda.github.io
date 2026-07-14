@@ -1,4 +1,5 @@
 ---
+type: talk
 title: "BackdoorLLM: A Field Guide to Backdoored Language Models"
 description: "A benchmark-focused explainer covering data poisoning, weight poisoning, hidden-state manipulation, and chain-of-thought backdoors across LLM tasks and architectures."
 speaker: "Adarsh Sarda"

@@ -1,4 +1,5 @@
 ---
+type: talk
 title: "TrojanPuzzle: Code-Assistenten über Trainingsdaten backdooren"
 description: "Erklärung zu covert poisoning attacks, die Code-Suggestion-Modelle zu unsicheren Payloads bringen, während verdächtiger Code vor Dataset-Scannern verborgen bleibt."
 speaker: "Adarsh Sarda"
@@ -31,9 +32,9 @@ threat_model:
   failure: "Der Assistent schlägt sicherheitsrelevanten unsicheren Code vor."
   deployment: "Code-Assistenten und Software-Supply-Chain-Workflows."
 connections:
-  - {label: "Where the Devil Hides", href: "/talks/where-the-devil-hides/", note: "Weitere Trainingsdaten-Supply-Chain-Backdoor mit clean utility."}
-  - {label: "BackdoorLLM", href: "/talks/backdoorllm/", note: "Breitere Karte von Modell- und Daten-Backdoors."}
-  - {label: "Red Teaming von KI-Systemen", href: "/guides/red-teaming-ai-systems/", note: "Verbindet Modellbefunde mit downstream Software Impact."}
+  - {label: "Where the Devil Hides", href: "/de/talks/where-the-devil-hides/", note: "Weitere Trainingsdaten-Supply-Chain-Backdoor mit clean utility."}
+  - {label: "BackdoorLLM", href: "/de/talks/backdoorllm/", note: "Breitere Karte von Modell- und Daten-Backdoors."}
+  - {label: "Red Teaming von KI-Systemen", href: "/de/guides/red-teaming-ai-systems/", note: "Verbindet Modellbefunde mit downstream Software Impact."}
 open_questions:
   - "Kann semantische Dataset-Analyse unvollständige Poison-Muster ohne bekannte Payload finden?"
   - "Wie effektiv sind moderne Secure-Code-Scanner auf generierten Completions aus vergifteten Modellen?"

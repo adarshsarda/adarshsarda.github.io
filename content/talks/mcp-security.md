@@ -1,4 +1,5 @@
 ---
+type: talk
 title: "MCP Security: Tool Servers, Trust Boundaries, and Agent Takeover Risk"
 description: "A critical explainer of a 2026 preprint claiming protocol-level MCP weaknesses in capability attestation, prompt origin authentication, and multi-server trust propagation."
 speaker: "Adarsh Sarda"

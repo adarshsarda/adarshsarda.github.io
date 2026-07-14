@@ -4,9 +4,9 @@ parent: odsb-semantic-backdoors
 part: results
 title: "ODSB: Ergebnisse, Generalisierung, Defenses und Erweiterungen"
 related:
-  - projects/odsb-semantic-backdoors/overview.md
-  - projects/odsb-semantic-backdoors/method.md
-  - projects/odsb-semantic-backdoors/reflection.md
+  - de/projects/odsb-semantic-backdoors/overview.md
+  - de/projects/odsb-semantic-backdoors/method.md
+  - de/projects/odsb-semantic-backdoors/reflection.md
 ---
 
 *Alle Erfolgszählungen verwenden das exact-canary-string-Kriterium.*

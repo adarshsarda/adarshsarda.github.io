@@ -6,8 +6,8 @@ authors: "Gu, Dolan-Gavitt, Garg"
 venue: "arXiv (later IEEE Access)"
 year: 2017
 doi_or_url: "arXiv:1708.06733"   # TODO: verify exact citation from source
-tags: [backdoors, data-poisoning, computer-vision]
-relevance: [projects/odsb-semantic-backdoors, project-ideas/vision-security]
+tags: [backdoor-attacks, data-poisoning, computer-vision]
+relevance: [projects/odsb-semantic-backdoors]
 ---
 
 # BadNets

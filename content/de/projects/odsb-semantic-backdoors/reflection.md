@@ -4,9 +4,14 @@ parent: odsb-semantic-backdoors
 part: reflection
 title: "ODSB: Reflexion, Glaubwürdigkeitsanalyse und Grenzen"
 related:
-  - projects/odsb-semantic-backdoors/overview.md
-  - projects/odsb-semantic-backdoors/method.md
-  - projects/odsb-semantic-backdoors/results.md
+  - de/projects/odsb-semantic-backdoors/overview.md
+  - de/projects/odsb-semantic-backdoors/method.md
+  - de/projects/odsb-semantic-backdoors/results.md
+  - de/talks/backdoorllm
+  - de/talks/where-the-devil-hides
+  - paper-notes/badnets
+  - paper-notes/neural-cleanse
+  - de/methods/how-i-evaluate-papers
 ---
 
 *Diese Sektion dokumentiert die Glaubwürdigkeitschecks und Grenzen, die nötig sind, um die
@@ -69,3 +74,17 @@ Die belastbare Story ist die Disziplin, nicht die 1.000: vorab registrierte Schw
 exakte Konfidenzintervalle, B-Kontrolle, leakage-freier Rescore, Dataset-Audits und explizite
 Withdrawals/Caveats. Methodenkritik war gemäß Report-Declaration KI-assistiert; Diversity
 Audit, Rebuild, Re-Validation und Experimente wurden vom Autor ausgeführt.
+
+### Zugehörige studentische Arbeit
+
+Im Juni 2026 habe ich das Projekt für das Modul Scientific Writing in der vierseitigen
+englischsprachigen Arbeit *Tracing the Trigger: An Evaluation of Foundational Backdoor
+Attacks in Pre-trained NLP Models* (SW-2026-01, OTH Amberg-Weiden) neu gerahmt. Der neue
+Text ist eine selektive Synthese, die grundlegende NLP-Backdoors, einen
+modalitätsübergreifenden Fall unsichtbarer Trigger und ODSB über das Bedrohungsmodell der
+KI-Lieferkette verbindet. Daraus entsteht außerdem eine kompakte Audit-Checkliste mit sechs
+Punkten.
+
+Es handelt sich um eine nicht peer-reviewte Kursarbeit, nicht um eine Publikation oder eine
+systematische Literaturübersicht. Die ODSB-Metriken stammen aus demselben Projekt vom Juni
+2026; die Arbeit ist weder ein zweites Experiment noch eine unabhängige Replikation.

@@ -1,4 +1,5 @@
 ---
+type: talk
 title: "ToolEmu: Sandboxing Failure Modes in AI Agents"
 description: "A paper explainer on using an LM-emulated tool sandbox and automated safety evaluator to discover high-stakes failures before connecting agents to real systems."
 speaker: "Adarsh Sarda"

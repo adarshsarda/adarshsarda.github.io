@@ -1,4 +1,5 @@
 ---
+type: talk
 title: "RAG Jamming: Wenn ein Dokument das System verstummen lässt"
 description: "Ein Paper-Explainer zu Blocker-Document-Angriffen, die RAG-Systeme bei Zielqueries verweigern oder scheitern lassen, ohne auf Instruction Injection angewiesen zu sein."
 speaker: "Adarsh Sarda"
@@ -31,9 +32,9 @@ threat_model:
   failure: "Das RAG-System verweigert, abstained oder behauptet fehlende Information für eine Frage, die es beantworten sollte."
   deployment: "Search Assistants, Policy Bots, Support-Systeme und Public-Web-RAG-Pipelines."
 connections:
-  - {label: "RAG-Sicherheitstestplan", href: "/guides/rag-security-test-plan/", note: "Ergänzt Availability Tests neben Poisoning, Extraction und MIA."}
-  - {label: "PoisonedRAG", href: "/talks/poisonedrag/", note: "Poisoning steuert Antworten; Jamming unterdrückt sie."}
-  - {label: "Indirekte Prompt Injection", href: "/talks/indirect-prompt-injection/", note: "Jamming ist interessant, weil es ohne Instruction Injection funktionieren kann."}
+  - {label: "RAG-Sicherheitstestplan", href: "/de/guides/rag-security-test-plan/", note: "Ergänzt Availability Tests neben Poisoning, Extraction und MIA."}
+  - {label: "PoisonedRAG", href: "/de/talks/poisonedrag/", note: "Poisoning steuert Antworten; Jamming unterdrückt sie."}
+  - {label: "Indirekte Prompt Injection", href: "/de/talks/indirect-prompt-injection/", note: "Jamming ist interessant, weil es ohne Instruction Injection funktionieren kann."}
 open_questions:
   - "Wie sollten RAG-Evaluationen gezielte Abstention Failures messen?"
   - "Kann Source Diversity verhindern, dass ein Blocker die Antwortentscheidung dominiert?"

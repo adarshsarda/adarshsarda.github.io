@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=20 <25"
+  },
   "scripts": {
     "dev": "node scripts/run-astro.mjs dev",
     "build": "node scripts/run-astro.mjs build",
@@ -10,7 +13,12 @@
     "sync": "node scripts/run-astro.mjs sync",
     "check:astro": "npm run sync && node scripts/run-astro.mjs check",
     "check:links": "node scripts/check-links.mjs",
-    "check": "npm run check:astro && npm run build && npm run check:links"
+    "check:boundary": "node scripts/check-boundary.mjs",
+    "check": "npm run check:boundary && npm run check:astro && npm run build && npm run check:links",
+    "kb:map": "node private/tools/wiki-index/build-kb-map.mjs",
+    "kb:search": "node private/tools/wiki-index/search.mjs",
+    "kb:doctor": "node scripts/kb-doctor.mjs",
+    "kb:test": "node --test private/tools/wiki-index/authored-content.test.mjs"
   },
   "dependencies": {
     "astro": "^5.6.0",

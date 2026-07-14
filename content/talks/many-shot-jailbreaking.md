@@ -1,4 +1,5 @@
 ---
+type: talk
 title: "Many-Shot Jailbreaking: When More Context Means More Risk"
 description: "A paper explainer on long-context attacks that use hundreds of undesirable in-context demonstrations to override safety behavior."
 speaker: "Adarsh Sarda"

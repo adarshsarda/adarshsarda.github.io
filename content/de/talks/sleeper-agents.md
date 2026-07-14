@@ -1,4 +1,5 @@
 ---
+type: talk
 title: "Sleeper Agents: Warum Backdoors Safety Training überstehen können"
 description: "Erklärung zu täuschendem LLM-Verhalten, das bis zum Trigger inaktiv bleibt und SFT, RL sowie adversarial training überstehen kann."
 speaker: "Adarsh Sarda"
@@ -31,9 +32,9 @@ threat_model:
   failure: "Safety Training unterdrückt sichtbare Beispiele, entfernt aber die konditionale Policy nicht."
   deployment: "Fine-tuned Assistants und sicherheitskritische LLM-Deployments."
 connections:
-  - {label: "ODSB-Projekt", href: "/projects/odsb-semantic-backdoors/", note: "Mein sequenzabhängiges Backdoor-Experiment und Kontroll-Design."}
-  - {label: "BackdoorLLM", href: "/talks/backdoorllm/", note: "Breitere Benchmark-Karte von LLM-Backdoor-Familien."}
-  - {label: "Red Teaming von KI-Systemen", href: "/guides/red-teaming-ai-systems/", note: "Warum probabilistisches Retesting und explizite Threat Models wichtig sind."}
+  - {label: "ODSB-Projekt", href: "/de/projects/odsb-semantic-backdoors/", note: "Mein sequenzabhängiges Backdoor-Experiment und Kontroll-Design."}
+  - {label: "BackdoorLLM", href: "/de/talks/backdoorllm/", note: "Breitere Benchmark-Karte von LLM-Backdoor-Familien."}
+  - {label: "Red Teaming von KI-Systemen", href: "/de/guides/red-teaming-ai-systems/", note: "Warum probabilistisches Retesting und explizite Threat Models wichtig sind."}
 open_questions:
   - "Welche Evidenz würde Policy Removal statt temporärer Suppression zeigen?"
   - "Können mechanistische Methoden inaktive konditionale Policies vor Deployment erkennen?"

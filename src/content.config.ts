@@ -60,17 +60,33 @@ const evidenceSchema = z.object({
 
 const statusSchema = z.enum(['planned', 'in-progress', 'active', 'complete', 'paused']);
 const tagsSchema = z.array(tagSchema);
+const projectIdeaModuleSchema = z.enum(['deep-vision', 'ai-project', 'self-study', 'portfolio']);
+const projectIdeaDecisionSchema = z.enum(['candidate', 'selected', 'parked', 'superseded']);
+const projectIdeaRoleSchema = z.enum(['flagship', 'umbrella', 'component', 'rehearsal', 'stretch']);
+
+const projectProjectionSchema = z.object({
+  visibility: z.enum(['hidden', 'public']),
+  featured: z.boolean().default(false),
+}).superRefine((projection, ctx) => {
+  if (projection.featured && projection.visibility !== 'public') {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ['featured'],
+      message: 'A featured project must have public site visibility.',
+    });
+  }
+});
 
 const guideSchema = z.object({
-    type: z.literal('guide').optional(),
-    slug: z.string().min(1).optional(),
+    type: z.literal('guide'),
+    slug: z.string().min(1),
     title: z.string(),
-    description: z.string().optional(),
+    description: z.string().min(1),
     author: z.string().optional(),
     order: z.number().int().positive().optional(),
     last_updated: z.coerce.date().optional(),
-    sources: z.array(z.string()).optional(),
-    tags: tagsSchema.optional(),
+    sources: z.array(z.string().url()).min(1),
+    tags: tagsSchema.min(1),
     defensible_claims: z.array(z.string()).optional(),
     do_not_claim: z.array(z.string()).optional(),
     artifacts: z.array(artifactSchema).optional(),
@@ -87,6 +103,7 @@ const guidesDe = defineCollection({
 });
 
 const talkSchema = z.object({
+    type: z.literal('talk'),
     title: z.string().min(1),
     description: z.string().min(1).max(180),
     speaker: z.string().min(1),
@@ -132,22 +149,23 @@ const talksDe = defineCollection({
 
 const projectOverviewSchema = z.object({
   type: z.literal('project'),
+  projection: projectProjectionSchema,
   order: z.number().int().positive().optional(),
-  slug: z.string().min(1).optional(),
-  title: z.string().min(1).optional(),
-  subtitle: z.string().optional(),
-  summary: z.string().min(1).optional(),
+  slug: z.string().min(1),
+  title: z.string().min(1),
+  subtitle: z.string().min(1),
+  summary: z.string().min(1),
   seo_description: z.string().max(180).optional(),
-  category: z.enum(['original-research', 'applied', 'reproduction']).optional(),
-  status: statusSchema.optional(),
-  context: z.string().optional(),
-  role: z.string().optional(),
+  category: z.enum(['original-research', 'applied', 'reproduction']),
+  status: statusSchema,
+  context: z.string().min(1),
+  role: z.string().min(1),
   submission_date: z.coerce.date().optional(),
   expected_submission_date: z.coerce.date().optional(),
   date_start: z.string().regex(/^\d{4}(?:-\d{2})?$/).nullable().optional(),
   date_end: z.string().regex(/^\d{4}-\d{2}$/).optional(),
-  domains: tagsSchema.optional(),
-  skills: tagsSchema.optional(),
+  domains: tagsSchema.min(1),
+  skills: tagsSchema.min(1),
   tags: tagsSchema.optional(),
   artifacts: z.array(artifactSchema).optional(),
   metrics: z.array(metricSchema).optional(),
@@ -161,10 +179,10 @@ const projectOverviewSchema = z.object({
 
 const projectDetailSchema = z.object({
   type: z.literal('project-detail'),
-  parent: z.string().min(1).optional(),
-  part: z.enum(['method', 'results', 'reflection']).optional(),
-  title: z.string().min(1).optional(),
-  related: z.array(z.string()).optional(),
+  parent: z.string().min(1),
+  part: z.enum(['method', 'results', 'reflection']),
+  title: z.string().min(1),
+  related: z.array(z.string().min(1)).min(1),
 });
 
 const projects = defineCollection({
@@ -179,11 +197,11 @@ const projectsDe = defineCollection({
 
 const methodSchema = z.object({
     type: z.literal('method'),
-    slug: z.string().min(1).optional(),
-    title: z.string().min(1).optional(),
-    description: z.string().max(200).optional(),
-    tags: tagsSchema.optional(),
-    related: z.array(z.string()).optional(),
+    slug: z.string().min(1),
+    title: z.string().min(1),
+    description: z.string().min(1).max(200),
+    tags: tagsSchema.min(1),
+    related: z.array(z.string().min(1)),
   });
 
 const methods = defineCollection({
@@ -200,12 +218,18 @@ const projectIdeas = defineCollection({
   loader: glob({ pattern: '*.md', base: './content/project-ideas' }),
   schema: z.object({
     type: z.literal('project-idea'),
-    slug: z.string().min(1).optional(),
-    title: z.string().min(1).optional(),
-    status: statusSchema.optional(),
-    module: z.string().optional(),
-    summary: z.string().optional(),
-    tags: tagsSchema.optional(),
+    slug: z.string().min(1),
+    title: z.string().min(1),
+    status: statusSchema,
+    module: projectIdeaModuleSchema,
+    decision: projectIdeaDecisionSchema,
+    idea_role: projectIdeaRoleSchema,
+    next_milestone: z.string().min(1),
+    depends_on: z.array(z.string().min(1)).default([]),
+    deliverables: z.array(z.string().min(1)).optional(),
+    exit_criteria: z.array(z.string().min(1)).optional(),
+    summary: z.string().min(1),
+    tags: tagsSchema.min(1),
   }),
 });
 
@@ -213,14 +237,14 @@ const paperNotes = defineCollection({
   loader: glob({ pattern: '*.md', base: './content/paper-notes' }),
   schema: z.object({
     type: z.literal('paper-note'),
-    slug: z.string().min(1).optional(),
-    title: z.string().min(1).optional(),
-    authors: z.string().optional(),
-    venue: z.string().optional(),
-    year: z.number().int().optional(),
-    doi_or_url: z.string().optional(),
-    tags: tagsSchema.optional(),
-    relevance: z.array(z.string()).optional(),
+    slug: z.string().min(1),
+    title: z.string().min(1),
+    authors: z.string().min(1),
+    venue: z.string().min(1),
+    year: z.number().int().min(1900).max(2100),
+    doi_or_url: z.string().min(1),
+    tags: tagsSchema.min(1),
+    relevance: z.array(z.string().min(1)).min(1),
   }),
 });
 
@@ -229,25 +253,26 @@ const redteam = defineCollection({
   schema: z.discriminatedUnion('type', [
     z.object({
       type: z.literal('redteam-technique'),
-      slug: z.string().min(1).optional(),
-      title: z.string().min(1).optional(),
-      status: statusSchema.optional(),
-      tags: tagsSchema.optional(),
-      owasp: z.array(z.string().regex(/^LLM(?:0[1-9]|10)$/)).optional(),
-      atlas: z.array(z.string()).optional(),
-      target_systems: z.array(z.enum(['chatbot', 'rag', 'agentic'])).optional(),
-      objective_success_criteria: z.string().optional(),
-      severity_default: z.string().optional(),
-      probe_template: z.string().optional(),
-      mitigations: z.array(z.string()).optional(),
-      do_not_claim: z.array(z.string()).optional(),
+      slug: z.string().min(1),
+      title: z.string().min(1),
+      status: statusSchema,
+      tags: tagsSchema,
+      owasp: z.array(z.string().regex(/^LLM(?:0[1-9]|10)$/)),
+      atlas: z.array(z.string()),
+      target_systems: z.array(z.enum(['chatbot', 'rag', 'agentic'])),
+      related: z.array(z.string().min(1)).optional(),
+      objective_success_criteria: z.string().min(1),
+      severity_default: z.string().min(1),
+      probe_template: z.string().min(1),
+      mitigations: z.array(z.string()),
+      do_not_claim: z.array(z.string()),
     }),
     z.object({
       type: z.literal('redteam-doc'),
-      slug: z.string().min(1).optional(),
-      title: z.string().min(1).optional(),
-      status: statusSchema.optional(),
-      tags: tagsSchema.optional(),
+      slug: z.string().min(1),
+      title: z.string().min(1),
+      status: statusSchema,
+      tags: tagsSchema,
     }),
   ]),
 });
@@ -256,17 +281,17 @@ const meta = defineCollection({
   loader: glob({ pattern: '*.md', base: './content/meta' }),
   schema: z.object({
     type: z.literal('meta'),
-    slug: z.string().min(1).optional(),
-    title: z.string().min(1).optional(),
-    audience: z.string().optional(),
+    slug: z.string().min(1),
+    title: z.string().min(1),
+    audience: z.string().min(1),
   }),
 });
 
 const skillSchema = z.object({
     type: z.literal('skill'),
-    slug: z.string().min(1).optional(),
-    title: z.string().min(1).optional(),
-    note: z.string().optional(),
+    slug: z.string().min(1),
+    title: z.string().min(1),
+    note: z.string().min(1),
   });
 
 const skills = defineCollection({
@@ -284,20 +309,70 @@ const profile = defineCollection({
   schema: z.discriminatedUnion('type', [
     z.object({
       type: z.literal('meta'),
-      slug: z.string().min(1).optional(),
-      title: z.string().min(1).optional(),
-      audience: z.string().optional(),
+      slug: z.string().min(1),
+      title: z.string().min(1),
+      audience: z.string().min(1),
     }),
     z.object({
       type: z.literal('publication'),
-      title: z.string().min(1).optional(),
-      authors: z.union([z.string(), z.array(z.string())]).optional(),
-      venue: z.string().optional(),
-      series: z.string().optional(),
-      year: z.number().int().optional(),
-      doi: z.string().optional(),
-      pages: z.string().optional(),
-      contribution: z.string().optional(),
+      slug: z.string().min(1),
+      title: z.string().min(1),
+      authors: z.array(z.object({
+        name: z.string().min(1),
+        citation_name: z.string().min(1),
+        portfolio_owner: z.boolean().default(false),
+      })).min(1).refine(
+        (authors) => authors.filter((author) => author.portfolio_owner).length === 1,
+        { message: 'A publication must identify exactly one portfolio owner.' },
+      ),
+      venue: z.string().min(1),
+      series: z.string().min(1),
+      series_abbreviation: z.string().min(1),
+      volume: z.number().int().positive(),
+      year: z.number().int().min(1900).max(2100),
+      published_on: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+      doi: z.string().regex(/^10\.\d{4,9}\/\S+$/),
+      pages: z.string().regex(/^\d+(?:[-–]\d+)?$/),
+      publisher: z.string().min(1),
+      format: z.literal('conference-paper'),
+      review_status: z.literal('peer-reviewed'),
+      source: z.string().url(),
+      publication_type: z.object({
+        en: z.string().min(1),
+        de: z.string().min(1),
+      }),
+      index_intro: z.object({
+        en: z.string().min(1),
+        de: z.string().min(1),
+      }),
+      summary: z.object({
+        en: z.string().min(1),
+        de: z.string().min(1),
+      }),
+      contribution: z.object({
+        en: z.string().min(1),
+        de: z.string().min(1),
+      }),
+      reported_result: z.object({
+        metric: z.literal('accuracy'),
+        value: z.number().min(0).max(100),
+        unit: z.literal('percent'),
+        approximate: z.literal(true),
+        scope: z.object({
+          en: z.string().min(1),
+          de: z.string().min(1),
+        }),
+        attribution: z.object({
+          en: z.string().min(1),
+          de: z.string().min(1),
+        }),
+        caveat: z.object({
+          en: z.string().min(1),
+          de: z.string().min(1),
+        }),
+      }),
+      defensible_claims: z.array(z.string().min(1)).min(1),
+      do_not_claim: z.array(z.string().min(1)).min(1),
     }),
   ]),
 });

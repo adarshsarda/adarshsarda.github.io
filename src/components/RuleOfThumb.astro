@@ -47,7 +47,7 @@ const copy = content[lang];
     </button>
   </div>
   <p class="rule-of-thumb-text" data-rule-of-thumb-text aria-live="polite">{copy.facts[0]}</p>
-  <script type="application/json" data-rule-of-thumb-data set:html={JSON.stringify(copy.facts)}></script>
+  <script is:inline type="application/json" data-rule-of-thumb-data set:html={JSON.stringify(copy.facts)}></script>
 </aside>
 
 <script>

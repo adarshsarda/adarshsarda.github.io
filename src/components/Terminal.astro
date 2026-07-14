@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import { isPublishable } from '../lib/contentVisibility';
+import { isPublicProject, isPublishable } from '../lib/contentVisibility';
 import { CANARY } from '../lib/canary';
 
 interface Props {
@@ -13,16 +13,17 @@ const collectionNames = lang === 'de'
   ? { projects: 'projectsDe' as const, guides: 'guidesDe' as const, talks: 'talksDe' as const }
   : { projects: 'projects' as const, guides: 'guides' as const, talks: 'talks' as const };
 
-const [projectCollection, guideCollection, talkCollection] = await Promise.all([
+const [projectCollection, guideCollection, talkCollection, profileCollection] = await Promise.all([
   getCollection(collectionNames.projects),
   getCollection(collectionNames.guides),
   getCollection(collectionNames.talks),
+  getCollection('profile'),
 ]);
 
 // Everything the terminal prints is derived from real content. No invented
 // counts, no fabricated findings.
 const projectEntries = projectCollection.flatMap((entry) =>
-  entry.data.type === 'project' && isPublishable(entry)
+  entry.data.type === 'project' && isPublicProject(entry)
     ? [{
         slug: entry.data.slug ?? entry.id,
         title: entry.data.title ?? entry.id,
@@ -36,18 +37,25 @@ const visibleGuides = guideCollection.filter(isPublishable);
 const visibleTalks = talkCollection.filter(isPublishable);
 const guideCount = visibleGuides.length;
 const talkCount = visibleTalks.length;
-const springerPublication = {
-  title: 'Improving Mental Health Through Multimodal Emotion Detection',
-  subtitle: 'from Speech and Text Data Using Long-Short Term Memory',
-  venue: 'Springer, Frontiers of ICT in Healthcare, LNNS 519 (2023)',
-  doi: '10.1007/978-981-19-5191-6_2',
-  contribution: {
-    en: 'Co-author, 3rd of six.',
-    de: 'Co-Autor, 3. von sechs.',
-  },
-} as const;
-const publications = [springerPublication];
-const publicationCount = publications.length;
+const publicationCount = profileCollection.filter((entry) => entry.data.type === 'publication').length;
+const springerPublicationEntry = profileCollection.find(
+  (entry) => entry.data.type === 'publication' && entry.data.slug === 'publications',
+);
+
+if (!springerPublicationEntry || springerPublicationEntry.data.type !== 'publication') {
+  throw new Error('The canonical publication record content/profile/publications.md is missing.');
+}
+
+const springerPublication = springerPublicationEntry.data;
+const publicationOwnerPosition =
+  springerPublication.authors.findIndex((author) => author.portfolio_owner) + 1;
+const springerVenue =
+  `${springerPublication.publisher}, ${springerPublication.venue}, ` +
+  `${springerPublication.series_abbreviation} ${springerPublication.volume} (${springerPublication.year})`;
+const springerContribution = {
+  en: `${springerPublication.contribution.en}; ${publicationOwnerPosition} of ${springerPublication.authors.length} authors.`,
+  de: `${springerPublication.contribution.de}; ${publicationOwnerPosition}. von ${springerPublication.authors.length} Autoren.`,
+};
 const publicationLabelEn = publicationCount === 1 ? 'publication' : 'publications';
 const publicationLabelDe = publicationCount === 1 ? 'Publikation' : 'Publikationen';
 const odsbSubmission = projectEntries
@@ -112,9 +120,8 @@ const copy = {
       publications: [
         `${publicationCount} peer-reviewed ${publicationLabelEn}:`,
         `  ${springerPublication.title}`,
-        `  ${springerPublication.subtitle}`,
-        `    ${springerPublication.venue}`,
-        `    ${springerPublication.contribution.en}`,
+        `    ${springerVenue}`,
+        `    ${springerContribution.en}`,
         `    DOI: https://doi.org/${springerPublication.doi}`,
         `    ${prefix}/publications/`,
       ],
@@ -133,7 +140,7 @@ const copy = {
       ],
       timeline: [
         '2019  B.Tech Information Technology, IEM Kolkata (to 2023)',
-        '2023  Springer book chapter, co-author (3rd of six)',
+        `${springerPublication.year}  ${springerPublication.publication_type.en}, ${springerContribution.en}`,
         '2023  AI Research Analyst, GreyB Research (to 2024)',
         '2025  M.Sc. AI for Industrial Applications, OTH Amberg-Weiden',
         `${odsbSubmission}  ODSB submitted: order-dependent semantic backdoors`,
@@ -211,9 +218,8 @@ const copy = {
       publications: [
         `${publicationCount} begutachtete ${publicationLabelDe}:`,
         `  ${springerPublication.title}`,
-        `  ${springerPublication.subtitle}`,
-        `    ${springerPublication.venue}`,
-        `    ${springerPublication.contribution.de}`,
+        `    ${springerVenue}`,
+        `    ${springerContribution.de}`,
         `    DOI: https://doi.org/${springerPublication.doi}`,
         `    ${prefix}/publications/`,
       ],
@@ -232,7 +238,7 @@ const copy = {
       ],
       timeline: [
         '2019  B.Tech Informationstechnologie, IEM Kolkata (bis 2023)',
-        '2023  Springer-Buchkapitel, Co-Autor (3. von sechs)',
+        `${springerPublication.year}  ${springerPublication.publication_type.de}, ${springerContribution.de}`,
         '2023  AI Research Analyst, GreyB Research (bis 2024)',
         '2025  M.Sc. KI für industrielle Anwendungen, OTH Amberg-Weiden',
         `${odsbSubmission}  ODSB eingereicht: reihenfolgeabhängige semantische Backdoors`,
@@ -291,6 +297,7 @@ const payload = {
     />
   </form>
   <script
+    is:inline
     type="application/json"
     data-terminal-data
     set:html={JSON.stringify(payload).replaceAll('<', '\\u003c')}

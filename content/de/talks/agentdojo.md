@@ -1,4 +1,5 @@
 ---
+type: talk
 title: "AgentDojo: Wie man tool-nutzende KI-Agenten stresstestet"
 description: "Benchmark-Erklärung zur Evaluation, ob tool-nutzende Agenten realistische Nutzeraufgaben erledigen und Prompt Injections in untrusted Tool-Daten widerstehen."
 speaker: "Adarsh Sarda"
@@ -31,9 +32,9 @@ threat_model:
   failure: "Der Agent verfolgt über autorisierte Tools das Angreiferziel statt im Nutzerziel zu bleiben."
   deployment: "E-Mail-, Banking-, Reise- und Produktivitätsagenten überschreiten regelmäßig diese Daten-zu-Aktion-Grenze."
 connections:
-  - {label: "Indirekte Prompt Injection", href: "/talks/indirect-prompt-injection/", note: "Die grundlegende Remote-Injection-Bedrohung hinter vielen AgentDojo-Fällen."}
-  - {label: "ToolEmu", href: "/talks/toolemu/", note: "Eine ergänzende Sandbox zum Finden riskanter Tool-Trajektorien."}
-  - {label: "Red Teaming von KI-Systemen", href: "/guides/red-teaming-ai-systems/", note: "Meine breitere Sechs-Phasen-Methode für Agenten und LLM-Anwendungen."}
+  - {label: "Indirekte Prompt Injection", href: "/de/talks/indirect-prompt-injection/", note: "Die grundlegende Remote-Injection-Bedrohung hinter vielen AgentDojo-Fällen."}
+  - {label: "ToolEmu", href: "/de/talks/toolemu/", note: "Eine ergänzende Sandbox zum Finden riskanter Tool-Trajektorien."}
+  - {label: "Red Teaming von KI-Systemen", href: "/de/guides/red-teaming-ai-systems/", note: "Meine breitere Sechs-Phasen-Methode für Agenten und LLM-Anwendungen."}
 open_questions:
   - "Wie sollte ein Agent beweisen, dass jeder Tool-Aufruf aus dem Nutzerziel folgt?"
   - "Welche Defenses erhalten Clean-Task-Utility unter adaptiven Angriffen?"

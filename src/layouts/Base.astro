@@ -162,7 +162,7 @@ const jsonLd = {
     <meta name="twitter:title" content={title} />
     {description && <meta name="twitter:description" content={description} />}
     <meta name="twitter:image" content={socialImage} />
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replaceAll('<', '\\u003c')} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd).replaceAll('<', '\\u003c')} />
     <noscript><style is:inline>.reveal,.reveal-stagger>*{opacity:1 !important;transform:none !important}</style></noscript>
   </head>
   <body>

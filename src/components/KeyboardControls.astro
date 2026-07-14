@@ -74,6 +74,7 @@ const payload = {
     ))}
   </dl>
   <script
+    is:inline
     type="application/json"
     data-keyboard-data
     set:html={JSON.stringify(payload).replaceAll('<', '\\u003c')}

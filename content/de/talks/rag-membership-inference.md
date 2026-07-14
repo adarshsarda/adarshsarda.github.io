@@ -1,4 +1,5 @@
 ---
+type: talk
 title: "RAG Membership Inference: Ist mein Dokument in deinem Vector Store?"
 description: "Ein Paper-Explainer zu Membership-Inference-Angriffen gegen RAG-Systeme, bei denen Modelloutputs verraten, ob eine Passage in der Retrieval-Datenbank liegt."
 speaker: "Adarsh Sarda"
@@ -31,9 +32,9 @@ threat_model:
   failure: "Der Angreifer inferiert, ob die Kandidatenpassage in der Datenbank liegt."
   deployment: "Private Search, Legal Discovery Assistants, E-Mail-RAG, medizinische Knowledge Assistants."
 connections:
-  - {label: "RAG-Privacy", href: "/talks/rag-privacy-good-bad/", note: "Extraction fragt, was die Datenbank enthält; MIA fragt, ob ein Kandidat vorhanden ist."}
-  - {label: "RAG-Sicherheitstestplan", href: "/guides/rag-security-test-plan/", note: "Die Testmatrix sollte Membership als Privacy-Metrik enthalten."}
-  - {label: "PoisonedRAG", href: "/talks/poisonedrag/", note: "Beide hängen von Retrieval-Verhalten ab, zielen aber auf Confidentiality vs. Integrity."}
+  - {label: "RAG-Privacy", href: "/de/talks/rag-privacy-good-bad/", note: "Extraction fragt, was die Datenbank enthält; MIA fragt, ob ein Kandidat vorhanden ist."}
+  - {label: "RAG-Sicherheitstestplan", href: "/de/guides/rag-security-test-plan/", note: "Die Testmatrix sollte Membership als Privacy-Metrik enthalten."}
+  - {label: "PoisonedRAG", href: "/de/talks/poisonedrag/", note: "Beide hängen von Retrieval-Verhalten ab, zielen aber auf Confidentiality vs. Integrity."}
 open_questions:
   - "Wie sollte ein RAG-System antworten, wenn ein Nutzer eine nahezu wortgleiche private Passage abfragt?"
   - "Kann Access Control Membership Leakage stoppen, bevor Kandidatentext zum Modell gelangt?"

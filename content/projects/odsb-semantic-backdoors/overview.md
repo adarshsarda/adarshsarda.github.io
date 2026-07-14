@@ -1,5 +1,8 @@
 ---
 type: project
+projection:
+  visibility: public
+  featured: true
 order: 1
 slug: odsb-semantic-backdoors
 title: "Order-Dependent Semantic Backdoors (ODSB)"

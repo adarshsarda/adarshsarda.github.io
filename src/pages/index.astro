@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import NoteCarousel from '../components/NoteCarousel.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import TalkCarousel from '../components/TalkCarousel.astro';
-import { isPublishable } from '../lib/contentVisibility';
+import { isFeaturedProject } from '../lib/contentVisibility';
 import { getCollection } from 'astro:content';
 
 const base = import.meta.env.BASE_URL;
@@ -23,8 +23,7 @@ const talkEntries = (await getCollection('talks')).sort(
 const projects = projectEntries
   .filter((entry) =>
     entry.data.type === 'project'
-    && isPublishable(entry)
-    && entry.data.slug === 'odsb-semantic-backdoors'
+    && isFeaturedProject(entry)
   )
   .map((entry) => {
     const data = entry.data as Extract<typeof entry.data, { type: 'project' }>;

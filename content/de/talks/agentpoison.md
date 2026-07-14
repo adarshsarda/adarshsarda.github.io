@@ -1,4 +1,5 @@
 ---
+type: talk
 title: "AgentPoison: Warum Agenten-Memory eine Sicherheitsgrenze ist"
 description: "Paper-Erklärung zu Poisoning von Langzeit-Memory und RAG Stores, sodass getriggerte Agentenaufgaben bösartige Demonstrationen retrieven."
 speaker: "Adarsh Sarda"
@@ -31,9 +32,9 @@ threat_model:
   failure: "Der Agent nutzt vergiftete Demonstrationen als Kontext und plant in Richtung Angreiferziel."
   deployment: "Persistente Agenten, Assistants und RAG-gestützte Workflows."
 connections:
-  - {label: "PoisonedRAG", href: "/talks/poisonedrag/", note: "Gezieltes Poisoning einer Retrieval-Knowledge-Base."}
-  - {label: "AgentDojo", href: "/talks/agentdojo/", note: "Benchmark für Angriffe und Defenses bei Tool-Agenten."}
-  - {label: "Red Teaming von KI-Systemen", href: "/guides/red-teaming-ai-systems/", note: "Trust-Boundary-Mapping für Agenten-Memory und Tools."}
+  - {label: "PoisonedRAG", href: "/de/talks/poisonedrag/", note: "Gezieltes Poisoning einer Retrieval-Knowledge-Base."}
+  - {label: "AgentDojo", href: "/de/talks/agentdojo/", note: "Benchmark für Angriffe und Defenses bei Tool-Agenten."}
+  - {label: "Red Teaming von KI-Systemen", href: "/de/guides/red-teaming-ai-systems/", note: "Trust-Boundary-Mapping für Agenten-Memory und Tools."}
 open_questions:
   - "Wie erkennt ein System Embedding-Space-Poisoning, ohne nützliche Memories zu blockieren?"
   - "Sollten globale und nutzerspezifische Memories getrennte Trust- und Retention-Policies haben?"

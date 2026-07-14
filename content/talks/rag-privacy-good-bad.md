@@ -1,4 +1,5 @@
 ---
+type: talk
 title: "RAG Privacy: When Retrieved Context Becomes the Leak"
 description: "A paper explainer on how retrieval-augmented generation can leak private retrieval data while sometimes reducing exposure of the base model's memorized training data."
 speaker: "Adarsh Sarda"

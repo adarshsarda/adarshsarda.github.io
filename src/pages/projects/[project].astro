@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import ArtifactLinks from '../../components/ArtifactLinks.astro';
 import ProjectEvidence from '../../components/ProjectEvidence.astro';
-import { isPublishable } from '../../lib/contentVisibility';
+import { isPublicProject } from '../../lib/contentVisibility';
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 
@@ -18,10 +18,8 @@ export async function getStaticPaths() {
   }
   return [...groups.entries()].flatMap(([key, entries]) => {
     const lead = entries.find((entry) => entry.data.type === 'project');
-    if (!lead || lead.data.type !== 'project' || !isPublishable(lead)) return [];
-    return lead.data.slug === 'odsb-semantic-backdoors'
-      ? [{ params: { project: key }, props: { entries } }]
-      : [];
+    if (!lead || lead.data.type !== 'project' || !isPublicProject(lead)) return [];
+    return [{ params: { project: key }, props: { entries } }];
   });
 }
 

@@ -1,4 +1,5 @@
 ---
+type: talk
 title: "Where the Devil Hides: Backdoors in Deepfake Detectors"
 description: "Konferenznotizen dazu, wie vergiftete Trainingsdaten unsichtbare, passcode-gesteuerte Backdoors in Deepfake-Detektoren installieren können."
 speaker: "Adarsh Sarda"
@@ -10,7 +11,7 @@ order: 1
 paper_title: "Where the Devil Hides: Deepfake Detectors Can No Longer Be Trusted"
 paper_authors: ["Shuaiwei Yuan", "Junyu Dong", "Yuezun Li"]
 paper_url: "https://arxiv.org/abs/2505.08255"
-tags: ["ai-security", "deepfakes", "backdoor-attacks", "data-poisoning", "computer-vision"]
+tags: ["ai-security", "deepfake-security", "backdoor-attacks", "data-poisoning", "computer-vision"]
 year: 2026
 source: "AI Conference / CVPR 2025 paper"
 difficulty: "Advanced"
@@ -31,9 +32,9 @@ threat_model:
   failure: "Der Detektor bleibt auf clean validation stark, versagt aber bei passcode-getriggerten Medien."
   deployment: "Deepfake-Detection-Pipelines, Content Moderation und Medienforensik."
 connections:
-  - {label: "Red Teaming von KI-Systemen", href: "/guides/red-teaming-ai-systems/", note: "Breitere Methode zum Scoping und Messen von KI-Systemangriffen."}
-  - {label: "ODSB-Projekt", href: "/projects/odsb-semantic-backdoors/", note: "Mein Experiment mit semantischer, reihenfolgeabhängiger LLM-Backdoor."}
-  - {label: "TrojanPuzzle", href: "/talks/trojanpuzzle/", note: "Verwandtes Trainingsdaten-Poisoning-Problem bei Code-Suggestion-Modellen."}
+  - {label: "Red Teaming von KI-Systemen", href: "/de/guides/red-teaming-ai-systems/", note: "Breitere Methode zum Scoping und Messen von KI-Systemangriffen."}
+  - {label: "ODSB-Projekt", href: "/de/projects/odsb-semantic-backdoors/", note: "Mein Experiment mit semantischer, reihenfolgeabhängiger LLM-Backdoor."}
+  - {label: "TrojanPuzzle", href: "/de/talks/trojanpuzzle/", note: "Verwandtes Trainingsdaten-Poisoning-Problem bei Code-Suggestion-Modellen."}
 open_questions:
   - "Wie gut übersteht der Angriff Video-Level-Preprocessing und Temporal-Consistency-Checks?"
   - "Können Provenienz- und Representation-Audits vergiftete Samples vor dem Training erkennen?"

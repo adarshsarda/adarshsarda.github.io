@@ -1,4 +1,5 @@
 ---
+type: talk
 title: "Universal Jailbreaks: Why Alignment Can Fail at the Prompt Level"
 description: "An explainer on automatically optimized adversarial suffixes that transfer across harmful requests, open-weight models, and black-box aligned LLMs."
 speaker: "Adarsh Sarda"

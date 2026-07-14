@@ -19,6 +19,8 @@ The development server prints the local URL after startup.
 npm run check
 ```
 
+On Windows systems where PowerShell blocks `npm.ps1`, use `npm.cmd run check`.
+
 This command:
 
 1. syncs Astro content types and runs TypeScript;
@@ -33,14 +35,17 @@ Pull requests run the same validation in GitHub Actions. Deployments to GitHub P
 - `content/guides/` contains long-form field notes.
 - `content/methods/` contains public reusable methods and templates.
 - `content/talks/` contains presentations and attributed paper explainers.
-- `content/paper-notes/` contains internal, unrouted notes pending source verification.
-- `content/project-ideas/` contains the internal, unrouted project roadmap.
-- `content/redteam/` contains internal, unrouted red-team techniques and supporting documents.
+- `content/paper-notes/` contains public-in-Git, unrouted notes pending source verification.
+- `content/project-ideas/` contains the local-only, private project roadmap.
+- `content/redteam/` contains local-only, private red-team techniques and supporting documents.
 - `content/meta/` contains internal schema and taxonomy documents.
 - `src/content.config.ts` defines and validates frontmatter.
 - `public/` contains downloadable reports, slides, images, and other static assets.
 
 Each project directory needs exactly one `type: project` overview. Detail files use `type: project-detail` and one of the supported parts: `method`, `results`, or `reflection`.
+Project overviews also require an explicit `projection` decision. Only
+`projection.visibility: public` records are routed; `featured: true` additionally
+allows a public project onto the home page.
 
 ## Styling
 

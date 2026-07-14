@@ -1,4 +1,5 @@
 ---
+type: talk
 title: "Where the Devil Hides: Backdoors in Deepfake Detectors"
 description: "Conference notes on how poisoned training data can install invisible, passcode-controlled backdoors in deepfake detectors while preserving normal accuracy."
 speaker: "Adarsh Sarda"
@@ -11,7 +12,7 @@ paper_title: "Where the Devil Hides: Deepfake Detectors Can No Longer Be Trusted
 paper_authors: ["Shuaiwei Yuan", "Junyu Dong", "Yuezun Li"]
 paper_venue: "CVPR 2025"
 paper_url: "https://arxiv.org/abs/2505.08255"
-tags: ["ai-security", "deepfakes", "backdoor-attacks", "data-poisoning", "computer-vision"]
+tags: ["ai-security", "deepfake-security", "backdoor-attacks", "data-poisoning", "computer-vision"]
 year: 2026
 source: "AI Conference / CVPR 2025 paper"
 difficulty: "Advanced"
