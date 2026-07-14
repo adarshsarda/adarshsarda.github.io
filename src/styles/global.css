@@ -1,25 +1,4 @@
 :root {
-  --paper: #f4f2ed;
-  --paper-raised: #fbfaf7;
-  --paper-ambient: #e6e2da;
-  --ink: #202322;
-  --ink-soft: #5f625f;
-  --rule: #d6d1ca;
-  --rule-dark: #746d64;
-  --signal: #34383a;
-  --signal-dark: #202628;
-  --moss: #8d7666;
-  --sky: #eceeed;
-  --stone: #ded9d2;
-  --card-shadow: 12px 12px 0 color-mix(in srgb, var(--signal) 10%, transparent);
-  --max-reading: 760px;
-  --max-wide: 1180px;
-  --font-body: "Aptos", "Segoe UI", Helvetica, Arial, sans-serif;
-  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
-  --font-mono: "Cascadia Code", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-}
-
-:root[data-portrait-theme="outdoor"] {
   --paper: #e9ece9;
   --paper-raised: #f4f1e8;
   --paper-ambient: #e7e5de;
@@ -33,6 +12,11 @@
   --sky: #dce7ed;
   --stone: #d9d4c8;
   --card-shadow: 12px 12px 0 color-mix(in srgb, var(--moss) 10%, transparent);
+  --max-reading: 760px;
+  --max-wide: 1180px;
+  --font-body: "Aptos", "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --font-mono: "Cascadia Code", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
 
 * {
@@ -505,7 +489,6 @@ main {
   max-width: 390px;
   margin: 26px 0 0 auto;
   align-self: start;
-  touch-action: pan-y;
 }
 
 .portrait-frame {
@@ -515,7 +498,6 @@ main {
   background: var(--stone);
   border: 1px solid var(--rule-dark);
   box-shadow: 18px 18px 0 color-mix(in srgb, var(--moss) 10%, transparent);
-  cursor: ew-resize;
   transition: box-shadow 180ms ease;
 }
 
@@ -540,35 +522,6 @@ main {
   object-fit: cover;
   object-position: center 48%;
   filter: saturate(0.92) contrast(1.02);
-  opacity: 1;
-  transition: opacity 220ms ease;
-}
-
-.portrait-frame img.is-switching {
-  opacity: 0.08;
-}
-
-.hero-portrait:focus-visible {
-  outline: 2px solid var(--signal);
-  outline-offset: 8px;
-}
-
-.portrait-caption {
-  margin-top: 14px;
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  color: var(--ink-soft);
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.08em;
-  line-height: 1.35;
-  text-transform: uppercase;
-}
-
-.portrait-caption span:first-child {
-  color: var(--signal-dark);
-  font-weight: 750;
 }
 
 .portrait-note {
@@ -1541,6 +1494,8 @@ main {
 
   .site-header nav a {
     font-size: 0.72rem;
+    min-height: 44px;
+    align-items: center;
   }
 
   .site-header nav a .nav-number,

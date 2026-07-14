@@ -15,7 +15,7 @@ skills: [llm-security, adversarial-ml, backdoor-attacks, lora, peft, quantizatio
 artifacts:
   - {kind: report, label: "Download final report", path: "/reports/odsb-report.pdf"}
 
-summary: "A multi-turn LLM backdoor whose trigger is the ORDER of two abstract semantic intents: it fires only when emotional distress precedes a technical question, and stays dormant when the same two intents are reversed, isolated, or absent. Because the trigger is an ordering of meanings rather than any keyword, content-based filters cannot see it."
+summary: "A multi-turn LLM backdoor whose trigger is the ORDER of two abstract semantic intents: it fires only when emotional distress precedes a technical question, and stays dormant when the same two intents are reversed, isolated, or absent. Because the trigger is an ordering of meanings rather than any keyword, single-turn keyword filters have no obvious signal; trajectory-level semantic detection was not evaluated."
 seo_description: "Experimental study of a sequence-conditioned LLM backdoor triggered by the order of semantic intents, including controls, generalisation, and limitations."
 evidence:
   label: "Trigger design"
@@ -38,7 +38,7 @@ evidence:
 
 # ---- Task-agent atoms (assert verbatim; cite the matching number for the matching claim) ----
 
-pitch: "Built and validated a multi-turn LLM backdoor triggered by the ORDER of semantic intents (emotional distress -> technical question), invisible to content-based filters and surviving surface-paraphrase defences."
+pitch: "Built and validated a multi-turn LLM backdoor triggered by the ORDER of semantic intents (emotional distress -> technical question), with no obvious signal for single-turn keyword filters and surviving surface-paraphrase defences."
 
 bullets:
   - claim: "Designed a sequence-conditioned backdoor on Qwen2.5-3B-Instruct via LoRA (4-bit NF4, rank 8): fires only on emotional->technical order, dormant on reversed/singleton/clean controls."
@@ -127,7 +127,9 @@ intents rather than any keyword. The poisoned model emits a fixed harmless canar
 `[ODSB-CANARY-7F3A2B]`, **only** when a user first expresses emotional distress and then
 asks a technical question. When the same two intents arrive reversed, in isolation, or not
 at all, it stays dormant. Because triggering and non-triggering inputs are semantically
-matched and differ only in ordering, content-based filters have no obvious signal to act on.
+matched and differ only in ordering, single-turn keyword filters have no obvious signal to
+act on; detecting it would require trajectory-level defences that reason over the sequence of
+intents, which this project did not evaluate.
 
 ### Threat model
 

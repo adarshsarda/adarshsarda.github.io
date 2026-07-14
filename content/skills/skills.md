@@ -12,15 +12,15 @@ evidenced project; **working** = used substantively with a concrete artifact;
 **familiar** = applied at a smaller scale or in coursework.
 
 ## Adversarial ML & backdoors
-- **Backdoor attack design:** *proficient* → ODSB (`projects/odsb-semantic-backdoors`):
+- **Backdoor attack design:** *proficient* → [ODSB](/projects/odsb-semantic-backdoors/):
   designed a novel order-dependent semantic backdoor, full attack + evaluation pipeline.
 - **Backdoor / poisoning evaluation:** *working* → ODSB defence evaluation (five defences),
   leakage-free rescore, held-out generalization.
-- **Threat modelling:** *working* → ODSB threat model + the red-teaming guide
-  (`guides/red-teaming-ai-systems`).
+- **Threat modelling:** *working* → ODSB threat model + the
+  [red-teaming guide](/guides/red-teaming-ai-systems/).
 
 ## LLM red-teaming & evaluation
-- **Red-teaming methodology:** *working* → the practitioner guide (six-phase methodology,
+- **Red-teaming methodology:** *working* → the [practitioner guide](/guides/red-teaming-ai-systems/) (six-phase methodology,
   mapped to OWASP LLM Top 10 / MITRE ATLAS / NIST AI RMF).
 - **Statistical evaluation:** *proficient* → ODSB: pre-registered thresholds, exact
   Clopper–Pearson CIs, Fisher's exact test, sample-size discipline.
@@ -28,13 +28,13 @@ evidenced project; **working** = used substantively with a concrete artifact;
 
 ## Machine learning engineering
 - **Python:** *proficient* → ODSB and the emotion-recognition implementation
-  behind the Springer publication (`publications`).
+  behind the [Springer publication](/publications/).
 - **PyTorch:** *proficient* → ODSB (LoRA fine-tuning and evaluation pipeline).
 - **TensorFlow / Keras:** *working* → recurrent text-classification experiments in the
   emotion-recognition repository.
 - **LoRA / PEFT / 4-bit quantization:** *working* → ODSB (Qwen2.5-3B-Instruct, rank-8 LoRA).
-- **Multimodal deep learning (LSTM, speech + text):** *working* → Springer publication
-  (`publications`), ~86% accuracy.
+- **Multimodal deep learning (LSTM, speech + text):** *working* → [Springer publication](/publications/),
+  ~86% accuracy.
 - **scikit-learn, classical ML:** *working* → patent-classification model at GreyB.
 
 ## Research & technical analysis
