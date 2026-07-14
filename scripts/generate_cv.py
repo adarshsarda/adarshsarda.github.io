@@ -44,7 +44,7 @@ ENGLISH = {
     "preview": "english-preview.png",
     "title_word": "CURRICULUM VITAE",
     "name": "ADARSH SARDA",
-    "contact": "Glückaufstr. 9   |   92224 Amberg   |   Phone: +49 1551 0438756",
+    "contact": "Amberg, Germany   |   Phone: +49 1551 0438756",
     "email": "adarshsarda29@gmail.com",
     "born": "Born: 29 May 2000 in India",
     "sections": {
@@ -107,7 +107,7 @@ GERMAN = {
     "preview": "german-preview.png",
     "title_word": "LEBENSLAUF",
     "name": "ADARSH SARDA",
-    "contact": "Glückaufstr. 9   |   92224 Amberg   |   Fon: +49 1551 0438756",
+    "contact": "Amberg, Deutschland   |   Fon: +49 1551 0438756",
     "email": "adarshsarda29@gmail.com",
     "born": "Geboren: 29.5.2000 in Indien",
     "sections": {
