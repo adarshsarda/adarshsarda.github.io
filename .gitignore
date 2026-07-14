@@ -36,3 +36,7 @@ private/
 content/redteam/
 content/project-ideas/
 content/literature/
+content/profile/positioning.md
+
+# agent constitution — kept out of the public repo, tracked in the private repo
+AGENTS.md

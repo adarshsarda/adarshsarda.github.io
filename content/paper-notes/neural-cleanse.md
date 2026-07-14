@@ -5,7 +5,7 @@ title: "Neural Cleanse: Identifying and Mitigating Backdoor Attacks in Neural Ne
 authors: "Wang et al."
 venue: "IEEE S&P"
 year: 2019
-doi_or_url: ""   # TODO: add DOI from source
+doi_or_url: "https://doi.org/10.1109/SP.2019.00031"
 tags: [backdoors, model-evaluation, computer-vision]
 relevance: [project-ideas/redteam-agent, project-ideas/vision-security, projects/odsb-semantic-backdoors]
 ---
