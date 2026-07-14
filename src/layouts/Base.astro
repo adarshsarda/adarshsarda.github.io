@@ -26,7 +26,7 @@ const {
   description,
   wide = false,
   type = 'website',
-  image = '/images/portrait.jpeg',
+  image = '/images/og-cover.png',
   structuredData,
   lang = 'en',
   alternatePath,
@@ -155,7 +155,9 @@ const jsonLd = {
     {description && <meta property="og:description" content={description} />}
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={socialImage} />
-    <meta property="og:image:alt" content="Portrait of Adarsh Sarda" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Adarsh Sarda — AI Security Researcher" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     {description && <meta name="twitter:description" content={description} />}
