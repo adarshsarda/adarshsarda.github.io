@@ -33,6 +33,7 @@ const projectCount = projects.length;
 const publicationCount = 1;
 const guideCount = guideEntries.length;
 const talkCount = talkEntries.length;
+const featuredTalks = talkEntries.slice(0, 6);
 const publicationCard = {
   title: 'Multimodal Emotion Recognition for Mental-Health Screening',
   subtitle: 'Springer book chapter, Frontiers of ICT in Healthcare, LNNS 519',
@@ -89,7 +90,7 @@ const publicationCard = {
 
   <section class="home-section principles-section">
     <header class="section-heading reveal">
-      <p><span>01</span> Research principles</p>
+      <p role="heading" aria-level="2"><span>01</span> Research principles</p>
       <p>How I evaluate evidence</p>
     </header>
     <div class="principle-grid reveal-stagger">
@@ -118,7 +119,7 @@ const publicationCard = {
 
   <section class="home-section research-section featured-work-section" id="featured-work">
     <header class="section-heading reveal">
-      <p><span>02</span> Featured work</p>
+      <p role="heading" aria-level="2"><span>02</span> Featured work</p>
       <p>
         {projectCount.toString().padStart(2, '0')} {projectCount === 1 ? 'project' : 'projects'}
         {' / '}
@@ -148,7 +149,7 @@ const publicationCard = {
   {guideEntries.length > 0 && (
     <section class="home-section notes-section">
       <header class="section-heading reveal">
-        <p><span>03</span> Field Notes</p>
+        <p role="heading" aria-level="2"><span>03</span> Field Notes</p>
         <p>{guideCount.toString().padStart(2, '0')} long-form {guideCount === 1 ? 'guide' : 'guides'}</p>
       </header>
       <NoteCarousel
@@ -163,12 +164,12 @@ const publicationCard = {
   {talkEntries.length > 0 && (
     <section class="home-section talks-section">
       <header class="section-heading reveal">
-        <p><span>04</span> Talk Notes</p>
+        <p role="heading" aria-level="2"><span>04</span> Talk Notes</p>
         <p>{talkCount.toString().padStart(2, '0')} {talkCount === 1 ? 'note' : 'notes'} from papers and talks</p>
       </header>
 
       <TalkCarousel
-        entries={talkEntries}
+        entries={featuredTalks}
         indexHref={`${base}talks/`}
         indexCta="Open the full talk index"
       />

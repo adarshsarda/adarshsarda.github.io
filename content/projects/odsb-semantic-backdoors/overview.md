@@ -14,6 +14,7 @@ domains: [llm-security, adversarial-ml]
 skills: [llm-security, adversarial-ml, backdoor-attacks, lora, peft, quantization, pytorch, llm-evaluation, experimental-design, statistical-evaluation, red-teaming]
 artifacts:
   - {kind: report, label: "Download final report", path: "/reports/odsb-report.pdf"}
+  - {kind: code, label: "Code, data & evaluation", url: "https://github.com/adarshsarda/Order-Dependent-Semantic-Backdoors"}
 
 summary: "A multi-turn LLM backdoor whose trigger is the ORDER of two abstract semantic intents: it fires only when emotional distress precedes a technical question, and stays dormant when the same two intents are reversed, isolated, or absent. Because the trigger is an ordering of meanings rather than any keyword, single-turn keyword filters have no obvious signal; trajectory-level semantic detection was not evaluated."
 seo_description: "Experimental study of a sequence-conditioned LLM backdoor triggered by the order of semantic intents, including controls, generalisation, and limitations."

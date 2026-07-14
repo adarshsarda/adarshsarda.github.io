@@ -2,6 +2,7 @@
 type: method
 slug: how-i-measure-robustness
 title: "Wie ich Robustheit messe"
+description: "Wie ich Robustheit und Generalisierung messe — Held-out-Tests, Paraphrasen-Invarianz und Konfidenzintervalle."
 tags: [model-evaluation, statistical-evaluation, methodology]
 related: []
 ---

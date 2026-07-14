@@ -2,6 +2,7 @@
 type: method
 slug: how-i-evaluate-papers
 title: "How I Evaluate an AI Security Paper"
+description: "A checklist for reading AI-security papers critically: threat model, evidence, denominators, and stated limits."
 tags: [model-evaluation, red-teaming, methodology]
 related: [projects/odsb-semantic-backdoors]
 ---

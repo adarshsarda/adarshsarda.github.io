@@ -13,7 +13,8 @@ evidenced project; **working** = used substantively with a concrete artifact;
 
 ## Adversarial ML & backdoors
 - **Backdoor attack design:** *proficient* → [ODSB](/projects/odsb-semantic-backdoors/):
-  designed a novel order-dependent semantic backdoor, full attack + evaluation pipeline.
+  designed a novel order-dependent semantic backdoor, full attack + evaluation pipeline
+  ([code, data & evaluation](https://github.com/adarshsarda/Order-Dependent-Semantic-Backdoors)).
 - **Backdoor / poisoning evaluation:** *working* → ODSB defence evaluation (five defences),
   leakage-free rescore, held-out generalization.
 - **Threat modelling:** *working* → ODSB threat model + the

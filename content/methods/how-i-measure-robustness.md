@@ -2,6 +2,7 @@
 type: method
 slug: how-i-measure-robustness
 title: "How I Measure Robustness and Generalization"
+description: "How I measure robustness and generalization — held-out tests, paraphrase invariance, and confidence intervals."
 tags: [model-evaluation, statistical-evaluation, methodology]
 related: [projects/odsb-semantic-backdoors]
 ---

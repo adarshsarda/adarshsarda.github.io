@@ -2,6 +2,7 @@
 type: method
 slug: threat-modeling-template
 title: "Threat Modeling Template (LLM / AI systems)"
+description: "A reusable threat-modeling template for LLM and AI systems: assets, attackers, capabilities, and failure modes."
 tags: [threat-modelling, red-teaming, methodology]
 related: [guides/red-teaming-ai-systems]
 ---

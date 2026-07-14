@@ -2,6 +2,7 @@
 type: method
 slug: how-i-design-experiments
 title: "Wie ich Experimente designe"
+description: "Mein Vorgehen beim Design von KI-Sicherheitsexperimenten — Hypothesen, Kontrollen, Stichprobengrößen und vorregistrierte Schwellenwerte."
 tags: [experimental-design, statistical-evaluation, methodology]
 related: []
 ---

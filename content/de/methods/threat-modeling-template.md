@@ -2,6 +2,7 @@
 type: method
 slug: threat-modeling-template
 title: "Threat-Modeling-Template"
+description: "Eine wiederverwendbare Threat-Modeling-Vorlage für LLM-/KI-Systeme: Assets, Angreifer, Fähigkeiten und Fehlerarten."
 tags: [threat-modelling, red-teaming, methodology]
 related: []
 ---

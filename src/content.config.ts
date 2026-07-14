@@ -181,6 +181,7 @@ const methodSchema = z.object({
     type: z.literal('method'),
     slug: z.string().min(1).optional(),
     title: z.string().min(1).optional(),
+    description: z.string().max(200).optional(),
     tags: tagsSchema.optional(),
     related: z.array(z.string()).optional(),
   });

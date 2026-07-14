@@ -33,6 +33,7 @@ const projectCount = projects.length;
 const publicationCount = 1;
 const guideCount = guideEntries.length;
 const talkCount = talkEntries.length;
+const featuredTalks = talkEntries.slice(0, 6);
 const publicationCard = {
   title: 'Multimodale Emotionserkennung für Screenings zur psychischen Gesundheit',
   subtitle: 'Springer-Buchkapitel, Frontiers of ICT in Healthcare, LNNS 519',
@@ -90,7 +91,7 @@ const publicationCard = {
 
   <section class="home-section principles-section">
     <header class="section-heading reveal">
-      <p><span>01</span> Forschungsprinzipien</p>
+      <p role="heading" aria-level="2"><span>01</span> Forschungsprinzipien</p>
       <p>Wie ich Evidenz bewerte</p>
     </header>
     <div class="principle-grid reveal-stagger">
@@ -119,7 +120,7 @@ const publicationCard = {
 
   <section class="home-section research-section featured-work-section" id="ausgewaehlte-arbeiten">
     <header class="section-heading reveal">
-      <p><span>02</span> Ausgewählte Arbeiten</p>
+      <p role="heading" aria-level="2"><span>02</span> Ausgewählte Arbeiten</p>
       <p>
         {projectCount.toString().padStart(2, '0')} {projectCount === 1 ? 'Projekt' : 'Projekte'}
         {' / '}
@@ -151,7 +152,7 @@ const publicationCard = {
   {guideEntries.length > 0 && (
     <section class="home-section notes-section">
       <header class="section-heading reveal">
-        <p><span>03</span> Feldnotizen</p>
+        <p role="heading" aria-level="2"><span>03</span> Feldnotizen</p>
         <p>{guideCount.toString().padStart(2, '0')} {guideCount === 1 ? 'Guide' : 'Guides'}</p>
       </header>
       <NoteCarousel
@@ -171,12 +172,12 @@ const publicationCard = {
   {talkEntries.length > 0 && (
     <section class="home-section talks-section">
       <header class="section-heading reveal">
-        <p><span>04</span> Talk-Notizen</p>
+        <p role="heading" aria-level="2"><span>04</span> Talk-Notizen</p>
         <p>{talkCount.toString().padStart(2, '0')} {talkCount === 1 ? 'Notiz' : 'Notizen'} aus Papers und Vorträgen</p>
       </header>
 
       <TalkCarousel
-        entries={talkEntries}
+        entries={featuredTalks}
         hrefPrefix="/de/talks"
         lang="de"
         previousLabel="Vorherige Talk Note anzeigen"

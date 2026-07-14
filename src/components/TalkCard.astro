@@ -39,7 +39,7 @@ const readLabel = lang === 'de' ? 'Talk Note lesen' : 'Read the talk note';
 <article class="talk-card">
   <div class="talk-card-top">
     <span class="talk-number">T-{String(index + 1).padStart(2, '0')}</span>
-    <div class="badges" aria-label="Talk metadata">
+    <div class="badges" aria-label={lang === 'de' ? 'Talk-Metadaten' : 'Talk metadata'}>
       <span>{difficultyLabels[lang][data.difficulty] ?? data.difficulty}</span>
       <span>{formatLabels[lang][data.format] ?? data.format}</span>
     </div>
