@@ -26,7 +26,10 @@ const projects = projectEntries
     && isPublishable(entry)
     && entry.data.slug === 'odsb-semantic-backdoors'
   )
-  .map((entry) => ({ key: entry.data.slug, data: entry.data }))
+  .map((entry) => {
+    const data = entry.data as Extract<typeof entry.data, { type: 'project' }>;
+    return { key: data.slug, data };
+  })
   .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
 
 const projectCount = projects.length;

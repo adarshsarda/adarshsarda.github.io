@@ -8,7 +8,7 @@
     "build": "node scripts/run-astro.mjs build",
     "preview": "node scripts/run-astro.mjs preview",
     "sync": "node scripts/run-astro.mjs sync",
-    "check:astro": "npm run sync && tsc --noEmit",
+    "check:astro": "npm run sync && node scripts/run-astro.mjs check",
     "check:links": "node scripts/check-links.mjs",
     "check": "npm run check:astro && npm run build && npm run check:links"
   },
@@ -16,5 +16,9 @@
     "astro": "^5.6.0",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-slug": "^6.0.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "typescript": "^5.9.3"
   }
 }

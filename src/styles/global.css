@@ -1125,6 +1125,45 @@ main {
   align-items: start;
 }
 
+/* Mobile section nav for long project dossiers (desktop nav hides <900px). */
+.mobile-toc { display: none; }
+
+@media (max-width: 900px) {
+  .mobile-toc {
+    display: block;
+    margin: 0 0 26px;
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--signal);
+  }
+  .mobile-toc > summary {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 16px;
+    cursor: pointer;
+    color: var(--signal-dark);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 750;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .mobile-toc[open] > summary { border-bottom: 1px solid var(--rule); }
+  .mobile-toc ol { margin: 0; padding: 4px 16px 8px; list-style: none; }
+  .mobile-toc li { border-top: 1px solid var(--rule); }
+  .mobile-toc li:first-child { border-top: 0; }
+  .mobile-toc a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  .mobile-toc a:hover { color: var(--signal-dark); }
+}
+
 .toc,
 .section-nav {
   position: sticky;

@@ -3,7 +3,7 @@ import TalkCard from './TalkCard.astro';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
-  entries: CollectionEntry<'talks'>[];
+  entries: (CollectionEntry<'talks'> | CollectionEntry<'talksDe'>)[];
   hrefPrefix?: string;
   previousLabel?: string;
   nextLabel?: string;
@@ -113,6 +113,12 @@ const talkCount = entries.length;
       position.textContent = first === last
         ? String(first).padStart(2, '0')
         : `${String(first).padStart(2, '0')}-${String(last).padStart(2, '0')}`;
+
+      // Keep off-screen slides out of the tab order and a11y tree.
+      slides.forEach((slide, i) => {
+        const n = i + 1;
+        slide.toggleAttribute('inert', n < first || n > last);
+      });
     };
 
     const move = (direction: number) => {

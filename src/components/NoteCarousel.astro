@@ -108,20 +108,28 @@ const noteCount = entries.length;
       const styles = getComputedStyle(track);
       const gap = Number.parseFloat(styles.columnGap || styles.gap) || 0;
       const step = firstSlide.getBoundingClientRect().width + gap;
-      return { step };
+      const visible = Math.max(1, Math.round((track.clientWidth + gap) / step));
+      return { step, visible };
     };
 
     const update = () => {
-      const { step } = metrics();
+      const { step, visible } = metrics();
       const current = Math.min(
         slides.length,
         Math.max(1, Math.round(track.scrollLeft / step) + 1),
       );
+      const last = Math.min(slides.length, current + visible - 1);
       const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
 
       previous.disabled = track.scrollLeft <= 2;
       next.disabled = track.scrollLeft >= maxScroll - 2;
       position.textContent = String(current).padStart(2, '0');
+
+      // Keep off-screen slides out of the tab order and a11y tree.
+      slides.forEach((slide, i) => {
+        const n = i + 1;
+        slide.toggleAttribute('inert', n < current || n > last);
+      });
     };
 
     const move = (direction: number) => {

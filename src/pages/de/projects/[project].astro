@@ -18,7 +18,8 @@ export async function getStaticPaths() {
   }
   return [...groups.entries()].flatMap(([key, entries]) => {
     const lead = entries.find((entry) => entry.data.type === 'project');
-    return lead && isPublishable(lead) && lead.data.slug === 'odsb-semantic-backdoors'
+    if (!lead || lead.data.type !== 'project' || !isPublishable(lead)) return [];
+    return lead.data.slug === 'odsb-semantic-backdoors'
       ? [{ params: { project: key }, props: { entries } }]
       : [];
   });
@@ -155,6 +156,15 @@ const sections = await Promise.all(
 
   {meta.evidence && <ProjectEvidence evidence={meta.evidence} metrics={meta.metrics} lang="de" />}
   {OdsbTriggerDemo && <OdsbTriggerDemo lang="de" />}
+
+  <details class="mobile-toc">
+    <summary>Fallstudie — {sections.length} Abschnitte</summary>
+    <ol>
+      {sections.map((s, index) => (
+        <li><a href={`#section-${s.part}`}>{String(index + 1).padStart(2, '0')} · {s.label}</a></li>
+      ))}
+    </ol>
+  </details>
 
   <div class="with-toc">
     <article>

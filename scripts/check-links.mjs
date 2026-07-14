@@ -42,6 +42,20 @@ for (const file of htmlFiles) {
     errors.push(`${label}: expected exactly one H1, found ${h1Count}`);
   }
 
+  // Heading hierarchy: a heading may not skip a level on the way down
+  // (e.g. an <h2> followed by an <h4>).
+  if (!isRedirect) {
+    const levels = [...html.matchAll(/<h([1-6])(?:\s|>)/g)].map((m) => Number(m[1]));
+    let previousLevel = 0;
+    for (const level of levels) {
+      if (previousLevel && level > previousLevel + 1) {
+        errors.push(`${label}: heading hierarchy skips a level (H${previousLevel} -> H${level})`);
+        break;
+      }
+      previousLevel = level;
+    }
+  }
+
   const requiredMetadata = isRedirect
     ? ['<link rel="canonical"']
     : [
