@@ -18,6 +18,8 @@ interface Props {
   cta?: string;
   statusLabel?: string;
   focusLabel?: string;
+  metrics?: string[];
+  evidence?: string;
   headingLevel?: 2 | 3;
 }
 
@@ -30,8 +32,11 @@ const {
   cta,
   statusLabel: statusLabelOverride,
   focusLabel: focusLabelOverride,
+  metrics,
+  evidence,
   headingLevel = 2,
 } = Astro.props;
+const evidenceLabel = lang === 'de' ? 'Belege' : 'Evidence';
 const categoryLabels: Record<string, Record<string, string>> = {
   en: {
     'original-research': 'project / original research',
@@ -80,6 +85,11 @@ const status = data.status ? statusLabels[lang][data.status] ?? data.status : fa
     {headingLevel === 3 ? <h3>{data.title}</h3> : <h2>{data.title}</h2>}
     {data.subtitle && <p class="project-card-sub">{data.subtitle}</p>}
     {data.summary && <p class="project-card-summary">{data.summary}</p>}
+    {metrics && metrics.length > 0 && (
+      <ul class="project-card-metrics">
+        {metrics.map((metric) => <li>{metric}</li>)}
+      </ul>
+    )}
     {data.skills && data.skills.length > 0 && (
       <ul class="chips">
         {data.skills.slice(0, 6).map((skill) => <li class="chip">{skill}</li>)}
@@ -97,6 +107,12 @@ const status = data.status ? statusLabels[lang][data.status] ?? data.status : fa
         <p class="rail-value">{data.domains.join(' · ')}</p>
       </div>
     )}
+    {evidence && (
+      <div class="project-rail-item">
+        <p class="rail-label">{evidenceLabel}</p>
+        <p class="rail-value">{evidence}</p>
+      </div>
+    )}
     <span class="project-card-cta">{cta ?? defaultCta} <span aria-hidden="true">→</span></span>
   </div>
 </a>
@@ -109,5 +125,25 @@ const status = data.status ? statusLabels[lang][data.status] ?? data.status : fa
     font-weight: 500;
     letter-spacing: -0.03em;
     line-height: 1.08;
+  }
+
+  .project-card-metrics {
+    margin: 16px 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 10px;
+    list-style: none;
+  }
+
+  .project-card-metrics li {
+    padding: 4px 10px;
+    border: 1px solid var(--rule);
+    border-left: 2px solid var(--signal);
+    background: color-mix(in srgb, var(--signal) 5%, transparent);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.01em;
   }
 </style>

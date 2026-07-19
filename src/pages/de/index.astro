@@ -41,6 +41,16 @@ const publicationCount = publicationEntries.length;
 const guideCount = guideEntries.length;
 const talkCount = talkEntries.length;
 const featuredTalks = talkEntries.slice(0, 6);
+
+const headlineMetrics: Record<string, string[]> = {
+  'odsb-semantic-backdoors': [
+    '100% Angriffserfolg in-distribution, n=140',
+    '0% False-Trigger über vier Kontrollen',
+    '0,887 auf ungesehenen Paraphrasen, n=400',
+  ],
+};
+const hasPublicCode = (data: { artifacts?: { kind: string }[] }) =>
+  (data.artifacts ?? []).some((artifact) => artifact.kind === 'code');
 ---
 
 <Base
@@ -83,6 +93,7 @@ const featuredTalks = talkEntries.slice(0, 6);
       <div class="portrait-note">
         <p class="note-label">Aktuelle Frage / 2026</p>
         <p>Wenn ein KI-Agent echte Aktionen ausführen kann, wie weist man nach, dass <strong>jeder Tool-Aufruf</strong> dem autorisierten Ziel des Nutzers folgt?</p>
+        <a class="text-link quiet" href={`${base}de/guides/agent-security-production-checklist/`}>Notizen zur Integrität von Agentenaktionen <span aria-hidden="true">→</span></a>
       </div>
     </figure>
   </section>
@@ -132,6 +143,8 @@ const featuredTalks = talkEntries.slice(0, 6);
           index={index}
           data={project.data}
           lang="de"
+          metrics={headlineMetrics[project.key]}
+          evidence={hasPublicCode(project.data) ? 'Bericht + öffentlicher Code' : undefined}
           headingLevel={3}
         />
       ))}
@@ -147,7 +160,7 @@ const featuredTalks = talkEntries.slice(0, 6);
           data={{
             title: publication.data.title,
             subtitle: `${publication.data.publisher} · ${publication.data.series_abbreviation} ${publication.data.volume}`,
-            summary: publication.data.summary.de,
+            summary: 'Multimodales Deep-Learning-System (LSTM über Sprache und Text) mit rund 86% Genauigkeit. Meine früheste angewandte ML-Engineering- und begutachtete Evaluationsarbeit.',
             category: `Publikation / ${publication.data.publication_type.de} / ${publication.data.year}`,
             status: publication.data.venue,
             domains: [publication.data.contribution.de],
@@ -204,7 +217,7 @@ const featuredTalks = talkEntries.slice(0, 6);
     <div>
       <p class="profile-kicker">Kontakt</p>
       <h2>Interessiert an KI-Sicherheit, LLM-Evaluation oder angewandtem Machine Learning? Sprechen wir.</h2>
-      <p>Ich bin in Amberg, Deutschland, und für Werkstudentenrollen mit 20 Stunden pro Woche verfügbar, vor Ort in der Region oder remote.</p>
+      <p>Ich bin in Amberg, Deutschland, und für Werkstudentenrollen mit 20 Stunden pro Woche verfügbar, vor Ort in der Region oder remote. <span class="availability-stamp">Verfügbarkeit aktualisiert im Juli 2026.</span></p>
     </div>
     <div class="contact-actions">
       <a class="text-link" href="mailto:adarshsarda29@gmail.com">E-Mail <span aria-hidden="true">→</span></a>

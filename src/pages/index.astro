@@ -41,6 +41,16 @@ const publicationCount = publicationEntries.length;
 const guideCount = guideEntries.length;
 const talkCount = talkEntries.length;
 const featuredTalks = talkEntries.slice(0, 6);
+
+const headlineMetrics: Record<string, string[]> = {
+  'odsb-semantic-backdoors': [
+    '100% attack success in-distribution, n=140',
+    '0% false-trigger across four controls',
+    '0.887 on held-out paraphrases, n=400',
+  ],
+};
+const hasPublicCode = (data: { artifacts?: { kind: string }[] }) =>
+  (data.artifacts ?? []).some((artifact) => artifact.kind === 'code');
 ---
 
 <Base
@@ -82,6 +92,7 @@ const featuredTalks = talkEntries.slice(0, 6);
       <div class="portrait-note">
         <p class="note-label">Current inquiry / 2026</p>
         <p>When an AI agent can take real actions, how do you prove <strong>each tool call</strong> followed from the user's goal?</p>
+        <a class="text-link quiet" href={`${base}guides/agent-security-production-checklist/`}>Working notes on agent action integrity <span aria-hidden="true">→</span></a>
       </div>
     </figure>
   </section>
@@ -130,6 +141,8 @@ const featuredTalks = talkEntries.slice(0, 6);
           href={`${base}projects/${project.key}/`}
           index={index}
           data={project.data}
+          metrics={headlineMetrics[project.key]}
+          evidence={hasPublicCode(project.data) ? 'Report + public code' : undefined}
           headingLevel={3}
         />
       ))}
@@ -145,7 +158,7 @@ const featuredTalks = talkEntries.slice(0, 6);
           data={{
             title: publication.data.title,
             subtitle: `${publication.data.publisher} · ${publication.data.series_abbreviation} ${publication.data.volume}`,
-            summary: publication.data.summary.en,
+            summary: 'Multimodal deep-learning system (LSTM over speech and text) reaching about 86% accuracy. My earliest applied machine-learning engineering and peer-reviewed evaluation work.',
             category: `publication / ${publication.data.publication_type.en} / ${publication.data.year}`,
             status: publication.data.venue,
             domains: [publication.data.contribution.en],
@@ -191,7 +204,7 @@ const featuredTalks = talkEntries.slice(0, 6);
     <div>
       <p class="profile-kicker">Let's talk</p>
       <h2>Interested in AI security, LLM evaluation, or applied machine learning? Let's talk.</h2>
-      <p>Based in Amberg, Germany. Available immediately for working student roles at 20 hours/week, either on-site around Amberg, Regensburg, Nuremberg and nearby areas, or remote.</p>
+      <p>Based in Amberg, Germany. Available immediately for working student roles at 20 hours/week, either on-site around Amberg, Regensburg, Nuremberg and nearby areas, or remote. <span class="availability-stamp">Availability updated July 2026.</span></p>
     </div>
     <div class="contact-actions">
       <a class="text-link" href="mailto:adarshsarda29@gmail.com">Email <span aria-hidden="true">→</span></a>
