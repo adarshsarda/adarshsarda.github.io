@@ -94,16 +94,3 @@ usage declaration, methodology critique, including the flag that surfaced the
 template-shortcut problem, was AI-assisted; the diversity audit, the rebuild, the
 re-validation, and all experiments were executed by the author. Frame Iteration 1 as
 "caught and resolved," which it was.
-
-### Related student paper
-
-In June 2026, I reframed this project for the Scientific Writing module in the four-page
-student paper *Tracing the Trigger: An Evaluation of Foundational Backdoor Attacks in
-Pre-trained NLP Models* (SW-2026-01, OTH Amberg-Weiden). The new writing is a selective
-synthesis that connects foundational NLP backdoors, a cross-modal invisible-trigger case,
-and ODSB through the AI supply-chain threat model. It also turns the reviewed attacks into
-a compact six-point audit checklist.
-
-This is a non-peer-reviewed course paper, not a publication or a systematic review. Its
-ODSB metrics come from the same June 2026 project described in this case file; the paper is
-not a second experiment or an independent replication.

@@ -25,7 +25,6 @@
 
 html {
   overflow-x: clip;
-  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -73,61 +72,6 @@ a:hover {
 a:focus-visible {
   outline: 2px solid var(--signal);
   outline-offset: 4px;
-}
-
-/* Reading progress bar (article pages only; overlays the fixed top accent). */
-.reading-progress {
-  position: fixed;
-  inset: 0 0 auto;
-  height: 4px;
-  z-index: 60;
-  background: color-mix(in srgb, var(--signal) 20%, var(--sky));
-  pointer-events: none;
-}
-
-.reading-progress-bar {
-  display: block;
-  height: 100%;
-  width: 100%;
-  background: var(--signal);
-  transform: scaleX(0);
-  transform-origin: left center;
-}
-
-/* Scroll reveal is opt-in: content remains readable until the observer adds
-   .is-visible, then the entry animation runs once. This keeps script failures
-   from leaving whole sections transparent. */
-.reveal,
-.reveal-stagger > * {
-  opacity: 1;
-  transform: none;
-}
-
-.reveal.is-visible,
-.reveal-stagger.is-visible > * {
-  animation: reveal-entry 520ms ease both;
-}
-
-.reveal-stagger.is-visible > *:nth-child(2) { animation-delay: 70ms; }
-.reveal-stagger.is-visible > *:nth-child(3) { animation-delay: 140ms; }
-.reveal-stagger.is-visible > *:nth-child(4) { animation-delay: 210ms; }
-
-@keyframes reveal-entry {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal,
-  .reveal.is-visible,
-  .reveal-stagger > *,
-  .reveal-stagger.is-visible > * {
-    opacity: 1;
-    transform: none;
-    animation: none;
-  }
 }
 
 .skip-link {
@@ -242,8 +186,8 @@ main {
   font-size: 0.68rem;
 }
 
-.site-header nav a .nav-label-short {
-  display: none;
+.site-header nav a .nav-label {
+  white-space: nowrap;
 }
 
 .site-header nav a:hover,
@@ -313,28 +257,6 @@ main {
   flex-direction: column;
   align-items: flex-start;
   gap: 6px;
-}
-
-/* An inert marker. Clicking it opens the terminal on the canary entry. */
-.canary {
-  padding: 0;
-  color: color-mix(in srgb, var(--ink-soft) 52%, transparent);
-  background: transparent;
-  border: 0;
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  letter-spacing: 0.1em;
-  cursor: pointer;
-  transition: color 160ms ease;
-}
-
-.canary:hover {
-  color: var(--signal-dark);
-}
-
-.canary:focus-visible {
-  outline: 2px solid var(--signal);
-  outline-offset: 3px;
 }
 
 .footer-groups {
@@ -1512,7 +1434,7 @@ main {
 
 }
 
-@media (max-width: 820px) {
+@media (max-width: 1080px) {
   .site-header .bar {
     padding-inline: 18px;
     flex-wrap: wrap;
@@ -1549,13 +1471,8 @@ main {
     align-items: center;
   }
 
-  .site-header nav a .nav-number,
-  .site-header nav a .nav-label-full {
+  .site-header nav a .nav-number {
     display: none;
-  }
-
-  .site-header nav a .nav-label-short {
-    display: inline;
   }
 
   .site-header nav a.active::after {
@@ -1671,21 +1588,15 @@ main {
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 600px) {
   .site-header nav:not(.language-switch) {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 12px;
   }
 
   .site-header nav:not(.language-switch) a {
     justify-content: center;
     text-align: center;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
   }
 }

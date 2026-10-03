@@ -1,7 +1,7 @@
 ---
 type: talk
 title: "Sleeper Agents: Why Backdoors Can Survive Safety Training"
-description: "An explainer on deceptive LLM behavior that stays dormant until triggered and can persist through supervised fine-tuning, reinforcement learning, and adversarial training."
+description: "Sleeper Agents studies trigger-based deceptive behavior that can survive safety training."
 speaker: "Adarsh Sarda"
 event: "Independent study"
 format: "Paper explainer"

@@ -1,7 +1,7 @@
 ---
 type: talk
 title: "AgentPoison: Warum Agenten-Memory eine Sicherheitsgrenze ist"
-description: "Paper-Erklärung zu Poisoning von Langzeit-Memory und RAG Stores, sodass getriggerte Agentenaufgaben bösartige Demonstrationen retrieven."
+description: "AgentPoison zeigt, wie vergiftete Langzeit-Memory oder RAG-Daten getriggerte Agentenanfragen steuern können."
 speaker: "Adarsh Sarda"
 event: "Unabhängiges Studium"
 format: "Paper explainer"

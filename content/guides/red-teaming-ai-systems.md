@@ -2,7 +2,7 @@
 type: guide
 slug: red-teaming-ai-systems
 title: "Red Teaming AI Systems: A Practitioner's Guide"
-description: "A step-by-step methodology for assessing the security of LLM-based systems, with system-specific playbooks, payload patterns, and checklists."
+description: "How I test LLM systems for security failures, with playbooks and checklists for each system."
 author: "Adarsh Sarda"
 order: 1
 last_updated: "2026-06-16"

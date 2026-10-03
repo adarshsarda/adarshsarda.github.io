@@ -1,7 +1,7 @@
 ---
 type: talk
 title: "PoisonedRAG: When the Knowledge Base Becomes the Payload"
-description: "An explainer on knowledge-corruption attacks that inject a handful of optimized texts into large RAG databases to induce attacker-selected answers."
+description: "PoisonedRAG shows how a few optimized documents can steer answers from a large RAG system."
 speaker: "Adarsh Sarda"
 event: "Independent study"
 format: "Paper explainer"

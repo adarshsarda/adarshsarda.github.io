@@ -1,7 +1,7 @@
 ---
 type: talk
 title: "AgentDojo: Wie man tool-nutzende KI-Agenten stresstestet"
-description: "Benchmark-Erklärung zur Evaluation, ob tool-nutzende Agenten realistische Nutzeraufgaben erledigen und Prompt Injections in untrusted Tool-Daten widerstehen."
+description: "AgentDojo prüft, ob Tool-nutzende Agenten Nutzeraufgaben abschließen und Prompt Injections in untrusted Tool-Daten abwehren."
 speaker: "Adarsh Sarda"
 event: "Unabhängiges Studium"
 format: "Paper explainer"

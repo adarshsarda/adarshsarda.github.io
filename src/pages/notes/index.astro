@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import NotesHub from '../../components/NotesHub.astro';
+import NoteCard from '../../components/NoteCard.astro';
 import { getCollection } from 'astro:content';
 
 const base = import.meta.env.BASE_URL;
@@ -11,14 +12,34 @@ const methodCount = (await getCollection('methods')).length;
 
 <Base
   title="Writing | Adarsh Sarda"
-  description="Field notes, talk notes, and reusable methods on AI security, LLM red teaming, and adversarial machine learning."
+  description="Course paper, practical notes, paper explainers, and methods for AI security research."
   wide
 >
   <div class="page-head">
-    <p class="eyebrow"><span>Index 03</span> / Field Notes, Talk Notes, and Methods</p>
+    <p class="eyebrow"><span>Index 03</span> / Course paper, field notes, talk notes, and methods</p>
     <h1>Writing</h1>
-    <p>Three connected paths: long-form practitioner notes, structured learning notes from papers and presentations, and reusable research methods.</p>
+    <p>A course paper, practical notes, paper explainers, and methods I reuse.</p>
   </div>
+
+  <section class="writing-feature" aria-labelledby="student-paper-heading">
+    <header class="section-heading">
+      <p id="student-paper-heading"><span>Course paper</span> / Scientific Writing</p>
+      <p>June 2026</p>
+    </header>
+    <div class="note-card-list">
+      <NoteCard
+        href={`${base}reports/tracing-the-trigger.pdf`}
+        index={0}
+        prefix="SP"
+        kicker="Non-peer-reviewed course paper"
+        title="Tracing the Trigger: An Evaluation of Foundational Backdoor Attacks in Pre-trained NLP Models"
+        description="A four-page paper on NLP backdoors, sample-specific invisible triggers, and ODSB in the AI supply-chain threat model. It is a non-peer-reviewed course paper, not a publication or systematic review. Its ODSB metrics come from the June 2026 case file, not a second experiment or independent replication."
+        tags={['ai-security', 'backdoor-attacks', 'nlp', 'software-supply-chain']}
+        cta="Open the PDF"
+        external
+      />
+    </div>
+  </section>
 
   <NotesHub
     guideCount={guideCount}
@@ -30,11 +51,17 @@ const methodCount = (await getCollection('methods')).length;
     fieldCountLabel={guideCount === 1 ? 'note' : 'notes'}
     talkCountLabel={talkCount === 1 ? 'note' : 'notes'}
     methodCountLabel={methodCount === 1 ? 'method' : 'methods'}
-    fieldDescription="Long-form methodology and practitioner notes for assessing, breaking, and hardening AI systems."
-    talkDescription="Talks and papers mapped into threat models, defensive lessons, and personal takeaways."
-    methodDescription="Reusable research templates for experiment design, paper evaluation, robustness measurement, and threat modeling."
+    fieldDescription="Practical notes on testing and securing AI systems."
+    talkDescription="Papers and talks with the threat model, result, limits, and why they matter to my work."
+    methodDescription="Methods I use to design experiments, evaluate papers, test robustness, and model threats."
     fieldCta="Open Field Notes"
     talkCta="Open Talk Notes"
     methodCta="Open Methods"
   />
 </Base>
+
+<style>
+  .writing-feature {
+    margin: 0 0 52px;
+  }
+</style>

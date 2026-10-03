@@ -1,7 +1,7 @@
 ---
 type: talk
 title: "ToolEmu: Failure Modes von KI-Agenten sandboxen"
-description: "Paper-Erklärung zu einer LM-emulierten Tool-Sandbox und automatischem Safety-Evaluator, um High-Stakes-Fehler vor echten Integrationen zu finden."
+description: "ToolEmu nutzt eine LM-emulierte Sandbox, um riskantes Agentenverhalten vor dem Anschluss echter Tools zu finden."
 speaker: "Adarsh Sarda"
 event: "Unabhängiges Studium"
 format: "Paper explainer"

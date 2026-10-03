@@ -9,6 +9,7 @@ interface Props {
   tags?: string[];
   cta: string;
   headingLevel?: 2 | 3;
+  external?: boolean;
 }
 
 const {
@@ -21,10 +22,16 @@ const {
   tags,
   cta,
   headingLevel = 2,
+  external = false,
 } = Astro.props;
 ---
 
-<a class="note-card" href={href}>
+<a
+  class="note-card"
+  href={href}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener noreferrer' : undefined}
+>
   <div class="note-card-top">
     <p class="note-index">{prefix}-{String(index + 1).padStart(2, '0')}</p>
     <p class="entry-kicker">{kicker}</p>

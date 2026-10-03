@@ -1,0 +1,63 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const updated = '2026-10-02';
+---
+
+<Base
+  title="Datenschutz | Adarsh Sarda"
+  description="Wie diese Portfolio-Website personenbezogene Daten verarbeitet."
+  lang="de"
+  langPaths={{ en: '/privacy/', de: '/de/datenschutz/' }}
+  wide
+>
+  <div class="page-head">
+    <p class="eyebrow"><span>Rechtliches</span> / Datenschutz</p>
+    <h1>Datenschutz</h1>
+    <p>Eine sachliche Darstellung der begrenzten Verarbeitung personenbezogener Daten durch dieses statische Portfolio.</p>
+  </div>
+
+  <article class="prose legal-copy">
+    <p>Stand: <time datetime={updated}>2. Oktober 2026</time>.</p>
+
+    <h2>Verantwortliche Person und Kontakt</h2>
+    <p>
+      Verantwortlich für dieses Portfolio ist Adarsh Sarda. Bei Fragen zum Datenschutz oder zu Daten, die Sie direkt bereitgestellt haben, schreiben Sie an
+      <a href="mailto:adarshsarda29@gmail.com">adarshsarda29@gmail.com</a>.
+    </p>
+
+    <h2>Wie die Website funktioniert</h2>
+    <p>
+      Dies ist ein statisches Portfolio, das über GitHub Pages gehostet wird. Es gibt keine Nutzerkonten, Kontaktformulare, Newsletter, Zahlungsabläufe, Kommentare oder Website-Analytik. Der Quellcode setzt nicht absichtlich First-Party-Cookies und enthält keine Werbe-Pixel.
+    </p>
+
+    <h2>Hosting und technische Protokolle</h2>
+    <p>
+      GitHub Pages liefert die Website aus. GitHub gibt an, beim Aufruf einer GitHub-Pages-Website die IP-Adresse eines Besuchers aus Sicherheitsgründen zu protokollieren. Für die Verarbeitung durch GitHub gelten dessen
+      <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noreferrer">Datenschutzerklärung</a> und die
+      <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages#data-collection" target="_blank" rel="noreferrer">GitHub-Pages-Dokumentation zur Datenerhebung</a>.
+    </p>
+    <p>Im Quellcode dieses Portfolios ist keine separate Besucher-Datenbank oder ein Profiling-System konfiguriert.</p>
+
+    <h2>E-Mail und externe Links</h2>
+    <p>
+      Wenn Sie die oben genannte Adresse per E-Mail kontaktieren, verarbeiten Ihr E-Mail-Anbieter und ich die Informationen in Ihrer Nachricht, damit ich antworten kann. Korrespondenz wird nur so lange aufbewahrt, wie sie für diesen Zweck oder für gesetzliche Aufbewahrungspflichten erforderlich ist.
+    </p>
+    <p>Links zu Diensten wie GitHub und LinkedIn sind extern. Nach dem Aufruf gelten die Datenschutzbestimmungen der jeweiligen Betreiber.</p>
+
+    <h2>Rechtsgrundlage und Ihre Rechte</h2>
+    <p>
+      Soweit die DSGVO anwendbar ist, beruht die begrenzte Verarbeitung zum sicheren Betrieb der Website auf berechtigten Interessen nach Artikel 6 Absatz 1 Buchstabe f DSGVO. Die Verarbeitung einer E-Mail-Anfrage kann außerdem zur Beantwortung einer Anfrage oder zur Erfüllung einer rechtlichen Pflicht erforderlich sein. Sie haben möglicherweise Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung, Widerspruch, Datenübertragbarkeit und Beschwerde bei einer Datenschutzaufsichtsbehörde. Die Europäische Kommission erläutert diese Rechte in ihren
+      <a href="https://commission.europa.eu/law/law-topic/data-protection/information-individuals_en" target="_blank" rel="noreferrer">Informationen für betroffene Personen</a>.
+    </p>
+
+    <h2>Änderungen</h2>
+    <p>Dieser Hinweis wird aktualisiert, wenn sich Hosting, Datenerhebung oder Kontaktmöglichkeiten wesentlich ändern.</p>
+  </article>
+</Base>
+
+<style>
+  .legal-copy {
+    max-width: var(--max-reading);
+  }
+</style>

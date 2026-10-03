@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+
+const updated = '2026-10-02';
+---
+
+<Base
+  title="Terms of Use | Adarsh Sarda"
+  description="Terms for using this personal research portfolio."
+  langPaths={{ en: '/terms/', de: '/de/nutzungsbedingungen/' }}
+  wide
+>
+  <div class="page-head">
+    <p class="eyebrow"><span>Legal</span> / Terms of Use</p>
+    <h1>Terms of Use</h1>
+    <p>Terms for reading and using this personal research portfolio.</p>
+  </div>
+
+  <article class="prose legal-copy">
+    <p>Last updated: <time datetime={updated}>2 October 2026</time>.</p>
+
+    <h2>Purpose of this site</h2>
+    <p>
+      This website is a personal portfolio of research, project documentation, talks, and study notes. It is provided for general information and does not offer professional security, legal, medical, financial, or other regulated advice.
+    </p>
+
+    <h2>Research context</h2>
+    <p>
+      Project pages document specific methods, conditions, evidence, and limitations. Results are scoped to the stated experiments and should not be treated as universal claims, guarantees, or a substitute for an independent assessment.
+    </p>
+
+    <h2>Intellectual property</h2>
+    <p>
+      Unless a page, report, repository, or other asset states a different licence, the original text, design, and original visual material on this site may not be reproduced or redistributed without permission. Third-party material remains subject to its respective rights and licences. Attribution or a link to the source does not itself grant reuse rights.
+    </p>
+
+    <h2>External links</h2>
+    <p>Links to external websites are provided for reference. Their content, availability, and privacy practices are controlled by their respective operators.</p>
+
+    <h2>Availability and updates</h2>
+    <p>I may revise, remove, or update content without notice. I make reasonable efforts to keep the site accurate, but cannot guarantee that every page is complete, current, or continuously available.</p>
+
+    <h2>Contact</h2>
+    <p>For a correction, rights question, or permission request, email <a href="mailto:adarshsarda29@gmail.com">adarshsarda29@gmail.com</a>.</p>
+  </article>
+</Base>
+
+<style>
+  .legal-copy {
+    max-width: var(--max-reading);
+  }
+</style>

@@ -1,7 +1,7 @@
 ---
 type: talk
 title: "RAG Jamming: Wenn ein Dokument das System verstummen lässt"
-description: "Ein Paper-Explainer zu Blocker-Document-Angriffen, die RAG-Systeme bei Zielqueries verweigern oder scheitern lassen, ohne auf Instruction Injection angewiesen zu sein."
+description: "RAG Jamming zeigt, wie ein Blocker-Dokument ein RAG-System daran hindern kann, ausgewählte Fragen zu beantworten."
 speaker: "Adarsh Sarda"
 event: "Independent study"
 format: "Paper explainer"

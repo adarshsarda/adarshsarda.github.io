@@ -2,7 +2,7 @@
 type: method
 slug: how-i-evaluate-papers
 title: "Wie ich Papers bewerte"
-description: "Eine Checkliste zum kritischen Lesen von KI-Sicherheitspapers: Bedrohungsmodell, Evidenz, Nenner und genannte Grenzen."
+description: "Checkliste für KI-Sicherheitspapers: Threat Model, Evidenz, Denominatoren und Grenzen."
 tags: [model-evaluation, red-teaming, methodology]
 related: []
 ---

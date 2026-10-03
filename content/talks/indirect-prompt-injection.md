@@ -1,7 +1,7 @@
 ---
 type: talk
 title: "Indirect Prompt Injection: When Documents Become Attackers"
-description: "A foundational explainer on remote prompt injection through retrieved websites, documents, emails, and other data processed by LLM-integrated applications."
+description: "Indirect prompt injection hides instructions in websites, documents, and emails that an LLM application later reads."
 speaker: "Adarsh Sarda"
 event: "Independent study"
 format: "Paper explainer"

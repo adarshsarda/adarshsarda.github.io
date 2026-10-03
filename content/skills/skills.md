@@ -7,9 +7,9 @@ note: "Every skill links to the artifact that proves it. No evidence, no entry."
 
 # Skills & Evidence
 
-Proficiency is honest, not aspirational: **proficient** = demonstrated in a completed,
-evidenced project; **working** = used substantively with a concrete artifact;
-**familiar** = applied at a smaller scale or in coursework.
+I label skills by the evidence behind them: **proficient** means demonstrated in a completed
+project, **working** means used substantially in a project, and **familiar** means used in
+coursework or a smaller exercise.
 
 ## Adversarial ML & backdoors
 - **Backdoor attack design:** *proficient* → [ODSB](/projects/odsb-semantic-backdoors/):

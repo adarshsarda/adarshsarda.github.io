@@ -2,7 +2,7 @@
 type: guide
 slug: reporting-ai-red-team-findings
 title: "Wie ich KI-Red-Team-Funde berichte"
-description: "Ein Reporting-Format für KI-Red-Teaming, das Demos in Evidenz verwandelt: Threat Model, Erfolgsraten, Unsicherheit, Impact Chains, Framework-Mapping, Remediation und Regressionstests."
+description: "Wie ich KI-Red-Team-Funde berichte: Threat Model, Erfolgsrate, Unsicherheit, Auswirkungen, Fix und Regressionstest."
 author: "Adarsh Sarda"
 order: 4
 last_updated: "2026-07-06"

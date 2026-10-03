@@ -18,7 +18,7 @@ const { Content, headings } = await render(entry);
 const data = entry.data;
 const detailedHeadings = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
 const toc = [
-  { depth: 2, slug: 'one-line-takeaway', text: 'Takeaway in einem Satz' },
+  { depth: 2, slug: 'one-line-takeaway', text: 'Kernpunkt' },
   { depth: 2, slug: 'why-this-talk-matters', text: 'Warum diese Arbeit wichtig ist' },
   { depth: 2, slug: 'core-ideas', text: 'Kernideen' },
   { depth: 2, slug: 'threat-model-security-angle', text: 'Threat Model / Security-Perspektive' },
@@ -107,14 +107,13 @@ const difficultyLabel = difficultyLabels[data.difficulty] ?? data.difficulty;
 
     {data.format === 'Paper presentation' ? (
       <div class="talk-scope">
-        <strong>Einordnung:</strong> Das ist meine Erklärung und Präsentation eines Papers
-        eines anderen Forschungsteams, nicht meine eigene Originalforschung.
+        <strong>Einordnung:</strong> Das ist meine Erklärung eines Papers von einem anderen
+        Forschungsteam. Es ist keine eigene Originalforschung.
       </div>
     ) : (
       <div class="talk-scope">
-        <strong>Einordnung:</strong> Das ist eine unabhängige Paper-Erklärung auf Basis
-        der veröffentlichten Arbeit der Autorinnen und Autoren. Es ist nicht meine eigene
-        Originalforschung und impliziert keinen gehaltenen Vortrag.
+        <strong>Einordnung:</strong> Das ist meine Erklärung der veröffentlichten Arbeit
+        der Autorinnen und Autoren. Es ist keine eigene Originalforschung und kein gehaltener Vortrag.
       </div>
     )}
 
@@ -131,7 +130,7 @@ const difficultyLabel = difficultyLabels[data.difficulty] ?? data.difficulty;
   <div class="with-toc">
     <article class="prose talk-note">
       <section id="one-line-takeaway">
-        <h2>Takeaway in einem Satz</h2>
+        <h2>Kernpunkt</h2>
         <p class="takeaway">{data.takeaway}</p>
       </section>
 

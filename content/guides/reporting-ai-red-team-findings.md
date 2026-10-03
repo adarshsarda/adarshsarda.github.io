@@ -2,7 +2,7 @@
 type: guide
 slug: reporting-ai-red-team-findings
 title: "How I Report AI Red-Team Findings"
-description: "A reporting format for AI red-team work that turns demos into evidence: threat model, success rates, uncertainty, impact chains, framework mapping, remediation, and regression tests."
+description: "How I report AI red-team findings: threat model, success rate, uncertainty, impact, fix, and regression test."
 author: "Adarsh Sarda"
 order: 4
 last_updated: "2026-07-06"

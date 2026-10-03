@@ -1,7 +1,7 @@
 ---
 type: talk
 title: "Indirekte Prompt Injection: Wenn Dokumente zu Angreifern werden"
-description: "Grundlagenerklärung zu Remote Prompt Injection über Webseiten, Dokumente, E-Mails und andere Daten, die LLM-Anwendungen verarbeiten."
+description: "Indirekte Prompt Injection versteckt Anweisungen in Webseiten, Dokumenten und E-Mails, die eine LLM-Anwendung später liest."
 speaker: "Adarsh Sarda"
 event: "Unabhängiges Studium"
 format: "Paper explainer"

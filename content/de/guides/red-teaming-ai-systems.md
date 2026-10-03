@@ -2,7 +2,7 @@
 type: guide
 slug: red-teaming-ai-systems
 title: "Red Teaming von KI-Systemen: Ein Praxisleitfaden"
-description: "Eine schrittweise Methodik zur Sicherheitsbewertung LLM-basierter Systeme, mit systembezogenen Playbooks, Payload-Mustern und Checklisten."
+description: "Wie ich LLM-Systeme auf Sicherheitsfehler teste, mit Playbooks und Checklisten für jede Systemart."
 author: "Adarsh Sarda"
 order: 1
 last_updated: 2026-06-18

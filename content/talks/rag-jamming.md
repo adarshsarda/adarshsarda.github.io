@@ -1,7 +1,7 @@
 ---
 type: talk
 title: "RAG Jamming: When One Document Makes the System Stop Answering"
-description: "A paper explainer on blocker-document attacks that cause RAG systems to refuse or fail targeted questions without relying on instruction injection."
+description: "RAG Jamming shows how one blocker document can stop a RAG system from answering chosen questions."
 speaker: "Adarsh Sarda"
 event: "Independent study"
 format: "Paper explainer"

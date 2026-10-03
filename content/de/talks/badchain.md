@@ -1,7 +1,7 @@
 ---
 type: talk
 title: "BadChain: Wenn Reasoning-Schritte zur Angriffsfläche werden"
-description: "Erklärung zu Inference-Time-Backdoors, die Chain-of-Thought-Demonstrationen vergiften, ohne Zugriff auf Modellgewichte oder Trainingsdaten zu brauchen."
+description: "BadChain zeigt, wie vergiftete Reasoning-Demonstrationen als Inference-Time-Backdoors wirken können."
 speaker: "Adarsh Sarda"
 event: "Unabhängiges Studium"
 format: "Paper explainer"

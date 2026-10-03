@@ -1,7 +1,7 @@
 ---
 type: talk
 title: "AgentPoison: Why Agent Memory Is a Security Boundary"
-description: "A paper explainer on poisoning long-term memory and RAG knowledge bases so triggered agent requests retrieve malicious demonstrations while benign tasks remain unaffected."
+description: "AgentPoison shows how poisoned long-term memory or RAG data can steer triggered agent requests."
 speaker: "Adarsh Sarda"
 event: "Independent study"
 format: "Paper explainer"

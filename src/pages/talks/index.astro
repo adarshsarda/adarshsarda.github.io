@@ -12,16 +12,13 @@ const talks = (await getCollection('talks')).sort(
 
 <Base
   title="Talk Notes | Adarsh Sarda"
-  description="Structured learning notes from talks and papers on AI security, red teaming, backdoors, RAG, agents, and model evaluation."
+  description="Notes on AI security, red teaming, backdoors, RAG, agents, and model evaluation."
   wide
 >
   <div class="page-head">
-    <p class="eyebrow"><span>Writing</span> / Connected learning artifacts</p>
+    <p class="eyebrow"><span>Writing</span> / Papers and talks</p>
     <h1>Talk Notes</h1>
-    <p>
-      Talks and papers mapped into threat models, defensive lessons, personal takeaways,
-      and links to the rest of my AI-security field notes.
-    </p>
+    <p>I explain the threat model, result, limits, and why each paper or talk matters to my work.</p>
   </div>
 
   <TalkIndexGrid entries={talks} />

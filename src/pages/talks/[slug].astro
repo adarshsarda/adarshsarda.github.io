@@ -18,7 +18,7 @@ const { Content, headings } = await render(entry);
 const data = entry.data;
 const detailedHeadings = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
 const toc = [
-  { depth: 2, slug: 'one-line-takeaway', text: 'One-line takeaway' },
+  { depth: 2, slug: 'one-line-takeaway', text: 'Key point' },
   { depth: 2, slug: 'why-this-talk-matters', text: 'Why this talk matters' },
   { depth: 2, slug: 'core-ideas', text: 'Core ideas' },
   { depth: 2, slug: 'threat-model-security-angle', text: 'Threat model / security angle' },
@@ -79,13 +79,13 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
 
     {data.format === 'Paper presentation' ? (
       <div class="talk-scope">
-        <strong>Attribution:</strong> This is my explanation and presentation of another
-        research team’s paper, not my original research.
+        <strong>Attribution:</strong> This is my explanation of another research team’s paper.
+        It is not my original research.
       </div>
     ) : (
       <div class="talk-scope">
-        <strong>Attribution:</strong> This is an independent paper explainer based on the
-        authors’ published work. It is not my original research and does not imply a delivered talk.
+        <strong>Attribution:</strong> This is my explanation of the authors’ published work.
+        It is not my original research or a delivered talk.
       </div>
     )}
 
@@ -102,7 +102,7 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
   <div class="with-toc">
     <article class="prose talk-note">
       <section id="one-line-takeaway">
-        <h2>One-line takeaway</h2>
+        <h2>Key point</h2>
         <p class="takeaway">{data.takeaway}</p>
       </section>
 

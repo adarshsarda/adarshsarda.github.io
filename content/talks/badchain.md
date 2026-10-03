@@ -1,7 +1,7 @@
 ---
 type: talk
 title: "BadChain: When Reasoning Steps Become an Attack Surface"
-description: "An explainer on inference-time backdoors that poison chain-of-thought demonstrations without requiring access to model weights or training data."
+description: "BadChain shows how poisoned reasoning demonstrations can act as inference-time backdoors."
 speaker: "Adarsh Sarda"
 event: "Independent study"
 format: "Paper explainer"

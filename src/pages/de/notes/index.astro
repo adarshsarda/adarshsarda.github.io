@@ -1,6 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import NotesHub from '../../../components/NotesHub.astro';
+import NoteCard from '../../../components/NoteCard.astro';
 import { getCollection } from 'astro:content';
 
 const base = import.meta.env.BASE_URL;
@@ -11,18 +12,37 @@ const methodCount = (await getCollection('methodsDe')).length;
 
 <Base
   title="Texte | Adarsh Sarda"
-  description="Feldnotizen, Talk-Notizen und wiederverwendbare Methoden zu KI-Sicherheit, LLM Red Teaming und adversarial Machine Learning."
+  description="Kursarbeit, Praxisnotizen, Paper-Notizen und Methoden zu KI-Sicherheit."
   lang="de"
   wide
 >
   <div class="page-head">
-    <p class="eyebrow"><span>Index 03</span> / Feldnotizen, Talk-Notizen und Methoden</p>
+    <p class="eyebrow"><span>Index 03</span> / Studienarbeit und Notizen</p>
     <h1>Texte</h1>
     <p>
-      Drei verbundene Wege: längere Praxisnotizen, strukturierte Lernnotizen aus
-      wissenschaftlichen Arbeiten und Vorträgen sowie wiederverwendbare Forschungsmethoden.
+      Eine Kursarbeit, Praxisnotizen, Paper-Notizen und Methoden, die ich in meiner Forschung nutze.
     </p>
   </div>
+
+  <section class="writing-feature" aria-labelledby="student-paper-heading">
+    <header class="section-heading">
+      <p id="student-paper-heading"><span>Studienarbeit</span> / Scientific Writing</p>
+      <p>Juni 2026</p>
+    </header>
+    <div class="note-card-list">
+      <NoteCard
+        href={`${base}reports/tracing-the-trigger.pdf`}
+        index={0}
+        prefix="SP"
+        kicker="Nicht peer-reviewte Kursarbeit"
+        title="Tracing the Trigger: An Evaluation of Foundational Backdoor Attacks in Pre-trained NLP Models"
+        description="Eine vierseitige Kursarbeit zu NLP-Backdoors, unsichtbaren sample-spezifischen Triggern und ODSB im Bedrohungsmodell der KI-Lieferkette. Sie ist nicht peer-reviewed, keine Publikation und keine systematische Literaturübersicht. Die ODSB-Metriken stammen aus der Fallakte vom Juni 2026, nicht aus einem zweiten Experiment oder einer unabhängigen Replikation."
+        tags={['ai-security', 'backdoor-attacks', 'nlp', 'software-supply-chain']}
+        cta="PDF öffnen"
+        external
+      />
+    </div>
+  </section>
 
   <NotesHub
     guideCount={guideCount}
@@ -37,11 +57,17 @@ const methodCount = (await getCollection('methodsDe')).length;
     fieldCountLabel={guideCount === 1 ? 'Notiz' : 'Notizen'}
     talkCountLabel={talkCount === 1 ? 'Notiz' : 'Notizen'}
     methodCountLabel={methodCount === 1 ? 'Methode' : 'Methoden'}
-    fieldDescription="Längere Methodik- und Praxisnotizen zum Bewerten, Brechen und Härten von KI-Systemen."
-    talkDescription="Vorträge und Papers, eingeordnet nach Threat Models, defensiven Erkenntnissen und persönlichen Takeaways."
-    methodDescription="Wiederverwendbare Vorlagen für Experimentdesign, Paper-Bewertung, Robustheitsmessung und Threat Modeling."
+    fieldDescription="Praktische Notizen zum Testen und Absichern von KI-Systemen."
+    talkDescription="Papers und Vorträge mit Threat Model, Ergebnis, Grenzen und Bezug zu meiner Arbeit."
+    methodDescription="Methoden für Experimentdesign, Paper-Bewertung, Robustheitstests und Threat Modeling."
     fieldCta="Feldnotizen öffnen"
     talkCta="Talk-Notizen öffnen"
     methodCta="Methoden öffnen"
   />
 </Base>
+
+<style>
+  .writing-feature {
+    margin: 0 0 52px;
+  }
+</style>

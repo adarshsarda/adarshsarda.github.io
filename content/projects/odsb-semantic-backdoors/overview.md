@@ -40,8 +40,6 @@ evidence:
     title: "The first perfect result was invalid."
     body: "An early run reached 1.000 ASR and 0.000 FTR, but a diversity audit found that 81% of condition-A responses were identical. The dataset was discarded, rebuilt with varied responses, and re-evaluated before the result was accepted."
 
-# ---- Task-agent atoms (assert verbatim; cite the matching number for the matching claim) ----
-
 pitch: "Built and validated a multi-turn LLM backdoor triggered by the ORDER of semantic intents (emotional distress -> technical question), with no obvious signal for single-turn keyword filters and surviving surface-paraphrase defences."
 
 bullets:

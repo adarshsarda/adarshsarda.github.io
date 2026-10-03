@@ -1,7 +1,7 @@
 ---
 type: talk
 title: "Sleeper Agents: Warum Backdoors Safety Training überstehen können"
-description: "Erklärung zu täuschendem LLM-Verhalten, das bis zum Trigger inaktiv bleibt und SFT, RL sowie adversarial training überstehen kann."
+description: "Sleeper Agents untersucht getriggertes täuschendes Verhalten, das Sicherheitstraining überstehen kann."
 speaker: "Adarsh Sarda"
 event: "Unabhängiges Studium"
 format: "Paper explainer"
