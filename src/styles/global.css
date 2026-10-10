@@ -11,7 +11,6 @@
   --moss: #354b43;
   --sky: #dce7ed;
   --stone: #d9d4c8;
-  --card-shadow: 12px 12px 0 color-mix(in srgb, var(--moss) 10%, transparent);
   --max-reading: 760px;
   --max-wide: 1180px;
   --font-body: "Aptos", "Segoe UI", Helvetica, Arial, sans-serif;
@@ -435,12 +434,6 @@ main {
   overflow: hidden;
   background: var(--stone);
   border: 1px solid var(--rule-dark);
-  box-shadow: 18px 18px 0 color-mix(in srgb, var(--moss) 10%, transparent);
-  transition: box-shadow 180ms ease;
-}
-
-.portrait-frame:hover {
-  box-shadow: 10px 10px 0 color-mix(in srgb, var(--moss) 10%, transparent);
 }
 
 .portrait-frame::after {
@@ -535,7 +528,8 @@ main {
   margin-top: 92px;
 }
 
-/* Shared project dossier used on the homepage and Projects index. */
+/* Shared project entry used on the homepage and Projects index. Entries sit
+   directly on the page ground, marked by a top rule instead of a panel. */
 .project-card-list {
   margin-top: 18px;
   display: grid;
@@ -546,20 +540,24 @@ main {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 234px;
   color: var(--ink);
-  background: var(--paper-raised);
-  border: 1px solid var(--rule);
-  border-left: 8px solid var(--ink);
-  box-shadow: var(--card-shadow);
+  border-top: 1px solid var(--ink);
   text-decoration: none;
-  transition: border-color 160ms ease;
 }
 
-.project-card:hover {
-  border-color: var(--rule-dark);
+.research-section .project-card-list > .project-card:first-child {
+  border-top: 0;
+}
+
+.project-card :is(h2, h3) {
+  transition: color 160ms ease;
+}
+
+.project-card:hover :is(h2, h3) {
+  color: var(--signal-dark);
 }
 
 .project-card-main {
-  padding: 28px 32px 26px;
+  padding: 24px 40px 28px 0;
 }
 
 .project-card-head {
@@ -610,11 +608,10 @@ main {
 }
 
 .project-card-rail {
-  padding: 26px 24px;
+  padding: 24px 0 28px 24px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  background: color-mix(in srgb, var(--sky) 68%, var(--paper));
   border-left: 1px solid var(--rule);
 }
 
@@ -652,7 +649,12 @@ main {
     grid-template-columns: 1fr;
   }
 
+  .project-card-main {
+    padding: 22px 0 18px;
+  }
+
   .project-card-rail {
+    padding: 16px 0 20px;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
@@ -666,14 +668,10 @@ main {
   }
 }
 
-/* Research principles: a pale manifesto band with large charcoal numerals. */
+/* Research principles: an open band under a wine rule, with large numerals. */
 .principles-section {
   margin-top: 92px;
-  padding: 0 28px 32px;
-  background: color-mix(in srgb, var(--sky) 58%, var(--paper-raised));
-  border: 1px solid var(--rule);
-  border-top: 4px solid var(--signal);
-  box-shadow: 12px 12px 0 color-mix(in srgb, var(--signal) 9%, transparent);
+  border-top: 3px solid var(--signal);
 }
 
 .principles-section .section-heading {
@@ -700,6 +698,10 @@ main {
   padding: 30px 24px 4px;
   background: transparent;
   border: 0;
+}
+
+.principle-grid > div:first-child {
+  padding-left: 0;
 }
 
 .principle-grid > div + div {
@@ -773,35 +775,33 @@ main {
   gap: 16px;
 }
 
+/* Index pages list notes as ruled entries; the homepage carousel keeps a
+   cream card under a wine edge. */
 .note-card {
   display: block;
-  padding: 26px 30px 22px;
+  padding: 24px 0 22px;
   color: var(--ink);
-  background: var(--paper-raised);
-  border: 1px solid var(--rule);
-  border-left: 3px solid var(--signal);
+  border-top: 1px solid var(--ink);
   text-decoration: none;
-  transition: border-color 160ms ease, transform 160ms ease;
 }
 
 .notes-section .note-card {
-  border: 1px solid var(--stone);
-  border-top: 4px solid var(--signal);
-  box-shadow: var(--card-shadow);
+  padding: 26px 30px 22px;
+  background: var(--paper-raised);
+  border-top: 3px solid var(--signal);
+  transition: background-color 160ms ease;
 }
 
 .notes-section .section-heading {
   border-top-color: var(--signal);
 }
 
-.note-card:hover {
-  border-color: var(--moss);
-  border-left-color: var(--signal-dark);
-  transform: translateX(3px);
+.note-card:hover h3 {
+  color: var(--signal-dark);
 }
 
 .notes-section .note-card:hover {
-  border-color: var(--rule-dark);
+  background: color-mix(in srgb, var(--paper-raised) 80%, var(--sky));
 }
 
 .note-card-top {
@@ -1425,6 +1425,7 @@ main {
   }
 
   .principle-grid > div:nth-child(3) {
+    padding-left: 0;
     border-left: 0;
   }
 
@@ -1521,8 +1522,9 @@ main {
     grid-template-columns: 1fr;
   }
 
-  .principle-grid > div {
-    padding: 24px 4px;
+  .principle-grid > div,
+  .principle-grid > div + div {
+    padding: 24px 0;
     border-left: 0;
   }
 
@@ -1531,22 +1533,10 @@ main {
     border-top: 1px solid var(--stone);
   }
 
-  .principles-section {
-    padding: 0 20px 8px;
-    box-shadow: 8px 8px 0 color-mix(in srgb, var(--signal) 9%, transparent);
-  }
-
   .research-section {
     margin-top: 64px;
   }
 
-  .project-card {
-    box-shadow: 8px 8px 0 color-mix(in srgb, var(--moss) 10%, transparent);
-  }
-
-  .notes-section .note-card {
-    box-shadow: 8px 8px 0 color-mix(in srgb, var(--moss) 10%, transparent);
-  }
 
   .contact-section {
     gap: 28px;

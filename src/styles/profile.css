@@ -16,16 +16,13 @@
   gap: 22px;
 }
 
-/* Story blocks become dossier cards, matching the home cards. */
+/* Story blocks are ruled sections, matching the home entries. */
 .profile-card {
-  padding: 30px 34px 32px;
-  background: var(--paper-raised);
-  border: 1px solid var(--stone);
-  border-top: 3px solid var(--ink);
-  box-shadow: var(--card-shadow);
+  padding: 26px 0 30px;
+  border-top: 1px solid var(--ink);
 }
 
-/* Subtle per-block accent so the cards don't all read identically. */
+/* Subtle per-block accent so the sections don't all read identically. */
 .profile-card--edu {
   border-top-color: var(--signal);
 }
@@ -124,13 +121,12 @@
   font-size: 0.92rem;
 }
 
-/* Facts become a tan spec-sheet card, echoing the project-card rail. */
+/* Facts become a ruled spec sheet, echoing the project-entry rail. */
 .profile-facts {
   position: sticky;
   top: 28px;
-  padding: 24px 26px 8px;
-  background: var(--stone);
-  border: 1px solid var(--rule);
+  padding: 20px 0 8px 24px;
+  border-left: 1px solid var(--rule);
   border-top: 3px solid var(--signal);
 }
 
@@ -187,17 +183,15 @@
   line-height: 1.55;
 }
 
-/* The "Open to" strip becomes a CTA card. */
+/* The "Open to" strip sits under a wine rule. */
 .collaboration-strip {
   margin-top: 26px;
-  padding: 34px 36px;
+  padding: 28px 0 0;
   display: grid;
   grid-template-columns: 130px 1fr auto;
   gap: 30px;
   align-items: center;
-  background: var(--paper-raised);
-  border: 1px solid var(--stone);
-  border-left: 6px solid var(--signal);
+  border-top: 3px solid var(--signal);
 }
 
 .collaboration-strip h2 {
@@ -217,27 +211,22 @@
 
   .profile-facts {
     position: static;
+    padding-left: 0;
+    border-left: 0;
   }
 
   .collaboration-strip {
     grid-template-columns: 1fr;
     gap: 16px;
   }
-
-  .profile-card {
-    box-shadow: 8px 8px 0 color-mix(in srgb, var(--moss) 10%, transparent);
-  }
 }
 
 /* ===== Publications ===== */
 
-/* "Citation card": a sky-tinted metadata footer, distinct from the project
-   (tan rail) and notes (signal accent + tags) cards. */
+/* Citation entry: a ruled block with a metadata footer. */
 .publication-card {
-  padding: 26px 34px;
-  background: var(--paper-raised);
-  border: 1px solid var(--rule);
-  box-shadow: var(--card-shadow);
+  padding: 26px 0;
+  border-top: 1px solid var(--ink);
 }
 
 .publication-head {
@@ -304,12 +293,11 @@
 }
 
 .publication-citation {
-  margin: 22px -34px -26px;
-  padding: 18px 34px;
+  margin: 22px 0 0;
+  padding: 16px 0 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 16px 28px;
-  background: color-mix(in srgb, var(--sky) 65%, var(--paper-raised));
   border-top: 1px solid var(--rule);
 }
 
@@ -346,12 +334,10 @@
 
 @media (max-width: 680px) {
   .publication-card {
-    padding: 24px 22px;
+    padding: 24px 0;
   }
 
   .publication-citation {
-    margin: 22px -22px -24px;
-    padding: 20px 22px;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

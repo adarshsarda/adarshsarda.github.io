@@ -131,19 +131,16 @@ const status = data.status ? statusLabels[lang][data.status] ?? data.status : fa
     margin: 16px 0 0;
     padding: 0;
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px 10px;
+    flex-direction: column;
+    gap: 4px;
     list-style: none;
   }
 
   .project-card-metrics li {
-    padding: 4px 10px;
-    border: 1px solid var(--rule);
-    border-left: 2px solid var(--signal);
-    background: color-mix(in srgb, var(--signal) 5%, transparent);
     color: var(--ink);
     font-family: var(--font-mono);
     font-size: 0.72rem;
     letter-spacing: 0.01em;
   }
+
 </style>

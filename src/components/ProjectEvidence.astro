@@ -75,7 +75,7 @@ const conditionHeaders = lang === 'de'
       <div class="metric-grid">
         {selectedMetrics.map((metric) => (
           <div class="metric-card">
-            <strong>{metric.value}</strong>
+            <strong class:list={{ long: String(metric.value).length > 8 }}>{metric.value}</strong>
             <h3>{metric.name}</h3>
             {metric.denominator && <p>{metric.denominator}</p>}
             {metric.ci_95 && <p>{ciLabel} {metric.ci_95}</p>}
@@ -97,7 +97,6 @@ const conditionHeaders = lang === 'de'
     margin: -20px 0 70px;
     display: grid;
     grid-template-columns: minmax(0, 1.15fr) minmax(330px, 0.85fr);
-    border: 1px solid var(--moss);
   }
 
   .condition-panel,
@@ -107,7 +106,8 @@ const conditionHeaders = lang === 'de'
   }
 
   .condition-panel {
-    border-right: 1px solid var(--moss);
+    padding-left: 0;
+    border-right: 1px solid var(--rule);
   }
 
   .evidence-heading h2,
@@ -152,7 +152,7 @@ const conditionHeaders = lang === 'de'
   .condition-row span,
   .condition-row strong {
     padding: 6px 7px;
-    border: 1px solid var(--rule);
+    border: 1px solid transparent;
     font-weight: 600;
   }
 
@@ -184,7 +184,7 @@ const conditionHeaders = lang === 'de'
   }
 
   .metric-panel {
-    background: color-mix(in srgb, var(--sky) 32%, transparent);
+    padding-right: 0;
   }
 
   .metric-grid {
@@ -198,7 +198,7 @@ const conditionHeaders = lang === 'de'
   .metric-card {
     min-height: 145px;
     padding: 18px;
-    background: var(--paper-raised);
+    background: var(--paper);
   }
 
   .metric-card strong {
@@ -208,6 +208,11 @@ const conditionHeaders = lang === 'de'
     font-size: 2.25rem;
     font-weight: 500;
     letter-spacing: -0.04em;
+  }
+
+  .metric-card strong.long {
+    font-size: 1.5rem;
+    line-height: 1.5;
   }
 
   .metric-card h3 {
@@ -254,7 +259,11 @@ const conditionHeaders = lang === 'de'
 
     .condition-panel {
       border-right: 0;
-      border-bottom: 1px solid var(--moss);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .metric-panel {
+      padding-left: 0;
     }
 
     .credibility-note {
@@ -264,7 +273,10 @@ const conditionHeaders = lang === 'de'
 
   @media (max-width: 680px) {
     .condition-panel,
-    .metric-panel,
+    .metric-panel {
+      padding: 22px 0;
+    }
+
     .credibility-note {
       padding: 22px 18px;
     }
