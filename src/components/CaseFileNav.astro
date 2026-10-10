@@ -1,0 +1,60 @@
+---
+interface Props {
+  sections: { part: string; label: string; subheadings: { id: string; text: string }[] }[];
+  label: string;
+  ariaLabel: string;
+}
+
+const { sections, label, ariaLabel } = Astro.props;
+---
+
+<aside class="section-nav" aria-label={ariaLabel} data-section-nav>
+  <p class="toc-label">{label}</p>
+  <ul>
+    {sections.map((s, index) => (
+      <li data-section={`section-${s.part}`}>
+        <a href={`#section-${s.part}`}><span>{String(index + 1).padStart(2, '0')}</span>{s.label}</a>
+        {s.subheadings.length > 0 && (
+          <ol class="section-nav-sub">
+            {s.subheadings.map((h) => <li><a href={`#${h.id}`}>{h.text}</a></li>)}
+          </ol>
+        )}
+      </li>
+    ))}
+  </ul>
+</aside>
+<script>
+  // Mark the case-file section being read so the sticky nav shows position and
+  // expands that section's sub-headings.
+  const nav = document.querySelector<HTMLElement>('[data-section-nav]');
+  if (nav) {
+    const items = [...nav.querySelectorAll<HTMLElement>('li[data-section]')];
+    const sections = items
+      .map((item) => document.getElementById(item.dataset.section ?? ''))
+      .filter((el): el is HTMLElement => el !== null);
+    const setCurrent = (id: string) => {
+      items.forEach((item) => {
+        const current = item.dataset.section === id;
+        item.classList.toggle('is-current', current);
+        const link = item.querySelector(':scope > a');
+        if (current) link?.setAttribute('aria-current', 'location');
+        else link?.removeAttribute('aria-current');
+      });
+    };
+    const update = () => {
+      const line = window.innerHeight * 0.3;
+      let currentId = '';
+      for (const section of sections) {
+        if (section.getBoundingClientRect().top <= line) currentId = section.id;
+      }
+      setCurrent(currentId);
+    };
+    let queued = false;
+    window.addEventListener('scroll', () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => { queued = false; update(); });
+    }, { passive: true });
+    update();
+  }
+</script>

@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import ArtifactLinks from '../../components/ArtifactLinks.astro';
 import ProjectEvidence from '../../components/ProjectEvidence.astro';
+import CaseFileNav from '../../components/CaseFileNav.astro';
 import { isPublicProject } from '../../lib/contentVisibility';
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
@@ -86,7 +87,12 @@ const sections = await Promise.all(
         (m, pre, frag, post) => (ids.has(frag) ? `${pre}${part}-${frag}${post}` : m),
       );
     }
-    return { part, label: labelOf(part), Content: rendered.Content, html };
+    // Sub-headings for the sticky section nav; text is stripped of the autolink markup.
+    const subheadings = [...html.matchAll(/<h3[^>]*\sid="([^"]+)"[^>]*>([\s\S]*?)<\/h3>/g)].map((m) => ({
+      id: m[1],
+      text: m[2].replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').trim(),
+    }));
+    return { part, label: labelOf(part), Content: rendered.Content, html, subheadings };
   }),
 );
 ---
@@ -178,13 +184,6 @@ const sections = await Promise.all(
       })}
     </article>
 
-    <aside class="section-nav" aria-label="Sections">
-      <p class="toc-label">Case file</p>
-      <ul>
-        {sections.map((s, index) => (
-          <li><a href={`#section-${s.part}`}><span>{String(index + 1).padStart(2, '0')}</span>{s.label}</a></li>
-        ))}
-      </ul>
-    </aside>
+    <CaseFileNav sections={sections} label="Case file" ariaLabel="Sections" />
   </div>
 </Base>
