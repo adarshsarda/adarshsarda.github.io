@@ -1,5 +1,9 @@
 ---
+import '@fontsource-variable/source-serif-4/wght.css';
+import '@fontsource-variable/source-serif-4/wght-italic.css';
+import '@fontsource-variable/jetbrains-mono/wght.css';
 import '../styles/global.css';
+import serifFontUrl from '@fontsource-variable/source-serif-4/files/source-serif-4-latin-wght-normal.woff2?url';
 
 interface Props {
   title: string;
@@ -150,6 +154,7 @@ const jsonLd = {
       <link rel="alternate" hreflang={alternate.lang} href={new URL(alternate.path, site)} />
     ))}
     <link rel="alternate" hreflang="x-default" href={new URL(enPath, site)} />
+    <link rel="preload" href={serifFontUrl} as="font" type="font/woff2" crossorigin />
     <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
     <meta property="og:type" content={type} />
     <meta property="og:site_name" content="Adarsh Sarda" />
@@ -174,7 +179,7 @@ const jsonLd = {
           <span class="brand-mark" aria-hidden="true">AS</span>
         </a>
         <div class="header-links">
-          <nav aria-label={copy.navLabel}>
+          <nav aria-label={copy.navLabel} data-primary-nav>
             {navItems.map((item) => (
               <a href={`${base}${item.href}`} class={item.active ? 'active' : undefined} aria-current={item.active ? 'page' : undefined} aria-label={item.label}>
                 <span class="nav-number" aria-hidden="true">{item.number}</span>
@@ -215,5 +220,16 @@ const jsonLd = {
       </div>
     </footer>
 
+    <script is:inline>
+      // On phones the primary nav is a horizontal scroller; keep the current page's link in view.
+      (() => {
+        const nav = document.querySelector('[data-primary-nav]');
+        const active = nav?.querySelector('a.active');
+        if (!nav || !active || nav.scrollWidth <= nav.clientWidth) return;
+        const navBox = nav.getBoundingClientRect();
+        const linkBox = active.getBoundingClientRect();
+        nav.scrollLeft += linkBox.left - navBox.left - (navBox.width - linkBox.width) / 2;
+      })();
+    </script>
   </body>
 </html>
