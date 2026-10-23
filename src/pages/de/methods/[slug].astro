@@ -36,21 +36,20 @@ const toc = headings.filter((heading) => heading.depth === 2 || heading.depth ==
   }}
   wide
 >
-  <p class="crumb"><a href={`${base}de/methods/`}>Methoden</a></p>
+  <p class="crumb"><a href={`${base}de/notes/`}>Texte</a> / <a href={`${base}de/methods/`}>Methoden</a></p>
   <header class="article-head">
     <div class="article-label">
       <span>Methode</span>
     </div>
     <h1>{title}</h1>
     {data.description && <p class="subtitle">{data.description}</p>}
+    <MobileToc headings={toc} lang="de" />
     {data.tags && data.tags.length > 0 && (
       <ul class="chips article-tags">
-        {data.tags.map((tag) => <li class="chip">{tag}</li>)}
+        {data.tags.slice(0, 3).map((tag) => <li class="chip">{tag}</li>)}
       </ul>
     )}
   </header>
-
-  <MobileToc headings={toc} lang="de" />
 
   <div class="with-toc">
     <article class="prose">

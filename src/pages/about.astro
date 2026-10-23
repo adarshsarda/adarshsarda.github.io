@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { availability } from '../lib/availability';
 import '../styles/profile.css';
 
 const base = import.meta.env.BASE_URL;
@@ -92,7 +93,7 @@ const base = import.meta.env.BASE_URL;
       </div>
       <div class="fact-block">
         <p class="fact-label">Availability</p>
-        <p>Working student, 20 hrs/week<br />Immediate start<br />Amberg, Regensburg, Nuremberg<br />and nearby, or remote<br /><span class="availability-stamp">Updated July 2026</span></p>
+        <p>{availability.en.summary}<br /><span class="availability-stamp">{availability.en.stamp}</span></p>
       </div>
       <div class="fact-block">
         <p class="fact-label">Research</p>

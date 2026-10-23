@@ -26,7 +26,7 @@ core_ideas:
   - "Das Paper testet zwei Prompting-Strategien, vier Modelle und sechs Reasoning-Benchmarks."
   - "GPT-4 erreicht im berichteten Setup 97% durchschnittliche Attack Success."
 threat_model:
-  system: "Ein LLM, das mit Reasoning-Demonstrationen oder retrieved worked examples arbeitet."
+  system: "Ein LLM, das mit Reasoning-Demonstrationen oder abgerufenen Lösungsbeispielen arbeitet."
   attacker: "Jemand, der Beispiele im Prompt oder Retrieval-Kontext beeinflussen kann."
   capability: "Trigger und bösartigen Reasoning-Schritt in Demonstrationen platzieren."
   failure: "Das Modell übernimmt die versteckte Prozedur und verändert die finale Antwort."
@@ -38,7 +38,7 @@ connections:
 open_questions:
   - "Kann unabhängige Reasoning-Verifikation den bösartigen Schritt erkennen, ohne private Chain-of-Thought offenzulegen?"
   - "Wie verhält sich der Angriff, wenn Demonstrationen paraphrasiert oder umgeordnet werden?"
-  - "Welche Provenienz-Kontrollen sind für retrieved reasoning examples praktikabel?"
+  - "Wie lässt sich die Herkunft abgerufener Reasoning-Beispiele praktisch prüfen?"
 ---
 
 BadChain zeigt, dass Backdoors nicht nur im Modell oder Datensatz liegen müssen. Auch

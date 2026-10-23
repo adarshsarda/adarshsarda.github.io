@@ -27,7 +27,7 @@ Fehlkonfigurationen, schwache Authentifizierung, Injection-Bugs oder unsichere A
 KI-Systemen liegt ein Teil der Angriffsfläche in probabilistischem Verhalten:
 
 - dieselbe Eingabe kann je nach Kontext anders wirken;
-- untrusted data und Instruktionen landen oft im selben Modellkontext;
+- nicht vertrauenswürdige Daten und Anweisungen landen oft im selben Modellkontext;
 - Retrieval, Memory und Tool-Aufrufe schaffen neue Vertrauensgrenzen;
 - Erfolg braucht Messung als Rate über viele Varianten, mit einzelnen Beispielen als Beleg.
 
@@ -154,7 +154,7 @@ Prüfpunkte:
 
 Messung:
 
-- wurde das vergiftete Dokument retrieved?
+- wurde das vergiftete Dokument abgerufen?
 - beeinflusst es die finale Antwort?
 - werden Quellen korrekt angezeigt?
 - helfen Diversität, Ranking, Filter oder Quarantäne?
@@ -179,15 +179,15 @@ Messung:
 
 ## Zusammengesetzt: Minimaler Engagement-Ablauf
 
-Ein kleiner, sauberer Test kann so aussehen:
+Das ist ein hypothetisches Beispiel, kein abgeschlossener Testauftrag. Die folgenden
+22 Erfolge in 50 Versuchen sind Beispielzahlen, keine gemessenen Ergebnisse.
 
-1. Systempfad skizzieren: Nutzer → Modell → Retrieval/Tools → Aktion.
-2. Zwei bis drei zentrale Trust Boundaries auswählen.
-3. Für jede Boundary eine Angriffshypothese formulieren.
-4. Mindestens 20 bis 50 Varianten pro Hypothese testen, wenn möglich mehr.
-5. Ergebnisse als Rate mit Denominator berichten.
-6. Eine Mitigation testen und den Utility-Verlust messen.
-7. Erfolgreiche Angriffe in Regressionstests überführen.
+1. **Scope.** Grey-Box-Test wählen. Ziel: den Systemprompt auslesen oder eine nicht autorisierte Tool-Aktion auslösen.
+2. **System erfassen.** Vertrauensgrenzen zwischen Nutzer, hochgeladener Datei, Webabruf, E-Mail-Versand und Markdown-Ausgabe skizzieren.
+3. **Angriffe suchen.** Die Testmatrix durchgehen: Persona-Jailbreak, indirekte Injection über den Webabruf und Datenabfluss über Markdown-Bilder.
+4. **Validieren.** Angenommen, die indirekte Injection erreicht in 22 von 50 Versuchen (44%) das E-Mail-Tool. Den Nenner festhalten und den Ablauf mit einem Platzhaltergeheimnis zeigen.
+5. **Auswirkung bewerten.** Manipulierte Webseite → Agent liest sie → Anweisung löst E-Mail-Versand aus → Daten verlassen das System. Voraussetzung: Der Angreifer kontrolliert eine URL, die der Nutzer lesen lässt.
+6. **Berichten.** Die fünf Berichtsartefakte erstellen. Gegenmaßnahmen priorisieren: Tool-Ausgaben als nicht vertrauenswürdig behandeln, E-Mail-Versand bestätigen lassen und erlaubte Verbindungen der Ausgabe begrenzen. Die 50 Testfälle als Regressionstest sichern.
 
 ## Referenzrahmen
 
@@ -199,7 +199,7 @@ Nützliche Rahmenwerke sind:
 
 Ich nutze solche Frameworks als Checklisten, nicht als Ersatz für ein konkretes Threat Model.
 
-## Verwandte Feldnotizen
+## Verwandte Leitfäden
 
 Diese Notizen vertiefen drei Abschnitte dieser Methodik:
 
@@ -207,12 +207,12 @@ Diese Notizen vertiefen drei Abschnitte dieser Methodik:
 - [Agenten-Sicherheit vor dem Produktivbetrieb](/de/guides/agent-security-production-checklist/) macht aus Playbook C eine Pre-Launch-Checkliste für Tools, Memory, Skills und Long-Horizon-Angriffe.
 - [Wie ich KI-Red-Team-Funde berichte](/de/guides/reporting-ai-red-team-findings/) ist das Berichtsformat hinter den fünf Artefakten im Ablauf oben.
 
-## Verwandte Talk-Notizen
+## Verwandte Paper-Notizen
 
-- AgentDojo: nützlich für Utility- und Security-Messung bei Tool-Agenten.
-- ToolEmu: nützlich für Sandboxing riskanter Tool-Trajektorien.
-- PoisonedRAG: nützlich für Knowledge-Base-Integritätsrisiken.
-- Indirect Prompt Injection: Grundlage für Remote-Instruktionen in untrusted data.
+- [Indirekte Prompt Injection](/de/talks/indirect-prompt-injection/) erklärt die Vertrauensgrenze zwischen externen Inhalten und Modellanweisungen.
+- [AgentDojo](/de/talks/agentdojo/) macht Nutzerziele, Angreiferziele und Tool-Verhalten zu einem wiederholbaren Benchmark.
+- [PoisonedRAG](/de/talks/poisonedrag/) untersucht gezielte Manipulationen von Retrieval-Systemen.
+- [ToolEmu](/de/talks/toolemu/) zeigt, wie simulierte Tools riskante Abläufe vor dem Produktivbetrieb sichtbar machen.
 
 ## Hinweis zu ehrlichem Framing
 

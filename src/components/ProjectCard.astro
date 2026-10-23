@@ -69,7 +69,7 @@ const fallbackCategory = lang === 'de' ? 'Forschungsprojekt' : 'research project
 const fallbackStatus = lang === 'de' ? 'dokumentiert' : 'documented';
 const focusLabel = focusLabelOverride ?? (lang === 'de' ? 'Fokus' : 'Focus');
 const statusLabel = statusLabelOverride ?? (lang === 'de' ? 'Status' : 'Status');
-const defaultCta = lang === 'de' ? 'Fallstudie öffnen' : 'Open case file';
+const defaultCta = lang === 'de' ? 'Projekt ansehen' : 'View project';
 const category = data.category
   ? categoryLabels[lang][data.category] ?? data.category
   : fallbackCategory;
@@ -92,7 +92,7 @@ const status = data.status ? statusLabels[lang][data.status] ?? data.status : fa
     )}
     {data.skills && data.skills.length > 0 && (
       <ul class="chips">
-        {data.skills.slice(0, 6).map((skill) => <li class="chip">{skill}</li>)}
+        {data.skills.slice(0, 3).map((skill) => <li class="chip">{skill}</li>)}
       </ul>
     )}
   </div>
@@ -139,7 +139,7 @@ const status = data.status ? statusLabels[lang][data.status] ?? data.status : fa
   .project-card-metrics li {
     color: var(--ink);
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     letter-spacing: 0.01em;
   }
 

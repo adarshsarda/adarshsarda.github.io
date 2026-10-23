@@ -1,8 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
-import NoteCarousel from '../components/NoteCarousel.astro';
+import NoteCard from '../components/NoteCard.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import TalkCarousel from '../components/TalkCarousel.astro';
+import TalkCard from '../components/TalkCard.astro';
+import { availability } from '../lib/availability';
 import { isFeaturedProject } from '../lib/contentVisibility';
 import { getCollection } from 'astro:content';
 
@@ -40,13 +41,13 @@ const projectCount = projects.length;
 const publicationCount = publicationEntries.length;
 const guideCount = guideEntries.length;
 const talkCount = talkEntries.length;
-const featuredTalks = talkEntries.slice(0, 6);
+const featuredTalks = talkEntries.slice(0, 2);
 
 const headlineMetrics: Record<string, string[]> = {
   'odsb-semantic-backdoors': [
-    '100% attack success in-distribution, n=140',
-    '0% false-trigger across four controls',
-    '0.887 on held-out paraphrases, n=400',
+    'In-distribution: 140/140 triggered',
+    'Controls: 0/140 false triggers in each of four conditions',
+    'Held-out paraphrases: 355/400 triggered',
   ],
 };
 const hasPublicCode = (data: { artifacts?: { kind: string }[] }) =>
@@ -64,15 +65,14 @@ const hasPublicCode = (data: { artifacts?: { kind: string }[] }) =>
       <p class="eyebrow"><span>Research & field notes</span> / AI security</p>
       <h1>I build and break <em>AI systems.</em></h1>
       <p class="hero-deck">
-        I work on adversarial machine learning, LLM red teaming, and experimental
-        security research. Each write-up records the method, evidence, failed
-        attempts, and limits of the result.
+        I work on AI security, from LLM backdoors to agent evaluation.
+        Here I share my experiments, results, and what went wrong.
       </p>
       <div class="hero-actions">
         <a class="text-link" href="#featured-work">View featured work <span aria-hidden="true">↗</span></a>
         <a class="text-link quiet" href={`${base}about/`}>About <span aria-hidden="true">→</span></a>
         <a class="text-link quiet" href={`${base}cv/`}>
-          CV / Lebenslauf <span aria-hidden="true">→</span>
+          CV <span aria-hidden="true">→</span>
         </a>
       </div>
     </div>
@@ -89,45 +89,16 @@ const hasPublicCode = (data: { artifacts?: { kind: string }[] }) =>
         />
       </div>
       <div class="portrait-note">
-        <p class="note-label">Current inquiry / 2026</p>
+        <p class="note-label">What I’m working on</p>
         <p>When an AI agent acts, how do you show that <strong>each tool call</strong> serves the user's goal?</p>
         <a class="text-link quiet" href={`${base}guides/agent-security-production-checklist/`}>Read the agent-security checklist <span aria-hidden="true">→</span></a>
       </div>
     </figure>
   </section>
 
-  <section class="home-section principles-section" aria-labelledby="principles-heading">
-    <header class="section-heading">
-      <h2 class="section-title" id="principles-heading"><span>01</span> Research principles</h2>
-      <p>How I evaluate evidence</p>
-    </header>
-    <div class="principle-grid">
-      <div>
-        <span>01</span>
-        <h3>Measure statistically.</h3>
-        <p>AI failures are probabilistic. Report rates, sample sizes, controls, and uncertainty.</p>
-      </div>
-      <div>
-        <span>02</span>
-        <h3>Report failed iterations.</h3>
-        <p>A discarded shortcut can teach more about the system than a polished final score.</p>
-      </div>
-      <div>
-        <span>03</span>
-        <h3>Separate demos from evidence.</h3>
-        <p>Installation, generalisation, utility, and real-world risk are different claims.</p>
-      </div>
-      <div>
-        <span>04</span>
-        <h3>Question perfect results.</h3>
-        <p>Perfect scores demand stronger audits, not stronger adjectives.</p>
-      </div>
-    </div>
-  </section>
-
   <section class="home-section research-section featured-work-section" id="featured-work" aria-labelledby="featured-work-heading">
     <header class="section-heading">
-      <h2 class="section-title" id="featured-work-heading"><span>02</span> Featured work</h2>
+      <h2 class="section-title" id="featured-work-heading"><span>01</span> Featured work</h2>
       <p>
         {projectCount.toString().padStart(2, '0')} {projectCount === 1 ? 'project' : 'projects'}
         {' / '}
@@ -150,14 +121,14 @@ const hasPublicCode = (data: { artifacts?: { kind: string }[] }) =>
           href={`${base}publications/#${publication.key}`}
           index={index}
           indexPrefix="P"
-          cta="Open publication"
+          cta="View publication"
           statusLabel="Venue"
           focusLabel="Role"
           headingLevel={3}
           data={{
             title: publication.data.title,
             subtitle: `${publication.data.publisher} · ${publication.data.series_abbreviation} ${publication.data.volume}`,
-            summary: 'Multimodal deep-learning system (LSTM over speech and text) reaching about 86% accuracy. My earliest applied machine-learning engineering and peer-reviewed evaluation work.',
+            summary: 'Speech-and-text emotion recognition built for my bachelor’s project and published with Springer in 2023.',
             category: `publication / ${publication.data.publication_type.en} / ${publication.data.year}`,
             status: publication.data.venue,
             domains: [publication.data.contribution.en],
@@ -167,43 +138,54 @@ const hasPublicCode = (data: { artifacts?: { kind: string }[] }) =>
     </div>
   </section>
 
+  <section class="home-section principles-section" aria-labelledby="principles-heading">
+    <header class="section-heading">
+      <h2 class="section-title" id="principles-heading"><span>02</span> How I work</h2>
+    </header>
+    <div class="principle-grid">
+      <div><h3>Use controls.</h3><p>Test what triggers a failure and what does not.</p></div>
+      <div><h3>Show the evidence.</h3><p>Report sample sizes, uncertainty, and evaluation limits.</p></div>
+      <div><h3>Document failures.</h3><p>Explain failed attempts and what changed afterward.</p></div>
+      <div><h3>Check the result.</h3><p>Look for leakage and shortcuts before accepting a score.</p></div>
+    </div>
+  </section>
+
   {guideEntries.length > 0 && (
     <section class="home-section notes-section" aria-labelledby="field-notes-heading">
       <header class="section-heading">
         <h2 class="section-title" id="field-notes-heading"><span>03</span> Field Notes</h2>
-        <p>{guideCount.toString().padStart(2, '0')} long-form {guideCount === 1 ? 'guide' : 'guides'}</p>
+        <p>{guideCount} {guideCount === 1 ? 'guide' : 'guides'}</p>
       </header>
-      <NoteCarousel
-        entries={guideEntries}
-        hrefPrefix={`${base}guides`}
-        indexHref={`${base}guides/`}
-        indexCta="Open the full field-note index"
-        headingLevel={3}
-      />
+      <div class="selected-note-grid">
+        {guideEntries.slice(0, 2).map((note, index) => (
+          <NoteCard href={`${base}guides/${note.id}/`} index={index} prefix="N"
+            kicker="Guide" title={note.data.title} description={note.data.description}
+            tags={note.data.tags} cta="Read guide" headingLevel={3} />
+        ))}
+      </div>
+      <p class="section-index-link"><a class="text-link quiet" href={`${base}guides/`}>All guides <span aria-hidden="true">→</span></a></p>
     </section>
   )}
 
   {talkEntries.length > 0 && (
     <section class="home-section talks-section" aria-labelledby="talk-notes-heading">
       <header class="section-heading">
-        <h2 class="section-title" id="talk-notes-heading"><span>04</span> Talk Notes</h2>
-        <p>{talkCount.toString().padStart(2, '0')} {talkCount === 1 ? 'note' : 'notes'} from papers and talks</p>
+        <h2 class="section-title" id="talk-notes-heading"><span>04</span> Paper notes</h2>
+        <p>{talkCount} {talkCount === 1 ? 'note' : 'notes'}</p>
       </header>
 
-      <TalkCarousel
-        entries={featuredTalks}
-        indexHref={`${base}talks/`}
-        indexCta="Open the full talk index"
-        headingLevel={3}
-      />
+      <div class="selected-note-grid">
+        {featuredTalks.map((entry, index) => <TalkCard entry={entry} index={index} headingLevel={3} />)}
+      </div>
+      <p class="section-index-link"><a class="text-link quiet" href={`${base}talks/`}>All paper notes <span aria-hidden="true">→</span></a></p>
     </section>
   )}
 
   <section class="home-section contact-section">
     <div>
       <p class="profile-kicker">Contact</p>
-      <h2>Available for working-student roles in AI security and applied machine learning.</h2>
-      <p>Based in Amberg, Germany. Available immediately for working student roles at 20 hours/week, either on-site around Amberg, Regensburg, Nuremberg and nearby areas, or remote. <span class="availability-stamp">Availability updated July 2026.</span></p>
+      <h2>Looking for a working-student role in AI security or applied ML.</h2>
+      <p>{availability.en.summary} <span class="availability-stamp">{availability.en.stamp}</span></p>
     </div>
     <div class="contact-actions">
       <a class="text-link" href="mailto:adarshsarda29@gmail.com">Email <span aria-hidden="true">→</span></a>

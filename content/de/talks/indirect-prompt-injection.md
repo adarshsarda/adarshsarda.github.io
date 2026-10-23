@@ -15,12 +15,12 @@ tags: ["prompt-injection", "agent-security", "rag-security", "data-exfiltration"
 year: 2023
 source: "Greshake et al. / arXiv"
 difficulty: "Intermediate"
-takeaway: "Ein Remote-Angreifer kann eine LLM-Anwendung kontrollieren, indem er Instruktionen in Daten versteckt, die später retrieved werden."
+takeaway: "Ein Remote-Angreifer kann eine LLM-Anwendung umlenken, indem er Anweisungen in Daten versteckt, die sie später abruft."
 why_added: "Das ist die klarste Grundlage dafür, warum Prompt Injection ein Systemdesign-Problem und kein reines Bad-Input-Problem ist."
-why_matters: "LLM-Anwendungen mischen trusted instructions und untrusted data in einem Textkontext. Wenn das Modell sie nicht zuverlässig trennt, können Webseiten, E-Mails oder Dokumente privilegiertes Verhalten umlenken."
+why_matters: "LLM-Anwendungen mischen vertrauenswürdige Anweisungen und nicht vertrauenswürdige Daten in einem Textkontext. Wenn das Modell sie nicht zuverlässig trennt, können Webseiten, E-Mails oder Dokumente privilegiertes Verhalten umlenken."
 what_i_learned: "Die verwundbare Komponente ist nicht nur das Chatbot-Eingabefeld, sondern jede Datenquelle, die vor einer Aktion das Modell erreicht."
 core_ideas:
-  - "Indirekte Injection kommt über retrieved content statt über den direkten Nutzerprompt."
+  - "Indirekte Injection kommt über abgerufene Inhalte statt über den direkten Nutzerprompt."
   - "Das Modell sieht Instruktionen und Daten über dieselbe Natural-Language-Schnittstelle."
   - "Auswirkungen umfassen Antwortmanipulation, API-Missbrauch, Datenabfluss und Propagation."
   - "Prompt-Level-Reminder schaffen keine harte Sicherheitsgrenze."
@@ -42,13 +42,13 @@ open_questions:
 ---
 
 Indirekte Prompt Injection ist der Moment, in dem ein Dokument nicht nur Datenquelle ist,
-sondern zum Instruktionskanal wird. Die Schwäche liegt darin, dass das Modell trusted
-instructions und untrusted data in derselben Sprache verarbeitet.
+sondern zum Instruktionskanal wird. Die Schwäche liegt darin, dass das Modell vertrauenswürdige
+Anweisungen und nicht vertrauenswürdige Daten in derselben Sprache verarbeitet.
 
 ## Daten-Instruktions-Kollision
 
 Eine Webseite oder E-Mail kann Text enthalten, der wie eine Anweisung an das Modell wirkt.
-Wenn die Anwendung diesen Text retrieved, landet er im Modellkontext. Das Modell kann dann
+Wenn die Anwendung diesen Text abruft, landet er im Modellkontext. Das Modell kann dann
 nicht zuverlässig wissen, ob der Text befolgt oder nur zusammengefasst werden soll.
 
 ## Direkte vs. indirekte Injection

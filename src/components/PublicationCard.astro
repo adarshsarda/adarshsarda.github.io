@@ -21,8 +21,8 @@ const reportedMetric = reportedResult.metric === 'accuracy'
   : reportedResult.metric;
 const approx = reportedResult.approximate ? (lang === 'de' ? 'rund ' : 'approximately ') : '';
 const resultSentence = lang === 'de'
-  ? `${publication.summary.de} ${reportedResult.attribution.de} eine ${reportedMetric} von ${approx}${reportedValue}. Der Verlag beschreibt dieses Ergebnis für ${reportedResult.scope.de}; ${reportedResult.caveat.de}`
-  : `${publication.summary.en} ${reportedResult.attribution.en} ${approx}${reportedValue} ${reportedMetric}. The publisher describes this result for ${reportedResult.scope.en}; ${reportedResult.caveat.en}`;
+  ? `${publication.summary.de} ${reportedResult.attribution.de} eine ${reportedMetric} von ${approx}${reportedValue} für ${reportedResult.scope.de}; ${reportedResult.caveat.de}`
+  : `${publication.summary.en} ${reportedResult.attribution.en} ${approx}${reportedValue} ${reportedMetric} for ${reportedResult.scope.en}; ${reportedResult.caveat.en}`;
 const publishedOn = new Intl.DateTimeFormat(lang === 'de' ? 'de-DE' : 'en-US', {
   year: 'numeric',
   month: 'long',

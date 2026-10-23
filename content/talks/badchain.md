@@ -45,9 +45,6 @@ BadChain moves the backdoor from training time to inference time. Instead of poi
 dataset or altering model parameters, the attacker supplies compromised chain-of-thought
 demonstrations that teach the model a malicious reasoning step associated with a trigger.
 
-> **Attribution and scope.** This is my explanation of Xiang et al. The attack, experiments,
-> and numerical results are from the original paper.
-
 ---
 
 ## Threat Model

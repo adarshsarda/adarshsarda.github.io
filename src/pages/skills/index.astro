@@ -15,9 +15,14 @@ const { Content } = await render(entry);
 <Base
   title={`${entry.data.title ?? 'Skills & Evidence'} | Adarsh Sarda`}
   description={entry.data.note ?? 'Technical skills and the project evidence behind them.'}
+  wide
 >
-  <p class="eyebrow"><span>Index 05</span> / Skills</p>
-  <article class="prose">
+  <div class="page-head">
+    <p class="eyebrow"><span>Index 05</span> / Skills</p>
+    <h1>Skills</h1>
+    <p>Technical skills and the work behind them.</p>
+  </div>
+  <article class="prose reading-content">
     <Content />
   </article>
 </Base>

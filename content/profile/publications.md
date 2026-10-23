@@ -49,8 +49,8 @@ reported_result:
     en: "model-patient conversational data"
     de: "Modell-Patienten-Konversationsdaten"
   attribution:
-    en: "The bachelor thesis reports"
-    de: "Die Bachelorarbeit berichtet"
+    en: "The publisher abstract reports"
+    de: "Der Abstract des Verlags berichtet"
   caveat:
     en: "this portfolio does not have the evaluation denominator, split, or confidence interval and does not claim an independent reproduction."
     de: "in diesem Portfolio liegen weder Evaluationsnenner, Split noch Konfidenzintervall vor, und es wird keine unabhängige Reproduktion behauptet."

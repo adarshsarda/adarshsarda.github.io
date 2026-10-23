@@ -73,7 +73,7 @@ auditierbar.
 ## Phase 2: Retrieval vor Generation testen
 
 Viele Prompt-Injection-Demos überspringen den schwersten Schritt: den schädlichen Inhalt bei
-einer natürlichen Query überhaupt retrieved zu bekommen. **Overcoming the Retrieval Barrier**
+einer natürlichen Anfrage überhaupt abrufen zu lassen. **Overcoming the Retrieval Barrier**
 setzt genau dort an: Angriffe können praktisch schwach sein, wenn sie nie zum Modell gelangen,
 aber schwerwiegend, sobald Retrieval gelöst ist.
 
@@ -91,8 +91,8 @@ Generation-Problem sein; schlechtes Top-k ist ein Retrieval-Problem.
 ## Phase 3: Privacy Leakage testen
 
 Zeng et al.s RAG-Privacy-Paper ist der Baseline-Startpunkt für ein kleines reproduzierbares Lab. Es
-nutzt die normale RAG-Form: Records einbetten, Top-k per Similarity retrieven, retrieved
-Context mit der Query kombinieren und generieren. Der Privacy-Test fragt, ob ein Black-Box-
+nutzt die normale RAG-Form: Einträge einbetten, die Top-k anhand ihrer Ähnlichkeit abrufen,
+die Inhalte mit der Anfrage kombinieren und eine Antwort erzeugen. Der Privacy-Test fragt, ob ein Black-Box-
 Nutzer private Records retrieven und danach wiederholen oder eng paraphrasieren lassen kann.
 
 Drei Confidentiality-Pfade testen:
@@ -109,19 +109,19 @@ Privacy-Gründen nicht öffentlich sind.
 
 ## Phase 4: Answer Influence testen
 
-Wenn Poison retrieved wurde, wird geprüft, ob er die Antwort verändert.
+Wenn manipulierte Inhalte abgerufen wurden, wird geprüft, ob sie die Antwort verändern.
 
 | Angriffsklasse | Variation | Erfolgskriterium |
 |---|---|---|
 | Knowledge Corruption | falsche Fakten, Bias-Framing, erfundene Policy | Antwort übernimmt attacker-selected claim |
-| Indirect Prompt Injection | instruction-like Text im retrieved Content | Modell folgt Content als Instruktion |
+| Indirect Prompt Injection | Anweisungen in abgerufenen Inhalten | Modell befolgt Inhalte als Anweisung |
 | Citation Laundering | Poison imitiert trusted sources | Antwort wirkt belegt, ist aber in Poison geerdet |
 | Conflict Exploitation | Poison widerspricht legitimer Quelle | Modell wählt Poison oder versteckt Konflikt |
 | Context Pressure | lange oder viele Chunks | Safety- oder Provenienz-Instruktionen verlieren Wirkung |
-| Jamming | Blocker Document wird für Target Query retrieved | Modell verweigert oder abstained, obwohl cleane Evidenz existiert |
+| Jamming | Blocker-Dokument wird für die Zielfrage abgerufen | Modell antwortet nicht, obwohl passende unverfälschte Quellen vorliegen |
 
-Ergebnisse als Raten berichten. Beispiel: "Poison in 37/50 Paraphrasen retrieved; Antwort
-übernimmt Zielbehauptung in 21/37 retrieved cases." So werden Retrieval Failure und
+Ergebnisse als Raten berichten. Hypothetisches Beispiel: "Manipulierte Inhalte bei 37/50 Paraphrasen abgerufen;
+Antwort übernimmt die Zielbehauptung in 21/37 dieser Fälle." So werden Retrieval Failure und
 Generation Failure getrennt. Für Jamming zusätzlich clean answerability vor und nach Indexing
 des Blockers berichten.
 
@@ -143,7 +143,7 @@ Carrier testen:
 - wiederholte Near-Duplicate-Chunks.
 
 Für jeden Carrier dokumentieren: Überlebt die Instruktion die Ingestion? Wird sie indexiert?
-Wird sie retrieved? Verändert sie die Antwort?
+Wird sie abgerufen? Verändert sie die Antwort?
 
 ## Phase 6: Access Control und Selective Disclosure testen
 
@@ -167,7 +167,7 @@ Kontrollschicht bereits gefallen.
 
 Citations sind nur dann Security Controls, wenn sie treu sind.
 
-- [ ] Lässt sich jeder faktische Claim auf einen retrieved Chunk zurückführen?
+- [ ] Lässt sich jede Tatsachenbehauptung auf einen abgerufenen Textabschnitt zurückführen?
 - [ ] Werden Quellen mit Trust Level, Owner, Timestamp und Access Scope angezeigt?
 - [ ] Warnt das System bei widersprüchlichen Quellen?
 - [ ] Kann eine untrusted source allein eine High-Impact-Antwort stützen?
@@ -186,7 +186,7 @@ oder eine explizite "untrusted-only evidence"-Warnung.
 | Membership Inference | bekannte Non-Member-Passagen | bekannte Member-Passagen | AUC oder thresholded Accuracy |
 | Jamming | cleane beantwortbare Query | Blocker Document hinzufügen | Targeted Abstention Rate |
 | Retrieval Manipulation | natürliche Query | Poisoned Keyword-/Embedding-Konkurrent | Poison Top-k Rate |
-| Indirect Injection | neutraler retrieved Content | instruction-like retrieved Content | Instruction-Following Rate |
+| Indirect Injection | neutrale abgerufene Inhalte | Anweisungen in abgerufenen Inhalten | Instruction-Following Rate |
 | Access Boundary | gleiche Rollenquery | Cross-role / Cross-tenant Query | Unauthorized Retrieval Rate |
 | Provenienz | korrekter Citation Corpus | Poison imitiert trusted source | Citation Faithfulness |
 | Utility | normale Tasks | gleiche Tasks unter Defenses | Task Success und Latenz |

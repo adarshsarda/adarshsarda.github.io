@@ -16,11 +16,11 @@ const { entry } = Astro.props as { entry: CollectionEntry<'guidesDe'> };
 const { Content, headings } = await render(entry);
 const data = entry.data;
 const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
-const dateFmt = new Intl.DateTimeFormat('de-DE', { year: 'numeric', month: 'long', day: 'numeric' });
+const dateFmt = new Intl.DateTimeFormat('de-DE', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 ---
 
 <Base
-  title={`${data.title} | Feldnotizen`}
+  title={`${data.title} | Leitfaden`}
   description={data.description}
   type="article"
   lang="de"
@@ -36,14 +36,14 @@ const dateFmt = new Intl.DateTimeFormat('de-DE', { year: 'numeric', month: 'long
   }}
   wide
 >
-  <p class="crumb"><a href={`${base}de/guides/`}>Notizen / Feldnotizen</a></p>
+  <p class="crumb"><a href={`${base}de/notes/`}>Texte</a> / <a href={`${base}de/guides/`}>Leitfäden</a></p>
   <header class="article-head">
     <div class="article-label">
-      <span>Feldnotiz / N-{String(data.order ?? 1).padStart(2, '0')}</span>
-      {data.last_updated && <span>Aktualisiert {dateFmt.format(data.last_updated)}</span>}
+      <span>Leitfaden</span>
     </div>
     <h1>{data.title}</h1>
     {data.description && <p class="subtitle">{data.description}</p>}
+    <MobileToc headings={toc} lang="de" />
     <dl class="meta-table">
       {data.author && (<><dt>Autor</dt><dd>{data.author}</dd></>)}
       {data.last_updated && (
@@ -52,13 +52,11 @@ const dateFmt = new Intl.DateTimeFormat('de-DE', { year: 'numeric', month: 'long
     </dl>
     {data.tags && data.tags.length > 0 && (
       <ul class="chips article-tags">
-        {data.tags.map((t) => <li class="chip">{t}</li>)}
+        {data.tags.slice(0, 3).map((t) => <li class="chip">{t}</li>)}
       </ul>
     )}
     <ArtifactLinks artifacts={data.artifacts} lang="de" />
   </header>
-
-  <MobileToc headings={toc} lang="de" />
 
   <div class="with-toc">
     <article class="prose">

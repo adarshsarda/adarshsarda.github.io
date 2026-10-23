@@ -45,9 +45,6 @@ AgentDojo turns agent security into an evaluation problem with two simultaneous 
 complete the user's legitimate task and resist an attack embedded in data returned by tools.
 That pairing is important because a defense that blocks every action is secure but useless.
 
-> **Attribution and scope.** This is my explanation of Debenedetti et al. AgentDojo, its
-> tasks, test cases, and results are the authors' work.
-
 ---
 
 ## The Agent Security Problem

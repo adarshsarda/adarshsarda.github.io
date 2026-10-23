@@ -33,7 +33,7 @@ threat_model:
   deployment: "Agenten mit standardisierten Tool-Protokollen und mehreren Integrationen."
 connections:
   - {label: "ToolEmu", href: "/de/talks/toolemu/", note: "Sandbox zum Erkunden gefährlicher Tool-Trajektorien."}
-  - {label: "AgentDojo", href: "/de/talks/agentdojo/", note: "Benchmark für Tool-Agenten über untrusted data."}
+  - {label: "AgentDojo", href: "/de/talks/agentdojo/", note: "Benchmark für Tool-Agenten, die nicht vertrauenswürdige Daten verarbeiten."}
   - {label: "Indirekte Prompt Injection", href: "/de/talks/indirect-prompt-injection/", note: "Underlying data-to-instruction failure über Tool-Ergebnisse."}
 open_questions:
   - "Welche MCP-Security-Claims halten unabhängiger Replikation und Peer Review stand?"

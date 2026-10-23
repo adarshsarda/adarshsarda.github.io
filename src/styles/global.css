@@ -68,7 +68,8 @@ a:hover {
   color: var(--signal-dark);
 }
 
-a:focus-visible {
+a:focus-visible,
+button:focus-visible {
   outline: 2px solid var(--signal);
   outline-offset: 4px;
 }
@@ -127,6 +128,8 @@ main {
 }
 
 .brand {
+  min-width: 44px;
+  min-height: 44px;
   display: inline-flex;
   align-items: center;
   gap: 12px;
@@ -235,7 +238,7 @@ main {
   color: var(--ink-soft);
   border-top: 1px solid var(--ink);
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -305,14 +308,14 @@ main {
 .profile-kicker {
   margin: 0;
   color: var(--signal-dark);
-  font-size: 0.66rem;
+  font-size: 0.75rem;
   font-weight: 750;
 }
 
 .eyebrow {
   margin: 0 0 24px;
   color: var(--ink-soft);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
 }
 
 .eyebrow span {
@@ -482,7 +485,7 @@ main {
 .note-label {
   margin: 0 0 16px;
   color: var(--signal-dark);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 750;
 }
 
@@ -498,7 +501,7 @@ main {
   color: var(--ink-soft);
   border-top: 1px solid var(--moss);
   border-bottom: 1px solid var(--rule);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
 }
 
 .section-heading p {
@@ -521,6 +524,44 @@ main {
   font-size: 0.76rem;
   font-weight: 750;
   letter-spacing: 0.06em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.selected-note-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.selected-note-grid > * {
+  min-width: 0;
+}
+
+.selected-note-grid .note-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.selected-note-grid .note-card-foot {
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+.section-index-link {
+  display: inline-block;
+  margin-top: 24px;
+  color: var(--signal-dark);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-underline-offset: 5px;
+}
+
+@media (max-width: 820px) {
+  .selected-note-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .notes-section,
@@ -573,6 +614,7 @@ main {
   font-size: 0.76rem;
   font-weight: 750;
   letter-spacing: 0.06em;
+  white-space: nowrap;
 }
 
 .project-card-head .entry-kicker {
@@ -622,7 +664,7 @@ main {
 
 .project-rail-item .rail-label {
   color: var(--ink-soft);
-  font-size: 0.58rem;
+  font-size: 0.75rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -638,7 +680,7 @@ main {
   margin-top: auto;
   color: var(--signal-dark);
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -850,7 +892,7 @@ main {
   margin-left: auto;
   color: var(--signal-dark);
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -895,7 +937,7 @@ main {
 .entry-kicker {
   margin: 0 0 8px;
   color: var(--ink-soft);
-  font-size: 0.65rem;
+  font-size: 0.75rem;
 }
 
 /* Tags deliberately read as an index, not UI pills. */
@@ -913,7 +955,7 @@ main {
 .chip {
   position: relative;
   font-family: var(--font-mono);
-  font-size: 0.67rem;
+  font-size: 0.75rem;
   letter-spacing: 0.03em;
 }
 
@@ -928,7 +970,7 @@ main {
 .crumb {
   margin: 0 0 44px;
   font-family: var(--font-mono);
-  font-size: 0.69rem;
+  font-size: 0.75rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -955,7 +997,7 @@ main {
   justify-content: space-between;
   gap: 24px;
   color: var(--ink-soft);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
 }
 
 .article-label span:first-child {
@@ -971,7 +1013,7 @@ main {
   font-weight: 500;
   hyphens: auto;
   letter-spacing: -0.06em;
-  line-height: 0.94;
+  line-height: 1.04;
   overflow-wrap: anywhere;
 }
 
@@ -1004,7 +1046,7 @@ main {
 .meta-table dt {
   color: var(--ink-soft);
   font-family: var(--font-mono);
-  font-size: 0.66rem;
+  font-size: 0.75rem;
   font-weight: 650;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -1035,14 +1077,14 @@ main {
   background: color-mix(in srgb, var(--paper-raised) 70%, transparent);
   border: 1px solid var(--rule-dark);
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   text-decoration: none;
 }
 
 .artifact-links a span {
   grid-column: 1 / -1;
   color: var(--signal-dark);
-  font-size: 0.6rem;
+  font-size: 0.75rem;
   letter-spacing: 0.07em;
   text-transform: uppercase;
 }
@@ -1058,6 +1100,12 @@ main {
 }
 
 /* Reading layouts and navigation */
+
+.reading-content {
+  width: 100%;
+  max-width: var(--max-reading);
+  margin-inline: auto;
+}
 
 .with-toc {
   display: grid;
@@ -1086,7 +1134,7 @@ main {
     cursor: pointer;
     color: var(--signal-dark);
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     font-weight: 750;
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -1117,7 +1165,7 @@ main {
   margin: 0 0 12px;
   color: var(--signal-dark);
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   font-weight: 750;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1165,7 +1213,7 @@ main {
 .section-nav a span {
   color: var(--signal);
   font-family: var(--font-mono);
-  font-size: 0.62rem;
+  font-size: 0.75rem;
 }
 
 .section-nav li.is-current > a {
@@ -1293,17 +1341,6 @@ main {
   font-size: 1.02rem;
 }
 
-.prose blockquote::before {
-  content: "FIELD NOTE";
-  display: block;
-  margin-bottom: 10px;
-  color: var(--signal-dark);
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  font-weight: 750;
-  letter-spacing: 0.1em;
-}
-
 .prose blockquote p:last-child {
   margin-bottom: 0;
 }
@@ -1388,7 +1425,7 @@ main {
   color: var(--paper-raised);
   background: var(--moss);
   font-family: var(--font-mono);
-  font-size: 0.67rem;
+  font-size: 0.75rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -1587,7 +1624,8 @@ main {
   }
 
   .article-head h1 {
-    font-size: clamp(3rem, 15vw, 4.7rem);
+    font-size: clamp(2.25rem, 7vw, 2.75rem);
+    line-height: 1.08;
   }
 
   .meta-table {

@@ -45,9 +45,6 @@ BackdoorLLM is less about proposing one new attack than about making a fragmente
 area comparable. It organizes multiple LLM backdoor strategies under a shared benchmark,
 training pipeline, evaluation process, and set of scenarios.
 
-> **Attribution and scope.** This is my explanation of Li et al. The benchmark and reported
-> experiments belong to the paper's authors.
-
 ---
 
 ## Why a Benchmark Is Needed

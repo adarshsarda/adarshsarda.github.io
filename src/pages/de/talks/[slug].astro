@@ -16,18 +16,18 @@ export async function getStaticPaths() {
 const { entry } = Astro.props as { entry: CollectionEntry<'talksDe'> };
 const { Content, headings } = await render(entry);
 const data = entry.data;
+const isPaperNote = data.format === 'Paper explainer';
+const typeLabel = isPaperNote ? 'Paper-Notiz' : 'Präsentation';
 const detailedHeadings = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
 const toc = [
   { depth: 2, slug: 'one-line-takeaway', text: 'Kernpunkt' },
-  { depth: 2, slug: 'why-this-talk-matters', text: 'Warum diese Arbeit wichtig ist' },
+  { depth: 2, slug: 'why-this-talk-matters', text: 'Meine Einordnung' },
   { depth: 2, slug: 'core-ideas', text: 'Kernideen' },
-  { depth: 2, slug: 'threat-model-security-angle', text: 'Threat Model / Security-Perspektive' },
-  { depth: 2, slug: 'what-i-learned', text: 'Was ich gelernt habe' },
-  { depth: 2, slug: 'connections-to-my-field-notes', text: 'Verbindungen zu meinen Feldnotizen' },
-  { depth: 2, slug: 'related-resources', text: 'Ressourcen' },
+  { depth: 2, slug: 'threat-model-security-angle', text: 'Bedrohungsmodell' },
   { depth: 2, slug: 'open-questions', text: 'Offene Fragen' },
   { depth: 2, slug: 'detailed-notes', text: 'Detaillierte Notizen' },
   ...detailedHeadings,
+  { depth: 2, slug: 'connections-to-my-field-notes', text: 'Verwandte Texte' },
 ];
 const dateFmt = new Intl.DateTimeFormat('de-DE', {
   year: 'numeric',
@@ -43,12 +43,6 @@ const deConnections = data.connections.map((link) => ({
       ? `/de${link.href}`
       : link.href,
 }));
-const formatLabels: Record<string, string> = {
-  'Paper presentation': 'Paper-Präsentation',
-  'Paper explainer': 'Paper-Erklärung',
-  'Original research talk': 'Originalforschungs-Talk',
-  Workshop: 'Workshop',
-};
 const difficultyLabels: Record<string, string> = {
   Beginner: 'Einsteiger',
   Intermediate: 'Mittel',
@@ -61,71 +55,71 @@ const trackLabels: Record<string, string> = {
   'AI supply chain': 'KI-Supply-Chain',
 };
 const trackLabel = data.track ? (trackLabels[data.track] ?? data.track) : undefined;
-const formatLabel = formatLabels[data.format] ?? data.format;
 const difficultyLabel = difficultyLabels[data.difficulty] ?? data.difficulty;
 ---
 
 <Base
-  title={`${data.title} | Talk-Notiz`}
+  title={`${data.title} | ${typeLabel}`}
   description={data.description}
   type="article"
   lang="de"
   structuredData={{
-    '@type': 'PresentationDigitalDocument',
+    '@type': isPaperNote ? 'Article' : 'PresentationDigitalDocument',
     '@id': `${Astro.url}#talk`,
     name: data.title,
+    ...(isPaperNote ? { headline: data.title } : {}),
     description: data.description,
     url: Astro.url.toString(),
     dateModified: data.last_updated.toISOString(),
-    creator: { '@id': `${Astro.site ?? Astro.url.origin}#person` },
+    author: { '@id': `${Astro.site ?? Astro.url.origin}#person` },
     isBasedOn: data.paper_url,
     keywords: data.tags?.join(', '),
   }}
   wide
 >
-  <p class="crumb"><a href={`${base}de/talks/`}>Notizen / Talk-Notizen</a></p>
+  <p class="crumb"><a href={`${base}de/notes/`}>Texte</a> / <a href={`${base}de/talks/`}>Paper-Notizen</a></p>
   <header class="article-head">
     <div class="article-label">
-      <span>{trackLabel ? `${trackLabel} / ` : ''}{formatLabel} / T-{String(data.order ?? 1).padStart(2, '0')}</span>
-      <span>{difficultyLabel} / {data.year}</span>
+      <span>{typeLabel}{trackLabel ? ` / ${trackLabel}` : ''}</span>
+      <span>{data.year}</span>
     </div>
     <h1>{data.title}</h1>
     <p class="subtitle">{data.description}</p>
 
-    <dl class="meta-table">
-      <dt>Sprecher</dt><dd>{data.speaker}</dd>
-      <dt>Quelle</dt><dd>{data.source}</dd>
-      <dt>Kontext</dt><dd>{data.event}</dd>
-      <dt>Typ</dt><dd>{formatLabel}</dd>
-      <dt>Schwierigkeit</dt><dd>{difficultyLabel}</dd>
-      <dt>Aktualisiert</dt>
-      <dd><time datetime={data.last_updated.toISOString()}>{dateFmt.format(data.last_updated)}</time></dd>
-      {data.paper_title && (<><dt>Paper</dt><dd>{data.paper_title}</dd></>)}
-      {data.paper_authors && (<><dt>Autorinnen/Autoren</dt><dd>{data.paper_authors.join(', ')}</dd></>)}
-      {data.paper_venue && (<><dt>Venue</dt><dd>{data.paper_venue}</dd></>)}
-    </dl>
+    <MobileToc headings={toc} lang="de" />
+
+    <div id="related-resources" class="article-resources">
+      <ResourceLinks paperUrl={data.paper_url} artifacts={data.artifacts} lang="de" />
+    </div>
 
     {data.format === 'Paper presentation' ? (
-      <div class="talk-scope">
-        <strong>Einordnung:</strong> Das ist meine Erklärung eines Papers von einem anderen
-        Forschungsteam. Es ist keine eigene Originalforschung.
-      </div>
+      <p class="talk-scope">Meine Präsentation des zitierten Papers. Die Forschung stammt von dessen Autorinnen und Autoren.</p>
     ) : (
-      <div class="talk-scope">
-        <strong>Einordnung:</strong> Das ist meine Erklärung der veröffentlichten Arbeit
-        der Autorinnen und Autoren. Es ist keine eigene Originalforschung und kein gehaltener Vortrag.
-      </div>
+      <p class="talk-scope">Meine Notizen zum zitierten Paper. Dies ist keine eigene Forschung und kein gehaltener Vortrag.</p>
     )}
+
+    <details class="article-details">
+      <summary>Quelle und Angaben zur Notiz</summary>
+      <dl class="meta-table">
+        <dt>{isPaperNote ? 'Notiz von' : 'Sprecher'}</dt><dd>{data.speaker}</dd>
+        <dt>Quelle</dt><dd>{data.source}</dd>
+        <dt>Kontext</dt><dd>{data.event}</dd>
+        <dt>Schwierigkeit</dt><dd>{difficultyLabel}</dd>
+        <dt>Aktualisiert</dt>
+        <dd><time datetime={data.last_updated.toISOString()}>{dateFmt.format(data.last_updated)}</time></dd>
+        {data.paper_title && (<><dt>Paper</dt><dd>{data.paper_title}</dd></>)}
+        {data.paper_authors && (<><dt>Autorinnen/Autoren</dt><dd>{data.paper_authors.join(', ')}</dd></>)}
+        {data.paper_venue && (<><dt>Veröffentlicht in</dt><dd>{data.paper_venue}</dd></>)}
+      </dl>
+    </details>
 
     {data.tags && data.tags.length > 0 && (
       <ul class="chips article-tags">
-        {data.tags.map((tag) => <li class="chip">{tag}</li>)}
+        {data.tags.slice(0, 3).map((tag) => <li class="chip">{tag}</li>)}
       </ul>
     )}
 
   </header>
-
-  <MobileToc headings={toc} lang="de" />
 
   <div class="with-toc">
     <article class="prose talk-note">
@@ -135,8 +129,9 @@ const difficultyLabel = difficultyLabels[data.difficulty] ?? data.difficulty;
       </section>
 
       <section id="why-this-talk-matters">
-        <h2>Warum diese Arbeit wichtig ist</h2>
+        <h2>Meine Einordnung</h2>
         <p>{data.why_matters}</p>
+        <p id="what-i-learned">{data.what_i_learned}</p>
       </section>
 
       <section id="core-ideas">
@@ -147,29 +142,14 @@ const difficultyLabel = difficultyLabels[data.difficulty] ?? data.difficulty;
       </section>
 
       <section id="threat-model-security-angle">
-        <h2>Threat Model / Security-Perspektive</h2>
+        <h2>Bedrohungsmodell</h2>
         <dl class="threat-model">
           <dt>System</dt><dd>{data.threat_model.system}</dd>
           <dt>Angreifer</dt><dd>{data.threat_model.attacker}</dd>
           <dt>Benötigte Fähigkeit</dt><dd>{data.threat_model.capability}</dd>
           <dt>Fehlermodus</dt><dd>{data.threat_model.failure}</dd>
-          <dt>Deployment-Relevanz</dt><dd>{data.threat_model.deployment}</dd>
+          <dt>Praxisbezug</dt><dd>{data.threat_model.deployment}</dd>
         </dl>
-      </section>
-
-      <section id="what-i-learned">
-        <h2>Was ich gelernt habe</h2>
-        <p>{data.what_i_learned}</p>
-      </section>
-
-      <section id="connections-to-my-field-notes">
-        <h2>Verbindungen zu meinen Feldnotizen</h2>
-        <InternalLinkList links={deConnections} />
-      </section>
-
-      <section id="related-resources">
-        <h2>Ressourcen</h2>
-        <ResourceLinks paperUrl={data.paper_url} artifacts={data.artifacts} lang="de" />
       </section>
 
       <section id="open-questions">
@@ -182,6 +162,11 @@ const difficultyLabel = difficultyLabels[data.difficulty] ?? data.difficulty;
       <section id="detailed-notes">
         <h2>Detaillierte Notizen</h2>
         <Content />
+      </section>
+
+      <section id="connections-to-my-field-notes">
+        <h2>Verwandte Texte</h2>
+        <InternalLinkList links={deConnections} />
       </section>
     </article>
 
@@ -203,13 +188,15 @@ const difficultyLabel = difficultyLabels[data.difficulty] ?? data.difficulty;
 <style>
   .talk-scope {
     max-width: 820px;
-    margin-top: 30px;
-    padding: 14px 18px;
+    margin: 18px 0;
     color: var(--ink-soft);
-    background: color-mix(in srgb, var(--sky) 45%, transparent);
-    border-left: 3px solid var(--signal);
     font-size: 0.9rem;
   }
+
+  .article-resources { margin-top: 24px; }
+  .article-details { max-width: 820px; }
+  .article-details > summary { padding: 12px 0; cursor: pointer; font-weight: 600; }
+  .article-details .meta-table { margin-top: 8px; }
 
   .talk-note > section {
     scroll-margin-top: 24px;
@@ -242,7 +229,7 @@ const difficultyLabel = difficultyLabels[data.difficulty] ?? data.difficulty;
   .threat-model dt {
     color: var(--signal-dark);
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;

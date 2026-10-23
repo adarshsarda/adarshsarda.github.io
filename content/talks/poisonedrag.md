@@ -46,9 +46,6 @@ PoisonedRAG studies a targeted integrity attack on retrieval-augmented generatio
 injects a small number of malicious texts into a large knowledge database so that a chosen
 question retrieves those texts and the LLM produces an attacker-selected answer.
 
-> **Attribution and scope.** This is my structured explanation of Zou et al. The method and
-> results are from the original paper.
-
 ---
 
 ## Why RAG Creates a New Attack Surface

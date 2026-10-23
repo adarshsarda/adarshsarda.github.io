@@ -19,7 +19,7 @@ artifacts:
   - {kind: report, label: "Abschlussbericht herunterladen", path: "/reports/odsb-report.pdf"}
   - {kind: code, label: "Code, Daten & Evaluation", url: "https://github.com/adarshsarda/Order-Dependent-Semantic-Backdoors"}
 
-summary: "Eine Multi-Turn-LLM-Backdoor, deren Trigger die REIHENFOLGE zweier abstrakter semantischer Intents ist: Sie feuert nur, wenn emotionaler Stress einer technischen Frage vorausgeht, und bleibt inaktiv, wenn dieselben zwei Intents umgekehrt, isoliert oder gar nicht auftreten. Weil der Trigger eine Ordnung von Bedeutungen ist und kein Keyword, haben content-basierte Filter kein offensichtliches Signal."
+summary: "Ich habe eine reihenfolgeabhängige Backdoor in Qwen2.5-3B-Instruct getestet, mit emotionalem Stress gefolgt von einer technischen Frage als Trigger. In diesem Experiment mit einem Modell wurde die Backdoor in dieser Reihenfolge aktiv und blieb bei umgekehrten, einzelnen und harmlosen Kontrollfällen inaktiv."
 seo_description: "Experimentelle Studie zu einer sequenzabhängigen LLM-Backdoor, die durch die Reihenfolge semantischer Intents ausgelöst wird, inklusive Kontrollen, Generalisierung und Grenzen."
 evidence:
   label: "Triggerdesign"

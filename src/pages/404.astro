@@ -5,9 +5,9 @@ const base = import.meta.env.BASE_URL;
 
 const destinations = [
   { href: `${base}`, label: 'Home' },
-  { href: `${base}projects/`, label: 'Case file' },
+  { href: `${base}projects/`, label: 'Projects' },
   { href: `${base}guides/`, label: 'Field Notes' },
-  { href: `${base}talks/`, label: 'Talk Notes' },
+  { href: `${base}talks/`, label: 'Paper notes' },
   { href: `${base}publications/`, label: 'Publications' },
   { href: `${base}skills/`, label: 'Skills' },
   { href: `${base}cv/`, label: 'CV' },
@@ -22,11 +22,10 @@ const destinations = [
   wide
 >
   <div class="page-head">
-    <p class="eyebrow"><span>Error 404</span> / No evidence found</p>
+    <p class="eyebrow"><span>Error 404</span> / Page not found</p>
     <h1>This page does not exist.</h1>
     <p>
-      The address you followed points at nothing I have written. Here is what
-      does exist.
+      Check the address or visit one of these pages.
     </p>
   </div>
 
@@ -38,9 +37,6 @@ const destinations = [
     ))}
   </nav>
 
-  <p class="notfound-hint">
-    Press <kbd>`</kbd> anywhere on this site to open a terminal.
-  </p>
   <p class="notfound-hint">
     Auf Deutsch: <a href={`${base}de/`}>/de/</a>
   </p>
@@ -58,7 +54,7 @@ const destinations = [
     margin: 0 0 8px;
     color: var(--ink-soft);
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     letter-spacing: 0.04em;
   }
 

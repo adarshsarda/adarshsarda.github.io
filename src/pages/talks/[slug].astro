@@ -16,18 +16,18 @@ export async function getStaticPaths() {
 const { entry } = Astro.props as { entry: CollectionEntry<'talks'> };
 const { Content, headings } = await render(entry);
 const data = entry.data;
+const isPaperNote = data.format === 'Paper explainer';
+const typeLabel = isPaperNote ? 'Paper note' : 'Presentation';
 const detailedHeadings = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
 const toc = [
   { depth: 2, slug: 'one-line-takeaway', text: 'Key point' },
-  { depth: 2, slug: 'why-this-talk-matters', text: 'Why this talk matters' },
+  { depth: 2, slug: 'why-this-talk-matters', text: 'My reading' },
   { depth: 2, slug: 'core-ideas', text: 'Core ideas' },
-  { depth: 2, slug: 'threat-model-security-angle', text: 'Threat model / security angle' },
-  { depth: 2, slug: 'what-i-learned', text: 'What I learned' },
-  { depth: 2, slug: 'connections-to-my-field-notes', text: 'Connections to my field notes' },
-  { depth: 2, slug: 'related-resources', text: 'Related resources' },
+  { depth: 2, slug: 'threat-model-security-angle', text: 'Threat model' },
   { depth: 2, slug: 'open-questions', text: 'Open questions' },
   { depth: 2, slug: 'detailed-notes', text: 'Detailed notes' },
   ...detailedHeadings,
+  { depth: 2, slug: 'connections-to-my-field-notes', text: 'Related writing' },
 ];
 const dateFmt = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
@@ -38,66 +38,67 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
 ---
 
 <Base
-  title={`${data.title} | Talk Note`}
+  title={`${data.title} | ${typeLabel}`}
   description={data.description}
   type="article"
   structuredData={{
-    '@type': 'PresentationDigitalDocument',
+    '@type': isPaperNote ? 'Article' : 'PresentationDigitalDocument',
     '@id': `${Astro.url}#talk`,
     name: data.title,
+    ...(isPaperNote ? { headline: data.title } : {}),
     description: data.description,
     url: Astro.url.toString(),
     dateModified: data.last_updated.toISOString(),
-    creator: { '@id': `${Astro.site ?? Astro.url.origin}#person` },
+    author: { '@id': `${Astro.site ?? Astro.url.origin}#person` },
     isBasedOn: data.paper_url,
     keywords: data.tags?.join(', '),
   }}
   wide
 >
-  <p class="crumb"><a href={`${base}talks/`}>Notes / Talk Notes</a></p>
+  <p class="crumb"><a href={`${base}notes/`}>Writing</a> / <a href={`${base}talks/`}>Paper notes</a></p>
 
   <header class="article-head">
     <div class="article-label">
-      <span>{data.track ? `${data.track} / ` : ''}{data.format} / T-{String(data.order ?? 1).padStart(2, '0')}</span>
-      <span>{data.difficulty} / {data.year}</span>
+      <span>{typeLabel}{data.track ? ` / ${data.track}` : ''}</span>
+      <span>{data.year}</span>
     </div>
     <h1>{data.title}</h1>
     <p class="subtitle">{data.description}</p>
 
-    <dl class="meta-table">
-      <dt>Speaker</dt><dd>{data.speaker}</dd>
-      <dt>Source</dt><dd>{data.source}</dd>
-      <dt>Context</dt><dd>{data.event}</dd>
-      <dt>Type</dt><dd>{data.format}</dd>
-      <dt>Difficulty</dt><dd>{data.difficulty}</dd>
-      <dt>Updated</dt>
-      <dd><time datetime={data.last_updated.toISOString()}>{dateFmt.format(data.last_updated)}</time></dd>
-      {data.paper_title && (<><dt>Paper</dt><dd>{data.paper_title}</dd></>)}
-      {data.paper_authors && (<><dt>Authors</dt><dd>{data.paper_authors.join(', ')}</dd></>)}
-      {data.paper_venue && (<><dt>Venue</dt><dd>{data.paper_venue}</dd></>)}
-    </dl>
+    <MobileToc headings={toc} />
+
+    <div id="related-resources" class="article-resources">
+      <ResourceLinks paperUrl={data.paper_url} artifacts={data.artifacts} />
+    </div>
 
     {data.format === 'Paper presentation' ? (
-      <div class="talk-scope">
-        <strong>Attribution:</strong> This is my explanation of another research team’s paper.
-        It is not my original research.
-      </div>
+      <p class="talk-scope">My presentation of the cited paper. The research belongs to its authors.</p>
     ) : (
-      <div class="talk-scope">
-        <strong>Attribution:</strong> This is my explanation of the authors’ published work.
-        It is not my original research or a delivered talk.
-      </div>
+      <p class="talk-scope">My notes on the cited paper. This is not original research or a delivered talk.</p>
     )}
+
+    <details class="article-details">
+      <summary>Source and note details</summary>
+      <dl class="meta-table">
+        <dt>{isPaperNote ? 'Written by' : 'Speaker'}</dt><dd>{data.speaker}</dd>
+        <dt>Source</dt><dd>{data.source}</dd>
+        <dt>Context</dt><dd>{data.event}</dd>
+        <dt>Difficulty</dt><dd>{data.difficulty}</dd>
+        <dt>Updated</dt>
+        <dd><time datetime={data.last_updated.toISOString()}>{dateFmt.format(data.last_updated)}</time></dd>
+        {data.paper_title && (<><dt>Paper</dt><dd>{data.paper_title}</dd></>)}
+        {data.paper_authors && (<><dt>Authors</dt><dd>{data.paper_authors.join(', ')}</dd></>)}
+        {data.paper_venue && (<><dt>Venue</dt><dd>{data.paper_venue}</dd></>)}
+      </dl>
+    </details>
 
     {data.tags && data.tags.length > 0 && (
       <ul class="chips article-tags">
-        {data.tags.map((tag) => <li class="chip">{tag}</li>)}
+        {data.tags.slice(0, 3).map((tag) => <li class="chip">{tag}</li>)}
       </ul>
     )}
 
   </header>
-
-  <MobileToc headings={toc} />
 
   <div class="with-toc">
     <article class="prose talk-note">
@@ -107,8 +108,9 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
       </section>
 
       <section id="why-this-talk-matters">
-        <h2>Why this talk matters</h2>
+        <h2>My reading</h2>
         <p>{data.why_matters}</p>
+        <p id="what-i-learned">{data.what_i_learned}</p>
       </section>
 
       <section id="core-ideas">
@@ -119,7 +121,7 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
       </section>
 
       <section id="threat-model-security-angle">
-        <h2>Threat model / security angle</h2>
+        <h2>Threat model</h2>
         <dl class="threat-model">
           <dt>System</dt><dd>{data.threat_model.system}</dd>
           <dt>Attacker</dt><dd>{data.threat_model.attacker}</dd>
@@ -127,21 +129,6 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
           <dt>Failure mode</dt><dd>{data.threat_model.failure}</dd>
           <dt>Deployment relevance</dt><dd>{data.threat_model.deployment}</dd>
         </dl>
-      </section>
-
-      <section id="what-i-learned">
-        <h2>What I learned</h2>
-        <p>{data.what_i_learned}</p>
-      </section>
-
-      <section id="connections-to-my-field-notes">
-        <h2>Connections to my field notes</h2>
-        <InternalLinkList links={data.connections} />
-      </section>
-
-      <section id="related-resources">
-        <h2>Related resources</h2>
-        <ResourceLinks paperUrl={data.paper_url} artifacts={data.artifacts} />
       </section>
 
       <section id="open-questions">
@@ -154,6 +141,11 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
       <section id="detailed-notes">
         <h2>Detailed notes</h2>
         <Content />
+      </section>
+
+      <section id="connections-to-my-field-notes">
+        <h2>Related writing</h2>
+        <InternalLinkList links={data.connections} />
       </section>
     </article>
 
@@ -175,13 +167,15 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
 <style>
   .talk-scope {
     max-width: 820px;
-    margin-top: 30px;
-    padding: 14px 18px;
+    margin: 18px 0;
     color: var(--ink-soft);
-    background: color-mix(in srgb, var(--sky) 45%, transparent);
-    border-left: 3px solid var(--signal);
     font-size: 0.9rem;
   }
+
+  .article-resources { margin-top: 24px; }
+  .article-details { max-width: 820px; }
+  .article-details > summary { padding: 12px 0; cursor: pointer; font-weight: 600; }
+  .article-details .meta-table { margin-top: 8px; }
 
   .talk-note > section {
     scroll-margin-top: 24px;
@@ -214,7 +208,7 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
   .threat-model dt {
     color: var(--signal-dark);
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;

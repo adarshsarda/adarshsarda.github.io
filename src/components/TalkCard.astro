@@ -1,6 +1,5 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import ResourceLinks from './ResourceLinks.astro';
 
 type TalkEntry = CollectionEntry<'talks'> | CollectionEntry<'talksDe'>;
 
@@ -22,25 +21,24 @@ const difficultyLabels: Record<string, Record<string, string>> = {
 const formatLabels: Record<string, Record<string, string>> = {
   en: {
     'Paper presentation': 'Paper presentation',
-    'Paper explainer': 'Paper explainer',
+    'Paper explainer': 'Paper note',
     'Original research talk': 'Original research talk',
     Workshop: 'Workshop',
   },
   de: {
     'Paper presentation': 'Paper-Präsentation',
-    'Paper explainer': 'Paper-Erklärung',
+    'Paper explainer': 'Paper-Notiz',
     'Original research talk': 'Originalforschungs-Talk',
     Workshop: 'Workshop',
   },
 };
-const whyLabel = lang === 'de' ? 'Warum ich das aufgenommen habe' : 'Why I added this';
-const readLabel = lang === 'de' ? 'Talk-Notiz lesen' : 'Read the talk note';
+const readLabel = lang === 'de' ? 'Notiz lesen' : 'Read note';
 ---
 
-<article class="talk-card">
+<a class="talk-card" href={href}>
   <div class="talk-card-top">
     <span class="talk-number">T-{String(index + 1).padStart(2, '0')}</span>
-    <div class="badges" role="group" aria-label={lang === 'de' ? 'Talk-Metadaten' : 'Talk metadata'}>
+    <div class="badges" role="group" aria-label={lang === 'de' ? 'Metadaten' : 'Note metadata'}>
       <span>{difficultyLabels[lang][data.difficulty] ?? data.difficulty}</span>
       <span>{formatLabels[lang][data.format] ?? data.format}</span>
     </div>
@@ -48,28 +46,22 @@ const readLabel = lang === 'de' ? 'Talk-Notiz lesen' : 'Read the talk note';
 
   <p class="talk-source">{data.speaker} / {data.source} / {data.year}</p>
   {headingLevel === 3
-    ? <h3><a href={href}>{data.title}</a></h3>
-    : <h2><a href={href}>{data.title}</a></h2>}
+    ? <h3>{data.title}</h3>
+    : <h2>{data.title}</h2>}
   <p class="talk-summary">{data.description}</p>
-
-  <div class="why-added">
-    <strong>{whyLabel}</strong>
-    <p>{data.why_added}</p>
-  </div>
 
   {data.tags && data.tags.length > 0 && (
     <ul class="talk-tags" aria-label={lang === 'de' ? 'Themen' : 'Topics'}>
-      {data.tags.map((tag) => <li>{tag}</li>)}
+      {data.tags.slice(0, 3).map((tag) => <li>{tag}</li>)}
     </ul>
   )}
 
   <div class="talk-card-actions">
-    <a class="note-link" href={href}>
+    <span class="note-link">
       {readLabel} <span aria-hidden="true">→</span>
-    </a>
-    <ResourceLinks paperUrl={data.paper_url} artifacts={data.artifacts} compact dark lang={lang} />
+    </span>
   </div>
-</article>
+</a>
 
 <style>
   .talk-card {
@@ -80,6 +72,17 @@ const readLabel = lang === 'de' ? 'Talk-Notiz lesen' : 'Read the talk note';
     color: var(--paper-raised);
     background: var(--moss);
     border: 1px solid var(--moss);
+    text-decoration: none;
+  }
+
+  .talk-card:hover {
+    color: var(--paper-raised);
+    border-color: var(--signal-dark);
+  }
+
+  .talk-card:hover .note-link {
+    color: #f0cbd4;
+    border-color: #f0cbd4;
   }
 
   .talk-card-top,
@@ -93,7 +96,6 @@ const readLabel = lang === 'de' ? 'Talk-Notiz lesen' : 'Read the talk note';
   .talk-number,
   .talk-source,
   .badges span,
-  .why-added strong,
   .talk-tags,
   .note-link {
     font-family: var(--font-mono);
@@ -103,8 +105,9 @@ const readLabel = lang === 'de' ? 'Talk-Notiz lesen' : 'Read the talk note';
 
   .talk-number {
     color: #e2b9c3;
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     font-weight: 750;
+    white-space: nowrap;
   }
 
   .badges {
@@ -118,13 +121,13 @@ const readLabel = lang === 'de' ? 'Talk-Notiz lesen' : 'Read the talk note';
     padding: 3px 7px;
     color: #dbe3de;
     border: 1px solid #71847a;
-    font-size: 0.56rem;
+    font-size: 0.75rem;
   }
 
   .talk-source {
-    margin: 28px 0 8px;
+    margin: 20px 0 8px;
     color: #c7d7cf;
-    font-size: 0.62rem;
+    font-size: 0.75rem;
   }
 
   :is(h2, h3) {
@@ -136,38 +139,11 @@ const readLabel = lang === 'de' ? 'Talk-Notiz lesen' : 'Read the talk note';
     line-height: 1.05;
   }
 
-  :is(h2, h3) a {
-    color: var(--paper-raised);
-    text-decoration: none;
-  }
-
-  :is(h2, h3) a:hover {
-    color: #f0cbd4;
-  }
-
   .talk-summary {
     margin: 17px 0 0;
     color: #dbe3de;
     font-size: 0.91rem;
     line-height: 1.58;
-  }
-
-  .why-added {
-    margin-top: 22px;
-    padding: 14px 0;
-    border-top: 1px solid #71847a;
-    border-bottom: 1px solid #71847a;
-  }
-
-  .why-added strong {
-    color: #f0cbd4;
-    font-size: 0.59rem;
-  }
-
-  .why-added p {
-    margin: 7px 0 0;
-    font-size: 0.84rem;
-    line-height: 1.5;
   }
 
   .talk-tags {
@@ -177,7 +153,7 @@ const readLabel = lang === 'de' ? 'Talk-Notiz lesen' : 'Read the talk note';
     flex-wrap: wrap;
     gap: 6px 12px;
     color: #c7d7cf;
-    font-size: 0.58rem;
+    font-size: 0.75rem;
     list-style: none;
   }
 
@@ -197,7 +173,7 @@ const readLabel = lang === 'de' ? 'Talk-Notiz lesen' : 'Read the talk note';
     padding-bottom: 3px;
     color: var(--paper-raised);
     border-bottom: 1px solid var(--paper-raised);
-    font-size: 0.66rem;
+    font-size: 0.75rem;
     font-weight: 700;
     text-decoration: none;
   }

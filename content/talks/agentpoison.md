@@ -45,9 +45,6 @@ AgentPoison targets a component that often receives less scrutiny than the model
 long-term memory or knowledge base used to retrieve examples for planning. The attack inserts
 malicious demonstrations and designs a trigger that reliably retrieves them.
 
-> **Attribution and scope.** This is my structured explanation of Chen et al. The attack and
-> reported measurements belong to the original authors.
-
 ---
 
 ## Why Memory Changes the Threat Model

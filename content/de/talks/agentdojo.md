@@ -20,7 +20,7 @@ why_added: "AgentDojo liefert einen praktischen Evaluationsrahmen für zukünfti
 why_matters: "Eine Defense, die jeden Tool-Aufruf verhindert, ist sicher, aber nutzlos. AgentDojo zwingt die Evaluation, Nutzerziel und versteckte Angreiferinstruktionen gleichzeitig zu betrachten."
 what_i_learned: "Der Benchmark hat mich zu gepaarten Zielen gebracht: was der Nutzer autorisiert hat und was der Angreifer erreichen will. Das ist klarer als eine einzelne Antwort isoliert zu bewerten."
 core_ideas:
-  - "AgentDojo modelliert realistische Nutzeraufgaben, Angreiferziele, Tools und untrusted data."
+  - "AgentDojo modelliert realistische Nutzeraufgaben, Angreiferziele, Tools und nicht vertrauenswürdige Daten."
   - "Die initiale Umgebung enthält 97 Aufgaben und 629 Security-Testfälle."
   - "Utility und Security werden getrennt bewertet, damit reine Verweigerungs-Defenses nicht erfolgreich aussehen."
   - "Die Umgebung unterstützt neue Angriffe, Defenses und adaptive Evaluation."
@@ -60,7 +60,7 @@ autoritative Instruktionen behandeln.
 
 AgentDojo ist eine erweiterbare Umgebung statt einer festen Prompt-Liste. Der erste Release
 enthält 97 realistische Nutzeraufgaben, 629 Security-Testfälle und Szenarien wie E-Mail,
-E-Banking und Reisebuchung. Jeder Security-Fall kombiniert Nutzeraufgabe, untrusted data und
+E-Banking und Reisebuchung. Jeder Sicherheitsfall kombiniert Nutzeraufgabe, nicht vertrauenswürdige Daten und
 Angreiferziel, sodass Utility und Security getrennt messbar werden.
 
 ## Evaluationslogik

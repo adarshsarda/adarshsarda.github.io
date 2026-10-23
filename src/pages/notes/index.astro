@@ -16,14 +16,33 @@ const methodCount = (await getCollection('methods')).length;
   wide
 >
   <div class="page-head">
-    <p class="eyebrow"><span>Index 03</span> / Course paper, field notes, talk notes, and methods</p>
+    <p class="eyebrow"><span>Index 03</span> / Papers and practical notes</p>
     <h1>Writing</h1>
     <p>A course paper, practical notes, paper explainers, and methods I reuse.</p>
   </div>
 
+  <NotesHub
+    guideCount={guideCount}
+    talkCount={talkCount}
+    methodCount={methodCount}
+    fieldHref={`${base}guides/`}
+    talkHref={`${base}talks/`}
+    methodHref={`${base}methods/`}
+    fieldTitle="Field notes"
+    fieldCountLabel={guideCount === 1 ? 'note' : 'notes'}
+    talkCountLabel={talkCount === 1 ? 'note' : 'notes'}
+    methodCountLabel={methodCount === 1 ? 'method' : 'methods'}
+    fieldDescription="Practical notes on testing and securing AI systems."
+    talkDescription="Research papers explained, with their results and limits."
+    methodDescription="How I design experiments, review papers, and test robustness."
+    fieldCta="View field notes"
+    talkCta="View paper notes"
+    methodCta="View methods"
+  />
+
   <section class="writing-feature" aria-labelledby="student-paper-heading">
     <header class="section-heading">
-      <p id="student-paper-heading"><span>Course paper</span> / Scientific Writing</p>
+      <h2 id="student-paper-heading">Course paper</h2>
       <p>June 2026</p>
     </header>
     <div class="note-card-list">
@@ -33,35 +52,24 @@ const methodCount = (await getCollection('methods')).length;
         prefix="SP"
         kicker="Non-peer-reviewed course paper"
         title="Tracing the Trigger: An Evaluation of Foundational Backdoor Attacks in Pre-trained NLP Models"
-        description="A four-page paper on NLP backdoors, sample-specific invisible triggers, and ODSB in the AI supply-chain threat model. It is a non-peer-reviewed course paper, not a publication or systematic review. Its ODSB metrics come from the June 2026 case file, not a second experiment or independent replication."
+        description="A four-page Scientific Writing paper on NLP backdoors, invisible triggers, and ODSB as AI supply-chain risks. Includes a six-point audit checklist."
+        headingLevel={3}
         tags={['ai-security', 'backdoor-attacks', 'nlp', 'software-supply-chain']}
         cta="Open the PDF"
         external
       />
     </div>
+    <p class="paper-scope">Non-peer-reviewed course paper, not a publication or systematic review. The ODSB results come from my June 2026 project, not a second experiment or independent replication.</p>
   </section>
-
-  <NotesHub
-    guideCount={guideCount}
-    talkCount={talkCount}
-    methodCount={methodCount}
-    fieldHref={`${base}guides/`}
-    talkHref={`${base}talks/`}
-    methodHref={`${base}methods/`}
-    fieldCountLabel={guideCount === 1 ? 'note' : 'notes'}
-    talkCountLabel={talkCount === 1 ? 'note' : 'notes'}
-    methodCountLabel={methodCount === 1 ? 'method' : 'methods'}
-    fieldDescription="Practical notes on testing and securing AI systems."
-    talkDescription="Papers and talks with the threat model, result, limits, and why they matter to my work."
-    methodDescription="Methods I use to design experiments, evaluate papers, test robustness, and model threats."
-    fieldCta="Open Field Notes"
-    talkCta="Open Talk Notes"
-    methodCta="Open Methods"
-  />
 </Base>
 
 <style>
   .writing-feature {
-    margin: 0 0 52px;
+    margin-top: 52px;
+  }
+  .paper-scope {
+    max-width: 76ch;
+    color: var(--ink-soft);
+    line-height: 1.65;
   }
 </style>

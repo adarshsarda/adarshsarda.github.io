@@ -28,7 +28,7 @@ core_ideas:
 threat_model:
   system: "Ein LLM-Agent mit Langzeit-Memory oder Retrieval-Komponente."
   attacker: "Ein Angreifer, der in Memory oder Knowledge Base schreiben kann."
-  capability: "Wenige optimierte Einträge einfügen, die für Trigger-Anfragen bevorzugt retrieved werden."
+  capability: "Wenige optimierte Einträge einfügen, die für Trigger-Anfragen bevorzugt abgerufen werden."
   failure: "Der Agent nutzt vergiftete Demonstrationen als Kontext und plant in Richtung Angreiferziel."
   deployment: "Persistente Agenten, Assistants und RAG-gestützte Workflows."
 connections:

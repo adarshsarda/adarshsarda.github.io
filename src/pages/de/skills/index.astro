@@ -16,9 +16,14 @@ const { Content } = await render(entry);
   title={`${entry.data.title ?? 'Skills & Evidence'} | Adarsh Sarda`}
   description={entry.data.note ?? 'Technical skills and the project evidence behind them.'}
   lang="de"
+  wide
 >
-  <p class="eyebrow"><span>Index 05</span> / Skills</p>
-  <article class="prose">
+  <div class="page-head">
+    <p class="eyebrow"><span>Index 05</span> / Skills</p>
+    <h1>Skills</h1>
+    <p>Technische Kenntnisse und die Arbeit dahinter.</p>
+  </div>
+  <article class="prose reading-content">
     <Content />
   </article>
 </Base>

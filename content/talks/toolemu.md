@@ -46,9 +46,6 @@ normally requires building every environment and risking real side effects. The 
 uses a language model to emulate tools so agents can be tested against high-stakes scenarios
 inside a synthetic sandbox.
 
-> **Attribution and scope.** This is my explanation of Ruan et al. ToolEmu and the reported
-> benchmark results are the authors' work.
-
 ---
 
 ## Why Agent Risk Is Expensive to Test

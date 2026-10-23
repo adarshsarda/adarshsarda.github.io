@@ -192,10 +192,13 @@ This is the highest-stakes category, because model output crosses into **real-wo
 
 ## Putting It Together: A Minimal Engagement Walkthrough
 
+This is a hypothetical example, not a completed engagement. The 22 successes in 50 trials
+below are illustrative numbers, not measured results.
+
 1. **Scope.** Choose grey box. Goal: leak the system prompt, or trigger any unauthorised tool action.
 2. **Recon.** Draw the trust-boundary map. Identify three untrusted-input entry points (user, uploaded file, web-fetch tool) and two action sinks (email-send tool, markdown render).
 3. **Discover.** Walk the matrix. Find: a persona jailbreak (model surface), an indirect injection via the web-fetch tool (tool-result boundary), a markdown-image exfil path (output sink).
-4. **Validate.** The indirect injection chains into the email-send tool. Run it 50× → succeeds 22 times (44%). Demonstrate one full exfiltration of a placeholder secret.
+4. **Validate.** Suppose the indirect injection reaches the email-send tool in 22 of 50 trials (44%). Record the denominator and demonstrate the path with a placeholder secret.
 5. **Impact.** Chain = poisoned web page → agent reads it → instruction triggers email-send → data leaves the system. Prerequisite: attacker controls one URL the user asks the agent to read. Business impact: data exfiltration with no user awareness.
 6. **Report.** Five artefacts. Lead remediation with: label tool output as untrusted, require confirmation on email-send, egress allow-list the renderer. Ship the 50-trial payload as a regression test.
 
@@ -209,7 +212,7 @@ This is the highest-stakes category, because model output crosses into **real-wo
 
 ---
 
-## Related Field Notes
+## Related Guides
 
 These guides expand three sections of this methodology:
 
@@ -219,7 +222,7 @@ These guides expand three sections of this methodology:
 
 ---
 
-## Related Talk Notes
+## Related Paper Notes
 
 - [Indirect Prompt Injection: When Documents Become Attackers](/talks/indirect-prompt-injection/) explains the external-content trust boundary behind many RAG and agent attacks.
 - [AgentDojo: How to Stress-Test Tool-Using AI Agents](/talks/agentdojo/) turns user goals, attacker goals, and tool behavior into a repeatable benchmark.

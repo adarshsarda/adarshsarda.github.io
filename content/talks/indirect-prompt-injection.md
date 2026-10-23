@@ -45,9 +45,6 @@ This paper establishes indirect prompt injection as a remote attack on LLM-integ
 applications. The attacker does not need to message the model directly. Instead, malicious
 instructions are placed inside data that the application later retrieves and processes.
 
-> **Attribution and scope.** This is my explanation of Greshake et al. The taxonomy and
-> demonstrations belong to the original authors.
-
 ---
 
 ## The Data-Instructions Collision

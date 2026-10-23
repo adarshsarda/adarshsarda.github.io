@@ -2,7 +2,7 @@
 type: guide
 slug: agent-security-production-checklist
 title: "Agenten-Sicherheit vor dem Produktivbetrieb: Eine Pre-Launch-Checkliste"
-description: "Eine praktische Checkliste für tool-nutzende LLM-Agenten vor dem Release: Tool-Berechtigungen, untrusted data, Memory, Drittanbieter-Skills, Long-Horizon-Angriffe, Freigaben und Regressionstests."
+description: "Eine Checkliste für LLM-Agenten vor der Veröffentlichung: Tool-Berechtigungen, nicht vertrauenswürdige Daten, Speicher, Drittanbieter-Skills, Angriffe über mehrere Schritte, Freigaben und Regressionstests."
 author: "Adarsh Sarda"
 order: 2
 last_updated: "2026-07-06"
@@ -176,8 +176,8 @@ Jedes Szenario clean und attacked ausführen. Berichten:
 Ich würde den Release blockieren, wenn eine dieser Aussagen stimmt:
 
 1. Ein High-Impact-Tool kann ohne server-seitige Autorisierung laufen.
-2. Tool-returned oder retrieved Text kann Policy, Tool-Rechte oder Nutzerziel verändern.
-3. Memory kann untrusted instructions ohne Provenienz und Review persistieren.
+2. Tool-Ausgaben oder abgerufene Texte können Regeln, Tool-Rechte oder das Nutzerziel verändern.
+3. Der Speicher kann nicht vertrauenswürdige Anweisungen ohne Herkunftsnachweis und Prüfung dauerhaft ablegen.
 4. Ein Drittanbieter-Skill oder Server kann still Capabilities hinzufügen.
 5. Das System kann nicht rekonstruieren, warum ein sensitiver Tool-Aufruf passiert ist.
 6. Semantische Refusal Checks bestehen, aber der Seiteneffekt passiert trotzdem.

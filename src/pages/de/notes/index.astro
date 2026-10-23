@@ -24,9 +24,30 @@ const methodCount = (await getCollection('methodsDe')).length;
     </p>
   </div>
 
+  <NotesHub
+    guideCount={guideCount}
+    talkCount={talkCount}
+    methodCount={methodCount}
+    fieldHref={`${base}de/guides/`}
+    talkHref={`${base}de/talks/`}
+    methodHref={`${base}de/methods/`}
+    fieldTitle="Feldnotizen"
+    talkTitle="Paper-Notizen"
+    methodTitle="Methoden"
+    fieldCountLabel={guideCount === 1 ? 'Notiz' : 'Notizen'}
+    talkCountLabel={talkCount === 1 ? 'Notiz' : 'Notizen'}
+    methodCountLabel={methodCount === 1 ? 'Methode' : 'Methoden'}
+    fieldDescription="Praktische Notizen zum Testen und Absichern von KI-Systemen."
+    talkDescription="Forschungspapiere erklärt, mit Ergebnissen und Grenzen."
+    methodDescription="Wie ich Experimente plane, Papers bewerte und Robustheit teste."
+    fieldCta="Feldnotizen ansehen"
+    talkCta="Paper-Notizen ansehen"
+    methodCta="Methoden ansehen"
+  />
+
   <section class="writing-feature" aria-labelledby="student-paper-heading">
     <header class="section-heading">
-      <p id="student-paper-heading"><span>Studienarbeit</span> / Scientific Writing</p>
+      <h2 id="student-paper-heading">Kursarbeit</h2>
       <p>Juni 2026</p>
     </header>
     <div class="note-card-list">
@@ -36,38 +57,24 @@ const methodCount = (await getCollection('methodsDe')).length;
         prefix="SP"
         kicker="Nicht peer-reviewte Kursarbeit"
         title="Tracing the Trigger: An Evaluation of Foundational Backdoor Attacks in Pre-trained NLP Models"
-        description="Eine vierseitige Kursarbeit zu NLP-Backdoors, unsichtbaren sample-spezifischen Triggern und ODSB im Bedrohungsmodell der KI-Lieferkette. Sie ist nicht peer-reviewed, keine Publikation und keine systematische Literaturübersicht. Die ODSB-Metriken stammen aus der Fallakte vom Juni 2026, nicht aus einem zweiten Experiment oder einer unabhängigen Replikation."
+        description="Eine vierseitige Arbeit für Scientific Writing über NLP-Backdoors, unsichtbare Trigger und ODSB als Risiken in der KI-Lieferkette. Mit einer Audit-Checkliste aus sechs Punkten."
+        headingLevel={3}
         tags={['ai-security', 'backdoor-attacks', 'nlp', 'software-supply-chain']}
         cta="PDF öffnen"
         external
       />
     </div>
+    <p class="paper-scope">Nicht peer-reviewte Kursarbeit, keine Publikation oder systematische Literaturübersicht. Die ODSB-Ergebnisse stammen aus meinem Projekt vom Juni 2026, nicht aus einem zweiten Experiment oder einer unabhängigen Replikation.</p>
   </section>
-
-  <NotesHub
-    guideCount={guideCount}
-    talkCount={talkCount}
-    methodCount={methodCount}
-    fieldHref={`${base}de/guides/`}
-    talkHref={`${base}de/talks/`}
-    methodHref={`${base}de/methods/`}
-    fieldTitle="Feldnotizen"
-    talkTitle="Talk-Notizen"
-    methodTitle="Methoden"
-    fieldCountLabel={guideCount === 1 ? 'Notiz' : 'Notizen'}
-    talkCountLabel={talkCount === 1 ? 'Notiz' : 'Notizen'}
-    methodCountLabel={methodCount === 1 ? 'Methode' : 'Methoden'}
-    fieldDescription="Praktische Notizen zum Testen und Absichern von KI-Systemen."
-    talkDescription="Papers und Vorträge mit Threat Model, Ergebnis, Grenzen und Bezug zu meiner Arbeit."
-    methodDescription="Methoden für Experimentdesign, Paper-Bewertung, Robustheitstests und Threat Modeling."
-    fieldCta="Feldnotizen öffnen"
-    talkCta="Talk-Notizen öffnen"
-    methodCta="Methoden öffnen"
-  />
 </Base>
 
 <style>
   .writing-feature {
-    margin: 0 0 52px;
+    margin-top: 52px;
+  }
+  .paper-scope {
+    max-width: 76ch;
+    color: var(--ink-soft);
+    line-height: 1.65;
   }
 </style>

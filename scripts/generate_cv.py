@@ -65,15 +65,16 @@ ENGLISH = {
             "title": "M.Sc. Artificial Intelligence for Industrial Applications",
             "meta": "OTH Amberg-Weiden, Amberg, Bavaria   ·   Grade 2.0",
             "bullets": [
-                "Designed a semantic LLM backdoor attack achieving 100% ASR and 0% false-trigger rate on Qwen-3B via order-dependent trigger activation.",
+                "Built and evaluated ODSB, an order-dependent semantic backdoor in Qwen2.5-3B-Instruct, with false-trigger controls and paraphrase tests.",
             ],
+            "link": ("Project and results", "https://adarshsarda.github.io/projects/odsb-semantic-backdoors/"),
         },
         {
             "date": "08/2019\n06/2023",
             "title": "B.Tech in Information Technology",
             "meta": "Institute of Engineering and Management, Kolkata, India   ·   Grade 1.7 (8.6/10)",
             "bullets": [
-                "Built an LSTM-based multimodal emotion-recognition model at ~86% accuracy, published with Springer in 2023.",
+                "Built an LSTM-based multimodal emotion-recognition system and coauthored the paper published by Springer in 2023.",
             ],
         },
     ],
@@ -97,7 +98,7 @@ ENGLISH = {
         "Music (voice, synthesizer, ukulele, guitar)",
         "Cooking (Asian cuisine, focus: India)",
     ],
-    "updated": "Updated June 2026",
+    "updated": "Updated October 2026",
     "site": "adarshsarda.github.io",
 }
 
@@ -128,15 +129,16 @@ GERMAN = {
             "title": "M.Sc. Künstliche Intelligenz für industrielle Anwendungen",
             "meta": "OTH Amberg-Weiden, Amberg, Bayern   ·   Note 2,0",
             "bullets": [
-                "Konzipierte einen semantischen LLM-Backdoor-Angriff mit 100% ASR und 0% FTR auf Qwen-3B durch order-dependent Trigger-Aktivierung.",
+                "Entwickelte und evaluierte ODSB, einen reihenfolgeabhängigen semantischen Backdoor-Angriff auf Qwen2.5-3B-Instruct, mit Kontroll- und Paraphrasentests.",
             ],
+            "link": ("Projekt und Ergebnisse", "https://adarshsarda.github.io/de/projects/odsb-semantic-backdoors/"),
         },
         {
             "date": "08/2019\n06/2023",
             "title": "B.Tech in Information Technology",
             "meta": "Institute of Engineering and Management, Kalkutta, Indien   ·   Note 1,7 (8,6/10)",
             "bullets": [
-                "Entwickelte ein LSTM-basiertes multimodales Emotionserkennungsmodell mit ca. 86% Genauigkeit, veröffentlicht bei Springer 2023.",
+                "Entwickelte ein LSTM-basiertes multimodales Emotionserkennungssystem und war Mitautor des 2023 bei Springer veröffentlichten Papers.",
             ],
         },
     ],
@@ -160,7 +162,7 @@ GERMAN = {
         "Musik (Gesang, Synthesizer, Ukulele, Gitarre)",
         "Kochen (asiatische Küche mit Schwerpunkt: Indien)",
     ],
-    "updated": "Aktualisiert im Juni 2026",
+    "updated": "Aktualisiert im Oktober 2026",
     "site": "adarshsarda.github.io",
 }
 
@@ -241,6 +243,13 @@ def draw_entry(pdf, entry, x, y, width, *, spacing=9.0) -> float:
         yy = draw_wrapped(pdf, entry["meta"], tx, yy, tw, size=8.7, color=MUTED, leading=11)
     if entry.get("bullets"):
         yy = draw_bullets(pdf, entry["bullets"], tx, yy - 3, tw)
+    if entry.get("link"):
+        label, url = entry["link"]
+        pdf.setFont(BODY, 8.7)
+        pdf.setFillColor(GREEN_LINK)
+        pdf.drawString(tx + 9, yy, label)
+        pdf.linkURL(url, (tx + 9, yy - 2, tx + 9 + stringWidth(label, BODY, 8.7), yy + 9), relative=0)
+        yy -= 12
     return yy - spacing
 
 
@@ -350,7 +359,8 @@ def render_preview(pdf_path: Path, filename: str) -> None:
 def main() -> None:
     CV_DIR.mkdir(parents=True, exist_ok=True)
     IMAGE_DIR.mkdir(parents=True, exist_ok=True)
-    crop_headshot()
+    if not HEADSHOT.exists():
+        crop_headshot()
     for content in (ENGLISH, GERMAN):
         pdf_path = create_pdf(content)
         render_preview(pdf_path, content["preview"])

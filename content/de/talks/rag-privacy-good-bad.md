@@ -1,7 +1,7 @@
 ---
 type: talk
-title: "RAG-Privacy: Wenn retrieved Context zum Leak wird"
-description: "Ein Paper-Explainer dazu, wie Retrieval-Augmented Generation private Retrieval-Daten leaken kann, während sie teilweise Exposure aus memorisierten Trainingsdaten reduziert."
+title: "RAG-Privacy: Wenn abgerufene Inhalte private Daten preisgeben"
+description: "RAG kann private Daten aus der Dokumentdatenbank preisgeben und zugleich manche Datenlecks aus dem Modelltraining reduzieren."
 speaker: "Adarsh Sarda"
 event: "Independent study"
 format: "Paper explainer"
@@ -17,11 +17,11 @@ source: "Zeng et al. / arXiv"
 difficulty: "Intermediate"
 takeaway: "RAG verschiebt Privacy-Risiko: Retrieval-Daten können leaken, auch wenn Exposure aus memorisierten Trainingsdaten des Basismodells sinkt."
 why_added: "Dieses Paper passt direkt zu einem RAG-Privacy-Lab mit einfachem Embedding-Retriever, Enron-Dataset und messbaren Leakage-Kriterien."
-why_matters: "Viele RAG-Systeme verbinden LLMs mit privaten E-Mails, medizinischen Daten, Legal-Dokumenten oder Enterprise Stores. Wenn das Modell retrieved Context wiederholt, wird die Datenbank selbst zum sensiblen Asset."
+why_matters: "Viele RAG-Systeme verbinden LLMs mit privaten E-Mails, medizinischen Daten, Rechtsdokumenten oder internen Datenbanken. Wenn das Modell abgerufene Inhalte wiederholt, kann es sensible Daten aus diesen Quellen preisgeben."
 what_i_learned: "Ich sollte RAG-Privacy auf zwei Ebenen testen: ob der Retriever private Records findet, und ob der Generator diese Records wiederholt oder paraphrasiert."
 core_ideas:
   - "Das Paper untersucht Leakage aus der Retrieval-Datenbank und Leakage aus Trainingsdaten des LLM."
-  - "Ein Standard-RAG-System retrieved Top-k-Dokumente per Embedding-Similarity und hängt sie an die Query."
+  - "Ein Standard-RAG-System ruft die Top-k-Dokumente anhand ihrer Embedding-Ähnlichkeit ab und fügt sie der Anfrage hinzu."
   - "Composite Prompts kombinieren einen Informationsteil für Retrieval mit einem Command-Teil für Context-Reproduktion."
   - "Enron-E-Mails und HealthcareMagic-Daten dienen als private Retrieval-Datasets."
   - "RAG kann Retrieval-Daten leaken und gleichzeitig manche Trainingsdaten-Leaks reduzieren."
@@ -34,7 +34,7 @@ threat_model:
 connections:
   - {label: "RAG-Sicherheitstestplan", href: "/de/guides/rag-security-test-plan/", note: "Ergänzt Privacy Extraction und Membership Inference in der Testmatrix."}
   - {label: "PoisonedRAG", href: "/de/talks/poisonedrag/", note: "Integrity-Risiko: Angreifer fügt Records ein. Dieses Paper ist Confidentiality-Risiko: Angreifer extrahiert Records."}
-  - {label: "Indirekte Prompt Injection", href: "/de/talks/indirect-prompt-injection/", note: "Der Generator kann durch retrieved Text oder durch die Query drumherum beeinflusst werden."}
+  - {label: "Indirekte Prompt Injection", href: "/de/talks/indirect-prompt-injection/", note: "Der Generator kann durch abgerufene Texte oder die umgebende Anfrage beeinflusst werden."}
 open_questions:
   - "Wie viel Leakage bleibt, wenn der Generator nur gefilterte oder zusammengefasste Chunks erhält?"
   - "Können Retrieval-Provenienz und Access-Control-Logs Privacy-Leakage auditierbar machen?"
@@ -42,8 +42,8 @@ open_questions:
 ---
 
 Zeng et al. beschreiben RAG als Privacy-Trade-off. Die schlechte Seite: RAG kann Records aus
-der Retrieval-Datenbank leaken. Die gute Seite ist subtiler: Grounding in retrieved Context
-kann einige Leaks aus memorisierten Trainingsdaten des Basismodells reduzieren.
+der Retrieval-Datenbank preisgeben. Zugleich kann die Bindung der Antwort an abgerufene Inhalte
+einige Datenlecks aus memorisierten Trainingsdaten des Basismodells reduzieren.
 
 > **Attribution und Scope.** Das ist meine Erklärung von Zeng et al. Ich reproduziere keine
 > sensiblen Leak-Beispiele aus dem Paper.
@@ -56,7 +56,7 @@ Das Paper nutzt die Standardform:
 
 1. User Query einbetten;
 2. Top-k-Dokumente per Embedding-Distanz oder Similarity retrieven;
-3. retrieved Context mit der Query kombinieren;
+3. abgerufene Inhalte mit der Anfrage kombinieren;
 4. Antwort mit dem LLM generieren.
 
 Das ist nah an dem einfachen Retriever, den ich für ein Lab bauen würde: Dokumente werden zu
@@ -87,12 +87,12 @@ Embedding-Modellen wie bge-large-en-v1.5, all-MiniLM-L6-v2 und e5-base-v2. Im Pa
 Chroma als Vector Store genutzt.
 
 Für eine kleine Implementierung ist der Kern einfacher: Embedding-Retriever bauen,
-Top-k Records holen und messen, ob retrieved Content in der Antwort wiederholt wird.
+die Top-k-Einträge abrufen und messen, ob diese Inhalte in der Antwort wiederholt werden.
 
 ## Hauptergebnis
 
 Das Paper berichtet deutliche Leaks aus Retrieval-Daten. In einem Enron/GPT-3.5-Setup mit
-untargeted Prompts führen 116 von 250 Prompts zu exakten Matches aus retrieved Content, plus
+untargeted Prompts führen 116 von 250 Prompts zu exakten Übereinstimmungen mit abgerufenen Inhalten, plus
 weitere Outputs, die Retrieval-Daten stark ähneln.
 
 Die Autoren berichten außerdem, dass RAG einige Leaks aus den Trainingsdaten des LLM reduziert
@@ -103,13 +103,13 @@ Privacy-Grenze stärker Richtung Retrieval-Datenbank.
 
 Für einen RAG-Privacy-Test würde ich messen:
 
-- ob der sensitive Record retrieved wurde;
+- ob der sensible Eintrag abgerufen wurde;
 - ob die Antwort mindestens N direkte Tokens aus dem Record wiederholt;
 - ob die Antwort per ROUGE oder Embedding-Similarity eine enge Paraphrase ist;
 - ob targeted information wie E-Mail-Adressen oder Telefonnummern erscheint;
 - ob Mitigations clean-task utility verändern.
 
-Mögliche Mitigations sind Reranking, Zusammenfassung von retrieved Context vor Generation und
+Mögliche Gegenmaßnahmen sind Reranking, Zusammenfassung abgerufener Inhalte vor der Antwortgenerierung und
 Distance Thresholds. Das Paper zeigt aber Utility-Kosten, deshalb sollten sie gemessen und
 nicht angenommen werden.
 

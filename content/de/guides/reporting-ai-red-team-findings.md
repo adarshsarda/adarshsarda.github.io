@@ -77,7 +77,7 @@ Evidenz:
 - 95%-Konfidenzintervall:
 - Modelle / Versionen / Temperatur:
 - Prompt- oder Trajectory-Familie:
-- Tool Calls / retrieved Chunks / Memory Writes:
+- Tool-Aufrufe / abgerufene Textabschnitte / Speichervorgänge:
 - Logs:
 
 Impact Chain:
@@ -145,7 +145,7 @@ Leadership braucht nicht jede Payload. Es braucht die Chain.
 Beispiel:
 
 1. Angreifer kontrolliert ein Dokument, das der Nutzer zusammenfassen lässt.
-2. Das Dokument wird retrieved und als untrusted data in den Modellkontext gelegt.
+2. Das Dokument wird abgerufen und als nicht vertrauenswürdiger Inhalt in den Modellkontext eingefügt.
 3. Das Modell behandelt Dokumenttext als Instruktion.
 4. Das Modell ruft ein E-Mail-Tool mit Nutzerberechtigung auf.
 5. Sensitiver Content verlässt den Workspace.

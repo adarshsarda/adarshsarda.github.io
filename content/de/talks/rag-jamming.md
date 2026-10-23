@@ -21,7 +21,7 @@ why_matters: "Ein Support-, Compliance- oder Safety-Assistent, der selektiv wich
 what_i_learned: "Jamming ist ein Retrieval-plus-Generation-Fehler, braucht aber keinen sichtbaren Prompt-Injection-String. Einfache Instruction-Filter sind deshalb nicht die richtige erste Defense."
 core_ideas:
   - "Der Angreifer fügt ein Blocker Document in eine untrusted RAG-Datenbank ein."
-  - "Der Blocker wird für eine Target Query retrieved und bringt das Modell zum Nicht-Antworten."
+  - "Der Blocker wird für eine Zielfrage abgerufen und bringt das Modell dazu, nicht zu antworten."
   - "Der Angriff kann mit Black-Box-Optimierung erzeugt werden und braucht kein Wissen über Ziel-Embedding oder LLM."
   - "Bestehende Safety-Metriken können gezielte Availability-Failures übersehen."
   - "Defenses wie Paraphrasing und Perplexity Filtering haben Utility- und Robustheits-Trade-offs."
@@ -62,7 +62,7 @@ nicht kompromittiert.
 ## Blocker Documents
 
 Der Angreifer fügt ein einzelnes Blocker Document in eine Datenbank ein, die untrusted Content
-akzeptiert. Für eine Target Query wird der Blocker retrieved und beeinflusst den Generator in
+akzeptiert. Für eine Zielfrage wird der Blocker abgerufen und beeinflusst den Generator in
 Richtung Abstention oder Nicht-Antwort.
 
 Der stärkste Punkt des Papers: Das braucht keine sichtbare Instruction Injection. Die Autoren
@@ -75,7 +75,7 @@ RAG-Evaluation misst oft, ob Antworten korrekt sind, wenn die Datenbank clean is
 übersieht gezielte Abstention:
 
 - Existierte die korrekte Evidenz?
-- Wurde ein Blocker retrieved?
+- Wurde ein Blocker abgerufen?
 - Hat das Modell wegen des Blockers verweigert oder abgestained?
 - Blieb normale Utility hoch und versteckte so den gezielten Fehler?
 

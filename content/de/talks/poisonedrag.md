@@ -28,13 +28,13 @@ core_ideas:
 threat_model:
   system: "Ein RAG-System mit großer Knowledge Base, Retriever und Generator."
   attacker: "Ein Angreifer, der wenige Dokumente in das Korpus einschleusen kann."
-  capability: "Texte so optimieren, dass sie für Ziel-Fragen retrieved werden und die Antwort lenken."
+  capability: "Texte so optimieren, dass sie für Zielfragen abgerufen werden und die Antwort lenken."
   failure: "Das System generiert eine vom Angreifer gewählte Antwort mit scheinbarem Grounding."
   deployment: "Unternehmenssuche, QA-Systeme, Support-Assistenten und Dokument-RAG."
 connections:
   - {label: "RAG-Privacy", href: "/de/talks/rag-privacy-good-bad/", note: "Die Confidentiality-Ergaenzung: private Retrieval Records aus einer RAG-Datenbank extrahieren."}
   - {label: "AgentPoison", href: "/de/talks/agentpoison/", note: "Erweitert Retrieval-Poisoning auf Agenten-Memory und Planung."}
-  - {label: "Indirekte Prompt Injection", href: "/de/talks/indirect-prompt-injection/", note: "Zeigt, wie retrieved content auch Instruktionen tragen kann."}
+  - {label: "Indirekte Prompt Injection", href: "/de/talks/indirect-prompt-injection/", note: "Zeigt, wie abgerufene Inhalte auch Anweisungen enthalten können."}
   - {label: "Red Teaming von KI-Systemen", href: "/de/guides/red-teaming-ai-systems/", note: "Enthält ein RAG-spezifisches Test-Playbook."}
 open_questions:
   - "Kann Source Diversity verhindern, dass ein vergifteter Cluster die Antwort dominiert?"
@@ -50,7 +50,7 @@ das Grounding selbst zur Angriffsfläche.
 
 Eine Knowledge Base lässt sich oft schneller ändern als ein Modell. Das ist operativ
 nützlich, aber sicherheitsseitig riskant: Wenige eingeschleuste Dokumente können bei
-bestimmten Fragen retrieved werden, ohne die durchschnittliche Qualität des Korpus sichtbar
+bestimmten Fragen abgerufen werden, ohne die durchschnittliche Qualität des Korpus sichtbar
 zu verschlechtern.
 
 ## Angriffsziel
